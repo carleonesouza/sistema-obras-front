@@ -1,6 +1,5 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { MATERIAL_SANITY_CHECKS } from '@angular/material/core';
-import { MATERIAL_SANITY_CHECKS_FACTORY } from '@angular/material/core/common-behaviors/common-module';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { FuseConfirmationModule } from '@fuse/services/confirmation';
 import { FuseLoadingModule } from '@fuse/services/loading';
