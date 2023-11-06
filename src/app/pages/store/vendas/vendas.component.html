@@ -1,0 +1,305 @@
+<div class="flex flex-col flex-auto min-w-0 p-5 md:overflow-auto sm:overflow-x-auto">
+
+    <!-- Header -->
+    <div class="bg-card rounded">
+        <div class="flex flex-col sm:flex-wrap w-full max-w-screen-xl mx-auto px-6 sm:px-8">
+            <div class="flex flex-col sm:flex-wrap flex-auto sm:items-center min-w-0 my-8 sm:my-12">
+                <!-- Avatar and name -->
+                <div class="flex flex-col sm:flex-row flex-auto sm:items-center min-w-0 my-5 sm:my-12">
+                    <div class="flex flex-auto items-center min-w-0">
+                        <div class="flex-0 w-16 h-16 rounded-full overflow-hidden">
+                            <img src="assets/images/logo/icon.svg" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex flex-col min-w-0 ml-4">
+                            <div
+                                class="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate ng-star-inserted">
+                                Controle de Caixa - Vendas</div>
+                            <div class="flex items-center">
+                                <div class="ml-1.5 leading-6 truncate text-secondary">Controle suas vendas!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!--Steps-->
+    <mat-stepper [linear]="isLinear" orientation="vertical" #stepper class="rounded bg-transparent"
+        [formGroup]="vendaForm">
+        <mat-step [stepControl]="vendaForm" class="p-4">
+
+            <ng-template matStepLabel>Selecione os Produtos</ng-template>
+
+            <ng-container *ngIf="products$ | async as products">
+                <ng-container *ngIf="products.length ; else noListas">
+                    <ng-container>
+                        <div class="keen-slider w-full" #sliderRef>
+                            <ng-container *ngFor="let product of products; let i = index; trackBy: trackByFn">
+
+                                <fuse-card class="flex flex-col md:flex-row w-full filter-shopping keen-slider__slide">
+                                    <div class="flex-0 w-60 md:w-50 p-5">
+                                        <img class="w-full h-full object-contain" src="assets/images/cards/box.png"
+                                            alt="Card cover image">
+                                    </div>
+                                    <div class="flex flex-col flex-auto m-8 mb-4">
+                                        <div class="text-2xl leading-tight">{{product?.name}}</div>
+                                        <div class="text-md font-medium text-secondary mt-1">{{product?.description}}
+                                        </div>
+                                        <div class="text-3xl font-semibold mt-4">{{product?.price | currency:"BRL" }}
+                                        </div>
+                                        <div class="flex items-center text-md mt-6">
+                                            <span class="text-secondary whitespace-nowrap mr-3">Estoque:</span>
+                                            <span class="font-bold text-primary mr-2">{{product?.quantity}}</span>
+                                        </div>
+                                        <div class="flex items-center text-md">
+                                            <span class="text-secondary whitespace-nowrap mr-3">Classificação:</span>
+                                            <span
+                                                class="font-bold text-primary mr-2">{{product?.volume}}/{{product?.classification}}</span>
+                                        </div>
+                                        <div class="flex items-center text-md mb-2">
+                                            <span class="text-secondary whitespace-nowrap mr-3">Categoria:</span>
+                                            <span class="font-bold text-primary mr-2">{{product?.category?.name}}</span>
+                                        </div>
+                                        <hr class="w-full border-b mt-6 md:mt-auto mb-4">
+                                        <div class="flex items-center -mx-3">
+                                            <button class="px-3 mr-1" mat-button [color]="'primary'"
+                                                (click)="boughtsProducts(product)">
+                                                <mat-icon class="icon-size-5"
+                                                    [svgIcon]="'heroicons_solid:shopping-cart'"></mat-icon>
+                                                <span class="ml-2">Adicionar ao Carrinho</span>
+                                            </button>
+
+                                        </div>
+                                    </div>
+                                </fuse-card>
+
+                            </ng-container>
+                        </div>
+                    </ng-container>
+                </ng-container>
+
+                <!-- No List -->
+                <ng-template #noListas>
+                    <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
+                        Não encontramos nenhuma Produto!</div>
+                </ng-template>
+            </ng-container>
+
+            <div class="flex flex-row mt-9 justify-end w-full">
+                <button mat-button [color]="'primary'" matStepperNext>Ir para Pagamento</button>
+            </div>
+
+        </mat-step>
+        <mat-step [stepControl]="vendaForm" label="Pagamento">
+
+            <fuse-card class="flex flex-col md:flex-row max-w-full md:max-w-full w-auto filter-shopping">
+
+                <div class="flex flex-col flex-auto m-8 mb-4">
+                    <div class="text-2xl leading-tight">Escolha a forma de Pagamento</div>
+                    <div class="flex flex-col flex-auto mt-8">
+                        <mat-form-field class="example-chip-list" appearance="fill">
+                            <mat-label>Formas de Pagamento</mat-label>
+                            <mat-chip-list #chipList aria-label="Selecionar Forma de Pagamento">
+                                <mat-chip *ngFor="let forma of formas" (removed)="remove(forma)">
+                                    {{forma}}
+                                    <button matChipRemove>
+                                        <mat-icon>cancel</mat-icon>
+                                    </button>
+                                </mat-chip>
+                                <input placeholder="Forma de Pagamento..." #pagamentoInput [formControl]="pgtoCtrl"
+                                    [matAutocomplete]="auto" [matChipInputFor]="chipList"
+                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                    (matChipInputTokenEnd)="add($event)" required>
+                            </mat-chip-list>
+                            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                                <mat-option *ngFor="let formas of filteredPag | async" [value]="formas">
+                                    {{formas}}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Price -->
+                    <div class="flex flex-col flex-auto mt-4 mb-4">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Dinheiro</mat-label>
+                            <input formControlName="valorPago" matInput currencyMask>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Price -->
+                    <div class="flex flex-col flex-auto mt-4 mb-4">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Troco</mat-label>
+                            <input formControlName="troco" matInput currencyMask>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Price -->
+                    <div class="flex flex-col flex-auto mt-4 mb-4">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Total da Venda</mat-label>
+                            <input formControlName="total" matInput currencyMask>
+                        </mat-form-field>
+                    </div>
+
+                </div>
+            </fuse-card>
+
+            <div class="flex flex-row mt-9 justify-end w-full">
+                <button mat-button matStepperPrevious>Voltar</button>
+                <button mat-button [color]="'primary'" (click)="createInvoice(vendaForm)" matStepperNext>Finalizar
+                    Venda</button>
+            </div>
+        </mat-step>
+
+        <mat-step  class="w-full">
+            <ng-template matStepLabel>Finalizar Venda</ng-template>
+
+            <div class="inset-0 min-w-0 text-center flex-col md:overflow-auto sm:overflow-x-auto">
+
+                <!-- Main -->
+                <div class="inline-block p-6 sm:p-10 text-left print:p-0 overflow-x-auto">
+
+                    <!-- Invoice -->
+                    <div
+                        class="md:w-auto sm:w-auto
+                        md:overflow-auto sm:overflow-x-auto flex-col w-240 min-w-240 p-16 rounded-2xl shadow bg-card print:w-auto print:p-0 print:rounded-none print:shadow-none print:bg-transparent">
+
+                        <div class="flex items-start">
+                            <div class="grid grid-rows-2 place-items-start gap-y-12">
+                                <div class="grid auto-cols-max grid-flow-col gap-x-8">
+                                    <div class="place-self-center w-24">
+                                        <img class="w-24" src="assets/images/logo/logo.svg">
+                                    </div>
+                                    
+                                </div>
+                                <div class="grid auto-cols-max grid-flow-col gap-x-8">
+                                    <div class="place-self-center w-24 text-center text-2xl text-secondary">
+                                        Bill To
+                                    </div>
+                                    <div class="pl-10 border-l text-md">
+                                        <div class="font-medium">{{venda?.user.name}}</div>
+                                       
+                                        <div>{{venda?.user.email}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-x-4 gap-y-1 ml-auto">
+                                <div class="justify-self-end text-4xl tracking-tight text-secondary">Nº DA VENDA</div>
+                                <div class="text-4xl">{{venda?.nvenda}}</div>
+                                <div class="justify-self-end font-medium tracking-tight text-secondary">DATA DA VENDA
+                                </div>
+                                <div class="font-medium">{{today | date:'fullDate'}}</div>
+                                <!-- <div class="justify-self-end font-medium tracking-tight text-secondary">DUE DATE</div>
+                                <div class="font-medium">Aug 19, 2022</div> -->
+                                <div class="justify-self-end font-medium tracking-tight text-secondary">TOTAL DA VENDA
+                                </div>
+                                <div class="font-medium">{{venda?.total | currency:"BRL" }}</div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-12 gap-x-1 mt-16">
+                            <!-- Columns -->
+                            <div class="col-span-8 font-medium text-md text-secondary">PRODUTOS</div>
+                            <div class="font-medium text-md text-right text-secondary">VALOR</div>
+                            <div class="font-medium text-md text-right text-secondary">QTD</div>
+                            <div class="col-span-2 font-medium text-md text-right text-secondary">TOTAL</div>
+
+                            <!-- Divider -->
+                            <div class="col-span-12 my-4 border-b"></div>
+
+                            <!-- Item -->
+                            <ng-container
+                                *ngFor="let produto of venda?.produtos; let i = index; let first = first; let last = last;">
+                                <div class="col-span-8">
+                                    <div class="text-lg font-medium">{{produto?.name}}</div>
+                                    <div class="mt-2 text-md text-secondary">
+                                        {{produto?.description}}.
+                                    </div>
+                                </div>
+                                <div class="self-center text-right">{{produto?.price | currency:"BRL"}}</div>
+                                <div class="self-center text-right">1</div>
+                                <div class="col-span-2 self-center text-right">{{produto?.price | currency:"BRL" }}
+                                </div>
+
+                                <!-- Divider -->
+                                <div class="col-span-12 my-4 border-b"></div>
+                            </ng-container>
+
+                            <!-- Spacer -->
+                            <div class="col-span-12 mt-16"></div>
+
+                            <!-- Tax -->
+                            <div class="col-span-10 self-center font-medium tracking-tight text-secondary">FORMA DE
+                                PAGAMENTO</div>
+                            <div class="col-span-2 text-right text-lg">{{venda?.formaPagamnto}}</div>
+
+                            <!-- Divider -->
+                            <div class="col-span-12 my-3 border-b"></div>
+
+                            <!-- Subtotal -->
+                            <div class="col-span-10 self-center font-medium tracking-tight text-secondary">SUBTOTAL
+                            </div>
+                            <div class="col-span-2 text-right text-lg">{{venda?.total | currency:"BRL" }}</div>
+
+                            <ng-container *ngIf="venda?.formaPagamnto==='Dinheiro'">
+                                <!-- Divider -->
+                                <div class="col-span-12 my-3 border-b"></div>
+
+                                <!-- Valor Pago -->
+                                <div class="col-span-10 self-center font-medium tracking-tight text-secondary">VALOR EM
+                                    DINHEIRO</div>
+                                <div class="col-span-2 text-right text-lg">{{venda?.valorPago | currency:"BRL" }}</div>
+
+                                <!-- Divider -->
+                                <div class="col-span-12 my-3 border-b"></div>
+
+                                <!-- Valor Troco-->
+                                <div class="col-span-10 self-center font-medium tracking-tight text-secondary">VALOR
+                                    TROCO</div>
+                                <div class="col-span-2 text-right text-lg">{{venda?.troco | currency:"BRL" }}</div>
+                            </ng-container>
+                            <!-- Divider -->
+                            <div class="col-span-12 my-3 border-b"></div>
+
+                            <!-- Total -->
+                            <div class="col-span-10 self-center text-2xl font-medium tracking-tight text-secondary">
+                                TOTAL</div>
+                            <div class="col-span-2 text-right text-2xl font-medium">{{venda?.total | currency:"BRL" }}
+                            </div>
+                        </div>
+
+                        <div class="mt-16">
+                            <div class="font-medium">Thank you for your business.</div>
+                            <div class="flex items-start mt-4">
+                                <img class="flex-0 w-10 mt-2" src="assets/images/logo/logo.svg">
+                                <div class="ml-6 text-sm text-secondary">
+                                    In condimentum malesuada efficitur. Mauris volutpat placerat auctor. Ut ac congue
+                                    dolor. Quisque scelerisque lacus sed feugiat fermentum.
+                                    Cras aliquet facilisis pellentesque. Nunc hendrerit quam at leo commodo, a suscipit
+                                    tellus dapibus. Etiam at felis volutpat est mollis lacinia.
+                                    Mauris placerat sem sit amet velit mollis, in porttitor ex finibus. Proin eu nibh id
+                                    libero tincidunt lacinia et eget.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="flex flex-row mt-9 justify-end w-full">
+                <button mat-button matStepperPrevious>Voltar</button>
+                <button mat-button (click)="fecharVenda();stepper.reset()">Fechar Venda</button>
+            </div>
+        </mat-step>
+
+    </mat-stepper>
+
+</div>

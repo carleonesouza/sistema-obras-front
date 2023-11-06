@@ -1,0 +1,47 @@
+<div class="relative flex flex-col w-full h-full">
+
+  <!-- Dismiss button -->
+  <ng-container>
+    <div class="absolute top-0 right-0 pt-4 pr-4">
+      <button mat-icon-button [matDialogClose]="undefined">
+        <mat-icon class="text-secondary" [svgIcon]="'heroicons_outline:x'"></mat-icon>
+      </button>
+    </div>
+  </ng-container>
+  <ng-container>
+    <!-- Content -->
+    <div class="flex flex-col sm:flex-row flex-auto items-center sm:items-start p-8 pb-6 sm:pb-8">
+
+      <!-- Icon -->
+      <ng-container>
+        <div class="flex flex-0 items-center justify-center w-10 h-10 sm:mr-4 rounded-full bg-yellow-200">
+          <mat-icon class="text-current">priority_high</mat-icon>
+        </div>
+      </ng-container>
+
+      <ng-container>
+        <div class="flex flex-col items-center sm:items-start mt-4 sm:mt-0 sm:pr-8 space-y-1 text-center sm:text-left">
+          <!-- Title -->
+          <ng-container>
+            <div class="text-xl leading-6 font-medium">{{data.title}}</div>
+          </ng-container>
+
+          <!-- Message -->
+          <ng-container>
+            <div class="text-secondary pt-5"> {{data.message }}</div>
+          </ng-container>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+
+  <div class="flex items-center justify-center sm:justify-end">
+    <div mat-dialog-actions class="area-action" *ngIf="data.confirm">
+      <button mat-button (click)="onNoClick()">Cancelar</button>
+      <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Confirmar</button>
+    </div>
+    <div mat-dialog-actions class="area-action" *ngIf="!data.confirm">
+      <button mat-button [mat-dialog-close]="data" cdkFocusInitial>OK</button>
+    </div>
+  </div>
+</div>

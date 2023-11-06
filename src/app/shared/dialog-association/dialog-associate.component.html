@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>{{titleDialog}}</h1>
+<div mat-dialog-content>
+  <mat-form-field appearance="fill" class="w-full">
+    <mat-label>{{labelInput}}</mat-label>
+    <mat-icon class="mr-2" [svgIcon]="'mat_outline:list_alt'" matPrefix></mat-icon>
+    <mat-select [(ngModel)]="selectedValue">
+        <mat-option *ngFor="let item of data"
+            [value]="item">
+            {{ item[propety] }}
+        </mat-option>
+    </mat-select>
+</mat-form-field>   
+</div>
+<div mat-dialog-actions class="area-action">
+  <button mat-button (click)="onNoClick()">Cancela</button>
+  <button mat-button [mat-dialog-close]="selectedValue" cdkFocusInitial>Confirma</button>
+</div>

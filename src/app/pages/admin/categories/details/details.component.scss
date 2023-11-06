@@ -1,0 +1,77 @@
+h2{
+    color: #307fe2;
+    font-weight: bold;
+    overflow:hidden;
+    position: relative;
+}
+h3{
+    color: #307fe2;
+    font-weight: 300;
+    overflow:hidden;
+    position: relative;
+}
+
+h3:after{
+    content:' ';
+    display:inline-block;
+    width:100%; 
+    height:100%;
+    margin-right:-80%;
+    margin-left:3px;
+    position: absolute;                                     
+    transform: translate(0, -40%);
+    border-bottom:1px solid #b0bec5;
+  }
+
+    /**
+ * ==============================================
+ * Dot Pulse
+ * ==============================================
+ */
+ .loader:after{
+    border-bottom: unset;
+}
+.loader>span {
+   width: 15px;
+   height: 15px;
+   display: block;
+   background: #307fe2;
+   border-radius: 50%;
+   position: relative;
+   margin: 0 5px;
+ }
+ 
+ .loader {
+   display: flex;
+   justify-content: center;
+ }
+ 
+ .dot-1 {
+   animation: anim 1s linear 0s infinite;
+ }
+ 
+ .dot-2 {
+   animation: anim 1s linear 0.25s infinite;
+ }
+ 
+ .dot-3 {
+   animation: anim 1s linear 0.50s infinite;
+ }
+ 
+ .dot-4 {
+   animation: anim 1s linear 0.75s infinite;
+ }
+ 
+ @keyframes anim {
+   0% {
+     top: 0;
+   }
+ 
+   50% {
+     top: 15px;
+   }
+ 
+   100% {
+     top: 0;
+   }
+ }

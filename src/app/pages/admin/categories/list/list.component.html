@@ -1,0 +1,13 @@
+<app-list-items
+[items$]= "categories$"
+[listCount]="categoriesCount"
+[listName]="'Categoria'"
+[listNames]="'Categorias'"
+[itemNome]="'name'"
+[pageSlice]="categories"
+[itemId]="'_id'"
+[totalElements]="totalElements"
+(addItem)="createItem($event)"
+(eventPages)="onPageChange($event)" 
+></app-list-items>
+

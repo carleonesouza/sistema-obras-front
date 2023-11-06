@@ -1,0 +1,18 @@
+<app-list-items
+[items$]= "products$"
+[listCount]="productsCount"
+[listName]="'Produto'"
+[listNames]="'Produtos'"
+[itemNome]="'name'"
+[placeHolder] = "'Digite o número do Contrato'"
+[pageSlice]="products"
+[itemId]="'_id'"
+[include]="false"
+[totalElements]="totalElements"
+(searchItem)="searchItem($event)"
+(addItem)="createItem($event)"
+(associa)="associaItem($event)"
+(syncList)="syncListas($event)"
+(eventPages)="onPageChange($event)" 
+></app-list-items>
+

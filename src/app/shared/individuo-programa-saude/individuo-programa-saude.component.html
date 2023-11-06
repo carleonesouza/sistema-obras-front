@@ -1,0 +1,28 @@
+ <!-- Individuo Programa Saúde -->
+ <div>
+    <div class="space-y-4">
+            <div class="mt-6 w-full">
+                <h3 class="text-3xl">Programa de Saúde</h3>
+            </div>
+            <fuse-card class="flex flex-col px-8 py-6 pb-4 shadow-xl" #fuseCard>
+                <div class="mt-2">
+                    <ng-container [formGroup]="">
+                        <div class="mt-6 flex flex-wrap">
+                            <div class="flex-auto">
+                                <mat-form-field appearance="fill" class="w-full">
+                                    <mat-label>Estado</mat-label>
+                                    <mat-select formControlName="programaSaude" [compareWith]="compareFn">
+                                        <mat-option *ngFor="let programa of programaSaudes$ | async"
+                                            [value]="programa">
+                                            {{ programa.nome }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                       
+                    </ng-container>
+                </div>
+            </fuse-card>
+    </div>
+</div>

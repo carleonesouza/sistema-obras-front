@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Adicionar Identificador</h1>
+<div mat-dialog-content>
+    <mat-form-field class="flex-auto w-full">
+        <mat-label class="text-lg font-bold">Identificador</mat-label>
+        <mat-icon class="mr-2" [svgIcon]="'mat_outline:list_alt'" matPrefix></mat-icon>
+        <input matInput [(ngModel)]="selectedValue"
+            [placeholder]="'identificador'">
+    </mat-form-field>
+</div>
+<div mat-dialog-actions class="area-action">
+  <button mat-button (click)="onNoClick()">Cancela</button>
+  <button mat-button [mat-dialog-close]="selectedValue" cdkFocusInitial>Confirma</button>
+</div>

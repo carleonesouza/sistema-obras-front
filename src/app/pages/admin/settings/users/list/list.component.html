@@ -1,0 +1,12 @@
+<app-list-items
+[items$]= "users$"
+[listCount]="usersCount"
+[listName]="'Usuários'"
+[listNames]="'Usuários'"
+[itemNome]="'fullName'"
+[pageSlice]="users"
+[itemId]="'_id'"
+[totalElements]="totalElements"
+(addItem)="createItem($event)"
+(eventPages)="onPageChange($event)" 
+></app-list-items>

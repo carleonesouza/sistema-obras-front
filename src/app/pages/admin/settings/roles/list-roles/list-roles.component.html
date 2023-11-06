@@ -1,0 +1,14 @@
+<app-list-items
+[items$]= "roles$"
+[listCount]="rolesCount"
+[listName]="'Perfil'"
+[listNames]="'Perfis'"
+[itemNome]="'role'"
+[pageSlice]="roles"
+[itemId]="'_id'"
+[totalElements]="totalElements"
+(searchItem)="searchItem($event)"
+(addItem)="createItem($event)"
+(eventPages)="onPageChange($event)" 
+></app-list-items>
+

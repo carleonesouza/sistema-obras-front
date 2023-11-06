@@ -1,0 +1,127 @@
+<!-- eslint-disable @angular-eslint/template/no-negated-async -->
+<fuse-loading-bar></fuse-loading-bar>
+
+    <!-- Navigation -->
+    <fuse-vertical-navigation *ngIf="(loginStatus$ | async) === true" class="dark bg-gray-900 print:hidden"
+        [mode]="isScreenSmall ? 'over' : 'side'" [name]="'mainNavigation'" [navigation]="navigationData"
+        [opened]="isScreenSmall">
+        <!-- Navigation header hook -->
+        <ng-container fuseVerticalNavigationContentHeader>
+            <!-- Logo -->
+            <div class="flex items-center p-6 pb-0">
+                <!-- Light version -->
+                <!-- Dark version -->
+                <img class="hidden dark:flex w-30" src="assets/images/logo/icon.svg" alt="Logo image">
+            </div>
+        </ng-container>
+    </fuse-vertical-navigation>
+    <!-- Wrapper -->
+    <div class="flex flex-col flex-auto w-full min-w-0">
+
+        <div class="flex" *ngIf="!(loginStatus$ | async)">
+            <mat-toolbar class=" mat-elevation-z6" color="accent">
+                <a class="relative w-15 h-15 overflow-hidden rounded-full avatar-logo" [routerLink]="['/home']"
+                    matTooltip="Início">
+                    <img src="assets/images/logo/icon.svg" class="inline-block align-middle " />
+                </a>
+                <div class="flex w-full">
+                    <!-- <a mat-button class="hover:bg-slate-400 active:bg-slate-400 focus:outline-none focus:ring focus:ring-slate-300 sm:hidden md:visible" [routerLink]="['/home']">Home</a> -->
+                    <a mat-button
+                        class="hover:bg-slate-400 active:bg-slate-400 focus:outline-none focus:ring focus:ring-slate-300"
+                        routerLink="/docs" matTooltip="Documentos">Docs</a>
+                    <a mat-button
+                        class="hover:bg-slate-400 active:bg-slate-400 focus:outline-none focus:ring focus:ring-slate-300"
+                        matTooltip="Dúvidas Frequentes" routerLink="/help-center">FAQs</a>
+                </div>
+                <span class="example-spacer"></span>
+                <a mat-button matTooltip="Cadastrar"
+                    class="hover:bg-slate-400 active:bg-slate-400 focus:outline-none focus:ring focus:ring-slate-300"
+                    [routerLink]="['/sign-up']" aria-label="botão cadastrar">
+                    <mat-icon> app_registration</mat-icon>
+                </a>
+    
+                <a mat-button
+                    class="hover:bg-slate-400 active:bg-slate-400 focus:outline-none focus:ring focus:ring-slate-300"
+                    aria-label="botão login" [routerLink]="['/sign-in']" matTooltip="Login">
+                    <mat-icon svgIcon="heroicons_outline:login"></mat-icon>
+                </a>
+            </mat-toolbar>
+        </div>
+
+        <!-- Header -->
+        <div *ngIf="(loginStatus$ | async) === true"
+            class="relative flex flex-0 items-center w-full h-16 px-4 md:px-6 z-49 shadow dark:shadow-none dark:border-b bg-card dark:bg-transparent print:hidden">
+            <!-- Navigation toggle button -->
+            <button mat-icon-button (click)="toggleNavigation('mainNavigation')">
+                <mat-icon [svgIcon]="'heroicons_outline:menu'"></mat-icon>
+            </button>
+            <!-- Components -->
+            <div class="flex items-center pl-2 ml-auto space-x-0.5 sm:space-x-2">
+                <div class="rounded-full py-3 px-6" *ngIf="user">{{user.name }}</div>
+
+                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                    <mat-icon svgIcon="heroicons_outline:user-circle"></mat-icon>
+                </button>
+
+                <!--Right User Menu-->
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item>
+                        <span class="flex flex-col leading-none" *ngIf="user">
+                            <span>Online como:</span>
+                            <span class="mt-1.5 text-md font-medium">{{user.email}}</span>
+                        </span>
+                    </button>
+                    <mat-divider class="my-2"></mat-divider>
+                    <button mat-menu-item (click)="profile()">
+                        <mat-icon [svgIcon]="'heroicons_outline:user'"></mat-icon>
+                        <span>Perfil</span>
+                    </button>
+                    <!-- <button mat-menu-item>
+                        <mat-icon [svgIcon]="'heroicons_outline:cog'"></mat-icon>
+                        <span>Configurações</span>
+                    </button>
+                    <button mat-menu-item [matMenuTriggerFor]="userStatus">
+                        <mat-icon [svgIcon]="'heroicons_outline:dots-circle-horizontal'"></mat-icon>
+                        <span>Status</span>
+                    </button> -->
+                    <mat-divider class="my-2"></mat-divider>
+                    <button mat-menu-item (click)="signOut()">
+                        <mat-icon [svgIcon]="'heroicons_outline:logout'"></mat-icon>
+                        <span>Desconectar</span>
+                    </button>
+                </mat-menu>
+            </div>
+            <mat-menu class="user-status-menu" #userStatus="matMenu">
+                <button mat-menu-item (click)="updateUserStatus('online')">
+                    <span class="w-4 h-4 mr-3 rounded-full bg-green-500"></span>
+                    <span>Online</span>
+                </button>
+                <button mat-menu-item (click)="updateUserStatus('away')">
+                    <span class="w-4 h-4 mr-3 rounded-full bg-amber-500"></span>
+                    <span>Away</span>
+                </button>
+                <button mat-menu-item (click)="updateUserStatus('busy')">
+                    <span class="w-4 h-4 mr-3 rounded-full bg-red-500"></span>
+                    <span>Busy</span>
+                </button>
+                <button mat-menu-item (click)="updateUserStatus('not-visible')">
+                    <span class="w-4 h-4 mr-3 rounded-full bg-gray-400"></span>
+                    <span>Invisible</span>
+                </button>
+            </mat-menu>
+        </div>
+
+        <!-- Content -->
+        <div class="flex flex-col flex-auto">
+            <!-- *ngIf="true" hack is required here for router-outlet to work correctly.
+             Otherwise, layout changes won't be registered and the view won't be updated! -->
+            <router-outlet></router-outlet>
+        </div>
+
+        <!-- Footer -->
+        <div *ngIf="(loginStatus$ | async) === true"
+            class="relative flex flex-0 items-center justify-start w-full h-14 px-4 md:px-6 z-49 border-t bg-card dark:bg-transparent print:hidden">
+            <span class="font-medium text-secondary"> CX Controle &copy; {{currentYear}}</span>
+        </div>
+
+    </div>
