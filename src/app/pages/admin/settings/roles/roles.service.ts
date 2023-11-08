@@ -30,31 +30,32 @@ export class RolesService {
 
 
   getAllRoles(): Observable<any[]>{
-    return this._httpClient.get<any[]>(environment.apiManager+'profiles').
+    return this._httpClient.get<any>(environment.apiManager+'tipo-usuarios').
     pipe(
       delay(500),
       tap((result) => {
-        result = result.sort((a, b) => a.role.localeCompare(b.role));
-        this._roles.next(result);
+        const data  = result.data;
+        this._roles.next(data);
       }),
-      catchError(this.error.handleError<any[]>('getAllRoles'))
+      catchError(this.error.handleError<any>('getAllRoles'))
     );
   }
 
 
   getRoleById(roleId: string): Observable<any>
     {
-        return this._httpClient.get(environment.apiManager + 'profiles/'+roleId)
+        return this._httpClient.get<any>(environment.apiManager + 'tipo-usuarios/'+roleId)
         .pipe(
           tap((result) =>{
-            this._role.next(result);
+            const data  = result.data;
+            this._role.next(data);
           }),
           catchError(this.error.handleError<any>('getRoleById'))
         );
     }
 
     ativaDesativaRole(role, roleId): Observable<any>{
-      return this._httpClient.put(environment.apiManager +'profiles/'+roleId, role)
+      return this._httpClient.put(environment.apiManager +'tipo-usuarios/'+roleId, role)
       .pipe(
         tap((result) =>{
           console.log(result);
@@ -66,8 +67,7 @@ export class RolesService {
 
 
   addRoles(role): Observable<any>{
-    const { _id } = new Usuario(JSON.parse(localStorage.getItem('user')));
-    return this._httpClient.post<any>(environment.apiManager+'profiles/'+_id, role)
+    return this._httpClient.post<any>(environment.apiManager+'tipo-usuarios/', role)
     .pipe(
       tap((newRole) => {
 

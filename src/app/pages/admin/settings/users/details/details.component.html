@@ -30,7 +30,7 @@
 
                             <div
                                 class="flex items-center justify-center w-full h-full rounded overflow-hidden uppercase text-8xl font-bold leading-none bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
-                                {{user.fullName.charAt(0)}}
+                                {{user.nome.charAt(0)}}
                             </div>
                         </div>
                         <!-- Actions -->
@@ -43,13 +43,13 @@
                         </div>
                     </div>
                     <!-- Name -->
-                    <div class="mt-3 text-4xl font-bold truncate">{{user.fullName}}</div>
-                    <div class="mt-6">
+                    <div class="mt-3 text-4xl font-bold truncate">{{user.nome}}</div>
+                    <!-- <div class="mt-6">
                         <mat-chip-list aria-label="Fish selection">
                             <mat-chip *ngIf="user.status" class="ind-active">Ativo</mat-chip>
                             <mat-chip *ngIf="!user.status" class="ind-deactived">Removido</mat-chip>
                         </mat-chip-list>
-                    </div>
+                    </div> -->
 
                     <div class="mt-6 w-full">
                         <h3 class="text-3xl">Detalhes</h3>
@@ -83,7 +83,7 @@
                                     <div
                                         class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
                                         <mat-icon class="mr-2" [svgIcon]="'heroicons_outline:phone'"></mat-icon>
-                                        <div class="font-mono">{{user.phone | mask:'(00) 0 0000-0000'}}</div>
+                                        <div class="font-mono">{{user.telefone | mask:'(00) 0 0000-0000'}}</div>
                                     </div>
                                 </ng-container>
                             </div>
@@ -98,18 +98,33 @@
                                     <div
                                         class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
                                         <mat-icon class="mr-2" svgIcon="mat_outline:admin_panel_settings"></mat-icon>
-                                        <div class="font-mono">{{user.profile.role }}</div>
+                                        <div class="font-mono">{{user.tipoUsuario.descricao }}</div>
                                     </div>
                                 </ng-container>
                             </div>
                         </div>
                     </ng-container>
 
-                    <div class="mt-6 w-full">
-                        <h3 class="text-3xl">Documentos </h3>
-                    </div>
+                    <ng-container>
+                        <div class="flex w-full mb-4  mt-4 pb-3">
+                            <div class="min-w-0 space-y-1 w-full">
+                                <ng-container>
+                                    <div
+                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
+                                        <mat-icon class="mr-2" svgIcon="mat_outline:admin_panel_settings"></mat-icon>
+                                        <div class="font-mono">{{user.instituicao_setor }}</div>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </ng-container>
+                    
 
-                    <div>
+                    <!-- <div class="mt-6 w-full">
+                        <h3 class="text-3xl">Documentos </h3>
+                    </div> -->
+
+                    <!-- <div>
 
                         <ng-container>
                             <div class="flex w-full mb-4  mt-4 pb-3">
@@ -126,17 +141,16 @@
                             </div>
                         </ng-container>
 
-                    </div>
+                    </div> -->
 
                     <!-- Address -->
-                    <ng-container *ngIf="user.address">
+                    <!-- <ng-container *ngIf="user.address">
                         <div class="mt-6 w-full">
                             <h3 class="text-3xl">Endereço</h3>
                         </div>
                         <div class="flex sm:items-center w-full mt-3">
                             <div class="space-y-4 w-full">
-                                <ng-container>
-                                    <!-- Endereços -->
+                                <ng-container>                                    
                                     <div
                                         class="flex flex-col md:flex-row space-x-4 leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
                                         <mat-icon class="mr-2" [svgIcon]="'heroicons_outline:location-marker'">
@@ -150,7 +164,7 @@
                                 </ng-container>
                             </div>
                         </div>
-                    </ng-container>
+                    </ng-container> -->
 
                 </div>
             </div>
@@ -201,7 +215,7 @@
                             <mat-form-field class="fuse-mat-no-subscript w-full">
                                 <mat-label>Nome</mat-label>
                                 <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:user'" matPrefix></mat-icon>
-                                <input [formControlName]="'fullName'" matInput>
+                                <input [formControlName]="'nome'" matInput>
                             </mat-form-field>
                         </div>
                         <!-- Username -->
@@ -217,11 +231,19 @@
                             <mat-form-field class="fuse-mat-no-subscript w-full">
                                 <mat-label>Telefone</mat-label>
                                 <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:phone'" matPrefix></mat-icon>
-                                <input [formControlName]="'phone'" mask="(00) 0 0000-0000" [placeholder]="'Telefone'" matInput>
+                                <input [formControlName]="'telefone'" mask="(00) 0 0000-0000" [placeholder]="'Telefone'" matInput>
                             </mat-form-field>
                         </div>
 
                         <div class="sm:col-span-4">
+                            <mat-form-field class="fuse-mat-no-subscript w-full">
+                                <mat-label>Instituição Setor</mat-label>
+                                <mat-icon aria-hidden="false" aria-label="Domain" fontIcon="domain"></mat-icon>
+                                <input [formControlName]="'instituicao_setor'"  [placeholder]="'Instituição Setor'" matInput>
+                            </mat-form-field>
+                        </div>
+
+                        <!-- <div class="sm:col-span-4">
                             <div class="flex-auto mr-2 w-full">
                                 <mat-form-field appearance="fill" class="w-full">
                                     <mat-label>CPF</mat-label>
@@ -235,12 +257,12 @@
                                 </mat-form-field>
                             </div>
 
-                        </div>
+                        </div> -->
                     </div>
                     <!-- Divider -->
                     <div class="my-10 border-t"></div>
                     <!-- Endereços -->
-                    <div>
+                    <!-- <div>
                         <div class="space-y-4">
                             <ng-container formGroupName="address">
                                 <div class="mt-6 w-full">
@@ -302,9 +324,9 @@
                             </ng-container>
                         </div>
 
-                    </div>
+                    </div> -->
                     <!-- Divider -->
-                    <div class="my-10 border-t"></div>
+                    <!-- <div class="my-10 border-t"></div> -->
 
                     <!-- Section -->
                     <div class="w-full">
@@ -314,19 +336,19 @@
                     </div>
                     <!-- Perfil -->
                     <div class="sm:col-span-4 mt-8 px-8 py-6 pb-4 shadow-xl">
-                        <div class="flex-auto w-full">
+                        <div class="flex-auto w-full">                           
                             <mat-form-field class="w-full" appearance="fill">
                                 <mat-label>Perfil</mat-label>
                                 <mat-icon class="mr-2" [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                <input matInput aria-label="Perfil" [matAutocomplete]="auto" formControlName="profile">
+                                <input matInput aria-label="Perfil" [matAutocomplete]="auto" formControlName="tipo_usuario_id">
 
                                 <mat-spinner *ngIf="isLoadingPerfis" diameter="20" matSuffix>
                                 </mat-spinner>
                                 <mat-autocomplete #auto="matAutocomplete" [compareWith]="compareFn"
                                     [displayWith]="itemDisplayFn">
-                                    <mat-option *ngFor="let perfil of perfis$ | async" [value]="perfil"
-                                        [id]="perfil._id">
-                                        {{ perfil.role }}
+                                    <mat-option *ngFor="let perfil of perfis" [value]="perfil"
+                                        [id]="perfil.id">
+                                        {{ perfil.descricao }}
                                     </mat-option>
                                 </mat-autocomplete>
                             </mat-form-field>
@@ -340,7 +362,7 @@
                         <!-- Section -->
                         <div class="w-full">
                             <div class="mt-6 w-full">
-                                <h3 class="text-3xl">Senha Provisória</h3>
+                                <h3 class="text-3xl">Senha</h3>
                             </div>
                         </div>
                         <div class="grid sm:grid-cols-4 gap-6 w-full mt-8 px-8 py-6 pb-4 shadow-xl  ">
@@ -349,7 +371,7 @@
                                 <mat-form-field class="fuse-mat-no-subscript w-full">
                                     <mat-label>Senha</mat-label>
                                     <!-- <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:key'" matPrefix></mat-icon> -->
-                                    <input matInput formControlName="password" [type]="hide ? 'password' : 'text'"
+                                    <input matInput formControlName="senha" [type]="hide ? 'password' : 'text'"
                                         maxlength="8">
                                     <button mat-icon-button matSuffix (click)="hide = !hide"
                                         [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
@@ -362,9 +384,9 @@
                                 <mat-form-field class="fuse-mat-no-subscript w-full">
                                     <mat-label>Confirmar Senha</mat-label>
                                     <!-- <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:key'" matPrefix></mat-icon> -->
-                                    <input matInput formControlName="confirmPassword"
+                                    <input matInput formControlName="senha_confirmation"
                                         [type]="hide ? 'password' : 'text'" maxlength="8"
-                                        appConfirmEqualValidator="password">
+                                        appConfirmEqualValidator="senha">
 
                                     <button mat-icon-button matSuffix (click)="hide = !hide"
                                         [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
@@ -373,7 +395,7 @@
 
                                 </mat-form-field>
                                 <mat-error
-                                    *ngIf="userControlsForm.confirmPassword.invalid && (userControlsForm.confirmPassword.dirty || userControlsForm.confirmPassword.touched)"
+                                    *ngIf="userControlsForm.senha_confirmation.invalid && (userControlsForm.senha_confirmation.dirty || userControlsForm.senha_confirmation.touched)"
                                     class="mt-1 text-md text-hint">
                                     Senhas não são iguais!
                                 </mat-error>

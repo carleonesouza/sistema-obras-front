@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UsersService } from '../users.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject, takeUntil } from 'rxjs';
+import { User } from 'app/models/user';
 
 @Component({
   selector: 'app-list',
@@ -10,8 +11,8 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 })
 export class ListComponent implements OnInit, OnDestroy {
 
-  users: any[];
-  users$: Observable<any[]>;
+  users: User[];
+  users$: Observable<User[]>;
   usersCount: number = 0;
   totalElements: number = 0;
   pageSize = 0;

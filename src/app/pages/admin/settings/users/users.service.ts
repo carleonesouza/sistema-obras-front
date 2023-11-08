@@ -28,24 +28,23 @@ export class UsersService {
   }
 
   getAllUsers(first = 1, last= 20): Observable<any[]> {
-    const { _id } = new Usuario(JSON.parse(localStorage.getItem('user')));
-
-    return this._httpClient.get<any[]>(environment.apiManager + 'users/group/'+_id )
+   
+    return this._httpClient.get<any>(environment.apiManager + 'usuarios' )
       .pipe(
-        tap((result) => {
-          let users = result;
-          users = users.sort((a, b) => a?.fullName.localeCompare(b?.fullName));
+        tap((result) => {   
+          let data = result?.data;    
+          const users = data;
           this._users.next(users);
         }),
-        catchError(this.error.handleError<any[]>('getAllUsers'))
+        catchError(this.error.handleError<any>('getAllUsers'))
       );
   }
 
   getUserById(id): Observable<any> {
-    return this._httpClient.get<any>(environment.apiManager + 'users/'+id)
+    return this._httpClient.get<any>(environment.apiManager + 'usuarios/'+id)
       .pipe(
         tap((result) => {
-          this._user.next(result);
+          this._user.next(result?.data);
         }),
         catchError(this.error.handleError<any>('getUserById'))
       );
@@ -54,7 +53,7 @@ export class UsersService {
 
   addUser(usuarioCliente): Observable<any> {
     const { _id } = new Usuario(JSON.parse(localStorage.getItem('user')));
-    return this._httpClient.post(environment.apiManager + 'users/create-user/'+_id, usuarioCliente)
+    return this._httpClient.post(environment.apiManager + 'usuarios', usuarioCliente)
       .pipe(
         tap((result) => {
           this._user.next(result);
@@ -63,8 +62,8 @@ export class UsersService {
       );
   }
 
-  removeUser(userId, user: Usuario): Observable<any> {
-      return this._httpClient.put(environment.apiManager + 'users/disable/'+userId, user)
+  removeUser(userId): Observable<any> {
+      return this._httpClient.delete(environment.apiManager + 'usuarios'+userId)
         .pipe(
           tap((result) => {
             this._snackBar.open('Usuário Removido com Sucesso', 'Fechar', {

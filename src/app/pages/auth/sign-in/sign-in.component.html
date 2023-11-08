@@ -39,7 +39,7 @@
                 <!-- Password field -->
                 <mat-form-field class="w-full">
                     <mat-label>Senha</mat-label>
-                    <input id="password" matInput type="password" [formControlName]="'password'" #passwordField>
+                    <input id="senha" matInput type="password" [formControlName]="'senha'" #passwordField>
                     <button mat-icon-button type="button"
                         (click)="passwordField.type === 'password' ? passwordField.type = 'text' : passwordField.type = 'password'"
                         matSuffix>

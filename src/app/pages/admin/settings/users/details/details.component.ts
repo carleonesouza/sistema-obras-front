@@ -15,6 +15,7 @@ import { Perfil } from 'app/models/perfil';
 import { RolesService } from '../../roles/roles.service';
 import { cpfValida } from 'app/utils/validaCpf';
 import { Address } from 'app/models/address';
+import { User } from 'app/models/user';
 
 @Component({
   selector: 'app-details',
@@ -27,7 +28,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['position', 'name'];
   editMode: boolean = false;
   title: string;
-  user: Usuario;
+  user: User;
   regex = /(?=.*[a-z]).*(?=[0-9]).*(?=[A-Z]).*(?=[!?*])[a-zA-Z0-9!?*#]{8,}/g;
   creating: boolean = false;
   loading: boolean = false;
@@ -37,7 +38,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
   rotas$: Observable<any[]>;
   isLoadingPerfis: boolean = false;
   rotas: any[];
-  perfis$: Observable<Perfil[]>;
+  perfis$: Observable<any>;
+  perfis: any;
   saving: boolean;
   useDefault = false;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -52,7 +54,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
     private _router: Router,
     public _dialog: DialogMessage,
     public dialog: MatDialog) {
-    this.perfis$ = this._perfilService.getAllRoles();
+     
+
   }
 
   ngOnInit(): void {
@@ -63,15 +66,23 @@ export class DetailsComponent implements OnInit, OnDestroy {
     if (this._route.snapshot.url[0].path === 'add') {
       this.creating = true;
       this.title = 'Novo Usuário';
+      this.perfis$ = this._perfilService.getAllRoles();
+      this.perfis$.subscribe((result) =>{
+        this.perfis = result.data
+      }) 
       this.createUserForm();
+
     }
 
     if (this._route.snapshot.paramMap.get('id') !== 'add') {
 
       this.loading = true;
-      this.user$ = this._usersService.user$;
-
-
+      this.user$ = this._usersService.user$;    
+      this.perfis$ = this._perfilService.getAllRoles();
+      this.perfis$.subscribe((result) =>{
+        this.perfis = result.data
+      }) 
+      
       this._usersService.user$
         .pipe(takeUntil(this._unsubscribeAll))
         .subscribe((user: any) => {
@@ -86,6 +97,10 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
           if (this.user) {
             this.userForm.patchValue(this.user);
+            this.userForm.patchValue({
+              tipo_usuario_id: user.tipoUsuario
+            })
+            
             this.loading = false;
           }
 
@@ -110,22 +125,14 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
   createUserForm() {
     this.userForm = this._formBuilder.group({
-      _id: new FormControl(''),
-      fullName: new FormControl('', Validators.required),
+      id: new FormControl(''),
+      nome: new FormControl('', Validators.required),
+      instituicao_setor: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
-      phone: new FormControl(''),
-      cpf: new FormControl('', [Validators.required, this.validateCPF]),
-      apiKey: new FormControl(''),
-      password: new FormControl(''),
-      confirmPassword: new FormControl(''),
-      address: this._formBuilder.group({
-        street: new FormControl(''),
-        zipCode: new FormControl(''),
-        neighborhood: new FormControl(''),
-        status: new FormControl(true)
-      }),
-      profile: new FormControl(''),
-      status: new FormControl(true)
+      telefone: new FormControl(''),
+      senha: new FormControl(''),
+      senha_confirmation: new FormControl(''),
+      tipo_usuario_id: new FormControl('')
     });
   }
 
@@ -135,7 +142,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
 
   compareFn(c1: any, c2: any): boolean {
-    return c1 && c2 ? c1._id === c2 : c2 === c1._id;
+    return c1 && c2 ? c1.id === c2 : c2 === c1.id;
   }
 
   get userControlsForm(): { [key: string]: AbstractControl } {
@@ -153,7 +160,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   itemDisplayFn(item: Perfil) {
-    return item ? item.role : '';
+    return item ? item.descricao : '';
   }
   /**
    * Close the drawer
@@ -193,25 +200,17 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this.editMode = false;
   }
 
-  getUserAdmKey() {
-    if (!localStorage.getItem('user')) {
-      return;
-    }
-    const { apiKey } = new Usuario(JSON.parse(localStorage.getItem('user')));
-
-    return apiKey;
-  }
-
+ 
   removerUser(){
     if (this.userForm.valid) {
-      const user = new Usuario(this.userForm.value);
+      const user = new User(this.userForm.value);
       this.saving = true;
       user.status = false;
-      user.address.status = false;
+      user.tipo_usuario_id = user.profile.id;
 
       if (user) {
         this._usersService
-          .removeUser(user._id,user)
+          .removeUser(user.id)
           .pipe(takeUntil(this._unsubscribeAll))
           .subscribe(
             () => {
@@ -232,10 +231,9 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     if (this.userForm.valid) {
-      const user = new Usuario(this.userForm.value);
+      const user = new User(this.userForm.value);
       this.saving = true;
-      user.address = new Address(this.userForm.get('address').value);
-      user.apiKey =  this.getUserAdmKey();
+    
       if (user) {
         this._usersService
           .addUser(user)

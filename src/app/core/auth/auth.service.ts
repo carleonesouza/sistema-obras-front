@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, ReplaySubject, catchError, of, switchMap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject, of, throwError } from 'rxjs';
 import { AuthUtils } from 'app/core/auth/auth.utils';
 import { environment } from 'environments/environment';
 import { Usuario } from 'app/models/usuario';
 import { HandleError } from 'app/utils/handleErrors';
 import { Loja } from 'app/models/loja';
+import { catchError, switchMap, tap } from 'rxjs/operators';
 
 @Injectable()
 export class AuthService {
@@ -42,7 +43,7 @@ export class AuthService {
         return this._isLoggerIn.asObservable();
     };
 
-    set isLoggerIn(value){
+    set isLoggerIn(value: any){
         this._isLoggerIn.next(value);
     }
 
@@ -85,7 +86,7 @@ export class AuthService {
             switchMap((response: any) => {
 
                 // Store the access token in the local storage
-                this.accessToken = response.accessToken;
+                this.accessToken = response.token;
 
                 // Set the authenticated flag to true
                 this._authenticated = true;
@@ -106,17 +107,17 @@ export class AuthService {
      *
      * @param credentials
      */
-    signIn(credentials: { email: string; password: string }): Observable<any> {
+    signIn(credentials: { email: string; senha: string }): Observable<any> {
         // Throw error, if the user is already logged in
         if (this._authenticated) {
             return throwError('User is already logged in.');
         }
 
-        return this._httpClient.post(environment.apiManager + 'users/login', credentials).pipe(
+        return this._httpClient.post(environment.apiManager + 'login', credentials).pipe(
             switchMap((response: any) => {
 
                 // Store the access token in the local storage
-                this.accessToken = response.accessToken;
+                this.accessToken = response.token;
 
                 // Set the authenticated flag to true
                 this._authenticated = true;
@@ -166,11 +167,7 @@ export class AuthService {
         // Remove the access user from the local storage
         localStorage.removeItem('user');
 
-        // Remove the access caixaId from the local storage
-        localStorage.removeItem('caixaId');
 
-        // Remove the access caixaId from the local storage
-        localStorage.removeItem('store');
 
         // Set the authenticated flag to false
         this._authenticated = false;
@@ -178,7 +175,12 @@ export class AuthService {
         this.isLoggerIn = false;
 
         // Return the observable
-        return of(false);
+        return this._httpClient.post(environment.apiManager + 'logout',{})
+        .pipe(
+            tap((result)=>{
+                console.log(result)
+            })
+        );
     }
 
     /**
