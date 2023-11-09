@@ -67,13 +67,10 @@ export class RoleDetailsComponent implements OnInit, OnDestroy {
           this.createPerfilForm();
           this.perfilForm.reset();
 
-          this.isActive = perfil?.status;
           this.perfil = perfil;
 
           if (this.perfil) {
-            this.perfilForm.patchValue({
-              role: this.perfil.role
-            });
+            this.perfilForm.patchValue(this.perfil);
 
           }
 
@@ -99,8 +96,8 @@ export class RoleDetailsComponent implements OnInit, OnDestroy {
 
   createPerfilForm() {
     this.perfilForm = this._formBuilder.group({
-      role: new FormControl('', Validators.required),
-      status: new FormControl(true)
+      id: new FormControl(''),
+      descricao: new FormControl('', Validators.required),
     });
   }
 
@@ -116,11 +113,8 @@ export class RoleDetailsComponent implements OnInit, OnDestroy {
 
 
   compareFn(c1: any, c2: any): boolean {
-    return c1 && c2 ? c1.recId === c2.recId : c1 === c2;
+    return c1 && c2 ? c1.id === c2.id : c1 === c2;
   }
-
-
-
 
   /**
    * Close the drawer
@@ -146,10 +140,43 @@ export class RoleDetailsComponent implements OnInit, OnDestroy {
     this._changeDetectorRef.markForCheck();
   }
 
+  deleteItem(){
+    if(this.perfil){
+      this._rolesService.deleteRole(this.perfil)
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(
+        () => {
+          this.saving = false;
+          this.toggleEditMode(false);
+          this.closeDrawer().then(() => true);
+          this._router.navigate(['/admin/perfil/lista']);
+          this._dialogMessage.showMessageResponse('Perfil Deletado com Sucesso!', 200);
+        });
+    }
+  }
+
+  updateRole(){
+    if (this.perfilForm.valid) {
+      this.saving = true;
+      const perfil = new Perfil(this.perfilForm.value);
+
+      this._rolesService.atualizaRole(perfil, perfil.id)
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe(
+          () => {
+            this.saving = false;
+            this.toggleEditMode(false);
+            this.closeDrawer().then(() => true);
+            this._router.navigate(['/admin/perfil/lista']);
+            this._dialogMessage.showMessageResponse('Perfil Atualizado com Sucesso!', 200);
+          });
+    }
+  }
+
   cancelEdit() {
     if (this.creating) {
       this.closeDrawer();
-      this._router.navigate(['/admin/configuracoes/perfil/lista']);
+      this._router.navigate(['/admin/perfil/lista']);
     }
     this.editMode = false;
   }
@@ -167,7 +194,7 @@ export class RoleDetailsComponent implements OnInit, OnDestroy {
             this.saving = false;
             this.toggleEditMode(false);
             this.closeDrawer().then(() => true);
-            this._router.navigate(['/admin/configuracoes/perfil/lista']);
+            this._router.navigate(['/admin/perfil/lista']);
             this._dialogMessage.showMessageResponse('Perfil Criado com Sucesso', 200);
             this.perfilForm.reset();
           });

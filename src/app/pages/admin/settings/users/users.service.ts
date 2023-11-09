@@ -52,7 +52,6 @@ export class UsersService {
 
 
   addUser(usuarioCliente): Observable<any> {
-    const { _id } = new Usuario(JSON.parse(localStorage.getItem('user')));
     return this._httpClient.post(environment.apiManager + 'usuarios', usuarioCliente)
       .pipe(
         tap((result) => {

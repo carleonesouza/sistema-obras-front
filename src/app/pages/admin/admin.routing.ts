@@ -10,7 +10,7 @@ const routes: Routes = [
     canActivateChild: [AuthGuard],
     children: [
       {
-        path: 'configuracoes', loadChildren: () => import('app/pages/admin/settings/settings.module').then(m => m.SettingsModule),
+        path: '', loadChildren: () => import('app/pages/admin/settings/settings.module').then(m => m.SettingsModule),
       },
       {
         path: 'produtos', loadChildren: () => import('app/pages/admin/products/products.module').then(p => p.ProductsModule),

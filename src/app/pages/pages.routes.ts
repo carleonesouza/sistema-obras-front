@@ -72,7 +72,7 @@ export const pagesRoutes: Route[] = [
                 },
                 children: [
                     { path: 'home', loadChildren: () => import('app/pages/landing/landing.module').then(m => m.LandingHomeModule) },
-                    // Documents
+                    
                     { path: 'docs', loadChildren: () => import('app/pages/docs/docs.module').then(m => m.DocsModule) },
 
                     { path: 'help-center', loadChildren: () => import('app/pages/help-center/help-center.module').then(h => h.HelpCenterModule) },

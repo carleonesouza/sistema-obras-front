@@ -37,31 +37,7 @@ export class PageComponent implements OnInit, OnDestroy, AfterViewInit {
             icon: 'heroicons_outline:home',
             link: '/inicio'
         },
-        {
-            id: 'loja',
-            title: 'Loja',
-            type: 'collapsable',
-            icon: 'heroicons_outline:shopping-bag',
-            link: '/loja',
-            children: [
-                {
-                    id: 'caixa',
-                    title: ' Caixa',
-                    subtitle: 'Gestão do Caixa',
-                    type: 'basic',
-                    icon: 'mat_solid:account_balance_wallet',
-                    link: 'loja/caixa'
-                },
-                {
-                    id: 'vendas',
-                    title: 'Vendas',
-                    subtitle: 'Gestão de Vendas',
-                    type: 'basic',
-                    icon: 'mat_solid:add_shopping_cart',
-                    link: 'loja/vendas'
-                }
-            ]
-        },
+        
         {
             id: 'admin',
             title: 'Administrativo',
@@ -69,47 +45,35 @@ export class PageComponent implements OnInit, OnDestroy, AfterViewInit {
             type: 'collapsable',
             icon: 'mat_outline:settings',
             children: [
-
                 {
-                    id: 'settings',
-                    title: 'Configurações',
-                    subtitle: '',
-                    type: 'collapsable',
-                    icon: 'mat_outline:settings',
-                    children: [
-                        {
-                            id: 'account',
-                            title: 'Conta',
-                            type: 'basic',
-                            icon: 'mat_outline:manage_accounts',
-                            link: 'admin/configuracoes/conta/lista'
-                        },
-                        {
-                            id: 'roles',
-                            title: 'Perfis',
-                            type: 'basic',
-                            icon: 'mat_outline:supervisor_account',
-                            link: 'admin/configuracoes/perfil/lista'
-                        },
-
-                    ]
-                },
-                {
-                    id: 'products',
-                    title: 'Produto',
+                    id: 'account',
+                    title: 'Conta',
                     type: 'basic',
-                    icon: 'mat_outline:storefront',
-                    link: 'admin/produtos/lista'
+                    icon: 'mat_outline:manage_accounts',
+                    link: 'admin/conta/lista'
                 },
                 {
-                    id: 'categories',
-                    title: 'Categoria',
+                    id: 'roles',
+                    title: 'Perfis',
                     type: 'basic',
-                    icon: 'mat_outline:add_moderator',
-                    link: 'admin/categorias/lista'
-                },
-
+                    icon: 'mat_outline:supervisor_account',
+                    link: 'admin/perfil/lista'
+                }                
             ]
+        },
+        {
+            id: 'products',
+            title: 'Produto',
+            type: 'basic',
+            icon: 'mat_outline:storefront',
+            link: 'admin/produtos/lista'
+        },
+        {
+            id: 'categories',
+            title: 'Categoria',
+            type: 'basic',
+            icon: 'mat_outline:add_moderator',
+            link: 'admin/categorias/lista'
         },
 
     ];

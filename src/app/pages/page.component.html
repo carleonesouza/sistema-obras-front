@@ -20,31 +20,31 @@
 
         <div class="flex" *ngIf="!(loginStatus$ | async)">
             <mat-toolbar class=" mat-elevation-z6" color="accent">
-                <a class="relative w-15 h-15 overflow-hidden rounded-full avatar-logo" [routerLink]="['/home']"
-                    matTooltip="Início">
+                <a class="relative w-15 h-15 overflow-hidden rounded-full avatar-logo" [routerLink]="['/sign-in']"
+                    matTooltip="Login">
                     <img src="assets/images/logo/icon.svg" class="inline-block align-middle " />
                 </a>
                 <div class="flex w-full">
                     <!-- <a mat-button class="hover:bg-slate-400 active:bg-slate-400 focus:outline-none focus:ring focus:ring-slate-300 sm:hidden md:visible" [routerLink]="['/home']">Home</a> -->
-                    <a mat-button
+                    <!-- <a mat-button
                         class="hover:bg-slate-400 active:bg-slate-400 focus:outline-none focus:ring focus:ring-slate-300"
                         routerLink="/docs" matTooltip="Documentos">Docs</a>
                     <a mat-button
                         class="hover:bg-slate-400 active:bg-slate-400 focus:outline-none focus:ring focus:ring-slate-300"
-                        matTooltip="Dúvidas Frequentes" routerLink="/help-center">FAQs</a>
+                        matTooltip="Dúvidas Frequentes" routerLink="/help-center">FAQs</a> -->
                 </div>
                 <span class="example-spacer"></span>
-                <a mat-button matTooltip="Cadastrar"
+                <!-- <a mat-button matTooltip="Cadastrar"
                     class="hover:bg-slate-400 active:bg-slate-400 focus:outline-none focus:ring focus:ring-slate-300"
                     [routerLink]="['/sign-up']" aria-label="botão cadastrar">
                     <mat-icon> app_registration</mat-icon>
-                </a>
+                </a> -->
     
-                <a mat-button
+                <!-- <a mat-button
                     class="hover:bg-slate-400 active:bg-slate-400 focus:outline-none focus:ring focus:ring-slate-300"
                     aria-label="botão login" [routerLink]="['/sign-in']" matTooltip="Login">
                     <mat-icon svgIcon="heroicons_outline:login"></mat-icon>
-                </a>
+                </a> -->
             </mat-toolbar>
         </div>
 
@@ -121,7 +121,7 @@
         <!-- Footer -->
         <div *ngIf="(loginStatus$ | async) === true"
             class="relative flex flex-0 items-center justify-start w-full h-14 px-4 md:px-6 z-49 border-t bg-card dark:bg-transparent print:hidden">
-            <span class="font-medium text-secondary"> CX Controle &copy; {{currentYear}}</span>
+            <span class="font-medium text-secondary"> Sistema Obras &copy; {{currentYear}}</span>
         </div>
 
     </div>

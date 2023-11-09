@@ -3,7 +3,7 @@ import { LayoutComponent } from './layout/layout.component';
 
 export const appRoutes: Route[] = [
 
-    {path: '', pathMatch : 'full', redirectTo: 'home'},
+    {path: '', pathMatch : 'full', redirectTo: 'sign-in'},
 
     {path: 'signed-in-redirect', pathMatch : 'full', redirectTo: 'inicio'},
 

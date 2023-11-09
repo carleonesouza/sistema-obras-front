@@ -6,6 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError, delay, tap } from 'rxjs/operators';
 import { environment } from 'environments/environment';
 import { Usuario } from 'app/models/usuario';
+import { Perfil } from 'app/models/perfil';
 
 @Injectable({
   providedIn: 'root'
@@ -54,28 +55,48 @@ export class RolesService {
         );
     }
 
-    ativaDesativaRole(role, roleId): Observable<any>{
-      return this._httpClient.put(environment.apiManager +'tipo-usuarios/'+roleId, role)
-      .pipe(
-        tap((result) =>{
-          console.log(result);
-        }),
-        catchError(this.error.handleError<any>('ativaDesativaRole'))
-      );
+    atualizaRole(role: Perfil, roleId: string): Observable<any> {
+      return this._httpClient.put<any>(environment.apiManager + 'tipo-usuarios/' + roleId, role)
+        .pipe(
+          tap((result) => {
+            // Update the roles list after a successful update
+            const updatedRoles = this._roles.value || [];
+            const updatedRoleIndex = updatedRoles.findIndex((r) => r.id === roleId);
+            if (updatedRoleIndex !== -1) {
+              updatedRoles[updatedRoleIndex] = result?.data;
+            }
+            this._roles.next(updatedRoles);
+          }),
+          catchError(this.error.handleError<any>('atualizaRole'))
+        );
     }
 
+    addRoles(role: Perfil): Observable<any> {
+      return this._httpClient.post<any>(environment.apiManager + 'tipo-usuarios/', role)
+        .pipe(
+          tap((newRole) => {
+            // Update the roles list after adding a new role
+            const updatedRoles = this._roles.value || [];
+            updatedRoles.push(newRole.data);
+            this._roles.next(updatedRoles);
+          }),
+          catchError(this.error.handleError<any>('addRoles'))
+        );
+    }
 
-
-  addRoles(role): Observable<any>{
-    return this._httpClient.post<any>(environment.apiManager+'tipo-usuarios/', role)
-    .pipe(
-      tap((newRole) => {
-
-        this._role.next(newRole);
-
-        return newRole;
-      }),
-      catchError(this.error.handleError<any>('addRoles'))
-    );
-  }
+    deleteRole(role: Perfil): Observable<void> {
+      return this._httpClient.delete<void>(environment.apiManager + 'tipo-usuarios/' + role.id, )
+        .pipe(
+          tap(() => {
+            // Update the roles list after successful deletion
+            const updatedRoles = this._roles.value || [];
+            const updatedRolesIndex = updatedRoles.findIndex((r) => r.id === role.id);
+            if (updatedRolesIndex !== -1) {
+              updatedRoles.splice(updatedRolesIndex, 1);
+              this._roles.next(updatedRoles);
+            }
+          }),
+          catchError(this.error.handleError<void>('deleteRole'))
+        );
+    }
 }
