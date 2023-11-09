@@ -4,7 +4,7 @@
     <!-- Navigation -->
     <fuse-vertical-navigation *ngIf="(loginStatus$ | async) === true" class="dark bg-gray-900 print:hidden"
         [mode]="isScreenSmall ? 'over' : 'side'" [name]="'mainNavigation'" [navigation]="navigationData"
-        [opened]="isScreenSmall">
+        [opened]="!isScreenSmall">
         <!-- Navigation header hook -->
         <ng-container fuseVerticalNavigationContentHeader>
             <!-- Logo -->

@@ -424,10 +424,10 @@
                     <div class="flex items-center justify-end mb-3">
 
                         <!-- Inativar -->
-                        <mat-slide-toggle *ngIf="editMode" class="mt-2" [color]="'warn'" [checked]="useDefault"
-                            (change)="removerUser()" [matTooltip]="'Remover Usuário'">Remover
-                        </mat-slide-toggle>
-
+                        <button mat-icon-button type="button" color="warn" [matTooltip]="'Delete'"  aria-label="Deletar item"
+                        (click)="removerUser()">
+                            <mat-icon>delete</mat-icon>
+                          </button>
                         <!-- Cancel -->
                         <button class="ml-auto" type="button" mat-button [matTooltip]="'Cancelar'"
                             (click)="cancelEdit()">

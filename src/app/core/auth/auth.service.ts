@@ -43,25 +43,23 @@ export class AuthService {
         return this._isLoggerIn.asObservable();
     };
 
-    set isLoggerIn(value: any){
+    set isLoggerIn(value: any) {
         this._isLoggerIn.next(value);
     }
 
-        /**
-         * Setter & getter for user
-         *
-         * @param value
-         */
-        set user(value: Usuario)
-        {
-            // Store the value
-            this._user.next(value);
-        }
+    /**
+     * Setter & getter for user
+     *
+     * @param value
+     */
+    set user(value: Usuario) {
+        // Store the value
+        this._user.next(value);
+    }
 
-        get user$(): Observable<Usuario>
-        {
-            return this._user.asObservable();
-        }
+    get user$(): Observable<Usuario> {
+        return this._user.asObservable();
+    }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
@@ -82,7 +80,7 @@ export class AuthService {
      * @param password
      */
     resetPassword(id: string, user: Usuario): Observable<any> {
-        return this._httpClient.post(environment.apiManager + 'reset-pwd'+id, user).pipe(
+        return this._httpClient.post(environment.apiManager + 'reset-pwd' + id, user).pipe(
             switchMap((response: any) => {
 
                 // Store the access token in the local storage
@@ -161,26 +159,27 @@ export class AuthService {
      * Sign out
      */
     signOut(): Observable<any> {
-        // Remove the access token from the local storage
-        localStorage.removeItem('accessToken');
-
-        // Remove the access user from the local storage
-        localStorage.removeItem('user');
-
-
-
-        // Set the authenticated flag to false
-        this._authenticated = false;
-
-        this.isLoggerIn = false;
 
         // Return the observable
-        return this._httpClient.post(environment.apiManager + 'logout',{})
-        .pipe(
-            tap((result)=>{
-                console.log(result)
-            })
-        );
+        return this._httpClient.post(environment.apiManager + 'logout', {})
+            .pipe(
+                tap((result) => {
+                    console.log(result)
+                    // Remove the access token from the local storage
+                    localStorage.removeItem('accessToken');
+
+                    // Remove the access user from the local storage
+                    localStorage.removeItem('user');
+
+
+
+                    // Set the authenticated flag to false
+                    this._authenticated = false;
+
+                    this.isLoggerIn = false;
+
+                })
+            );
     }
 
     /**
@@ -189,7 +188,7 @@ export class AuthService {
      * @param user
      */
     signUp(user: Usuario, id: string): Observable<any> {
-        return this._httpClient.post(environment.apiManager + 'users/register/'+id, user).pipe(
+        return this._httpClient.post(environment.apiManager + 'users/register/' + id, user).pipe(
             switchMap((response: any) => {
 
                 // Store the access token in the local storage
@@ -215,9 +214,9 @@ export class AuthService {
         );
     }
 
-    registerStoreApp(store: Loja){
+    registerStoreApp(store: Loja) {
         return this._httpClient.post(environment.apiManager + 'stores/register', store).pipe(switchMap((response: any) => of(response)),
-        catchError(this.error.handleError<any>('registerStoreApp'))
+            catchError(this.error.handleError<any>('registerStoreApp'))
         )
     }
 

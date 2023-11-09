@@ -195,9 +195,41 @@ export class DetailsComponent implements OnInit, OnDestroy {
   cancelEdit() {
     if (this.creating) {
       this.closeDrawer();
-      this._router.navigate(['/admin/configuracoes/conta/lista']);
+      this._router.navigate(['/admin/conta/lista']);
     }
     this.editMode = false;
+  }
+
+  updateUser() {
+    if (this.userForm.valid) {
+      const user = new User(this.userForm.value);
+     this.saving = true;
+      const perfil =  new Perfil(this.userForm.get('tipo_usuario_id').value);
+      user.tipo_usuario_id = perfil.id;
+      
+      if(user.senha == null && this.user.senha_confirmation == null){
+        delete user.senha
+        delete user.senha_confirmation
+      }
+       
+      if (user) {
+        this._usersService
+          .updateUser(user)
+          .pipe(takeUntil(this._unsubscribeAll))
+          .subscribe(
+            () => {
+              this.saving = false;
+              this.toggleEditMode(false);
+              this.closeDrawer().then(() => true);
+              this._router.navigate(['/admin/conta/lista']);
+              this._snackBar.open('Usuário Atualizado com Sucesso', 'Fechar', {
+                duration: 3000
+              });
+              this.userForm.reset();
+            },
+          );
+      }
+    }
   }
 
  
@@ -205,19 +237,18 @@ export class DetailsComponent implements OnInit, OnDestroy {
     if (this.userForm.valid) {
       const user = new User(this.userForm.value);
       this.saving = true;
-      user.status = false;
-      user.tipo_usuario_id = user.profile.id;
+      user.status = false;     
 
       if (user) {
         this._usersService
-          .removeUser(user.id)
+          .removeUser(user)
           .pipe(takeUntil(this._unsubscribeAll))
           .subscribe(
             () => {
               this.saving = false;
               this.toggleEditMode(false);
               this.closeDrawer().then(() => true);
-              this._router.navigate(['/admin/configuracoes/conta/lista']);
+              this._router.navigate(['/admin/conta/lista']);
               this._snackBar.open('Usuário Removido com Sucesso', 'Fechar', {
                 duration: 3000
               });
@@ -232,8 +263,10 @@ export class DetailsComponent implements OnInit, OnDestroy {
   onSubmit() {
     if (this.userForm.valid) {
       const user = new User(this.userForm.value);
-      this.saving = true;
-    
+     this.saving = true;
+      const perfil =  new Perfil(this.userForm.get('tipo_usuario_id').value);
+      user.tipo_usuario_id = perfil.id;
+
       if (user) {
         this._usersService
           .addUser(user)
@@ -243,7 +276,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
               this.saving = false;
               this.toggleEditMode(false);
               this.closeDrawer().then(() => true);
-              this._router.navigate(['/admin/configuracoes/conta/lista']);
+              this._router.navigate(['/admin/conta/lista']);
               this._snackBar.open('Usuário Salvo com Sucesso', 'Fechar', {
                 duration: 3000
               });

@@ -63,14 +63,14 @@ export class PageComponent implements OnInit, OnDestroy, AfterViewInit {
         },
         {
             id: 'products',
-            title: 'Produto',
+            title: 'Empreendimento',
             type: 'basic',
             icon: 'mat_outline:storefront',
             link: 'admin/produtos/lista'
         },
         {
             id: 'categories',
-            title: 'Categoria',
+            title: 'Iniciativa',
             type: 'basic',
             icon: 'mat_outline:add_moderator',
             link: 'admin/categorias/lista'
