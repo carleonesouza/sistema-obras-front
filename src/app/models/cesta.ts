@@ -1,8 +1,8 @@
-import { Produto } from './produto';
+import { Empreendimento } from './empreendimento';
 
 export class Cesta {
 
-    produto: Produto;
+    produto: Empreendimento;
     quantity: number=0;  
 
     public constructor(init?: Partial<Cesta>) {

@@ -1,12 +1,12 @@
 import { Address } from "./address";
-import { Produto } from "./produto";
+import { Empreendimento } from "./empreendimento";
 import { Usuario } from "./usuario";
 
 export class Loja {
 
     _id?: string;
     users?: Array<Usuario>;
-    produtos?: Array<Produto>;
+    produtos?: Array<Empreendimento>;
     name: string;
     cnpj: string;
     apiKey: string;

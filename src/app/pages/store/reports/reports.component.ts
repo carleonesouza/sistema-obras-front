@@ -5,7 +5,7 @@ import { StoreService } from 'app/pages/store/store.service';
 import { Observable } from 'rxjs';
 import * as _moment from 'moment';
 import { MatPaginator } from '@angular/material/paginator';
-import { Produto } from 'app/models/produto';
+import { Produto } from 'app/models/empreendimento';
 import { Venda } from 'app/models/vendas';
 import { Cesta } from 'app/models/cesta';
 import { trigger, state, style, transition, animate } from '@angular/animations';

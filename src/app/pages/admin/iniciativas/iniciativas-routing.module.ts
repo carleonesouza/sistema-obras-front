@@ -1,24 +1,24 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CategoriesComponent } from './categories.component';
+import { IniciativasComponent } from './iniciativas.component';
 import { ListComponent } from './list/list.component';
 import { DetailsComponent } from './details/details.component';
-import { CategoriesResolver, CategoryResolver } from './categories.resolver';
+import { IniciativasResolver, IniciativaResolver } from './iniciativas.resolver';
 
 const routes: Routes = [{
   path: '',
-  component: CategoriesComponent,
+  component: IniciativasComponent,
   children: [
     {
       path: 'lista',
       component: ListComponent,
       // eslint-disable-next-line @typescript-eslint/naming-convention
-      resolve: {CategoriesResolver},
+      resolve: {IniciativasResolver},
       children: [
         {
           path: ':id',
           // eslint-disable-next-line @typescript-eslint/naming-convention
-          resolve: {CategoryResolver},
+          resolve: {IniciativaResolver},
           component: DetailsComponent,
         }
       ]
@@ -30,4 +30,4 @@ const routes: Routes = [{
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class CategoriesRoutingModule { }
+export class IniciativasRoutingModule { }

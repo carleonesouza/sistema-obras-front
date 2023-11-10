@@ -3,14 +3,14 @@ import { CommonModule } from '@angular/common';
 import { CurrencyMaskConfig, CurrencyMaskModule, CURRENCY_MASK_CONFIG } from 'ng2-currency-mask';
 
 import { CurrencyPipe } from '@angular/common';
-import { ProductsRoutingModule } from './products-routing.module';
-import { ListProductsComponent } from './list-products/list-products.component';
+import { EmpreendimentosRoutingModule } from './empreendimentos-routing.module';
+import { ListEmpreendimentosComponent } from './list-Empreendimentos/list-empreendimentos.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
-import { ProductsComponent } from './products.component';
+import { EmpreendimentosComponent } from './Empreendimentos.component';
 import { SharedModule } from 'app/shared/shared.module';
 import { MaterialAppModule } from 'material-app.module';
-import { ProductsService } from './products.service';
-import { ProductResolver, ProductsResolver } from './products.resolver';
+import { EmpreendimentosService } from './empreendimentos.service';
+import { ProductResolver, EmpreendimentosResolver } from './empreendimentos.resolver';
 import { HandleError } from 'app/utils/handleErrors';
 
 export const customCurrencyMaskConfig: CurrencyMaskConfig = {
@@ -26,24 +26,24 @@ export const customCurrencyMaskConfig: CurrencyMaskConfig = {
 
 @NgModule({
   declarations: [
-    ListProductsComponent,
+    ListEmpreendimentosComponent,
     ProductDetailsComponent,
-    ProductsComponent
+    EmpreendimentosComponent
   ],
   imports: [
     CommonModule,
-    ProductsRoutingModule,
+    EmpreendimentosRoutingModule,
     SharedModule,
     MaterialAppModule,
     CurrencyMaskModule
   ],
   providers:[
-    ProductsService,
-    ProductsResolver,
+    EmpreendimentosService,
+    EmpreendimentosResolver,
     ProductResolver,
     HandleError,
     CurrencyPipe,
     { provide: CURRENCY_MASK_CONFIG, useValue: customCurrencyMaskConfig }
   ]
 })
-export class ProductsModule { }
+export class EmpreendimentosModule { }

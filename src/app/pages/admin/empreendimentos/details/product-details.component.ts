@@ -4,13 +4,13 @@ import { MatAccordion } from '@angular/material/expansion';
 import { MatDrawerToggleResult } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Produto } from 'app/models/produto';
+import { Produto } from 'app/models/empreendimento';
 import { ListItemsComponent } from 'app/shared/list-items/list-items.component';
 import { DialogMessage } from 'app/utils/dialog-message ';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ProductsService } from '../products.service';
-import { Categoria } from 'app/models/categoria';
+import { Categoria } from 'app/models/iniciativa';
 
 @Component({
   selector: 'app-product-details',

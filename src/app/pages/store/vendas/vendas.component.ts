@@ -7,7 +7,7 @@ import {
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { Produto } from 'app/models/produto';
+import { Produto } from 'app/models/empreendimento';
 import { Venda } from 'app/models/vendas';
 import { ProductsService } from 'app/pages/admin/products/products.service';
 import KeenSlider, { KeenSliderInstance } from 'keen-slider';

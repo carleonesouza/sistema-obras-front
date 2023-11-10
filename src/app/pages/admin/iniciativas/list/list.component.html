@@ -1,0 +1,13 @@
+<app-list-items
+[items$]= "iniciativas$"
+[listCount]="iniciativasCount"
+[listName]="'Iniciativa'"
+[listNames]="'Iniciativas'"
+[itemNome]="'nome'"
+[pageSlice]="iniciativas"
+[itemId]="'id'"
+[totalElements]="totalElements"
+(addItem)="createItem($event)"
+(eventPages)="onPageChange($event)" 
+></app-list-items>
+

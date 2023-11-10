@@ -1,7 +1,7 @@
 
-export class Produto {
+export class Empreendimento {
 
-    _id?: string;
+    id?: string;
     name: string;
     description: string;
     price: number;
@@ -11,7 +11,7 @@ export class Produto {
     quantity: number;
     status: boolean;
 
-    public constructor(init?: Partial<Produto>) {
+    public constructor(init?: Partial<Empreendimento>) {
         Object.assign(this, init);
     }
 };

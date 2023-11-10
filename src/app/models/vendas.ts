@@ -1,11 +1,11 @@
 import { Cesta } from './cesta';
-import { Produto } from './produto';
+import { Empreendimento } from './empreendimento';
 import { Usuario } from './usuario';
 
 export class Venda {
 
     _id: string;
-    produtos: Array<Produto>;
+    produtos: Array<Empreendimento>;
     cestas?: Array<Cesta>;
     nvenda: number;
     total: number;

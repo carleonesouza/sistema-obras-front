@@ -2,17 +2,17 @@
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CategoriesRoutingModule } from './categories-routing.module';
+import { IniciativasRoutingModule } from './iniciativas-routing.module';
 import { SharedModule } from 'app/shared/shared.module';
 import { MaterialAppModule } from 'material-app.module';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
-import { CategoriesService } from './categories.service';
+import { IniciativasService } from './iniciativas.service';
 
 
 import { ListComponent } from './list/list.component';
 import { DetailsComponent } from './details/details.component';
 import { HandleError } from 'app/utils/handleErrors';
-import { CategoriesResolver, CategoryResolver } from './categories.resolver';
+import { IniciativasResolver, IniciativaResolver } from './iniciativas.resolver';
 import { AuthInterceptor } from 'app/core/auth/auth.interceptor';
 
 
@@ -25,17 +25,17 @@ import { AuthInterceptor } from 'app/core/auth/auth.interceptor';
   imports: [
     HttpClientModule,
     CommonModule,
-    CategoriesRoutingModule,
+    IniciativasRoutingModule,
     SharedModule,
     MaterialAppModule,
     CurrencyMaskModule
   ],
   providers:[
-    CategoriesService,
+    IniciativasService,
     HandleError,
-    CategoriesResolver,
-    CategoryResolver,
+    IniciativasResolver,
+    IniciativaResolver,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
   ]
 })
-export class CategoriesModule { }
+export class IniciativasModule { }

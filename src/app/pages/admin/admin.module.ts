@@ -12,12 +12,12 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 
 
 import { AdminComponent } from './admin.component';
-import { CategoriesComponent } from './categories/categories.component';
+import { IniciativasComponent } from './iniciativas/iniciativas.component';
 
 @NgModule({
   declarations: [
     AdminComponent,
-    CategoriesComponent,
+    IniciativasComponent
   ],
   imports: [
     CommonModule,

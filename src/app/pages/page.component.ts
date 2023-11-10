@@ -58,6 +58,13 @@ export class PageComponent implements OnInit, OnDestroy, AfterViewInit {
                     type: 'basic',
                     icon: 'mat_outline:supervisor_account',
                     link: 'admin/perfil/lista'
+                },
+                {
+                    id: 'setors',
+                    title: 'Setores',
+                    type: 'basic',
+                    icon: 'mat_solid:admin_panel_settings',
+                    link: 'admin/setores/lista'
                 }                
             ]
         },
@@ -69,11 +76,11 @@ export class PageComponent implements OnInit, OnDestroy, AfterViewInit {
             link: 'admin/produtos/lista'
         },
         {
-            id: 'categories',
+            id: 'iniciativa',
             title: 'Iniciativa',
             type: 'basic',
             icon: 'mat_outline:add_moderator',
-            link: 'admin/categorias/lista'
+            link: 'admin/iniciativas/lista'
         },
 
     ];

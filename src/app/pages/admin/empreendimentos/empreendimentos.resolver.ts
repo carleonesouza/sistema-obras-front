@@ -4,18 +4,19 @@ import {
   RouterStateSnapshot,
   ActivatedRouteSnapshot
 } from '@angular/router';
-import { Observable, catchError, of, throwError } from 'rxjs';
-import { CategoriesService } from './categories.service';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { EmpreendimentosService } from './empreendimentos.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class CategoriesResolver implements Resolve<boolean> {
+export class EmpreendimentosResolver implements Resolve<boolean> {
 
-  constructor(private _categoryService: CategoriesService){}
+  constructor(private _EmpreendimentosService: EmpreendimentosService){}
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
-    return this._categoryService.getAllCategories();
+    return this._EmpreendimentosService.getAllEmpreendimentos();
   }
 }
 
@@ -25,13 +26,13 @@ export class CategoriesResolver implements Resolve<boolean> {
   providedIn: 'root'
 })
 
-export class CategoryResolver implements Resolve<any>
+export class EmpreendimentoResolver implements Resolve<any>
 {
     /**
      * Constructor
      */
     constructor(
-      private _categoryService: CategoriesService,
+        private _EmpreendimentosService: EmpreendimentosService,
         private _router: Router,
     ) {
     }
@@ -48,7 +49,7 @@ export class CategoryResolver implements Resolve<any>
      */
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
         if (route.paramMap.get('id') !== 'add') {
-            return this._categoryService.getCategorytById(route.paramMap.get('id'))
+            return this._EmpreendimentosService.getEmpreendimentoById(route.paramMap.get('id'))
                 .pipe(
                     // Error here means the requested individuo is not available
                     catchError((error) => {

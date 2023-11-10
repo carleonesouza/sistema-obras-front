@@ -24,9 +24,9 @@ export const pagesRoutes: Route[] = [
                     {
                         path: '', loadChildren: () => import('app/pages/admin/admin.module').then(admin => admin.AdminModule),
                     },
-                    {
-                        path: '', loadChildren: () => import('app/pages/store/store.module').then(store => store.StoreModule),
-                    }
+                    // {
+                    //     path: '', loadChildren: () => import('app/pages/store/store.module').then(store => store.StoreModule),
+                    // }
                 ]
             },
             {
@@ -64,20 +64,20 @@ export const pagesRoutes: Route[] = [
             },
 
             // Landing routes
-            {
-                path: '',
-                component: LayoutComponent,
-                data: {
-                    layout: 'empty'
-                },
-                children: [
-                    { path: 'home', loadChildren: () => import('app/pages/landing/landing.module').then(m => m.LandingHomeModule) },
+            // {
+            //     path: '',
+            //     component: LayoutComponent,
+            //     data: {
+            //         layout: 'empty'
+            //     },
+            //     children: [
+            //         { path: 'home', loadChildren: () => import('app/pages/landing/landing.module').then(m => m.LandingHomeModule) },
                     
-                    { path: 'docs', loadChildren: () => import('app/pages/docs/docs.module').then(m => m.DocsModule) },
+            //         { path: 'docs', loadChildren: () => import('app/pages/docs/docs.module').then(m => m.DocsModule) },
 
-                    { path: 'help-center', loadChildren: () => import('app/pages/help-center/help-center.module').then(h => h.HelpCenterModule) },
-                ]
-            },
+            //         { path: 'help-center', loadChildren: () => import('app/pages/help-center/help-center.module').then(h => h.HelpCenterModule) },
+            //     ]
+            // },
 
             // Admin routes
             {

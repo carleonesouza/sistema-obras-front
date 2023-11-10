@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CategoriesService } from '../categories.service';
+import { IniciativasService } from '../iniciativas.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject, takeUntil } from 'rxjs';
 
@@ -10,9 +10,9 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 })
 export class ListComponent implements OnInit, OnDestroy {
 
-  categories: any[];
-  categories$: Observable<any[]>;
-  categoriesCount: number = 0;
+  iniciativas: any[];
+  iniciativas$: Observable<any[]>;
+  iniciativasCount: number = 0;
   totalElements: number = 0;
   pageSize = 0;
   pageSlice;
@@ -21,19 +21,19 @@ export class ListComponent implements OnInit, OnDestroy {
   constructor(
     private _activatedRoute: ActivatedRoute,
     private _router: Router,
-    private _categoryService: CategoriesService
+    private _iniciativasService: IniciativasService
   ) {  }
 
   ngOnInit() {
 
-    this.categories$ = this._categoryService.categories$;
+    this.iniciativas$ = this._iniciativasService.iniciativas$;
 
-    this.categories$
+    this.iniciativas$
     .pipe(
       takeUntil(this._unsubscribeAll))
     .subscribe((result) => {
-      this.categories = result;
-      this.categoriesCount = result.length;
+      this.iniciativas = result;
+      this.iniciativasCount = result.length;
     });
 
   }

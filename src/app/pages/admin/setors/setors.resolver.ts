@@ -1,38 +1,33 @@
 import { Injectable } from '@angular/core';
-import {
-  Router, Resolve,
-  RouterStateSnapshot,
-  ActivatedRouteSnapshot
-} from '@angular/router';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { ProductsService } from './products.service';
+import { ActivatedRouteSnapshot, Resolve, ResolveFn, Router, RouterStateSnapshot } from '@angular/router';
+import { SetorsService } from './setors.service';
+import { Observable, catchError, throwError } from 'rxjs';
+
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProductsResolver implements Resolve<boolean> {
+export class SetorsResolver implements Resolve<boolean> {
 
-  constructor(private _productsService: ProductsService){}
+  constructor(private _setorsService: SetorsService){}
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
-    return this._productsService.getAllProducts();
+    return this._setorsService.getSetores();
   }
 }
 
 
-
 @Injectable({
   providedIn: 'root'
 })
 
-export class ProductResolver implements Resolve<any>
+export class SetorResolver implements Resolve<any>
 {
     /**
      * Constructor
      */
     constructor(
-        private _productsService: ProductsService,
+      private __setorsService: SetorsService,
         private _router: Router,
     ) {
     }
@@ -49,7 +44,7 @@ export class ProductResolver implements Resolve<any>
      */
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
         if (route.paramMap.get('id') !== 'add') {
-            return this._productsService.getProductById(route.paramMap.get('id'))
+            return this.__setorsService.getSetortById(route.paramMap.get('id'))
                 .pipe(
                     // Error here means the requested individuo is not available
                     catchError((error) => {

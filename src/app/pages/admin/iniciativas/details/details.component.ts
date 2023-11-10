@@ -1,13 +1,13 @@
 import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { CategoriesService } from '../categories.service';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { IniciativasService } from '../iniciativas.service';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDrawerToggleResult } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ListItemsComponent } from 'app/shared/list-items/list-items.component';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { Categoria } from 'app/models/categoria';
+import { Iniciativa } from 'app/models/iniciativa';
 
 @Component({
   selector: 'app-details',
@@ -15,20 +15,21 @@ import { Categoria } from 'app/models/categoria';
   styleUrls: ['./details.component.scss']
 })
 export class DetailsComponent implements OnInit, OnDestroy{
-  @Input() caterogyForm: FormGroup;
+  @Input() iniciativaForm: FormGroup;
   editMode: boolean = false;
   title: string;
   creating: boolean = false;
   loading: boolean = false;
-  categoria$: Observable<any>;
-  category: any;
+  isLoading: boolean = false;
+  iniciativa$: Observable<any>;
+  iniciativa: any;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   constructor(private _changeDetectorRef: ChangeDetectorRef, private _listItemComponent: ListItemsComponent,
     private _formBuilder: FormBuilder,
     public _snackBar: MatSnackBar,
     private _activateRoute: ActivatedRoute,
-    private _categoryService: CategoriesService,
+    private _iniciativasService: IniciativasService,
     private _router: Router,
     public dialog: MatDialog) {}
 
@@ -39,27 +40,27 @@ export class DetailsComponent implements OnInit, OnDestroy{
 
      if (this._activateRoute.snapshot.url[0].path === 'add') {
       this.creating = true;
-      this.title = 'Nova Categoria';
-      this.createCategoryForm();
+      this.title = 'Nova Iniciativa';
+      this.createIniciativaForm();
     }
 
     if (this._activateRoute.snapshot.paramMap.get('id') !== 'add') {
 
       this.loading = true;
-      this.categoria$ = this._categoryService.category$;
+      this.iniciativa$ = this._iniciativasService.iniciativas$;
 
-      this.categoria$
-        .subscribe((category) => {
+      this.iniciativa$
+        .subscribe((iniciativa) => {
 
           // Open the drawer in case it is closed
           this._listItemComponent.matDrawer.open();
-          this.createCategoryForm();
-          this.caterogyForm.reset();
-          this.category = category;
+          this.createIniciativaForm();
+          this.iniciativaForm.reset();
+          this.iniciativa = iniciativa;
           // Get the Lista
-          if (this.category) {
+          if (this.iniciativa) {
             this.loading = false;
-            this.caterogyForm.patchValue(this.category);
+            this.iniciativaForm.patchValue(this.iniciativa);
           }
 
           // Toggle the edit mode off
@@ -79,17 +80,23 @@ export class DetailsComponent implements OnInit, OnDestroy{
     this._unsubscribeAll.complete();
   }
 
-  createCategoryForm(){
-    this.caterogyForm = this._formBuilder.group({
-      name: new FormControl(''),
-      description: new FormControl(''),
+  createIniciativaForm(){
+    this.iniciativaForm = this._formBuilder.group({
+      nome: new FormControl('', Validators.required),
+      responsavel: new FormControl('', Validators.required),
+      ele_principal_afetado: new FormControl('', Validators.required),
+      expectativa: new FormControl('', Validators.required),
+      instrumento: new FormControl('', Validators.required),
+      setor: new FormControl(''),
+      usuario: new FormControl(''),
+      usuario_alteracao: new FormControl(''),
       status: new FormControl(true)
     });
   }
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  get categoryControls() {
-    return this.caterogyForm.controls;
+  get iniciativaControls() {
+    return this.iniciativaForm.controls;
   }
 
   compareFn(c1: any, c2: any): boolean {
@@ -115,7 +122,7 @@ export class DetailsComponent implements OnInit, OnDestroy{
     }
     else {
       this.editMode = editMode;
-      this.title = 'Editar Categoria';
+      this.title = 'Editar iniciativa';
     }
     // Mark for check
     this._changeDetectorRef.markForCheck();
@@ -124,34 +131,34 @@ export class DetailsComponent implements OnInit, OnDestroy{
   cancelEdit() {
     if(this.creating){
       this.closeDrawer();
-      this._router.navigate(['/admin/categorias/list']);
+      this._router.navigate(['/admin/iniciativas/list']);
     }
     this.editMode = false;
   }
 
   updateItem() {
-    if (this.caterogyForm.valid) {
-      console.log(this.caterogyForm.value);
+    if (this.iniciativaForm.valid) {
+      console.log(this.iniciativaForm.value);
     }
   }
 
   onSubmit(){
-    if(this.caterogyForm.valid){
-      const product = new Categoria(this.caterogyForm.value);
-      delete product._id;
+    if(this.iniciativaForm.valid){
+      const iniciativa = new Iniciativa(this.iniciativaForm.value);
+      delete iniciativa.id;
       this.closeDrawer().then(() => true);
-      this._categoryService
-        .addCategory(product)
+      this._iniciativasService
+        .addIniciativa(iniciativa)
         .pipe(takeUntil(this._unsubscribeAll))
         .subscribe(
           () => {
             this.toggleEditMode(false);
             this.closeDrawer().then(() => true);
-            this._router.navigate(['/admin/categorias/lista']);
-            this._snackBar.open('Categoria Salva com Sucesso','Fechar', {
+            this._router.navigate(['/admin/iniciativas/lista']);
+            this._snackBar.open('Iniciativa Salva com Sucesso','Fechar', {
               duration: 3000
             });
-            this.caterogyForm.reset();
+            this.iniciativaForm.reset();
           });
     }
   }
