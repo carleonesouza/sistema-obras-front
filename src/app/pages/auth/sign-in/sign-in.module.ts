@@ -11,6 +11,8 @@ import { FuseAlertModule } from '@fuse/components/alert';
 import { SharedModule } from 'app/shared/shared.module';
 import { AuthSignInComponent } from 'app/pages/auth/sign-in/sign-in.component';
 import { authSignInRoutes } from 'app/pages/auth/sign-in/sign-in.routing';
+import { RECAPTCHA_SETTINGS, RecaptchaFormsModule, RecaptchaModule, RecaptchaSettings, RecaptchaV3Module } from 'ng-recaptcha';
+import { environment } from 'environments/environment';
 
 @NgModule({
     declarations: [
@@ -25,8 +27,18 @@ import { authSignInRoutes } from 'app/pages/auth/sign-in/sign-in.routing';
         MatInputModule,
         MatProgressSpinnerModule,
         FuseCardModule,
+        RecaptchaFormsModule,
+        RecaptchaModule,
         FuseAlertModule,
         SharedModule
+    ],
+    providers:[
+        {
+            provide: RECAPTCHA_SETTINGS,
+            useValue: {
+              siteKey: environment.recaptcha.siteKey,
+            } as RecaptchaSettings,
+        }
     ]
 })
 export class AuthSignInModule

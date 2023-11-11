@@ -1,9 +1,11 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Component, Inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
+import { environment } from 'environments/environment';
+import { RECAPTCHA_V3_SITE_KEY, ReCaptchaV3Service } from 'ng-recaptcha';
 
 @Component({
     selector: 'auth-sign-in',
@@ -11,16 +13,17 @@ import { AuthService } from 'app/core/auth/auth.service';
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations
 })
-export class AuthSignInComponent implements OnInit
-{
+export class AuthSignInComponent implements OnInit {
     @ViewChild('signInNgForm') signInNgForm: NgForm;
 
     alert: { type: FuseAlertType; message: string } = {
-        type   : 'success',
+        type: 'success',
         message: ''
     };
     signInForm: FormGroup;
     showAlert: boolean = false;
+    isCaptchaResolved = false;
+    recaptcha: string | undefined;
 
     /**
      * Constructor
@@ -30,9 +33,9 @@ export class AuthSignInComponent implements OnInit
         private _authService: AuthService,
         private _formBuilder: FormBuilder,
         private _router: Router
-    )
-    {
-    }
+    ) {
+        this.recaptcha = environment.recaptcha.siteKey;
+     }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -43,12 +46,12 @@ export class AuthSignInComponent implements OnInit
      * admin
      * On init
      */
-    ngOnInit(): void
-    {
+    ngOnInit(): void {
         // Create the form
         this.signInForm = this._formBuilder.group({
-            email     : ['', [Validators.required, Validators.email]],
-            senha  : ['', Validators.required],
+            email: ['', [Validators.required, Validators.email]],
+            senha: ['', Validators.required],
+            recaptcha: new FormControl(['', Validators.required],),
             rememberMe: ['']
         });
     }
@@ -57,19 +60,27 @@ export class AuthSignInComponent implements OnInit
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
+    // eslint-disable-next-line @typescript-eslint/member-ordering
+    get signInControls() {
+        return this.signInForm.controls;
+    }
+
     /**
      * Sign in
      */
-    signIn(): void
-    {
+    signIn(): void {
         // Return if the form is invalid
-        if ( this.signInForm.invalid )
-        {
+        if (this.signInForm.invalid) {
+            for (const control of Object.keys(this.signInForm.controls)) {
+                this.signInForm.controls[control].markAsTouched();
+            }
             return;
         }
+        
 
         // Disable the form
         this.signInForm.disable();
+        this.isCaptchaResolved = true;
 
         // Hide the alert
         this.showAlert = false;
@@ -99,7 +110,7 @@ export class AuthSignInComponent implements OnInit
 
                     // Set the alert
                     this.alert = {
-                        type   : 'error',
+                        type: 'error',
                         message: response.error.message
                     };
 

@@ -55,6 +55,11 @@
                         [routerLink]="['/forgot-password']">Esqueci minha senha
                     </a> -->
                 </div>
+                <re-captcha [siteKey]="recaptcha" data-sitekey="recaptcha" class="g-recaptcha" id="recaptcha" name="recaptcha" [formControl]="signInControls.recaptcha" required 
+                [class.is-invalid]="signInControls.recaptcha.invalid && ( signInControls.recaptcha.dirty || signInControls.recaptcha.touched)"></re-captcha>
+                <div *ngIf="'recaptcha.invalid && (recaptcha.dirty || recaptcha.touched)'" class="invalid-feedback">
+                    <div *ngIf="signInForm.get('recaptcha').hasError('required')" class="text-red-700">This field is required.</div>
+                </div>
 
                 <!-- Submit button -->
                 <button class="fuse-mat-button-large w-full mt-6" mat-flat-button [color]="'primary'"

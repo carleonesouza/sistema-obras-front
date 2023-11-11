@@ -17,6 +17,8 @@ import { FuseFindByKeyPipeModule } from '@fuse/pipes/find-by-key';
 import { MaterialAppModule } from 'material-app.module';
 import { AuthInterceptor } from './core/auth/auth.interceptor';
 import { DirectiveModule } from './directives/directive.module';
+import { RECAPTCHA_SETTINGS, RECAPTCHA_V3_SITE_KEY, RecaptchaFormsModule, RecaptchaModule, RecaptchaSettings, RecaptchaV3Module } from 'ng-recaptcha';
+import { environment } from 'environments/environment';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
@@ -40,10 +42,10 @@ const routerConfig: ExtraOptions = {
           //Shared Module
           SharedModule,
           DirectiveModule,
-
-
         // Core module of your application
         CoreModule,
+        RecaptchaModule,
+        RecaptchaFormsModule,
 
         // Layout module of your application
         LayoutModule,
@@ -55,7 +57,14 @@ const routerConfig: ExtraOptions = {
         FuseFindByKeyPipeModule,
     ],
     providers:[
-        {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
+        {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+        {
+            provide: RECAPTCHA_SETTINGS,
+            useValue: {
+              siteKey: environment.recaptcha.siteKey,
+            } as RecaptchaSettings,
+          },
+    ],
     bootstrap   : [
         AppComponent
     ]
