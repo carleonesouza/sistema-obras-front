@@ -11,6 +11,12 @@ import { Iniciativa } from 'app/models/iniciativa';
 import { SetorsService } from '../../setors/setors.service';
 import { Setor } from 'app/models/setor';
 import { User } from 'app/models/user';
+import { DialogMessage } from 'app/utils/dialog-message ';
+
+interface Expectativa {
+  value: string;
+}
+
 
 @Component({
   selector: 'app-details',
@@ -24,10 +30,16 @@ export class DetailsComponent implements OnInit, OnDestroy{
   creating: boolean = false;
   loading: boolean = false;
   isLoading: boolean = false;
+  checked: boolean = false;
   iniciativa$: Observable<any>;
   setores$: Observable<any>;
   setores: any;
   iniciativa: any;
+  expectativas: Expectativa[] = [
+    {value: 'SIM'},
+    {value: 'NÃO'},
+   
+  ];
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   constructor(private _changeDetectorRef: ChangeDetectorRef, private _listItemComponent: ListItemsComponent,
@@ -35,6 +47,7 @@ export class DetailsComponent implements OnInit, OnDestroy{
     public _snackBar: MatSnackBar,
     private _activateRoute: ActivatedRoute,
     private _setoresService: SetorsService,
+    public _dialog: DialogMessage,
     private _iniciativasService: IniciativasService,
     private _router: Router,
     public dialog: MatDialog) {}
@@ -74,10 +87,11 @@ export class DetailsComponent implements OnInit, OnDestroy{
           this.iniciativa = iniciativa;    
           // Get the Lista
           if (this.iniciativa) {
-            this.loading = false;            
+            this.loading = false;              
             this.iniciativaForm.patchValue(this.iniciativa);
             this.iniciativaForm.patchValue({
-              setor: this.iniciativa.setor.setor
+              setor: this.iniciativa.setor.setor,
+              status: parseInt(this.iniciativa.status)
             })
           }
 
@@ -159,10 +173,37 @@ export class DetailsComponent implements OnInit, OnDestroy{
     this.editMode = false;
   }
 
+
+  async desativaItem(event) {
+    const ativaDesativa = parseInt(this.iniciativa.status) === 1 ? 'Inativar' : 'Ativar';
+    const dialogRef = this._dialog.showDialog(`${ativaDesativa} Produto`, `Certeza que deseja ${ativaDesativa} Produto?`,
+      this.iniciativa, true);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+
+        const iniciativa = new Iniciativa();
+        const user = new User(JSON.parse(localStorage.getItem('user')));
+        iniciativa.usuario_alteracao = user.id;
+        iniciativa.id = result?.item.id;
+        iniciativa.status = parseInt(result?.item?.status) === 1 ? 0 : 1;
+        
+        this._iniciativasService.deactivateActiveItem(iniciativa)
+          .subscribe(
+            () => {
+              this._router.navigate(['/admin/iniciativas/lista/']);
+              this.closeDrawer();
+              this._dialog.showMessageResponse('Atualizado com Sucesso!', 'OK');
+            }
+          );
+      }
+    });
+  }
+  
   deleteItem(){
     if (this.iniciativaForm.valid) {
       const iniciativa = new Iniciativa(this.iniciativaForm.value);  
-
+     
       if (iniciativa) {
         this._iniciativasService
           .deleteIniciativa(iniciativa)
@@ -187,7 +228,6 @@ export class DetailsComponent implements OnInit, OnDestroy{
       const iniciativa = new Iniciativa(this.iniciativaForm.value);
       const user = new User(JSON.parse(localStorage.getItem('user')));
       const setor = new Setor(this.iniciativaForm.get('setor').value);
-      const creatUser = new User(this.iniciativaForm.get('usuario').value)
       iniciativa.usuario_alteracao = user.id;
       iniciativa.setor = setor.id;
       delete iniciativa.usuario;

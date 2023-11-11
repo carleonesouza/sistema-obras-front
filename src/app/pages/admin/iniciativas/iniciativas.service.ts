@@ -51,7 +51,8 @@ export class IniciativasService {
 
 
   editIniciativa(iniciativa: Iniciativa): Observable<any> {
-    return this._httpClient.put<any>(environment.apiManager + `iniciativas/${iniciativa.id}`, iniciativa).pipe(
+    return this._httpClient.put<any>(environment.apiManager + `iniciativas/${iniciativa.id}`, iniciativa)
+    .pipe(
       tap((result) => {
         const updatedIniciativas = this._iniciativas.value || [];
         const iniciativaIndex = updatedIniciativas.findIndex((inicia) => inicia.id === iniciativa.id);
@@ -61,7 +62,23 @@ export class IniciativasService {
         }
         this._iniciativa.next(result.data);
       }),
-      catchError(this.error.handleError<any>('updateUser'))
+      catchError(this.error.handleError<any>('editIniciativa'))
+    );
+  }
+
+  deactivateActiveItem(iniciativa: Iniciativa): Observable<any>{
+    return this._httpClient.patch<any>(environment.apiManager + `iniciativas/${iniciativa.id}`, iniciativa)
+    .pipe(
+      tap((result) => {
+        const updatedIniciativas = this._iniciativas.value || [];
+        const iniciativaIndex = updatedIniciativas.findIndex((inicia) => inicia.id === iniciativa.id);
+        if (iniciativaIndex !== -1) {
+          updatedIniciativas[iniciativaIndex] = result.data;
+          this._iniciativas.next(updatedIniciativas);
+        }
+        this._iniciativa.next(result.data);
+      }),
+      catchError(this.error.handleError<any>('deactivateActiveItem'))
     );
   }
 

@@ -25,6 +25,19 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     background: #f80834 !important;
 }
 
+.ind-active{
+  background-color: #2e7d32 !important;
+  color: #fff !important;
+}
+.ind-suspended{
+  background-color: #f57c00 !important;
+  color: #000 !important;
+}
+.ind-deactived{
+  background-color: #d32f2f !important;
+  color: #000 !important;
+}
+
 html {
     box-sizing: border-box;
     overflow: -moz-scrollbars-vertical;
@@ -9033,6 +9046,7 @@ html {
   .swagger-ui .renderedMarkdown pre > code {
     display: block;
   }
+  
   
   /*# sourceMappingURL=swagger-ui.css.map*/
   

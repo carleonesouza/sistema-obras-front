@@ -171,8 +171,6 @@ export class AuthService {
                     // Remove the access user from the local storage
                     localStorage.removeItem('user');
 
-
-
                     // Set the authenticated flag to false
                     this._authenticated = false;
 

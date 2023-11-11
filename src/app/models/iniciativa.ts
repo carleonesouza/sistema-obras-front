@@ -10,7 +10,7 @@ export class Iniciativa {
     setor: any;
     usuario: any;
     usuario_alteracao: any;
-    status?: boolean;
+    status?: number;
 
     public constructor(init?: Partial<Iniciativa>) {
         Object.assign(this, init);

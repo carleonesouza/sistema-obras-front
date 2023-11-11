@@ -23,8 +23,8 @@ export class ConfirmationDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onNoClick(): void {
-    this.dialogRef.close();
+  cancel() {
+    return this.dialogRef.close(false);
   }
 
 }

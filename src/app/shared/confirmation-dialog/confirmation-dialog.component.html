@@ -37,7 +37,7 @@
 
   <div class="flex items-center justify-center sm:justify-end">
     <div mat-dialog-actions class="area-action" *ngIf="data.confirm">
-      <button mat-button (click)="onNoClick()">Cancelar</button>
+      <button mat-button (click)="cancel()">Cancelar</button>
       <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Confirmar</button>
     </div>
     <div mat-dialog-actions class="area-action" *ngIf="!data.confirm">

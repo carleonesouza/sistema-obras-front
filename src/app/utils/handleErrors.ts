@@ -26,7 +26,7 @@ export class HandleError {
           width: 'auto',
           data: {
             title: 'Ocorreu um erro!', message: handle.error,
-            confirm: false, recId: operation, status: handle.status
+            confirm: false, id: operation, status: handle.status
           },
         });
         return throwError(errorMenssage);
