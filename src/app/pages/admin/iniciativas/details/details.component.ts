@@ -8,6 +8,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ListItemsComponent } from 'app/shared/list-items/list-items.component';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { Iniciativa } from 'app/models/iniciativa';
+import { SetorsService } from '../../setors/setors.service';
+import { Setor } from 'app/models/setor';
+import { User } from 'app/models/user';
 
 @Component({
   selector: 'app-details',
@@ -22,6 +25,8 @@ export class DetailsComponent implements OnInit, OnDestroy{
   loading: boolean = false;
   isLoading: boolean = false;
   iniciativa$: Observable<any>;
+  setores$: Observable<any>;
+  setores: any;
   iniciativa: any;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -29,6 +34,7 @@ export class DetailsComponent implements OnInit, OnDestroy{
     private _formBuilder: FormBuilder,
     public _snackBar: MatSnackBar,
     private _activateRoute: ActivatedRoute,
+    private _setoresService: SetorsService,
     private _iniciativasService: IniciativasService,
     private _router: Router,
     public dialog: MatDialog) {}
@@ -42,12 +48,21 @@ export class DetailsComponent implements OnInit, OnDestroy{
       this.creating = true;
       this.title = 'Nova Iniciativa';
       this.createIniciativaForm();
+
+      this.setores$ = this._setoresService.getSetores();
+      this.setores$.subscribe((result) =>{
+        this.setores = result.data;
+      })
     }
 
     if (this._activateRoute.snapshot.paramMap.get('id') !== 'add') {
 
       this.loading = true;
-      this.iniciativa$ = this._iniciativasService.iniciativas$;
+      this.iniciativa$ = this._iniciativasService.iniciativa$;
+      this.setores$ = this._setoresService.getSetores();
+      this.setores$.subscribe((result) =>{
+        this.setores = result.data;
+      })
 
       this.iniciativa$
         .subscribe((iniciativa) => {
@@ -56,11 +71,14 @@ export class DetailsComponent implements OnInit, OnDestroy{
           this._listItemComponent.matDrawer.open();
           this.createIniciativaForm();
           this.iniciativaForm.reset();
-          this.iniciativa = iniciativa;
+          this.iniciativa = iniciativa;    
           // Get the Lista
           if (this.iniciativa) {
-            this.loading = false;
+            this.loading = false;            
             this.iniciativaForm.patchValue(this.iniciativa);
+            this.iniciativaForm.patchValue({
+              setor: this.iniciativa.setor.setor
+            })
           }
 
           // Toggle the edit mode off
@@ -82,6 +100,7 @@ export class DetailsComponent implements OnInit, OnDestroy{
 
   createIniciativaForm(){
     this.iniciativaForm = this._formBuilder.group({
+      id: new FormControl(''),
       nome: new FormControl('', Validators.required),
       responsavel: new FormControl('', Validators.required),
       ele_principal_afetado: new FormControl('', Validators.required),
@@ -103,6 +122,10 @@ export class DetailsComponent implements OnInit, OnDestroy{
     return c1 && c2 ? c1._id === c2._id : c1 === c2;
   }
 
+  itemDisplayFn(item: Setor) {
+    return item ? item.descricao : '';
+  }
+
 
     /**
      * Close the drawer
@@ -122,7 +145,7 @@ export class DetailsComponent implements OnInit, OnDestroy{
     }
     else {
       this.editMode = editMode;
-      this.title = 'Editar iniciativa';
+      this.title = 'Editar Iniciativa';
     }
     // Mark for check
     this._changeDetectorRef.markForCheck();
@@ -136,15 +159,65 @@ export class DetailsComponent implements OnInit, OnDestroy{
     this.editMode = false;
   }
 
+  deleteItem(){
+    if (this.iniciativaForm.valid) {
+      const iniciativa = new Iniciativa(this.iniciativaForm.value);  
+
+      if (iniciativa) {
+        this._iniciativasService
+          .deleteIniciativa(iniciativa)
+          .pipe(takeUntil(this._unsubscribeAll))
+          .subscribe(
+            () => {
+              this.toggleEditMode(false);
+              this.closeDrawer().then(() => true);
+              this._router.navigate(['/admin/iniciativas/lista']);
+              this._snackBar.open('Iniciativa Removido com Sucesso', 'Fechar', {
+                duration: 3000
+              });
+              this.iniciativaForm.reset();
+            },
+          );
+      }
+    }
+  }
+
   updateItem() {
     if (this.iniciativaForm.valid) {
-      console.log(this.iniciativaForm.value);
+      const iniciativa = new Iniciativa(this.iniciativaForm.value);
+      const user = new User(JSON.parse(localStorage.getItem('user')));
+      const setor = new Setor(this.iniciativaForm.get('setor').value);
+      const creatUser = new User(this.iniciativaForm.get('usuario').value)
+      iniciativa.usuario_alteracao = user.id;
+      iniciativa.setor = setor.id;
+      delete iniciativa.usuario;
+           
+      if (iniciativa) {
+        this._iniciativasService
+          .editIniciativa(iniciativa)
+          .pipe(takeUntil(this._unsubscribeAll))
+          .subscribe(
+            () => {
+              this.toggleEditMode(false);
+              this.closeDrawer().then(() => true);
+              this._router.navigate(['/admin/iniciativas/lista']);
+              this._snackBar.open('Iniciativa Atualizado com Sucesso', 'Fechar', {
+                duration: 3000
+              });
+              this.iniciativaForm.reset();
+            },
+          );
+      }
     }
   }
 
   onSubmit(){
     if(this.iniciativaForm.valid){
       const iniciativa = new Iniciativa(this.iniciativaForm.value);
+      const user = new User(JSON.parse(localStorage.getItem('user')));
+      const setor = new Setor(this.iniciativaForm.get('setor').value)
+      iniciativa.setor = setor.id;
+      iniciativa.usuario = user.id;
       delete iniciativa.id;
       this.closeDrawer().then(() => true);
       this._iniciativasService

@@ -40,7 +40,7 @@ export class IniciativasService {
 
 
   getIniciativatById(id: string): Observable<any> {
-      return this._httpClient.get<any>(environment.apiManager + `iniciativas/${id}`)
+    return this._httpClient.get<any>(environment.apiManager + `iniciativas/${id}`)
       .pipe(
         tap((result) => {
           this._iniciativa.next(result?.data);
@@ -51,45 +51,25 @@ export class IniciativasService {
 
 
   editIniciativa(iniciativa: Iniciativa): Observable<any> {
-    return this.iniciativas$.pipe(
-      take(1),
-      switchMap(iniciativas => this._httpClient.put<any>(environment.apiManager + `iniciativas/${iniciativa.id}`, iniciativa)
-        .pipe(
-          map((updateIniciativa) => {
-
-            // Find the index of the updated categorie
-            const index = iniciativas.findIndex(item => item.id === iniciativa.id);
-
-            // Update the product
-            iniciativas[index] = updateIniciativa;
-
-            // Update the products
-            this._iniciativas.next(iniciativas);
-
-            // Return the updated product
-            return updateIniciativa;
-          }),
-          switchMap(updateIniciativa => this.iniciativa$.pipe(
-            take(1),
-            filter(item => item && item._id === iniciativa.id),
-            tap(() => {
-              // Update the product if it's selected
-              this._iniciativa.next(updateIniciativa);
-
-              // Return the product
-              return updateIniciativa;
-            })
-          )),
-          catchError(this.error.handleError<any>('editiniciativa'))
-        ))
+    return this._httpClient.put<any>(environment.apiManager + `iniciativas/${iniciativa.id}`, iniciativa).pipe(
+      tap((result) => {
+        const updatedIniciativas = this._iniciativas.value || [];
+        const iniciativaIndex = updatedIniciativas.findIndex((inicia) => inicia.id === iniciativa.id);
+        if (iniciativaIndex !== -1) {
+          updatedIniciativas[iniciativaIndex] = result.data;
+          this._iniciativas.next(updatedIniciativas);
+        }
+        this._iniciativa.next(result.data);
+      }),
+      catchError(this.error.handleError<any>('updateUser'))
     );
   }
 
 
 
   addIniciativa(iniciativa: Iniciativa): Observable<any> {
-    
-    return this._httpClient.post<any>(environment.apiManager + `iniciativas/${iniciativa.id}`, iniciativa)
+
+    return this._httpClient.post<any>(environment.apiManager + `iniciativas`, iniciativa)
       .pipe(
         tap((result) => {
           this._iniciativas.next([...(this._iniciativas.value || []), result.data]);
@@ -100,7 +80,9 @@ export class IniciativasService {
   }
 
   deleteIniciativa(iniciativa: Iniciativa): Observable<any> {
-    return this._httpClient.delete(environment.apiManager + `iniciativas/${iniciativa.id}`)
+    return this._httpClient.delete(environment.apiManager + `iniciativas/${iniciativa.id}`, {
+      body: iniciativa
+    })
       .pipe(
         tap(() => {
           const updatedIniciativas = this._iniciativas.value || [];
@@ -110,7 +92,7 @@ export class IniciativasService {
             this._iniciativas.next(updatedIniciativas);
           }
         }),
-       
+
         catchError(this.error.handleError<any>('deleteIniciativa'))
       );
   }

@@ -14,6 +14,7 @@ import { DetailsComponent } from './details/details.component';
 import { HandleError } from 'app/utils/handleErrors';
 import { IniciativasResolver, IniciativaResolver } from './iniciativas.resolver';
 import { AuthInterceptor } from 'app/core/auth/auth.interceptor';
+import { SetorsService } from '../setors/setors.service';
 
 
 
@@ -34,6 +35,7 @@ import { AuthInterceptor } from 'app/core/auth/auth.interceptor';
     IniciativasService,
     HandleError,
     IniciativasResolver,
+    SetorsService,
     IniciativaResolver,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
   ]

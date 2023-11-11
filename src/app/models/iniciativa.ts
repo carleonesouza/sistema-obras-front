@@ -1,5 +1,3 @@
-import { Setor } from "./setor";
-import { User } from "./user";
 
 export class Iniciativa {
 
@@ -9,9 +7,9 @@ export class Iniciativa {
     ele_principal_afetado: string;
     expectativa: string;
     instrumento: string;
-    setor: Setor;
-    usuario: User;
-    usuario_alteracao: User;
+    setor: any;
+    usuario: any;
+    usuario_alteracao: any;
     status?: boolean;
 
     public constructor(init?: Partial<Iniciativa>) {

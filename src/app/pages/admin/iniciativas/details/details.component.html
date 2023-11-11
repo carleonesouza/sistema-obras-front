@@ -50,9 +50,9 @@
 
                     <div class="mt-6">
 
-                        <div class="space-y-4">
-                            <ng-container>
-                                <div class="flex">
+                       
+                        <ng-container>
+                            <div class="flex w-full mb-3 mt-2">
                                     <div class="min-w-0 space-y-1 w-full">
                                         <ng-container>
                                             <div
@@ -65,16 +65,16 @@
                                     </div>
                                 </div>
                             </ng-container>                        
-                        </div>
+                       
 
-                        <div class="space-y-4">
+                      
                             <ng-container>
-                                <div class="flex">
+                                <div class="flex w-full mb-3 mt-2">
                                     <div class="min-w-0 space-y-1 w-full">
                                         <ng-container>
                                             <div
                                                 class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                <mat-icon class="mr-2" [svgIcon]="'mat_outline:description'"></mat-icon>
+                                                <mat-icon class="mr-2" [svgIcon]="'mat_solid:adjust'"></mat-icon>
                                                 <div class="text-primary-500">
                                                     <span class="font-bold mr-2">Elemento Principal Afetado:</span> {{iniciativa.ele_principal_afetado}}</div>                                               
                                             </div>
@@ -82,16 +82,16 @@
                                     </div>
                                 </div>
                             </ng-container>                        
-                        </div>
+                        
 
-                        <div class="space-y-4">
+                  
                             <ng-container>
-                                <div class="flex">
+                                <div class="flex w-full mb-3 mt-2">
                                     <div class="min-w-0 space-y-1 w-full">
                                         <ng-container>
                                             <div
                                                 class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                <mat-icon class="mr-2" [svgIcon]="'mat_outline:description'"></mat-icon>
+                                                <mat-icon class="mr-2" [svgIcon]="'mat_solid:add_reaction'"></mat-icon>
                                                 <div class="text-primary-500">
                                                     <span class="font-bold mr-2">Expectativa:</span> {{iniciativa.expectativa}}</div>                                               
                                             </div>
@@ -99,16 +99,16 @@
                                     </div>
                                 </div>
                             </ng-container>                        
-                        </div>
+                    
 
-                        <div class="space-y-4">
+                        
                             <ng-container>
-                                <div class="flex">
+                                <div class="flex w-full mb-3 mt-2">
                                     <div class="min-w-0 space-y-1 w-full">
                                         <ng-container>
                                             <div
                                                 class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                <mat-icon class="mr-2" [svgIcon]="'mat_outline:description'"></mat-icon>
+                                                <mat-icon class="mr-2" [svgIcon]="'mat_solid:add_road'"></mat-icon>
                                                 <div class="text-primary-500">
                                                     <span class="font-bold mr-2">Instrumento:</span> {{iniciativa.instrumento}}</div>                                               
                                             </div>
@@ -116,25 +116,23 @@
                                     </div>
                                 </div>
                             </ng-container>                        
-                        </div>
+                   
 
-                        <div class="space-y-4">
                             <ng-container>
-                                <div class="flex">
+                                <div class="flex w-full mb-3 mt-2">
                                     <div class="min-w-0 space-y-1 w-full">
                                         <ng-container>
                                             <div
                                                 class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                <mat-icon class="mr-2" [svgIcon]="'mat_outline:description'"></mat-icon>
+                                                <mat-icon class="mr-2" [svgIcon]="'mat_solid:admin_panel_settings'"></mat-icon>
                                                 <div class="text-primary-500">
-                                                    <span class="font-bold mr-2">Setor:</span> {{iniciativa.setor}}</div>                                               
+                                                    <span class="font-bold mr-2">Setor:</span> {{iniciativa.setor.setor.descricao}}</div>                                               
                                             </div>
                                         </ng-container>
                                     </div>
                                 </div>
-                            </ng-container>                        
-                        </div>
-
+                            </ng-container>                       
+                      
                     </div>
                 </div>
             </div>
@@ -237,7 +235,7 @@
                                     <mat-autocomplete #auto="matAutocomplete" [compareWith]="compareFn"
                                         [displayWith]="itemDisplayFn">
                                         <mat-option *ngFor="let setor of setores" [value]="setor"
-                                            [id]="perfil.id">
+                                            [id]="setor.id">
                                             {{ setor.descricao }}
                                         </mat-option>
                                     </mat-autocomplete>
@@ -250,14 +248,10 @@
                     <!-- Actions -->
                     <div class="flex justify-center mt-10 -mx-6 py-4 pr-4 pl-1 border-t bg-gray-50 dark:bg-transparent">
 
-                        <!-- Inativar -->
-                        <mat-slide-toggle *ngIf="!creating" class="mt-2" [color]="'warn'" [checked]="useDefault"
-                            [matTooltip]="'Inativar'">Inativar
-                        </mat-slide-toggle>
-
                         <!-- Delete -->
-                        <button class="ml-2" *ngIf="!creating" [color]="'warn'" type="button" mat-button [matTooltip]="'Remover'">
-                            Remover
+                        <button class="ml-2" *ngIf="!creating" [color]="'warn'" type="button" mat-button [matTooltip]="'Delete'"  aria-label="Deletar item"
+                        (click)="deleteItem()">
+                        <mat-icon>delete</mat-icon>
                         </button>
 
                         <!-- Cancel -->

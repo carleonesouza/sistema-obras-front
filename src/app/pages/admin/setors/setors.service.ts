@@ -47,6 +47,22 @@ export class SetorsService {
       );
   }
 
+  atualizaSetor(setor: Setor): Observable<any> {
+    return this._httpClient.put<any>(environment.apiManager + `setores/${setor.id}`, setor)
+      .pipe(
+        tap((result) => {
+          // Update the roles list after a successful update
+          const updatedSetores = this._setores.value || [];
+          const updatedSetorIndex = updatedSetores.findIndex((r) => r.id === setor.id);
+          if (updatedSetorIndex !== -1) {
+            updatedSetores[updatedSetorIndex] = result?.data;
+          }
+          this._setores.next(updatedSetores);
+        }),
+        catchError(this.error.handleError<any>('atualizaSetor'))
+      );
+  }
+
   addSetor(setor: Setor): Observable<any> {
     
     return this._httpClient.post<any>(environment.apiManager + `setores/${setor.id}`, setor)
@@ -60,7 +76,9 @@ export class SetorsService {
   }
 
   deleteSetor(setor: Setor): Observable<any> {
-    return this._httpClient.delete(environment.apiManager + `setores/${setor.id}`)
+    return this._httpClient.delete(environment.apiManager + `setores/${setor.id}`,{
+      body: setor
+    })
       .pipe(
         tap(() => {
           const updatedSetores = this._setores.value || [];
