@@ -63,8 +63,8 @@
 
                 <!-- Submit button -->
                 <button class="fuse-mat-button-large w-full mt-6" mat-flat-button [color]="'primary'"
-                    [disabled]="signInForm.disabled" (click)="signIn()">
-                    <span *ngIf="!signInForm.disabled">
+                    [disabled]="signInForm.invalid" (click)="signIn()">
+                    <span *ngIf="!signInForm.disabled ">
                         Entrar
                     </span>
                     <mat-progress-spinner *ngIf="signInForm.disabled" [diameter]="24" [mode]="'indeterminate'">
