@@ -22,7 +22,6 @@ export class AuthSignInComponent implements OnInit {
     };
     signInForm: FormGroup;
     showAlert: boolean = false;
-    isCaptchaResolved = false;
     recaptcha: string | undefined;
 
     /**
@@ -80,8 +79,7 @@ export class AuthSignInComponent implements OnInit {
 
         // Disable the form
         this.signInForm.disable();
-        this.isCaptchaResolved = true;
-
+        
         // Hide the alert
         this.showAlert = false;
 
