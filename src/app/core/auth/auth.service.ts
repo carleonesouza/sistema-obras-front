@@ -4,15 +4,14 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, ReplaySubject, of, throwError } from 'rxjs';
 import { AuthUtils } from 'app/core/auth/auth.utils';
 import { environment } from 'environments/environment';
-import { Usuario } from 'app/models/usuario';
 import { HandleError } from 'app/utils/handleErrors';
-import { Loja } from 'app/models/loja';
 import { catchError, switchMap, tap } from 'rxjs/operators';
+import { User } from 'app/models/user';
 
 @Injectable()
 export class AuthService {
     private _authenticated: boolean = false;
-    private _user: ReplaySubject<Usuario> = new ReplaySubject<Usuario>(1);
+    private _user: ReplaySubject<User> = new ReplaySubject<User>(1);
     private _isLoggerIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
     /**
@@ -52,12 +51,12 @@ export class AuthService {
      *
      * @param value
      */
-    set user(value: Usuario) {
+    set user(value: User) {
         // Store the value
         this._user.next(value);
     }
 
-    get user$(): Observable<Usuario> {
+    get user$(): Observable<User> {
         return this._user.asObservable();
     }
 
@@ -79,7 +78,7 @@ export class AuthService {
      *
      * @param password
      */
-    resetPassword(id: string, user: Usuario): Observable<any> {
+    resetPassword(id: string, user: User): Observable<any> {
         return this._httpClient.post(environment.apiManager + 'reset-pwd' + id, user).pipe(
             switchMap((response: any) => {
 
@@ -179,46 +178,6 @@ export class AuthService {
                 })
             );
     }
-
-    /**
-     * Sign up
-     *
-     * @param user
-     */
-    signUp(user: Usuario, id: string): Observable<any> {
-        return this._httpClient.post(environment.apiManager + 'users/register/' + id, user).pipe(
-            switchMap((response: any) => {
-
-                // Store the access token in the local storage
-                this.accessToken = response.accessToken;
-
-                // Set the authenticated flag to true
-                this._authenticated = true;
-                this.isLoggerIn = true;
-
-                // Store the user on the user service
-                this.user = response.user;
-                this.user.profile = response.tipo_usuario;
-                localStorage.setItem('user', JSON.stringify(response.user));
-
-                // Return a new observable with the response
-                return of(response);
-            })
-        );
-    }
-
-    obterSignature(email) {
-        return this._httpClient.post(environment.apiManager + 'signature', email).pipe(
-            switchMap((response: any) => of(response))
-        );
-    }
-
-    registerStoreApp(store: Loja) {
-        return this._httpClient.post(environment.apiManager + 'stores/register', store).pipe(switchMap((response: any) => of(response)),
-            catchError(this.error.handleError<any>('registerStoreApp'))
-        )
-    }
-
 
     /**
      * Check the authentication status

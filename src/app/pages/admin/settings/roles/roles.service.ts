@@ -5,7 +5,6 @@ import { HandleError } from 'app/utils/handleErrors';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError, delay, tap } from 'rxjs/operators';
 import { environment } from 'environments/environment';
-import { Usuario } from 'app/models/usuario';
 import { Perfil } from 'app/models/perfil';
 
 @Injectable({

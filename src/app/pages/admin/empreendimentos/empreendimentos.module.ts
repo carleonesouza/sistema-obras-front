@@ -4,14 +4,16 @@ import { CurrencyMaskConfig, CurrencyMaskModule, CURRENCY_MASK_CONFIG } from 'ng
 
 import { CurrencyPipe } from '@angular/common';
 import { EmpreendimentosRoutingModule } from './empreendimentos-routing.module';
-import { ListEmpreendimentosComponent } from './list-Empreendimentos/list-empreendimentos.component';
-import { ProductDetailsComponent } from './product-details/product-details.component';
-import { EmpreendimentosComponent } from './Empreendimentos.component';
+
 import { SharedModule } from 'app/shared/shared.module';
 import { MaterialAppModule } from 'material-app.module';
 import { EmpreendimentosService } from './empreendimentos.service';
-import { ProductResolver, EmpreendimentosResolver } from './empreendimentos.resolver';
+import { EmpreendimentoResolver, EmpreendimentosResolver } from './empreendimentos.resolver';
 import { HandleError } from 'app/utils/handleErrors';
+import { EmpreendimentosComponent } from './empreendimentos.component';
+import { ListComponent } from './list/list.component';
+import { DetailsComponent } from './details/details.component';
+import { ObraTipoComponent } from './obra-templates/obra-tipo.component';
 
 export const customCurrencyMaskConfig: CurrencyMaskConfig = {
   align: 'right',
@@ -26,9 +28,10 @@ export const customCurrencyMaskConfig: CurrencyMaskConfig = {
 
 @NgModule({
   declarations: [
-    ListEmpreendimentosComponent,
-    ProductDetailsComponent,
-    EmpreendimentosComponent
+   EmpreendimentosComponent,
+   ListComponent,
+   ObraTipoComponent,
+   DetailsComponent,
   ],
   imports: [
     CommonModule,
@@ -40,7 +43,7 @@ export const customCurrencyMaskConfig: CurrencyMaskConfig = {
   providers:[
     EmpreendimentosService,
     EmpreendimentosResolver,
-    ProductResolver,
+    EmpreendimentoResolver,
     HandleError,
     CurrencyPipe,
     { provide: CURRENCY_MASK_CONFIG, useValue: customCurrencyMaskConfig }

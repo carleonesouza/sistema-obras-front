@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { UsersService } from '../users.service';
-import { Usuario } from 'app/models/usuario';
-import { FormGroup, FormBuilder, FormControl, Validators, FormArray, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatAccordion } from '@angular/material/expansion';
 import { MatDrawerToggleResult } from '@angular/material/sidenav';
@@ -14,7 +13,6 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 import { Perfil } from 'app/models/perfil';
 import { RolesService } from '../../roles/roles.service';
 import { cpfValida } from 'app/utils/validaCpf';
-import { Address } from 'app/models/address';
 import { User } from 'app/models/user';
 
 @Component({

@@ -1,6 +1,6 @@
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { CommonModule, CurrencyPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FuseNavigationModule } from '@fuse/components/navigation';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
@@ -17,7 +17,6 @@ import localePt from '@angular/common/locales/pt';
 import { SharedModule } from 'app/shared/shared.module';
 import { AuthInterceptor } from 'app/core/auth/auth.interceptor';
 
-import { HomeComponent } from './home/home.component';
 import { PageComponent } from './page.component';
 import { PagesService } from './pages.service';
 import { PagesResolver } from './pages.resolver';
@@ -35,7 +34,6 @@ const maskConfig: Partial<IConfig> = { validation: false};
 
 @NgModule({
   declarations: [
-    HomeComponent,
     PageComponent,
 
   ],

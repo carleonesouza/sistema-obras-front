@@ -1,14 +1,14 @@
-import { AfterViewInit, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {
     FuseVerticalNavigationAppearance, FuseVerticalNavigationMode, FuseNavigationItem, FuseVerticalNavigationPosition,
     FuseNavigationService, FuseVerticalNavigationComponent
 } from '@fuse/components/navigation';
 import { AuthService } from 'app/core/auth/auth.service';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { PagesService } from './pages.service';
-import { Usuario } from 'app/models/usuario';
-import { Perfil } from 'app/models/perfil';
+import { User } from 'app/models/user';
+
 
 @Component({
     selector: 'app-page',
@@ -26,7 +26,7 @@ export class PageComponent implements OnInit, OnDestroy, AfterViewInit {
     @Input() isScreenSmall: boolean;
     @Input() position: FuseVerticalNavigationPosition;
     @Input() transparentOverlay: boolean;
-    user: Usuario;
+    user: User;
     loginStatus$: Observable<boolean>;
     isAuth = false;
     private navigationData: FuseNavigationItem[] = [
@@ -118,7 +118,7 @@ export class PageComponent implements OnInit, OnDestroy, AfterViewInit {
 
         this.loginStatus$.subscribe((auth) => {
             if (auth) {
-                this.user = new Usuario(JSON.parse(localStorage.getItem('user')));
+                this.user = new User(JSON.parse(localStorage.getItem('user')));
 
                 //Set menu for specific role
                 this.navigationData.map((item) => {

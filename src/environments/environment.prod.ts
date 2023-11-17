@@ -1,7 +1,7 @@
 export const environment = {
     production: true,
-    apiManager: 'https://app-loja-backend.onrender.com/v1/api/',
-    apiDocs: 'https://app-loja-backend.onrender.com/',
+    apiManager: 'http://127.0.0.1:8000/api/v1/',
+    apiDocs: 'http://127.0.0.1:8000/api/v1/',
     recaptcha: {
         siteKey: '6LcdFgwpAAAAAFuLL9uaXdC4LziiEzwwXNZ-958U',
       },

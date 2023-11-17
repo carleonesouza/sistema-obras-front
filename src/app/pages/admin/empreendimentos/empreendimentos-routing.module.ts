@@ -1,27 +1,28 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ListProductsComponent } from './list-products/list-products.component';
-import { ProductDetailsComponent } from './product-details/product-details.component';
-import { ProductsComponent } from './products.component';
-import { ProductResolver, ProductsResolver } from './products.resolver';
+import { EmpreendimentosComponent } from './empreendimentos.component';
+import { ListComponent } from './list/list.component';
+import { EmpreendimentoResolver, EmpreendimentosResolver } from './empreendimentos.resolver';
+import { DetailsComponent } from './details/details.component';
+
 
 const routes: Routes = [
   {
     path: '',
-    component: ProductsComponent,
+    component: EmpreendimentosComponent,
     children: [
       {
         path: 'lista',
-        component: ListProductsComponent,
+        component: ListComponent,
         resolve: {
-          list: ProductsResolver
+          list: EmpreendimentosResolver
         },
         children: [
           {
             path: ':id',
-            component: ProductDetailsComponent,
+            component: DetailsComponent,
             resolve:{
-              product: ProductResolver
+              product: EmpreendimentoResolver
             }
           }
         ]

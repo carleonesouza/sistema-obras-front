@@ -2,10 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Iniciativa } from 'app/models/iniciativa';
-import { Usuario } from 'app/models/usuario';
 import { HandleError } from 'app/utils/handleErrors';
 import { environment } from 'environments/environment';
-import { BehaviorSubject, Observable, tap, catchError, take, switchMap, map, filter } from 'rxjs';
+import { BehaviorSubject, Observable, tap, catchError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -109,7 +108,6 @@ export class IniciativasService {
             this._iniciativas.next(updatedIniciativas);
           }
         }),
-
         catchError(this.error.handleError<any>('deleteIniciativa'))
       );
   }

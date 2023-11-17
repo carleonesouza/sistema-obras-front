@@ -1,6 +1,5 @@
 import { formatDate } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ViewEncapsulation, OnInit } from '@angular/core';
-import { StoreService } from '../store/store.service';
 
 
 
@@ -22,7 +21,7 @@ export class HomeComponent implements  OnInit
     sequenciaNotasNPS: Array<number>;
     sequencialNPS: Array<number>;
 
-        constructor(private _storeService: StoreService){
+        constructor(){
       
         this.selectedClient = 'Todos';
         this.currentDate = formatDate(new Date(), 'dd/MM/yyyy', 'en');

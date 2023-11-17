@@ -2,14 +2,12 @@
 export class Empreendimento {
 
     id?: string;
-    name: string;
-    description: string;
-    price: number;
-    classification: string;
-    category: string;
-    volume: number;
-    quantity: number;
-    status: boolean;
+    nome: string;
+    responsavel: string;
+    respondente: string;
+    setor: any;
+    obras: any;
+    status: any;
 
     public constructor(init?: Partial<Empreendimento>) {
         Object.assign(this, init);

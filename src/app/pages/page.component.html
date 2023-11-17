@@ -11,7 +11,7 @@
             <div class="flex items-center p-6 pb-0">
                 <!-- Light version -->
                 <!-- Dark version -->
-                <img class="hidden dark:flex w-30" src="assets/images/logo/icon.svg" alt="Logo image">
+                <img class="hidden dark:flex w-30" src="assets/images/logo/logo-branca.png" alt="Logo image">
             </div>
         </ng-container>
     </fuse-vertical-navigation>
@@ -22,7 +22,7 @@
             <mat-toolbar class=" mat-elevation-z6" color="accent">
                 <a class="relative w-15 h-15 overflow-hidden rounded-full avatar-logo" [routerLink]="['/sign-in']"
                     matTooltip="Login">
-                    <img src="assets/images/logo/icon.svg" class="inline-block align-middle " />
+                    <img src="assets/images/logo/logo-branca.png" class="inline-block align-middle " />
                 </a>
                 <div class="flex w-full">
                     <!-- <a mat-button class="hover:bg-slate-400 active:bg-slate-400 focus:outline-none focus:ring focus:ring-slate-300 sm:hidden md:visible" [routerLink]="['/home']">Home</a> -->
@@ -121,7 +121,7 @@
         <!-- Footer -->
         <div *ngIf="(loginStatus$ | async) === true"
             class="relative flex flex-0 items-center justify-start w-full h-14 px-4 md:px-6 z-49 border-t bg-card dark:bg-transparent print:hidden">
-            <span class="font-medium text-secondary"> Sistema Obras &copy; {{currentYear}}</span>
+            <span class="font-medium text-secondary"> Infraestrutura de Transportes &copy; {{currentYear}}</span>
         </div>
 
     </div>
