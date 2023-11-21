@@ -4,6 +4,7 @@ import { EmpreendimentosComponent } from './empreendimentos.component';
 import { ListComponent } from './list/list.component';
 import { EmpreendimentoResolver, EmpreendimentosResolver } from './empreendimentos.resolver';
 import { DetailsComponent } from './details/details.component';
+import { ObraAereaComponent } from './obra-aerea/obra-aerea.component';
 
 
 const routes: Routes = [
@@ -26,6 +27,9 @@ const routes: Routes = [
             }
           }
         ]
+      },{
+        path: 'obras',
+        component: ObraAereaComponent
       }
     ]
   }

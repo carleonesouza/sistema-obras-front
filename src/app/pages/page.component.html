@@ -8,10 +8,10 @@
         <!-- Navigation header hook -->
         <ng-container fuseVerticalNavigationContentHeader>
             <!-- Logo -->
-            <div class="flex items-center p-6 pb-0">
+            <div class="flex items-center p-6 pb-3">
                 <!-- Light version -->
                 <!-- Dark version -->
-                <img class="hidden dark:flex w-30" src="assets/images/logo/logo-branca.png" alt="Logo image">
+                <img class="hidden dark:flex" src="assets/images/logo/logo-branca.png" alt="Logo image">
             </div>
         </ng-container>
     </fuse-vertical-navigation>
@@ -20,7 +20,7 @@
 
         <div class="flex" *ngIf="!(loginStatus$ | async)">
             <mat-toolbar class=" mat-elevation-z6" color="accent">
-                <a class="relative w-15 h-15 overflow-hidden rounded-full avatar-logo" [routerLink]="['/sign-in']"
+                <a class="relative w-30 h-30 overflow-hidden rounded-full avatar-logo" [routerLink]="['/sign-in']"
                     matTooltip="Login">
                     <img src="assets/images/logo/logo-branca.png" class="inline-block align-middle " />
                 </a>

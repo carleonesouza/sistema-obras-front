@@ -16,6 +16,14 @@ export class EmpreendimentosService {
   private _empreendimentos: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
   private _empreendimento: BehaviorSubject<any | null> = new BehaviorSubject(null);
 
+  private _produtos: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
+  private _produto: BehaviorSubject<any | null> = new BehaviorSubject(null);
+
+  private _infraEstruturas: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
+  private _infraEstrutura: BehaviorSubject<any | null> = new BehaviorSubject(null);
+
+  private _obras: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
+  private _obra: BehaviorSubject<any | null> = new BehaviorSubject(null);
  
   constructor(private _httpClient: HttpClient, private error: HandleError, public _snackBar: MatSnackBar) { }
 
@@ -28,7 +36,51 @@ export class EmpreendimentosService {
     return this._empreendimento.asObservable();
   }
 
+  get produtos$(): Observable<any[]> {
+    return this._produtos.asObservable();
+  }
 
+  get produto$(): Observable<any> {
+    return this._produto.asObservable();
+  }
+
+  get infras$(): Observable<any[]> {
+    return this._infraEstruturas.asObservable();
+  }
+
+  get infra$(): Observable<any> {
+    return this._infraEstrutura.asObservable();
+  }
+
+  get obras$(): Observable<any[]> {
+    return this._obras.asObservable();
+  }
+
+  get obra$(): Observable<any> {
+    return this._obra.asObservable();
+  }
+
+  getAllProdutos(): Observable<any> {
+    return this._httpClient.get<any>(environment.apiManager + 'produtos')
+    .pipe(
+      tap((result) => {
+        const produtos = result.data;          
+        this._produtos.next(produtos);
+      }),
+      catchError(this.error.handleError<any>('getAllProdutos'))
+    );
+  }
+
+  getAllInfras(): Observable<any> {
+    return this._httpClient.get<any>(environment.apiManager + 'tipos-infra')
+    .pipe(
+      tap((result) => {
+        const infras = result.data;          
+        this._infraEstruturas.next(infras);
+      }),
+      catchError(this.error.handleError<any>('getAllInfras'))
+    );
+  }
 
   getAllEmpreendimentos(page = 0, size = 10) {
     
@@ -105,6 +157,17 @@ export class EmpreendimentosService {
           this._empreendimento.next(result.data);
         }),
         catchError(this.error.handleError<any>('addEmpreendimento'))
+      );
+  }
+
+  addObra(obra: any): Observable<any> {
+    return this._httpClient.post<any>(environment.apiManager + 'obras', obra)
+      .pipe(
+        tap((result) => {
+          this._obras.next([...(this._empreendimentos.value || []), result.data]);
+          this._obra.next(result.data);
+        }),
+        catchError(this.error.handleError<any>('addObra'))
       );
   }
 

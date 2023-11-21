@@ -133,13 +133,12 @@ export class DetailsComponent implements OnInit, OnDestroy{
   }
 
   compareFn(c1: any, c2: any): boolean {
-    return c1 && c2 ? c1._id === c2._id : c1 === c2;
+    return c1 && c2 ? c1.id === c2.id : c1 === c2;
   }
 
   itemDisplayFn(item: Setor) {
     return item ? item.descricao : '';
   }
-
 
     /**
      * Close the drawer

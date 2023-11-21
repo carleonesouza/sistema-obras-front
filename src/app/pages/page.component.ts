@@ -71,9 +71,27 @@ export class PageComponent implements OnInit, OnDestroy, AfterViewInit {
         {
             id: 'empreendimento',
             title: 'Empreendimento',
-            type: 'basic',
+            subtitle: '',
+            type: 'collapsable',
             icon: 'mat_outline:storefront',
-            link: 'admin/empreendimentos/lista'
+            link: 'admin/empreendimentos/lista',
+            children:[
+                {
+                    id: 'empreendimento',
+                    title: 'Empreendimento',
+                    type: 'basic',
+                    icon: 'mat_solid:admin_panel_settings',
+                    link: 'admin/empreendimentos/lista',
+                }  
+                ,
+                {
+                    id: 'obras',
+                    title: 'Obras',
+                    type: 'basic',
+                    icon: 'mat_solid:admin_panel_settings',
+                    link: 'admin/empreendimentos/obras'
+                }  
+            ]
         },
         {
             id: 'iniciativa',

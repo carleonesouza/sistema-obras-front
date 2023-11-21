@@ -19,6 +19,8 @@ import { DateAdapter, MAT_DATE_FORMATS, NativeDateAdapter } from '@angular/mater
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { ObraTipoComponent } from '../obra-templates/obra-tipo.component';
+import { SetorsService } from '../../setors/setors.service';
+import { User } from 'app/models/user';
 
 @Component({
   selector: 'app-details-empreendimentos',
@@ -44,7 +46,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
   tipoObraSelecionada: string;
   empreendimento$: Observable<any>;
   obras$: Observable<any[]>;
-  setores$: Observable<any[]>;
+  setores$: Observable<any>;
+  setores: any;
   empreendimento: Empreendimento;
   saving: boolean;
 
@@ -54,6 +57,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
     private _listItemsComponent: ListItemsComponent,
     private _formBuilder: FormBuilder,
     public _snackBar: MatSnackBar,
+    private _setoresService: SetorsService,
     public _tipoObraDialog: MatDialog,
     private _empreendimentoService: EmpreendimentosService,
     private _route: ActivatedRoute,
@@ -64,6 +68,10 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+    this._setoresService.getSetores().subscribe((result)=>{
+      this.setores = result.data;
+    });
     // Open the drawer
     this._listItemsComponent.matDrawer.open();
     this._changeDetectorRef.markForCheck();
@@ -73,17 +81,18 @@ export class DetailsComponent implements OnInit, OnDestroy {
       this.title = 'Novo Empreendimento';
 
       this.createEmpreendimentoForm();
+  
     }
 
     if (this._route.snapshot.paramMap.get('id') !== 'add') {
 
       this.loading = true;
       this.empreendimento$ = this._empreendimentoService.empreendimento$;
-
-
+   
+     
       this._empreendimentoService.empreendimento$
         .pipe(takeUntil(this._unsubscribeAll))
-        .subscribe((empreendimento: Empreendimento) => {
+        .subscribe((empreendimento: any) => {
 
           // Open the drawer in case it is closed
           this._listItemsComponent.matDrawer.open();
@@ -91,10 +100,15 @@ export class DetailsComponent implements OnInit, OnDestroy {
           this.empreendimentoForm.reset();
 
           // Get the Lista
-          this.empreendimento = empreendimento;
+          this.empreendimento = empreendimento.data;
 
           if (this.empreendimento) {
+    
             this.empreendimentoForm.patchValue(this.empreendimento);
+            this.empreendimentoForm.patchValue({
+              setor: this.empreendimento.setor.setor,
+              status: parseInt(this.empreendimento.status)
+            });
             this.loading = false;
           }
 
@@ -123,111 +137,11 @@ export class DetailsComponent implements OnInit, OnDestroy {
       responsavel: ['', [Validators.required]],
       respondente: ['', [Validators.required]],
       setor: ['', [Validators.required]],
-      obra: this._formBuilder.array([]),
+      obras: this._formBuilder.array([]),
+      user: [''],
       status:[true]
     });
   }
-
-
-  initializeObraForm(type: string): FormGroup {
-    this.formObra = this._formBuilder.group({
-      id: [''],
-      empreendimento: ['', [Validators.required]],
-      tipo: ['', [Validators.required]],
-      nomeDaInfraestrutura: ['', [Validators.required]],
-      descricao: ['', [Validators.required]],
-      intervencao: ['', [Validators.required]],
-      status: ['', [Validators.required]],
-      instrumento: ['', [Validators.required]],
-      dataInicio: [{ value: '', disabled: true }, [Validators.required]],
-      dataConclusao: [{ value: '', disabled: true }, [Validators.required]],
-      documentosAdicionais: [''],
-      arquivoGeorreferenciado: [''],
-      valorGlobal: ['', [Validators.required]],
-      percentualFinanceiroExecutado: ['', [Validators.required]],
-
-    });
-
-    this.formObra.addControl('endereco', this._formBuilder.group({
-      logradouro: new FormControl('', Validators.required),
-      municipio: new FormControl('', Validators.required),
-      estado: new FormControl('', Validators.required),
-      longitude: new FormControl('', Validators.required),
-      latitude: new FormControl('', Validators.required),
-    })
-    )
-
-    if (type === 'aereo') {
-      this.formObra.addControl('situacaoAeroporto', new FormControl('', Validators.required));
-      this.formObra.addControl('codigoIATA', new FormControl('', Validators.required));
-      this.formObra.addControl('tipoAviaoRecICAO', new FormControl('', Validators.required));
-      this.formObra.addControl('novaExtensao', new FormControl('', Validators.required));
-      this.formObra.addControl('novaLargura', new FormControl('', Validators.required));
-      this.formObra.addControl('novaAreaCriada', new FormControl('', Validators.required));
-    }
-
-    // if (type === 'rodoviaria') {
-    //     this.formObra.addControl('rodovia', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('kmInicial', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('kmFinal', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('extensao', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('codigo', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('versao', this._formBuilder.control('', [Validators.required]));
-    // }
-
-    // if (type === 'portuaria') {
-    //     this.formObra.addControl('tipoEmbarcacao', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('ampliacaoCapacidade', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('tipoProduto', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('novoCalado', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('novaLargura', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('novoComprimento', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('capacidadeDinamica', this._formBuilder.control('', [Validators.required]));
-    // }
-
-    // if (type === 'hidroviaria') {
-    //     this.formObra.addControl('situacaoHidrovia', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('temEclusa', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('temBarragem', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('tipoEmbarcacao', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('ampliacaoCapacidade', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('profundidadeMinima', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('profundidadeMaxima', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('comboiosCheia', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('comboiosEstiagem', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('novaLargura', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('novoComprimento', this._formBuilder.control('', [Validators.required]));
-    // }
-
-    // if (type === 'ferroviaria') {
-    //     this.formObra.addControl('kmInicial', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('kmFinal', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('extensao', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('novaBitola', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('novaVelocidade', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('produto', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('capacidadeDinamica', this._formBuilder.control('', [Validators.required]));
-    // }
-
-    // if (type === 'duto') {
-    //     this.formObra.addControl('tipoDuto', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('funcaoEstrutura', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('materialTransportado', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('nivelDuto', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('codigoOrigem', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('codigoDestino', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('nomeXRL', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('novaExtesao', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('espessura', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('vazaoProjeto', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('vazaoOperacional', this._formBuilder.control('', [Validators.required]));
-    //     this.formObra.addControl('novaAreaImpactada', this._formBuilder.control('', [Validators.required]));
-    // }
-
-
-    return this.formObra;
-  }
-
 
   get obras(): FormArray {
     return this.empreendimentoForm.controls['obra'] as FormArray;
@@ -241,34 +155,11 @@ export class DetailsComponent implements OnInit, OnDestroy {
     return this.empreendimentoForm.controls;
   }
 
-  adicionarTipoObra() {
-    const dialogRef = this._tipoObraDialog.open(ObraTipoComponent, {
-      width: '350px',
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result != undefined && result != null) {
-        this.tipoObraSelecionada = result;
-        (this.empreendimentoForm.get('obra') as FormArray).push(this.initializeObraForm(result))
-        console.log(this.empreendimentoForm)
-      }
-
-    });
-
-  }
-
-  addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
-    if (this.empreendimentoForm.get('obra')) {
-      this.events.push(_moment(event.value).format('L'));
-      console.log(this.events);
-    }
+  compareSetores(c1: any, c2: any): boolean {
+    return c1 && c2 ? c1.id === c2.id : c1 === c2;
   }
 
   compareFn(c1: any, c2: any): boolean {
-    return c1 && c2 ? c1.descricao === c2 : c2 === c1.descricao;
-  }
-
-  compareSetores(c1: any, c2: any): boolean {
     return c1 && c2 ? c1.id === c2.id : c1 === c2;
   }
 
@@ -354,6 +245,10 @@ export class DetailsComponent implements OnInit, OnDestroy {
   onSubmit() {
     if (this.empreendimentoForm.valid) {
       const empreendimento = new Empreendimento(this.empreendimentoForm.value);
+      const user = new User(JSON.parse(localStorage.getItem('user')));
+      const setor = new Setor(this.empreendimentoForm.get('setor').value)
+      empreendimento.user = user.id;
+      empreendimento.setor = setor.id;
       delete empreendimento.id;
       this.saving = true;
       this.closeDrawer().then(() => true);

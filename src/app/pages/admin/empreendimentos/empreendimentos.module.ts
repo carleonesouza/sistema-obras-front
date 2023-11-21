@@ -13,6 +13,7 @@ import { HandleError } from 'app/utils/handleErrors';
 import { EmpreendimentosComponent } from './empreendimentos.component';
 import { ListComponent } from './list/list.component';
 import { DetailsComponent } from './details/details.component';
+import { ObraAereaComponent } from './obra-aerea/obra-aerea.component';
 import { ObraTipoComponent } from './obra-templates/obra-tipo.component';
 
 export const customCurrencyMaskConfig: CurrencyMaskConfig = {
@@ -32,6 +33,7 @@ export const customCurrencyMaskConfig: CurrencyMaskConfig = {
    ListComponent,
    ObraTipoComponent,
    DetailsComponent,
+   ObraAereaComponent,
   ],
   imports: [
     CommonModule,

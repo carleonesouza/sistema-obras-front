@@ -1,3 +1,4 @@
+import { User } from "./user";
 
 export class Empreendimento {
 
@@ -7,6 +8,7 @@ export class Empreendimento {
     respondente: string;
     setor: any;
     obras: any;
+    user: any;
     status: any;
 
     public constructor(init?: Partial<Empreendimento>) {
