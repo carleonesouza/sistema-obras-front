@@ -29,10 +29,14 @@ export class ObraDuto implements Obra {
     espessura: number;
     vazaoProjeto: number;
     vazaoOperacional: number;
-    novaAreaImpactada: number
+    novaAreaImpactada: number;
+    user: any;
+    tipo_infraestrutura: any;
+    produto: any;
         
     public constructor(init?: Partial<ObraDuto>) {
         Object.assign(this, init);
     }
+   
        
 };

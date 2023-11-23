@@ -26,8 +26,12 @@ export class ObraPortuaria implements Obra {
     novaLargura: number;
     novoComprimento: number;    
     capacidadeDinamica: number; 
+    user: any;
+    tipo_infraestrutura: any;
+    produto: any;
 
     public constructor(init?: Partial<ObraPortuaria>) {
         Object.assign(this, init);
     }
+   
 };

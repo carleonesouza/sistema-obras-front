@@ -4,7 +4,7 @@ export class Endereco {
     id?: string;
     logradouro: string;
     municipio: string;
-    estado: string;
+    UF: string;
     longitude?: string;
     latitude?: string
 

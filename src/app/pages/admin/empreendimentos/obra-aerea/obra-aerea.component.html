@@ -1,7 +1,7 @@
 <ng-container *ngIf="!saving; else noItems">
     <div class="mt-6 w-full">
         <div class="space-y-4 w-full">
-            <form [formGroup]="obra" novalidate>
+            <form [formGroup]="obra" (ngSubmit)="onSubmit()" enctype="multipart/form-data" novalidate>
                 <ng-container>
                     <div class="mt-6 w-full p-6">
                         <h3 class="text-3xl">Obra </h3>
@@ -138,26 +138,48 @@
                                             </mat-form-field>
                                         </div>
                                     </div>
+                                    <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                        <div class="flex-auto">
+                                            <mat-form-field appearance="fill"
+                                                class="w-full">
+                                                <mat-label>Produto</mat-label>
+                                                <mat-select formControlName="produto"
+                                                    [compareWith]="compareFn">
+                                                    <mat-option
+                                                        *ngFor="let prod of produtos"
+                                                        [value]="prod">
+                                                        {{ prod.descricao }}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
 
                                     <div class="mt-4 flex flex-wrap space-x-4 w-full">
 
                                         <mat-form-field class="w-full">
                                             <mat-label>Documentos Adicionais</mat-label>
+                                            
                                             <mat-icon matPrefix class="hidden sm:flex icon-size-5"
                                                 svgIcon="mat_solid:upload_file">
                                             </mat-icon>
-                                            <div class="w-full">
+                                            <p *ngIf="selectedFile">{{ selectedFile.name }}</p>
+                                            <input type="file"  id="fileInput" matInput (change)="docsAdicionais($event)"
+                                             formControlName="documentosAdicionais" 
+                                            accept=".pdf, .doc, .docx, .txt">
+                                            
+                                            <!-- <div class="w-full">
                                                 <mat-toolbar class="w-full">
 
                                                     <input matInput [value]="" class="w-full" />
 
                                                     <button mat-flat-button color="primary">
                                                         Upload
-                                                    </button>
+                                                    </button> 
                                                 </mat-toolbar>
-                                                <input type="file" id="fileInput" name="fileInput"
+                                                <input type="file" id="fileInput" name="fileInput" (change)="onFileChange($event)"
                                                     formControlName="documentosAdicionais" class="w-full" />
-                                            </div>
+                                            </div> -->
                                         </mat-form-field>
                                     </div>
 
@@ -169,15 +191,16 @@
                                                 svgIcon="mat_solid:upload_file">
                                             </mat-icon>
                                             <div class="w-full">
-                                                <mat-toolbar class="w-full">
+                                                <!-- <mat-toolbar class="w-full">
 
                                                     <input matInput [value]="" class="w-full" />
 
                                                     <button mat-flat-button color="primary">
                                                         Upload
                                                     </button>
-                                                </mat-toolbar>
-                                                <input type="file" id="fileInput" name="fileInput"
+                                                </mat-toolbar> -->
+                                                <p *ngIf="arquivoGeo">{{ arquivoGeo.name }}</p>
+                                                <input type="file" id="fileInput" matInput name="fileInput" (change)="geoDocs($event)" accept=".pdf, .doc, .docx, .txt"
                                                     formControlName="arquivoGeorreferenciado" class="w-full" />
                                             </div>
                                         </mat-form-field>
@@ -208,6 +231,15 @@
                                                             [placeholder]="'Município'">
                                                     </mat-form-field>
                                                 </div>
+                                                <div class="flex-auto">
+                                                    <mat-form-field class=" w-full">
+                                                        <mat-label>Estado</mat-label>
+                                                        <mat-icon matPrefix class="hidden sm:flex icon-size-5"
+                                                            [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
+                                                        <input matInput formControlName="UF"
+                                                            [placeholder]="'Estado'">
+                                                    </mat-form-field>
+                                                </div>
                                             </div>
                                             <div class="mt-4 flex flex-wrap space-x-4 w-full">
                                                 <div class="flex-auto">
@@ -229,22 +261,7 @@
                                                     </mat-form-field>
                                                 </div>
                                             </div>
-                                            <!-- <div class="mt-4 flex flex-wrap space-x-4 w-full">
-                                            <div class="flex-auto">
-                                                <mat-form-field appearance="fill"
-                                                    class="w-full">
-                                                    <mat-label>Estado</mat-label>
-                                                    <mat-select formControlName="estado"
-                                                        [compareWith]="compareFn">
-                                                        <mat-option
-                                                            *ngFor="let estado of estados$ | async"
-                                                            [value]="estado">
-                                                            {{ estado.nome }}
-                                                        </mat-option>
-                                                    </mat-select>
-                                                </mat-form-field>
-                                            </div>
-                                        </div> -->
+                                            
                                         </ng-container>
                                     </div>
 
@@ -411,24 +428,7 @@
                                                         [placeholder]="'Ampliação da Capacidade'">
                                                 </mat-form-field>
                                             </div>
-                                        </div>
-
-                                        <div class="mt-4 flex flex-wrap space-x-4 w-full">
-                                            <div class="flex-auto">
-                                                <mat-form-field appearance="fill"
-                                                    class="w-full">
-                                                    <mat-label>Produto</mat-label>
-                                                    <mat-select formControlName="produto"
-                                                        [compareWith]="compareFn">
-                                                        <mat-option
-                                                            *ngFor="let prod of produtos"
-                                                            [value]="prod">
-                                                            {{ prod.descricao }}
-                                                        </mat-option>
-                                                    </mat-select>
-                                                </mat-form-field>
-                                            </div>
-                                        </div>
+                                        </div>                                       
 
                                         <div class="mt-4 flex flex-wrap space-x-4 w-full">
                                             <div class="flex-auto">
@@ -658,7 +658,7 @@
                                                         [placeholder]="'Nova Bitola'">
                                                 </mat-form-field>
                                             </div>
-                                            <div class="flex-auto">
+                                            <!-- <div class="flex-auto">
                                                 <mat-form-field class=" w-full">
                                                     <mat-label>Produto</mat-label>
                                                     <mat-icon matPrefix class="hidden sm:flex icon-size-5"
@@ -666,7 +666,7 @@
                                                     <input matInput formControlName="produto" type="text"
                                                         [placeholder]="'Produto'">
                                                 </mat-form-field>
-                                            </div>
+                                            </div> -->
                                         </div>
 
                                         <div class="mt-4 flex flex-wrap space-x-4 w-full">
@@ -853,9 +853,16 @@
                         Tipo Obra
                     </button>
 
+                     <!-- Adiciona Tipo Obra -->
+                     <!-- <button *ngIf="!editMode" class="ml-2" mat-flat-button [color]="'accent'" type="button"
+                     (click)="adicionarTipoObra()" [matTooltip]="'Escolha o Tipo da Obra'">
+                     Tipo Obra
+                 </button> -->
+
+
                     <!-- Save -->
                     <button *ngIf="!editMode" class="ml-2" mat-flat-button [color]="'primary'" type="submit"
-                        [matTooltip]="'Salvar'" [disabled]="obra.invalid">
+                        [matTooltip]="'Salvar'">
                         Salvar
                     </button>
 

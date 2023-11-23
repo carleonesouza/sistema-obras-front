@@ -25,9 +25,12 @@ export class ObraFerroviaria implements Obra {
     novaVelocidade: number;
     produto: string;
     capacidadeDinamica: number;
+    user: any;
+    tipo_infraestrutura: any;
     
     public constructor(init?: Partial<ObraFerroviaria>) {
         Object.assign(this, init);
     }
+   
    
 };

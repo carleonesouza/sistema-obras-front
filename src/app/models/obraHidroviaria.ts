@@ -29,9 +29,13 @@ export class ObraHidroviaria implements Obra {
     comboiosEstiagem: string;
     novaLargura: number;
     novoComprimento: number;
+    user: any;
+    tipo_infraestrutura: any;
+    produto: any;
 
     public constructor(init?: Partial<ObraHidroviaria>) {
         Object.assign(this, init);
     }
+  
     
 };

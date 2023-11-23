@@ -4,9 +4,10 @@ import { Endereco } from "./endereco";
 export class ObraAereo implements Obra {
 
     id: number;
-    empreendimento: number;
+    empreendimento: any;
     tipo: string;
-    nomeDaInfraestrutura: string;
+    user: any;
+    tipo_infraestrutura: any;
     descricao: string;
     intervencao: string;
     status: any;
@@ -24,9 +25,11 @@ export class ObraAereo implements Obra {
     novaExtensao: number;
     novaLargura: number;
     novaAreaCriada: number;
+    produto: any;
         
     public constructor(init?: Partial<ObraAereo>) {
         Object.assign(this, init);
     }
+   
     
 };

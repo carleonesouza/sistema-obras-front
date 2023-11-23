@@ -24,8 +24,12 @@ export class ObraRodoviaria implements Obra {
     extensao: number;
     codigo: string;
     versao: string;
+    user: any;
+    tipo_infraestrutura: any;
+    produto: any;
 
     public constructor(init?: Partial<ObraRodoviaria>) {
         Object.assign(this, init);
     }
+    
 };

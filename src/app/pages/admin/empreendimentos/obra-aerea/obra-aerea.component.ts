@@ -1,19 +1,20 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 import { MAT_DATE_FORMATS, DateAdapter, NativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import * as _moment from 'moment';
+import moment, * as _moment from 'moment';
 import { MatDialog } from '@angular/material/dialog';
 import { ObraTipoComponent } from '../obra-templates/obra-tipo.component';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { EmpreendimentosService } from '../empreendimentos.service';
-import { Obra } from '../../../../interfaces/obra';
 import { User } from 'app/models/user';
-import { Setor } from 'app/models/setor';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-_moment.locale('pt-br');
+import { ObraAereo } from 'app/models/obraAereo';
+import { Endereco } from 'app/models/endereco';
+import { Produto } from 'app/models/produto';
+_moment.locale('en');
 
 @Component({
   selector: 'app-obra-aerea',
@@ -36,10 +37,12 @@ export class ObraAereaComponent implements OnInit {
   creating: boolean = false;
   loading: boolean = false;
   isLoading: boolean = false;
+  selectedFile: File | null = null;
+  arquivoGeo: File | null = null;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
 
-  constructor(private _formBuilder: FormBuilder, public _tipoObraDialog: MatDialog,
+  constructor(private _formBuilder: FormBuilder, public _tipoObraDialog: MatDialog, private cd: ChangeDetectorRef,
     private empreendimentoService: EmpreendimentosService, private _router: Router, public _snackBar: MatSnackBar) { }
 
 
@@ -53,13 +56,13 @@ export class ObraAereaComponent implements OnInit {
     this.empreendimentoService
       .getAllInfras()
       .subscribe((infras) => {
-       
+
         this.infras = infras.data
       });
 
-      this.empreendimentoService
+    this.empreendimentoService
       .getAllEmpreendimentos()
-      .subscribe((emprs) =>{
+      .subscribe((emprs) => {
         this.empreendimentos = emprs.data;
       })
 
@@ -75,12 +78,13 @@ export class ObraAereaComponent implements OnInit {
       tipo_infraestrutura: ['', [Validators.required]],
       descricao: ['', [Validators.required]],
       intervencao: ['', [Validators.required]],
-      status: ['', [Validators.required]],
+      status: [true],
       instrumento: ['', [Validators.required]],
       dataInicio: [{ value: '', disabled: true }, [Validators.required]],
       dataConclusao: [{ value: '', disabled: true }, [Validators.required]],
       documentosAdicionais: [''],
       arquivoGeorreferenciado: [''],
+      produto:['', [Validators.required]],
       endereco: this.createEnderecoForm(),
       valorGlobal: ['', [Validators.required]],
       percentualFinanceiroExecutado: ['', [Validators.required]],
@@ -91,13 +95,54 @@ export class ObraAereaComponent implements OnInit {
     return this._formBuilder.group({
       logradouro: new FormControl('', Validators.required),
       municipio: new FormControl('', Validators.required),
-      estado: new FormControl('', Validators.required),
+      UF: new FormControl('', Validators.required),
       longitude: new FormControl('', Validators.required),
       latitude: new FormControl('', Validators.required),
     })
   }
 
+
+  docsAdicionais(event: any) {
+
+    const reader = new FileReader();
+
+    if (event.target.files && event.target.files.length) {
+      const file = event.target.files[0];
+      this.selectedFile = event.target.files[0];
+
+      // reader.readAsDataURL(file);
+      // reader.onload = () => {
+      //   this.obra.patchValue({
+      //     documentosAdicionais: reader.result
+      //   });
+
+      //   this.cd.markForCheck();
+      // };
+    }
+
+  }
+
+  geoDocs(event: any) {
+    const reader = new FileReader();
+
+    if (event.target.files && event.target.files.length) {
+      const file = event.target.files[0];
+      this.arquivoGeo = event.target.files[0];
+
+      // reader.readAsDataURL(file);
+      // reader.onload = () => {
+      //   this.obra.patchValue({
+      //     arquivoGeorreferenciado: reader.result
+      //   });
+
+      //   this.cd.markForCheck();
+      // };
+    }
+  }
+
   initializeObraForm(type: string) {
+
+    this.obra.patchValue({ tipo: type })
 
     if (type === 'aerea') {
       this.obra.addControl('situacaoAeroporto', new FormControl('', Validators.required));
@@ -120,7 +165,6 @@ export class ObraAereaComponent implements OnInit {
     if (type === 'portuaria') {
       this.obra.addControl('tipoEmbarcacao', this._formBuilder.control('', [Validators.required]));
       this.obra.addControl('ampliacaoCapacidade', this._formBuilder.control('', [Validators.required]));
-      this.obra.addControl('produto', this._formBuilder.control('', [Validators.required]));
       this.obra.addControl('novoCalado', this._formBuilder.control('', [Validators.required]));
       this.obra.addControl('novaLargura', this._formBuilder.control('', [Validators.required]));
       this.obra.addControl('novoComprimento', this._formBuilder.control('', [Validators.required]));
@@ -147,7 +191,6 @@ export class ObraAereaComponent implements OnInit {
       this.obra.addControl('extensao', this._formBuilder.control('', [Validators.required]));
       this.obra.addControl('novaBitola', this._formBuilder.control('', [Validators.required]));
       this.obra.addControl('novaVelocidade', this._formBuilder.control('', [Validators.required]));
-      this.obra.addControl('produto', this._formBuilder.control('', [Validators.required]));
       this.obra.addControl('capacidadeDinamica', this._formBuilder.control('', [Validators.required]));
     }
 
@@ -187,7 +230,7 @@ export class ObraAereaComponent implements OnInit {
 
         this.initializeObraForm(result);
         this.tipoObraSelecionada = result;
-     
+
       }
 
     });
@@ -203,28 +246,55 @@ export class ObraAereaComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.obra.valid) {
-      const obra =this.obra.value;
-      const user = new User(JSON.parse(localStorage.getItem('user')));
-      const setor = new Setor(this.obra.get('setor').value)
-      obra.user = user.id;
-      obra.setor = setor.id;
-      delete obra.id;
-      this.saving = true;
-      
-      this.empreendimentoService
-        .addObra(obra)
-        .pipe(takeUntil(this._unsubscribeAll))
-        .subscribe(
-          () => {
-            this.saving = false;           
-            this._router.navigate(['/admin/empreendimentos/lista']);
+    if (this.obra) {
+      if (this.obra.get('tipo').value === 'aerea') {
+        const obraAerea = new ObraAereo(this.obra.value);
+        const user = new User(JSON.parse(localStorage.getItem('user')));
+        const endereco = new Endereco(this.obra.get('endereco').value);
+        const produto = new Produto(this.obra.get('produto').value)
+        const enderecoString = JSON.stringify(endereco);
+        obraAerea.dataInicio = moment(this.obra.get('dataInicio').value).format('L');
+        obraAerea.dataConclusao = moment(this.obra.get('dataConclusao').value).format('L');
+        obraAerea.empreendimento = obraAerea.empreendimento?.id;
+        obraAerea.tipo_infraestrutura = obraAerea.tipo_infraestrutura?.id;
+        obraAerea.produto = produto.id;
+        obraAerea.user = user.id;
+        console.log(produto)
+
+        delete obraAerea.id;
+        delete obraAerea.endereco;
+  
+        const formData = new FormData();
+  
+        for (let key in obraAerea) {
+          if (obraAerea.hasOwnProperty(key) && obraAerea[key] != null) {
+            formData.append(key, obraAerea[key]);
+          }
+        }
+        formData.append('endereco', enderecoString);
+
+      // Append file data
+    if (this.obra.get('documentosAdicionais')) {
+      formData.append('documentosAdicionais', this.obra.get('documentosAdicionais').value);
+    }
+
+    if (this.obra.get('arquivoGeorreferenciado')) {
+      formData.append('arquivoGeorreferenciado', this.obra.get('arquivoGeorreferenciado').value);
+    }
+  
+        this.empreendimentoService.addObra(formData)
+          .pipe(takeUntil(this._unsubscribeAll))
+          .subscribe(() => {
             this._snackBar.open('Empreendimento Salvo com Sucesso', 'Fechar', {
               duration: 3000
             });
-            this.obra.reset();
+            // Additional actions after successful submission
           });
+      }
     }
   }
+  
 
 }
+
+
