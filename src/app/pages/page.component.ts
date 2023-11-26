@@ -90,7 +90,28 @@ export class PageComponent implements OnInit, OnDestroy, AfterViewInit {
                     type: 'basic',
                     icon: 'mat_solid:admin_panel_settings',
                     link: 'admin/empreendimentos/obras'
-                }  
+                },
+                {
+                    id: 'tipoInfra',
+                    title: 'Tipo Infraestrutura',
+                    type: 'basic',
+                    icon: 'mat_solid:admin_panel_settings',
+                    link: 'admin/empreendimentos/tipo-infraestrutura'
+                },
+                {
+                    id: 'intervencao',
+                    title: 'Intervenção',
+                    type: 'basic',
+                    icon: 'mat_solid:admin_panel_settings',
+                    link: 'admin/empreendimentos/intervencao'
+                },
+                {
+                    id: 'situacao',
+                    title: 'Situação',
+                    type: 'basic',
+                    icon: 'mat_solid:admin_panel_settings',
+                    link: 'admin/empreendimentos/situacao'
+                }     
             ]
         },
         {

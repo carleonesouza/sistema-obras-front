@@ -12,6 +12,7 @@ import { SetorsService } from '../../setors/setors.service';
 import { Setor } from 'app/models/setor';
 import { User } from 'app/models/user';
 import { DialogMessage } from 'app/utils/dialog-message ';
+import { Status } from 'app/models/status';
 
 interface Expectativa {
   value: string;
@@ -34,6 +35,9 @@ export class DetailsComponent implements OnInit, OnDestroy{
   iniciativa$: Observable<any>;
   setores$: Observable<any>;
   setores: any;
+  statues$: Observable<any>;
+  statues: any;
+  selectedStatus;
   iniciativa: any;
   expectativas: Expectativa[] = [
     {value: 'SIM'},
@@ -66,6 +70,11 @@ export class DetailsComponent implements OnInit, OnDestroy{
       this.setores$.subscribe((result) =>{
         this.setores = result.data;
       })
+
+      this.statues$ = this._iniciativasService.getAllStatues();
+      this.statues$.subscribe((res) =>{       
+        this.statues = res.data;
+      })
     }
 
     if (this._activateRoute.snapshot.paramMap.get('id') !== 'add') {
@@ -75,6 +84,11 @@ export class DetailsComponent implements OnInit, OnDestroy{
       this.setores$ = this._setoresService.getSetores();
       this.setores$.subscribe((result) =>{
         this.setores = result.data;
+      })
+
+      this.statues$ = this._iniciativasService.getAllStatues();
+      this.statues$.subscribe((res) =>{       
+        this.statues = res.data;
       })
 
       this.iniciativa$
@@ -89,9 +103,10 @@ export class DetailsComponent implements OnInit, OnDestroy{
           if (this.iniciativa) {
             this.loading = false;              
             this.iniciativaForm.patchValue(this.iniciativa);
+            this.selectedStatus = this.iniciativa.status.status;
             this.iniciativaForm.patchValue({
               setor: this.iniciativa.setor.setor,
-              status: parseInt(this.iniciativa.status)
+              status: this.iniciativa.status.status
             })
           }
 
@@ -122,8 +137,8 @@ export class DetailsComponent implements OnInit, OnDestroy{
       instrumento: new FormControl('', Validators.required),
       setor: new FormControl(''),
       usuario: new FormControl(''),
-      usuario_alteracao: new FormControl(''),
-      status: new FormControl(true)
+      usuario_que_alterou: new FormControl(''),
+      status: new FormControl()
     });
   }
 
@@ -137,6 +152,10 @@ export class DetailsComponent implements OnInit, OnDestroy{
   }
 
   itemDisplayFn(item: Setor) {
+    return item ? item.descricao : '';
+  }
+
+  itemDisplayFnStatus(item: any) {
     return item ? item.descricao : '';
   }
 
@@ -183,7 +202,7 @@ export class DetailsComponent implements OnInit, OnDestroy{
 
         const iniciativa = new Iniciativa();
         const user = new User(JSON.parse(localStorage.getItem('user')));
-        iniciativa.usuario_alteracao = user.id;
+        iniciativa.usuario_que_alterou = user.id;
         iniciativa.id = result?.item.id;
         iniciativa.status = parseInt(result?.item?.status) === 1 ? 0 : 1;
         
@@ -227,8 +246,11 @@ export class DetailsComponent implements OnInit, OnDestroy{
       const iniciativa = new Iniciativa(this.iniciativaForm.value);
       const user = new User(JSON.parse(localStorage.getItem('user')));
       const setor = new Setor(this.iniciativaForm.get('setor').value);
-      iniciativa.usuario_alteracao = user.id;
+      const status = new Status(this.iniciativaForm.get('status').value)
+      iniciativa.usuario_que_alterou = user.id;
       iniciativa.setor = setor.id;
+      iniciativa.status = status.id;
+
       delete iniciativa.usuario;
            
       if (iniciativa) {
@@ -255,8 +277,11 @@ export class DetailsComponent implements OnInit, OnDestroy{
       const iniciativa = new Iniciativa(this.iniciativaForm.value);
       const user = new User(JSON.parse(localStorage.getItem('user')));
       const setor = new Setor(this.iniciativaForm.get('setor').value)
+      const status = new Status(this.iniciativaForm.get('status').value)
       iniciativa.setor = setor.id;
       iniciativa.usuario = user.id;
+      iniciativa.status = status.id;
+
       delete iniciativa.id;
       this.closeDrawer().then(() => true);
       this._iniciativasService

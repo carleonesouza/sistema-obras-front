@@ -1,14 +1,13 @@
-import { User } from "./user";
 
 export class Empreendimento {
 
     id?: string;
     nome: string;
     responsavel: string;
-    respondente: string;
     setor: any;
     obras: any;
     user: any;
+    usuario_que_alterou: any;
     status: any;
 
     public constructor(init?: Partial<Empreendimento>) {

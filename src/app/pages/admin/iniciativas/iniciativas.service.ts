@@ -14,6 +14,9 @@ export class IniciativasService {
   private _iniciativas: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
   private _iniciativa: BehaviorSubject<any | null> = new BehaviorSubject(null);
 
+  private _statues: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
+  private _status: BehaviorSubject<any | null> = new BehaviorSubject(null);
+
   constructor(private _httpClient: HttpClient, private error: HandleError, public _snackBar: MatSnackBar) { }
 
   get iniciativas$(): Observable<any[]> {
@@ -22,6 +25,14 @@ export class IniciativasService {
 
   get iniciativa$(): Observable<any> {
     return this._iniciativa.asObservable();
+  }
+
+  get statues$(): Observable<any[]> {
+    return this._statues.asObservable();
+  }
+
+  get status$(): Observable<any> {
+    return this._status.asObservable();
   }
 
 
@@ -34,6 +45,18 @@ export class IniciativasService {
           this._iniciativas.next(iniciativas);
         }),
         catchError(this.error.handleError<any>('getAllIniciativas'))
+      );
+  }
+
+  getAllStatues() {
+    return this._httpClient.get<any>(environment.apiManager + 'status')
+      .pipe(
+        tap((result) => {
+          const data = result?.data;
+          const statues = data;
+          this._statues.next(statues);
+        }),
+        catchError(this.error.handleError<any>('getAllStatues'))
       );
   }
 

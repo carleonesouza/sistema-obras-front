@@ -32,10 +32,18 @@ export class ObraHidroviaria implements Obra {
     user: any;
     tipo_infraestrutura: any;
     produto: any;
+    usuario_que_alterou: any;
+    funcao_estrutura: any;
+    situacao: any;
+    sim_nao: any;
+    latitude: any;
+    longitude: any;
+    municipio: any;
+    uf: any;
+    data_base_orcamento: string | Date;
 
     public constructor(init?: Partial<ObraHidroviaria>) {
         Object.assign(this, init);
-    }
-  
+    }  
     
 };

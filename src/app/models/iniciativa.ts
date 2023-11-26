@@ -9,8 +9,8 @@ export class Iniciativa {
     instrumento: string;
     setor: any;
     usuario: any;
-    usuario_alteracao: any;
-    status?: number;
+    usuario_que_alterou: any;
+    status?: any;
 
     public constructor(init?: Partial<Iniciativa>) {
         Object.assign(this, init);

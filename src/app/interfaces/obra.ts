@@ -9,7 +9,10 @@ export interface Obra {
     descricao: string;
     intervencao: string;
     status: any;
+    funcao_estrutura: any;
     instrumento: string;
+    situacao: any;
+    sim_nao: any;
     dataInicio: Date | string;
     dataConclusao: Date | string;
     documentosAdicionais?: string; // Pode ser um URL para download ou algo assim
@@ -17,7 +20,13 @@ export interface Obra {
     arquivoGeorreferenciado?: string; // Opcional, pode ser um URL para download
     valorGlobal: number;
     percentualFinanceiroExecutado: number;
-    produto: any
+    produto: any;
+    latitude: any;
+    longitude:any;
+    municipio: any;
+    uf: any;
+    usuario_que_alterou: any;
+    data_base_orcamento: Date | string;
     // Inclua campos adicionais específicos de cada tipo de obra
   }
   

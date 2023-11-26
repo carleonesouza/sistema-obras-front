@@ -12,7 +12,7 @@
                                 <ng-container>
                                     <div class="flex flex-wrap space-x-4 w-full">
                                         <div class="flex-auto">
-                                            <mat-form-field appearance="fill"
+                                            <mat-form-field appearance="outline"
                                                 class="w-full">
                                                 <mat-label>Selecione o Empreendimento </mat-label>
                                                 <mat-select formControlName="empreendimento"
@@ -29,7 +29,7 @@
 
                                     <div class="flex flex-wrap space-x-4 w-full">
                                         <div class="flex-auto">
-                                            <mat-form-field class=" w-full">
+                                            <mat-form-field class=" w-full" appearance="outline">
                                                 <mat-label>Descrição</mat-label>
                                                 <mat-icon matPrefix class="hidden sm:flex icon-size-5"
                                                     [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
@@ -37,19 +37,24 @@
                                             </mat-form-field>
                                         </div>
                                         <div class="flex-auto">
-                                            <mat-form-field class=" w-full">
-                                                <mat-label>Intervenção</mat-label>
-                                                <mat-icon matPrefix class="hidden sm:flex icon-size-5"
-                                                    [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
-                                                <input matInput formControlName="intervencao"
-                                                    [placeholder]="'Intervenção'">
+                                            <mat-form-field appearance="outline"
+                                                class="w-full">
+                                                <mat-label>Intervenção </mat-label>
+                                                <mat-select formControlName="intervencao"
+                                                    [compareWith]="compareFn">
+                                                    <mat-option
+                                                        *ngFor="let intervencao of intervecoes"
+                                                        [value]="intervencao">
+                                                        {{ intervencao.descricao }}
+                                                    </mat-option>
+                                                </mat-select>
                                             </mat-form-field>
                                         </div>
                                     </div>
 
                                     <div class="mt-4 flex flex-wrap space-x-4 w-full">
                                         <div class="flex-auto">
-                                            <mat-form-field class=" w-full">
+                                            <mat-form-field class=" w-full" appearance="outline">
                                                 <mat-label>Valor Global</mat-label>
                                                 <mat-icon matPrefix class="hidden sm:flex icon-size-5"
                                                     [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
@@ -58,7 +63,7 @@
                                             </mat-form-field>
                                         </div>
                                         <div class="flex-auto">
-                                            <mat-form-field class=" w-full">
+                                            <mat-form-field class=" w-full" appearance="outline">
                                                 <mat-label>Percental Financeiro
                                                     Executado</mat-label>
                                                 <mat-icon matPrefix class="hidden sm:flex icon-size-5"
@@ -71,7 +76,7 @@
 
                                     <div class="mt-4 flex flex-wrap space-x-4 w-full">
                                         <div class="flex-auto">
-                                            <mat-form-field class="flex-auto">
+                                            <mat-form-field class="flex-auto" appearance="outline">
                                                 <mat-label>Instrumento</mat-label>
                                                 <mat-icon matPrefix class="hidden sm:flex icon-size-5"
                                                     [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
@@ -81,7 +86,7 @@
                                         </div>
                                        
                                             <div class="flex-auto">
-                                                <mat-form-field appearance="fill"
+                                                <mat-form-field appearance="outline"
                                                     class="w-full">
                                                     <mat-label>Tipos de Infraestruturas </mat-label>
                                                     <mat-select formControlName="tipo_infraestrutura"
@@ -108,7 +113,7 @@
 
                                     <div class="mt-4 flex flex-wrap space-x-4 w-full">
                                         <div class="flex-auto">
-                                            <mat-form-field class="w-full">
+                                            <mat-form-field class="w-full" appearance="outline">
                                                 <mat-label>Data Inicío</mat-label>
                                                 <mat-icon matPrefix class="hidden sm:flex icon-size-5"
                                                     [svgIcon]="'heroicons_solid:cake'">
@@ -123,7 +128,7 @@
                                         </div>
 
                                         <div class="flex-auto">
-                                            <mat-form-field class="w-full">
+                                            <mat-form-field class="w-full" appearance="outline">
                                                 <mat-label>Data Conclusão</mat-label>
                                                 <mat-icon matPrefix class="hidden sm:flex icon-size-5"
                                                     [svgIcon]="'heroicons_solid:cake'">
@@ -140,7 +145,7 @@
                                     </div>
                                     <div class="mt-4 flex flex-wrap space-x-4 w-full">
                                         <div class="flex-auto">
-                                            <mat-form-field appearance="fill"
+                                            <mat-form-field appearance="outline"
                                                 class="w-full">
                                                 <mat-label>Produto</mat-label>
                                                 <mat-select formControlName="produto"
@@ -153,11 +158,39 @@
                                                 </mat-select>
                                             </mat-form-field>
                                         </div>
+
+                                        <div class="flex-auto">
+                                            <mat-form-field appearance="outline" class="w-full">
+                                                <mat-label>Status</mat-label>
+                                                
+                                                <mat-select  [compareWith]="compareFn"   formControlName="status">
+                                                  <mat-option *ngFor="let status of statues" [value]="status" [id]="status.id">
+                                                    {{ status.descricao }}
+                                                  </mat-option>
+                                                </mat-select>
+                                              </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                        <div class="flex-auto">
+                                            <mat-form-field appearance="outline"
+                                                class="w-full">
+                                                <mat-label>Situação</mat-label>
+                                                <mat-select formControlName="situacao"
+                                                    [compareWith]="compareFn">
+                                                    <mat-option
+                                                        *ngFor="let situacao of situacoes"
+                                                        [value]="situacao">
+                                                        {{ situacao.descricao }}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
                                     </div>
 
                                     <div class="mt-4 flex flex-wrap space-x-4 w-full">
 
-                                        <mat-form-field class="w-full">
+                                        <mat-form-field class="w-full" appearance="outline">
                                             <mat-label>Documentos Adicionais</mat-label>
                                             
                                             <mat-icon matPrefix class="hidden sm:flex icon-size-5"
@@ -185,7 +218,7 @@
 
                                     <div class="mt-4 flex flex-wrap space-x-4 w-full">
 
-                                        <mat-form-field class="w-full">
+                                        <mat-form-field class="w-full" appearance="outline">
                                             <mat-label>Arquivo Georeferênciado</mat-label>
                                             <mat-icon matPrefix class="hidden sm:flex icon-size-5"
                                                 svgIcon="mat_solid:upload_file">
@@ -211,19 +244,24 @@
                                         <div class="w-full pb-6">
                                             <h3 class="text-3xl">Endereço</h3>
                                         </div>
-                                        <ng-container formGroupName="endereco">
+                                        <ng-container>
                                             <div class="flex flex-wrap space-x-4 w-full">
                                                 <div class="flex-auto">
-                                                    <mat-form-field class=" w-full">
-                                                        <mat-label>Logradouro</mat-label>
-                                                        <mat-icon matPrefix class="hidden sm:flex icon-size-5"
-                                                            [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
-                                                        <input matInput formControlName="logradouro"
-                                                            [placeholder]="'Rua e número'">
+                                                    <mat-form-field appearance="outline"
+                                                        class="w-full">
+                                                        <mat-label>Estado </mat-label>
+                                                        <mat-select formControlName="uf"
+                                                            [compareWith]="compareFn">
+                                                            <mat-option
+                                                                *ngFor="let estado of estados"
+                                                                [value]="estado">
+                                                                {{ estado.sigla }}
+                                                            </mat-option>
+                                                        </mat-select>
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="flex-auto">
-                                                    <mat-form-field class=" w-full">
+                                                    <mat-form-field class=" w-full" appearance="outline">
                                                         <mat-label>Município</mat-label>
                                                         <mat-icon matPrefix class="hidden sm:flex icon-size-5"
                                                             [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
@@ -231,19 +269,11 @@
                                                             [placeholder]="'Município'">
                                                     </mat-form-field>
                                                 </div>
-                                                <div class="flex-auto">
-                                                    <mat-form-field class=" w-full">
-                                                        <mat-label>Estado</mat-label>
-                                                        <mat-icon matPrefix class="hidden sm:flex icon-size-5"
-                                                            [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
-                                                        <input matInput formControlName="UF"
-                                                            [placeholder]="'Estado'">
-                                                    </mat-form-field>
-                                                </div>
+                                                
                                             </div>
                                             <div class="mt-4 flex flex-wrap space-x-4 w-full">
                                                 <div class="flex-auto">
-                                                    <mat-form-field class=" w-full">
+                                                    <mat-form-field class=" w-full" appearance="outline">
                                                         <mat-label>Latitude</mat-label>
                                                         <mat-icon matPrefix class="hidden sm:flex icon-size-5"
                                                             [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
@@ -252,7 +282,7 @@
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="flex-auto">
-                                                    <mat-form-field class=" w-full">
+                                                    <mat-form-field class=" w-full" appearance="outline">
                                                         <mat-label>Longitude</mat-label>
                                                         <mat-icon matPrefix class="hidden sm:flex icon-size-5"
                                                             [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
@@ -272,7 +302,7 @@
                                         </div>
                                         <div class="mt-4 flex flex-wrap space-x-4 w-full">
                                             <div class="flex-auto">
-                                                <mat-form-field class="w-full">
+                                                <mat-form-field class="w-full" appearance="outline">
                                                     <mat-label>Situação do Aeroporto</mat-label>
                                                     <mat-icon matPrefix class="hidden sm:flex icon-size-5"
                                                         [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
@@ -281,7 +311,7 @@
                                                 </mat-form-field>
                                             </div>
                                             <div class="flex-auto">
-                                                <mat-form-field class="w-full">
+                                                <mat-form-field class="w-full" appearance="outline">
                                                     <mat-label>Código IATA</mat-label>
                                                     <mat-icon matPrefix class="hidden sm:flex icon-size-5"
                                                         [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
@@ -293,7 +323,7 @@
 
                                         <div class="mt-4 flex flex-wrap space-x-4 w-full">
                                             <div class="flex-auto">
-                                                <mat-form-field class=" w-full">
+                                                <mat-form-field class=" w-full" appearance="outline">
                                                     <mat-label>Tipo de Avião que será recebido com base
                                                         no
                                                         Cadastro de ICAO</mat-label>
@@ -307,7 +337,7 @@
 
                                         <div class="mt-4 flex flex-wrap space-x-4 w-full">
                                             <div class="flex-auto">
-                                                <mat-form-field class=" w-full">
+                                                <mat-form-field class=" w-full" appearance="outline">
                                                     <mat-label>Nova Extensão</mat-label>
                                                     <mat-icon matPrefix class="hidden sm:flex icon-size-5"
                                                         [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
@@ -316,7 +346,7 @@
                                                 </mat-form-field>
                                             </div>
                                             <div class="flex-auto">
-                                                <mat-form-field class=" w-full">
+                                                <mat-form-field class="w-full" appearance="outline">
                                                     <mat-label>Nova Largura</mat-label>
                                                     <mat-icon matPrefix class="hidden sm:flex icon-size-5"
                                                         [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
@@ -325,7 +355,7 @@
                                                 </mat-form-field>
                                             </div>
                                             <div class="flex-auto">
-                                                <mat-form-field class=" w-full">
+                                                <mat-form-field class="w-full" appearance="outline">
                                                     <mat-label>Nova Área Criada</mat-label>
                                                     <mat-icon matPrefix class="hidden sm:flex icon-size-5"
                                                         [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
@@ -344,7 +374,7 @@
                                         </div>
                                         <div class="mt-4 flex flex-wrap space-x-4 w-full">
                                             <div class="flex-auto">
-                                                <mat-form-field class="w-full">
+                                                <mat-form-field class="w-full" appearance="outline">
                                                     <mat-label>Rodovia</mat-label>
                                                     <mat-icon matPrefix class="hidden sm:flex icon-size-5"
                                                         [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>

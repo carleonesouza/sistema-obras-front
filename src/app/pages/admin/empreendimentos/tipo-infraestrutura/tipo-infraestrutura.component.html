@@ -1,0 +1,106 @@
+<ng-container *ngIf="!saving; else noItems">
+    <div class="mt-6 w-full">
+        <div class="space-y-4 w-full">
+            <form [formGroup]="tipoInfra" (ngSubmit)="onSubmit()" novalidate>
+                <ng-container>
+                    <div class="mt-6 w-full p-6">
+                        <h3 class="text-3xl">Tipo Infraestrutura </h3>
+                    </div>
+                    <div class="relative flex w-full">
+                        <div class="flex flex-col px-8 py-6 pb-4 shadow-xl w-full">
+                            <div class="mt-4 flex flex-wrap">
+                                <ng-container>                                   
+                                    <div class="flex flex-wrap space-x-4 w-full">
+                                        <div class="flex-auto">
+                                            <mat-form-field class=" w-full">
+                                                <mat-label>Descrição</mat-label>
+                                                <mat-icon matPrefix class="hidden sm:flex icon-size-5"
+                                                    [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
+                                                <input matInput formControlName="descricao" [placeholder]="'Descrição'">
+                                            </mat-form-field>
+                                        </div>
+                                        
+                                    </div>
+
+                                    <div class="sm:col-span-4 mt-3 w-full">
+                                        <div class="flex-auto w-full">
+                                            <mat-form-field class="w-full" appearance="fill" >
+                                                <mat-label>Setor</mat-label>
+                                                <mat-icon class="mr-2" svgIcon="mat_solid:admin_panel_settings"></mat-icon>
+                                                <input matInput aria-label="Setor" [matAutocomplete]="auto"
+                                                    formControlName="setor_id">
+                
+                                                <mat-spinner *ngIf="isLoading" diameter="20" matSuffix>
+                                                </mat-spinner>
+                                                <mat-autocomplete #auto="matAutocomplete"
+                                                    [displayWith]="itemDisplayFn">
+                                                    <mat-option *ngFor="let setor of setores" [value]="setor" [id]="setor.id">
+                                                        {{ setor.descricao }}
+                                                    </mat-option>
+                                                </mat-autocomplete>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>                                
+
+                                </ng-container>
+                            </div>
+                            <hr class="border-b mt-4 mb-1">
+                        </div>
+                    </div>
+                </ng-container>
+
+                <!-- Divider -->
+                <div class="mt-11 mb-10 border-t"></div>
+
+                <!-- Actions -->
+                <div class="flex items-center justify-end m-3">
+
+                    <!-- Inativar -->
+                    <!-- <mat-slide-toggle *ngIf="editMode" class="mt-2" [color]="'warn'" [checked]="!obra.status"
+                        (change)="desativaEmpreendimento($event)" [matTooltip]="'Inativar'">Inativar
+                    </mat-slide-toggle> -->
+                    <!-- Cancel -->
+                    <button class="ml-auto" type="button" mat-button [matTooltip]="'Cancelar'" (click)="cancelEdit()">
+                        Cancelar
+                    </button>
+
+                    <!-- Adiciona Tipo Obra -->
+                    <!-- <button *ngIf="!editMode" class="ml-2" mat-flat-button [color]="'accent'" type="button"
+                        (click)="adicionarTipoObra()" [matTooltip]="'Escolha o Tipo da Obra'">
+                        Tipo Obra
+                    </button> -->
+
+                     <!-- Adiciona Tipo Obra -->
+                     <!-- <button *ngIf="!editMode" class="ml-2" mat-flat-button [color]="'accent'" type="button"
+                     (click)="adicionarTipoObra()" [matTooltip]="'Escolha o Tipo da Obra'">
+                     Tipo Obra
+                 </button> -->
+
+
+                    <!-- Save -->
+                    <button *ngIf="!editMode" class="ml-2" mat-flat-button [color]="'primary'" type="submit"
+                        [matTooltip]="'Salvar'" [disabled]="tipoInfra.invalid">
+                        Salvar
+                    </button>
+
+                    <!-- Update -->
+                    <button *ngIf="editMode" class="ml-2" mat-flat-button type="button" [color]="'primary'"
+                        [matTooltip]="'Atualizar'" [disabled]="tipoInfra.invalid">
+                        Atualizar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</ng-container>
+
+  <!-- No Items -->
+  <ng-template #noItems>
+    <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center loader">Carregando
+        Produto
+        <span class="dot dot-1"></span>
+        <span class="dot dot-2"></span>
+        <span class="dot dot-3"></span>
+        <span class="dot dot-4"></span>
+    </div>
+</ng-template>

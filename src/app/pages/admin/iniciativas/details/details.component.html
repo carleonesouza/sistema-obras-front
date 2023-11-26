@@ -151,6 +151,24 @@
                             </div>
                         </ng-container>
 
+                        <ng-container>
+                            <div class="flex w-full mb-3 mt-2">
+                                <div class="min-w-0 space-y-1 w-full">
+                                    <ng-container>
+                                        <div
+                                            class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
+                                            <mat-icon class="mr-2"
+                                                [svgIcon]="'mat_solid:admin_panel_settings'"></mat-icon>
+                                            <div class="text-primary-500">
+                                                <span class="font-bold mr-2">Status:</span>
+                                                {{iniciativa.status.status.descricao}}
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </ng-container>
+
                     </div>
                 </div>
             </div>
@@ -223,11 +241,31 @@
                         </mat-form-field>
                     </div>
 
-                    <div class="mt-8 w-full flex space-x-4">                        
+                    <div class="sm:col-span-4 mt-3">
+                        <div class="flex-auto w-full">
+                            <mat-form-field class="w-full" appearance="fill">
+                                <mat-label>Setor</mat-label>
+                                <mat-icon class="mr-2" svgIcon="mat_solid:admin_panel_settings"></mat-icon>
+                                <input matInput aria-label="Setor" [matAutocomplete]="auto"
+                                    [formControl]="iniciativaControls.setor">
+
+                                <mat-spinner *ngIf="isLoading" diameter="20" matSuffix>
+                                </mat-spinner>
+                                <mat-autocomplete #auto="matAutocomplete"
+                                    [displayWith]="itemDisplayFn">
+                                    <mat-option *ngFor="let setor of setores" [value]="setor" [id]="setor.id">
+                                        {{ setor.descricao }}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 w-full flex space-x-4">
                         <mat-form-field class="w-full">
                             <mat-label>Expectativa de Parceria</mat-label>
                             <mat-icon class="mr-2" svgIcon="mat_solid:add_reaction"></mat-icon>
-                          
+
                             <mat-select [formControl]="iniciativaControls.expectativa">
                                 <mat-option *ngFor="let expectativa of expectativas" [value]="expectativa.value">
                                     {{ expectativa.value }}
@@ -244,42 +282,51 @@
                         </mat-form-field>
                     </div>
 
-                    <div class="sm:col-span-4 mt-8">
+                    <div class="sm:col-span-4 mt-3">
                         <div class="flex-auto w-full">
-                            <mat-form-field class="w-full" appearance="fill">
-                                <mat-label>Setor</mat-label>
+                            <mat-form-field appearance="fill" class="w-full">
+                                <mat-label>Status</mat-label>
                                 <mat-icon class="mr-2" svgIcon="mat_solid:admin_panel_settings"></mat-icon>
-                                <input matInput aria-label="Setor" [matAutocomplete]="auto"
-                                    [formControl]="iniciativaControls.setor">
+                                <mat-select  [compareWith]="compareFn"   [formControl]="iniciativaControls.status" [(value)]="selectedStatus">
+                                  <mat-option *ngFor="let status of statues" [value]="status" [id]="status.id">
+                                    {{ status.descricao }}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+
+                            <!-- <mat-form-field class="w-full" appearance="fill">
+                                <mat-label>Status</mat-label>
+                                <mat-icon class="mr-2" svgIcon="mat_solid:admin_panel_settings"></mat-icon>
+                                <input matInput aria-label="Status" [matAutocomplete]="auto"
+                                    [formControl]="iniciativaControls.status">
 
                                 <mat-spinner *ngIf="isLoading" diameter="20" matSuffix>
                                 </mat-spinner>
-                                <mat-autocomplete #auto="matAutocomplete" [compareWith]="compareFn"
-                                    [displayWith]="itemDisplayFn">
-                                    <mat-option *ngFor="let setor of setores" [value]="setor" [id]="setor.id">
-                                        {{ setor.descricao }}
+                                <mat-autocomplete #auto="matAutocomplete" [displayWith]="itemDisplayFnStatus">
+                                    <mat-option *ngFor="let status of statues" [value]="status" [id]="status.id">
+                                        {{ status.descricao }}
                                     </mat-option>
                                 </mat-autocomplete>
-                            </mat-form-field>
+                            </mat-form-field> -->
                         </div>
                     </div>
-
 
 
                     <!-- Actions -->
                     <div class="flex justify-center mt-10 -mx-6 py-4 pr-4 pl-1 border-t bg-gray-50 dark:bg-transparent">
 
                         <!-- Inativar -->
-                        <button *ngIf="editMode" class="p-0 m-0" [color]="'accent'" type="button" mat-button
+                        <!-- <button *ngIf="editMode" class="p-0 m-0" [color]="'accent'" type="button" mat-button
                             (click)="desativaItem($event)" [matTooltip]="'Encerrar'">
                             <ng-container *ngIf="iniciativa.status === '1'">
                                 <mat-icon svgIcon="mat_solid:toggle_off" class="w-14 h-14"></mat-icon>
                             </ng-container>
+
                             <ng-container *ngIf="iniciativa.status === '0'">
                                 <mat-icon svgIcon="mat_solid:toggle_on" class="w-14 h-14"></mat-icon>
                             </ng-container>
-                     
-                        </button>
+
+                        </button> -->
 
                         <!-- Delete -->
                         <button class="ml-2" *ngIf="!creating" [color]="'warn'" type="button" mat-button

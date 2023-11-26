@@ -127,6 +127,7 @@ h3:after{
   }
   
   #fileInput {
+    position: absolute;
     cursor: pointer;
     z-index: 10;
     opacity: 0;
@@ -149,12 +150,12 @@ h3:after{
     width: 100%;
   }
   
-  // .message {
-  //   background-color: #ddd;
-  //   padding: 15px;
-  //   color: #333;
-  //   border: #aaa solid 1px;
-  //   border-radius: 4px;
-  //   margin-bottom: 10px;
-  // }
+  .message {
+    background-color: #ddd;
+    padding: 15px;
+    color: #333;
+    border: #aaa solid 1px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
   

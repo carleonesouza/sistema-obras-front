@@ -135,7 +135,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
       id: [''],
       nome: ['', [Validators.required]],
       responsavel: ['', [Validators.required]],
-      respondente: ['', [Validators.required]],
       setor: ['', [Validators.required]],
       obras: this._formBuilder.array([]),
       user: [''],

@@ -18,10 +18,7 @@ export class ObraDuto implements Obra {
     arquivoGeorreferenciado?: string;
     valorGlobal: number;
     percentualFinanceiroExecutado: number;
-    tipoDuto: string;
-    funcaoEstrutura: string;
     materialTransportado: string;
-    nivelDuto: string;
     codigoOrigem: string;
     codigoDestino: string;
     nomeXRL: string;
@@ -33,10 +30,20 @@ export class ObraDuto implements Obra {
     user: any;
     tipo_infraestrutura: any;
     produto: any;
+    usuario_que_alterou: any;
+    tipo_duto: any;
+    nivel_duto:any;
+    funcao_estrutura: any;
+    situacao: any;
+    sim_nao: any;
+    latitude: any;
+    longitude: any;
+    municipio: any;
+    uf: any;
+    data_base_orcamento: string | Date;
         
     public constructor(init?: Partial<ObraDuto>) {
         Object.assign(this, init);
     }
-   
        
 };

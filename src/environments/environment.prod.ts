@@ -1,8 +1,8 @@
 export const environment = {
     production: true,
-    apiManager: 'http://127.0.0.1:8000/api/v1/',
-    apiDocs: 'http://127.0.0.1:8000/api/v1/',
+    apiManager: 'http://localhost:8081/api/v1/',
+    apiDocs: 'http://localhost:8081/api/v1/',
     recaptcha: {
-        siteKey: '6LcdFgwpAAAAAFuLL9uaXdC4LziiEzwwXNZ-958U',
+        siteKey: '6LcmrxspAAAAAIYxPpHftI1cQlMjSorUzu5LN0wY',
       },
 };

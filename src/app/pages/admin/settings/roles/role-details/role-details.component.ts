@@ -159,7 +159,8 @@ export class RoleDetailsComponent implements OnInit, OnDestroy {
     if (this.perfilForm.valid) {
       this.saving = true;
       const perfil = new Perfil(this.perfilForm.value);
-
+      perfil.descricao = perfil.descricao.toLocaleUpperCase();
+      
       this._rolesService.atualizaRole(perfil, perfil.id)
         .pipe(takeUntil(this._unsubscribeAll))
         .subscribe(
@@ -186,6 +187,8 @@ export class RoleDetailsComponent implements OnInit, OnDestroy {
     if (this.perfilForm.valid) {
       this.saving = true;
       const perfil = new Perfil(this.perfilForm.value);
+      delete perfil.id;
+      perfil.descricao = perfil.descricao.toLocaleUpperCase();
 
       this._rolesService.addRoles(perfil)
         .pipe(takeUntil(this._unsubscribeAll))

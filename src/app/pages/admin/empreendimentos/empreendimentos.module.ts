@@ -15,6 +15,12 @@ import { ListComponent } from './list/list.component';
 import { DetailsComponent } from './details/details.component';
 import { ObraAereaComponent } from './obra-aerea/obra-aerea.component';
 import { ObraTipoComponent } from './obra-templates/obra-tipo.component';
+import { IntervencoesService } from './intervencoes.service';
+import { TipoInfraestruturaService } from './tipo-infraestrutura/tipo-infraestrutura.service';
+import { IntervencoesComponent } from './intervencoes/intervencoes.component';
+import { TipoInfraestruturaComponent } from './tipo-infraestrutura/tipo-infraestrutura.component';
+import { SituacaoComponent } from './situacao/situacao.component';
+import { SituacaoService } from './situacao.service';
 
 export const customCurrencyMaskConfig: CurrencyMaskConfig = {
   align: 'right',
@@ -34,6 +40,9 @@ export const customCurrencyMaskConfig: CurrencyMaskConfig = {
    ObraTipoComponent,
    DetailsComponent,
    ObraAereaComponent,
+   TipoInfraestruturaComponent,
+   IntervencoesComponent,
+   SituacaoComponent
   ],
   imports: [
     CommonModule,
@@ -45,7 +54,10 @@ export const customCurrencyMaskConfig: CurrencyMaskConfig = {
   providers:[
     EmpreendimentosService,
     EmpreendimentosResolver,
+    IntervencoesService,
+    TipoInfraestruturaService,
     EmpreendimentoResolver,
+    SituacaoService,
     HandleError,
     CurrencyPipe,
     { provide: CURRENCY_MASK_CONFIG, useValue: customCurrencyMaskConfig }

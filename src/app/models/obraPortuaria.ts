@@ -21,7 +21,6 @@ export class ObraPortuaria implements Obra {
     percentualFinanceiroExecutado: number;
     tipoEmbarcacao: string;
     ampliacaoCapacidade: string;
-    tipoProduto: string;
     novoCalado: string;
     novaLargura: number;
     novoComprimento: number;    
@@ -29,9 +28,18 @@ export class ObraPortuaria implements Obra {
     user: any;
     tipo_infraestrutura: any;
     produto: any;
-
+    usuario_que_alterou: any;
+    funcao_estrutura: any;
+    situacao: any;
+    sim_nao: any;
+    latitude: any;
+    longitude: any;
+    municipio: any;
+    uf: any;
+    data_base_orcamento: string | Date;
+   
     public constructor(init?: Partial<ObraPortuaria>) {
         Object.assign(this, init);
     }
-   
+    
 };

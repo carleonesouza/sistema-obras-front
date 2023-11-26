@@ -7,7 +7,7 @@ export const environment = {
     apiManager: 'http://127.0.0.1:8000/api/v1/',
     apiDocs: 'http://127.0.0.1:8000/api/v1/',
     recaptcha: {
-        siteKey: '6LcdFgwpAAAAAFuLL9uaXdC4LziiEzwwXNZ-958U',
+        siteKey: '6LdhchwpAAAAADpyzVV8yeFhg0TYyu2bhurd_jsV',
       },
 };
 

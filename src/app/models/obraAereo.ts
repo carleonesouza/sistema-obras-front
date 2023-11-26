@@ -19,17 +19,25 @@ export class ObraAereo implements Obra {
     arquivoGeorreferenciado?: string;
     valorGlobal: number;
     percentualFinanceiroExecutado: number;  
-    situacaoAeroporto?: string;
     codigoIATA: string;
     tipoAviaoRecICAO: string;
-    novaExtensao: number;
+    extensao: number;
     novaLargura: number;
     novaAreaCriada: number;
     produto: any;
+    usuario_que_alterou: any;
+    funcao_estrutura: any;
+    situacao: any;
+    sim_nao: any;
+    latitude: any;
+    longitude: any;
+    municipio: any;
+    uf: any;
+    data_base_orcamento: string | Date;
         
     public constructor(init?: Partial<ObraAereo>) {
         Object.assign(this, init);
     }
-   
-    
+ 
+     
 };

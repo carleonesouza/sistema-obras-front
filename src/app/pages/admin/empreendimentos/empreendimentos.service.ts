@@ -24,6 +24,12 @@ export class EmpreendimentosService {
 
   private _obras: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
   private _obra: BehaviorSubject<any | null> = new BehaviorSubject(null);
+
+  private _statues: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
+  private _status: BehaviorSubject<any | null> = new BehaviorSubject(null);
+
+
+  private _estados: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
  
   constructor(private _httpClient: HttpClient, private error: HandleError, public _snackBar: MatSnackBar) { }
 
@@ -60,6 +66,20 @@ export class EmpreendimentosService {
     return this._obra.asObservable();
   }
 
+  get estados$(): Observable<any[]> {
+    return this._estados.asObservable();
+  }
+
+  get statues$(): Observable<any[]> {
+    return this._statues.asObservable();
+  }
+
+  get status$(): Observable<any> {
+    return this._status.asObservable();
+  }
+
+
+
   getAllProdutos(): Observable<any> {
     return this._httpClient.get<any>(environment.apiManager + 'produtos')
     .pipe(
@@ -71,6 +91,18 @@ export class EmpreendimentosService {
     );
   }
 
+  getAllStatues() {
+    return this._httpClient.get<any>(environment.apiManager + 'status')
+      .pipe(
+        tap((result) => {
+          const data = result?.data;
+          const statues = data;
+          this._statues.next(statues);
+        }),
+        catchError(this.error.handleError<any>('getAllStatues'))
+      );
+  }
+
   getAllInfras(): Observable<any> {
     return this._httpClient.get<any>(environment.apiManager + 'tipos-infra')
     .pipe(
@@ -79,6 +111,17 @@ export class EmpreendimentosService {
         this._infraEstruturas.next(infras);
       }),
       catchError(this.error.handleError<any>('getAllInfras'))
+    );
+  }
+
+  getEstados(): Observable<any> {
+    return this._httpClient.get<any>(environment.apiManager + 'estados')
+    .pipe(
+      tap((result) => {
+        const estados = result.data;          
+        this._estados.next(estados);
+      }),
+      catchError(this.error.handleError<any>('getEstados'))
     );
   }
 

@@ -14,6 +14,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ObraAereo } from 'app/models/obraAereo';
 import { Endereco } from 'app/models/endereco';
 import { Produto } from 'app/models/produto';
+import { IntervencoesService } from '../intervencoes.service';
+import { SituacaoService } from '../situacao.service';
 _moment.locale('en');
 
 @Component({
@@ -32,6 +34,12 @@ export class ObraAereaComponent implements OnInit {
   produtos$: Observable<any>;
   produtos: any;
   infras: any;
+  estados: any;
+  intervecoes:any;
+  statues$: Observable<any>;
+  statues: any;
+  situacoes$: Observable<any>;
+  situacoes: any;
   empreendimentos: any;
   saving: boolean;
   creating: boolean = false;
@@ -43,7 +51,8 @@ export class ObraAereaComponent implements OnInit {
 
 
   constructor(private _formBuilder: FormBuilder, public _tipoObraDialog: MatDialog, private cd: ChangeDetectorRef,
-    private empreendimentoService: EmpreendimentosService, private _router: Router, public _snackBar: MatSnackBar) { }
+    private empreendimentoService: EmpreendimentosService, private _router: Router, public _snackBar: MatSnackBar,
+    private intervencaoService: IntervencoesService, private situacaoService: SituacaoService) { }
 
 
   ngOnInit(): void {
@@ -59,11 +68,35 @@ export class ObraAereaComponent implements OnInit {
 
         this.infras = infras.data
       });
+      
+      this.empreendimentoService
+      .getEstados()
+      .subscribe((estados) =>{
+        this.estados = estados.data;
+      })
 
     this.empreendimentoService
       .getAllEmpreendimentos()
       .subscribe((emprs) => {
         this.empreendimentos = emprs.data;
+      });
+
+      this.intervencaoService
+      .getIntervencoes()
+      .subscribe((interv) =>{
+        this.intervecoes = interv.data;
+      })
+
+      this.statues$ = this.empreendimentoService
+      .getAllStatues();
+      this.statues$.subscribe((res) =>{    
+        this.statues = res.data;
+      })
+      
+      this.situacaoService
+      .getSitaucoes()
+      .subscribe((sit) =>{
+        this.situacoes = sit.data;
       })
 
     this.createObaForm();
@@ -83,9 +116,14 @@ export class ObraAereaComponent implements OnInit {
       dataInicio: [{ value: '', disabled: true }, [Validators.required]],
       dataConclusao: [{ value: '', disabled: true }, [Validators.required]],
       documentosAdicionais: [''],
+      situacao:['', [Validators.required]],
       arquivoGeorreferenciado: [''],
       produto:['', [Validators.required]],
-      endereco: this.createEnderecoForm(),
+      logradouro: new FormControl('', Validators.required),
+      municipio: new FormControl('', Validators.required),
+      uf: new FormControl('', Validators.required),
+      longitude: new FormControl('', Validators.required),
+      latitude: new FormControl('', Validators.required),
       valorGlobal: ['', [Validators.required]],
       percentualFinanceiroExecutado: ['', [Validators.required]],
     })
