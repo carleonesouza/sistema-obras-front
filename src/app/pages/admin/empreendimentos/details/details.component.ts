@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatAccordion } from '@angular/material/expansion';
 import { MatDrawerToggleResult } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -11,14 +11,11 @@ import { takeUntil } from 'rxjs/operators';
 import { Empreendimento } from 'app/models/empreendimento';
 import { EmpreendimentosService } from '../empreendimentos.service';
 import { Setor } from 'app/models/setor';
-import { Endereco } from 'app/models/endereco';
 import * as _moment from 'moment';
 _moment.locale('pt-br');
 import { MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, NativeDateAdapter } from '@angular/material/core';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
-import { ObraTipoComponent } from '../obra-templates/obra-tipo.component';
 import { SetorsService } from '../../setors/setors.service';
 import { User } from 'app/models/user';
 
@@ -46,10 +43,12 @@ export class DetailsComponent implements OnInit, OnDestroy {
   tipoObraSelecionada: string;
   empreendimento$: Observable<any>;
   obras$: Observable<any[]>;
+  obrasEmpreendimento: any;
   setores$: Observable<any>;
   setores: any;
   empreendimento: Empreendimento;
   saving: boolean;
+  panelOpenState = false;
 
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -68,7 +67,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
+    
     this._setoresService.getSetores().subscribe((result)=>{
       this.setores = result.data;
     });
@@ -103,6 +102,10 @@ export class DetailsComponent implements OnInit, OnDestroy {
           this.empreendimento = empreendimento.data;
 
           if (this.empreendimento) {
+
+            this.obrasEmpreendimento = this.empreendimento?.obras;
+
+            console.log(this.obrasEmpreendimento)
     
             this.empreendimentoForm.patchValue(this.empreendimento);
             this.empreendimentoForm.patchValue({

@@ -28,6 +28,15 @@ export class EmpreendimentosService {
   private _statues: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
   private _status: BehaviorSubject<any | null> = new BehaviorSubject(null);
 
+  private _tipo_dutos: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
+  private _tipo_duto: BehaviorSubject<any | null> = new BehaviorSubject(null);
+
+  private _funcao_estruturas: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
+  private _funcao_estrutura: BehaviorSubject<any | null> = new BehaviorSubject(null);
+
+  private _nivel_dutos: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
+  private _nivel_duto: BehaviorSubject<any | null> = new BehaviorSubject(null);
+
 
   private _estados: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
  
@@ -78,7 +87,29 @@ export class EmpreendimentosService {
     return this._status.asObservable();
   }
 
+  get tipo_dutos$(): Observable<any[]> {
+    return this._tipo_dutos.asObservable();
+  }
 
+  get tipo_duto$(): Observable<any> {
+    return this._tipo_duto.asObservable();
+  }
+
+  get funcao_estruturas$(): Observable<any[]> {
+    return this._funcao_estruturas.asObservable();
+  }
+
+  get funcao_estrutura$(): Observable<any> {
+    return this._funcao_estrutura.asObservable();
+  }
+
+  get nivel_dutos$(): Observable<any[]> {
+    return this._nivel_dutos.asObservable();
+  }
+
+  get nivel_duto$(): Observable<any> {
+    return this._nivel_duto.asObservable();
+  }
 
   getAllProdutos(): Observable<any> {
     return this._httpClient.get<any>(environment.apiManager + 'produtos')
@@ -122,6 +153,39 @@ export class EmpreendimentosService {
         this._estados.next(estados);
       }),
       catchError(this.error.handleError<any>('getEstados'))
+    );
+  }
+
+  getTipoDutos(): Observable<any> {
+    return this._httpClient.get<any>(environment.apiManager + 'tipo-dutos')
+    .pipe(
+      tap((result) => {
+        const tipoDutos = result.data;          
+        this._tipo_dutos.next(tipoDutos);
+      }),
+      catchError(this.error.handleError<any>('getTipoDutos'))
+    );
+  }
+
+  getFuncaoEstruturas(): Observable<any> {
+    return this._httpClient.get<any>(environment.apiManager + 'funcao-estruturas')
+    .pipe(
+      tap((result) => {
+        const funcaoEstruturas = result.data;          
+        this._funcao_estruturas.next(funcaoEstruturas);
+      }),
+      catchError(this.error.handleError<any>('getFuncaoEstruturas'))
+    );
+  }
+
+  getNivelDutos(): Observable<any> {
+    return this._httpClient.get<any>(environment.apiManager + 'nivel-dutos')
+    .pipe(
+      tap((result) => {
+        const nivelDutos = result.data;          
+        this._nivel_dutos.next(nivelDutos);
+      }),
+      catchError(this.error.handleError<any>('getNivelDutos'))
     );
   }
 
@@ -178,6 +242,16 @@ export class EmpreendimentosService {
         this._empreendimento.next(result.data);
       }),
       catchError(this.error.handleError<any>('deactivateActiveItem'))
+    );
+  }
+
+  uploadFile(formData){
+    return this._httpClient.post<any>(environment.apiManager + `upload-file`, formData)
+    .pipe(
+      tap((result) => {
+        return result;
+      }),
+      catchError(this.error.handleError<any>('uploadFile'))
     );
   }
 

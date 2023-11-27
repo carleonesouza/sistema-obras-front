@@ -1,23 +1,22 @@
 import { Obra } from "app/interfaces/obra";
-import { Endereco } from "./endereco";
 
 export class ObraDuto implements Obra {
 
     id: number;
-    empreendimento: number;
+    empreendimento: any;
     tipo: string;
     nomeDaInfraestrutura: string;
     descricao: string;
-    intervencao: string;
+    intervencao: any;
     status: any;
     instrumento: string;
     dataInicio: string | Date;
     dataConclusao: string | Date;
     documentosAdicionais?: string;
-    endereco: Endereco;
     arquivoGeorreferenciado?: string;
     valorGlobal: number;
     percentualFinanceiroExecutado: number;
+    
     materialTransportado: string;
     codigoOrigem: string;
     codigoDestino: string;

@@ -4,17 +4,16 @@ import { Endereco } from "./endereco";
 export class ObraFerroviaria implements Obra {
 
     id: number;
-    empreendimento: number;
+    empreendimento: any;
     tipo: string;
     nomeDaInfraestrutura: string;
     descricao: string;
-    intervencao: string;
+    intervencao: any;
     status: any;
     instrumento: string;
     dataInicio: string | Date;
     dataConclusao: string | Date;
     documentosAdicionais?: string;
-    endereco: Endereco;
     arquivoGeorreferenciado?: string;
     valorGlobal: number;
     percentualFinanceiroExecutado: number;
@@ -23,7 +22,7 @@ export class ObraFerroviaria implements Obra {
     extensao: number;
     novaBitola: string;
     novaVelocidade: number;
-    produto: string;
+    produto: any;
     capacidadeDinamica: number;
     user: any;
     tipo_infraestrutura: any;

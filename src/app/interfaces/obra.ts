@@ -7,7 +7,7 @@ export interface Obra {
     tipo: string; // Por exemplo, 'aero', 'duto', 'ferroviario', etc.
     tipo_infraestrutura: any;
     descricao: string;
-    intervencao: string;
+    intervencao: any;
     status: any;
     funcao_estrutura: any;
     instrumento: string;
@@ -16,7 +16,6 @@ export interface Obra {
     dataInicio: Date | string;
     dataConclusao: Date | string;
     documentosAdicionais?: string; // Pode ser um URL para download ou algo assim
-    endereco: Endereco;
     arquivoGeorreferenciado?: string; // Opcional, pode ser um URL para download
     valorGlobal: number;
     percentualFinanceiroExecutado: number;

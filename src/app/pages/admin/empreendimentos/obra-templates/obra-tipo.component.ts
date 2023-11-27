@@ -15,8 +15,8 @@ export interface DialogData {
 export class ObraTipoComponent {
   tipoObraForm: FormGroup;
   tiposDeObra = [
-    { label: 'Aérea', value: 'aerea' },
-    { label: 'Duto', value: 'duto' },
+    { label: 'Aeroportuária', value: 'aerea' },
+    { label: 'Dutoviária', value: 'duto' },
     { label: 'Ferroviária', value: 'ferroviaria' },
     { label: 'Hidroviária', value: 'hidroviaria' },
     { label: 'Portuária', value: 'portuaria' },

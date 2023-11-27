@@ -7,6 +7,7 @@ import { environment } from 'environments/environment';
 import { HandleError } from 'app/utils/handleErrors';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 import { User } from 'app/models/user';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthService {
@@ -19,7 +20,7 @@ export class AuthService {
      */
     constructor(
         private _httpClient: HttpClient,
-        private error: HandleError
+        private _router: Router
     ) {
     }
 
@@ -185,7 +186,8 @@ export class AuthService {
     check(): Observable<boolean> {
         // Check if the user is logged in
         if (!this._authenticated) {
-
+            
+            this._router.navigate(['sign-in']);
             return of(false);
         }
 

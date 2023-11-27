@@ -31,6 +31,10 @@ h3:after{
   .bg-removed{
     background-color: #FEE2E2;
   }
+  .select-placeholder-container {
+    display: flex;
+    align-items: center;
+  }
  
   /**
  * ==============================================
@@ -125,18 +129,22 @@ h3:after{
   .progress {
     width: 50px;
   }
-  
-  #fileInput {
+
+  .file-input{
+    display: inline-block;
     cursor: pointer;
-    z-index: 10;
-    opacity: 0;
-    height: 100%;
-    left: 0px;
-    top: 0px;
+    width: 100%;
+    height: 50px;
+    line-height: 13px;
+    padding: 0 12px;
   }
   
+  .file-input input[type="file"] {  
+    opacity: 0;
+    width: 100% !important;
+  } 
+    
   .mat-toolbar-single-row {
-    height: auto !important;
     background: transparent;
     padding: 0;
   }

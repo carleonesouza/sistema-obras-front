@@ -4,11 +4,11 @@ import { Endereco } from "./endereco";
 export class ObraRodoviaria implements Obra {
 
     id: number;
-    empreendimento: number;
+    empreendimento: any;
     tipo: string;
     nomeDaInfraestrutura: string;
     descricao: string;
-    intervencao: string;
+    intervencao: any;
     status: any;
     instrumento: string;
     dataInicio: string | Date;

@@ -11,6 +11,7 @@ export class User {
     profile?: Perfil;
     senha_confirmation: string;
     tipo_usuario_id: string;
+    tipo_usuario: any;
     status?: boolean;
 
     public constructor(init?: Partial<User>) {

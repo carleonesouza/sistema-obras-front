@@ -21,6 +21,7 @@ import { IntervencoesComponent } from './intervencoes/intervencoes.component';
 import { TipoInfraestruturaComponent } from './tipo-infraestrutura/tipo-infraestrutura.component';
 import { SituacaoComponent } from './situacao/situacao.component';
 import { SituacaoService } from './situacao.service';
+import { PercentageMaskDirective } from 'app/directives/parcentage-mask.directive';
 
 export const customCurrencyMaskConfig: CurrencyMaskConfig = {
   align: 'right',
@@ -42,7 +43,8 @@ export const customCurrencyMaskConfig: CurrencyMaskConfig = {
    ObraAereaComponent,
    TipoInfraestruturaComponent,
    IntervencoesComponent,
-   SituacaoComponent
+   SituacaoComponent,
+   PercentageMaskDirective
   ],
   imports: [
     CommonModule,

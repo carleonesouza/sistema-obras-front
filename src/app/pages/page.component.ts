@@ -158,16 +158,14 @@ export class PageComponent implements OnInit, OnDestroy, AfterViewInit {
         this.loginStatus$.subscribe((auth) => {
             if (auth) {
                 this.user = new User(JSON.parse(localStorage.getItem('user')));
+              
 
-                //Set menu for specific role
-                this.navigationData.map((item) => {
-                  
-                    // const profile = new Perfil(this.user);
-                    // if (profile.role.toLowerCase().localeCompare(String('Admin').toLowerCase()) === 1 && item.id === 'admin') {
-                    //     item.hidden = () => true;
-                    // }
-
-                });
+                  //Set menu for specific role
+            this.navigationData.map((item) => {
+            if (this.user?.tipo_usuario.descricao.toLowerCase() !== 'admin' && item.id === 'admin') {
+                item.hidden = () => true;
+            }
+        });
             }
         });
 

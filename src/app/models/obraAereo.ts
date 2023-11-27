@@ -1,5 +1,4 @@
 import { Obra } from "app/interfaces/obra";
-import { Endereco } from "./endereco";
 
 export class ObraAereo implements Obra {
 
@@ -9,13 +8,12 @@ export class ObraAereo implements Obra {
     user: any;
     tipo_infraestrutura: any;
     descricao: string;
-    intervencao: string;
+    intervencao: any;
     status: any;
     instrumento: string;
     dataInicio: string | Date;
     dataConclusao: string | Date;
     documentosAdicionais?: string;
-    endereco: Endereco;
     arquivoGeorreferenciado?: string;
     valorGlobal: number;
     percentualFinanceiroExecutado: number;  
