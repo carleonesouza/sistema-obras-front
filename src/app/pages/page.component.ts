@@ -92,6 +92,13 @@ export class PageComponent implements OnInit, OnDestroy, AfterViewInit {
                     link: 'admin/empreendimentos/obras'
                 },
                 {
+                    id: 'lista-obras',
+                    title: 'Lista Obras',
+                    type: 'basic',
+                    icon: 'mat_solid:admin_panel_settings',
+                    link: 'admin/empreendimentos/todas-obras'
+                },
+                {
                     id: 'tipoInfra',
                     title: 'Tipo Infraestrutura',
                     type: 'basic',

@@ -212,6 +212,29 @@ export class EmpreendimentosService {
       );
   }
 
+  getObras(page = 0, size = 10) {
+    return this._httpClient.get<any>(environment.apiManager + 'obras')
+      .pipe(
+        tap((result) => {
+          const obras = result.data;          
+          this._obras.next(obras);
+        }),
+        catchError(this.error.handleError<any>('getObras'))
+      );
+  }
+
+  getObra(id) {
+    return this._httpClient.get<any>(environment.apiManager + `obras/${id}`)
+      .pipe(
+        tap((result) => {
+          const obra = result.data;          
+          this._obra.next(obra);
+          return result.data; 
+        }),
+        catchError(this.error.handleError<any>('getObra'))
+      );
+  }
+
 
   editEmpreendimento(empreendimento: Empreendimento): Observable<any> {
     return this._httpClient.put<any>(environment.apiManager + `empreendimentos/${empreendimento.id}`, empreendimento)

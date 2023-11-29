@@ -1,1 +1,17 @@
-<p>list works!</p>
+<app-list-items
+[items$]= "obras$"
+[listCount]="obraCount"
+[listName]="'Obra'"
+[listNames]="'Obras'"
+[itemNome]="'descricao'"
+[placeHolder] = "'Digite a descrição do Contrato'"
+[pageSlice]="obras"
+[itemId]="'id'"
+[include]="false"
+[totalElements]="totalElements"
+(searchItem)="searchItem($event)"
+(addItem)="createItem($event)"
+(associa)="associaItem($event)"
+(syncList)="syncListas($event)"
+(eventPages)="onPageChange($event)" 
+></app-list-items>

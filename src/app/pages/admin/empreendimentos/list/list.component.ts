@@ -14,7 +14,6 @@ import { EmpreendimentosService } from '../empreendimentos.service';
 })
 export class ListComponent implements OnInit, OnDestroy {
 
-
   empreendimentos: any[];
   empreendimentos$: Observable<any[]>;
   empreendimentoCount: number = 0;
