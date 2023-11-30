@@ -104,8 +104,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
           if (this.empreendimento) {
 
             this.obrasEmpreendimento = this.empreendimento?.obras;
-
-            console.log(this.obrasEmpreendimento)
     
             this.empreendimentoForm.patchValue(this.empreendimento);
             this.empreendimentoForm.patchValue({
@@ -210,6 +208,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
     if (this.empreendimentoForm.valid) {
       this.saving = true;
       const empreendimento = new Empreendimento(this.empreendimentoForm.value);
+      const user = new User(JSON.parse(localStorage.getItem('user')));
+      empreendimento.usuario_que_alterou = user.id;
       this._empreendimentoService
         .editEmpreendimento(empreendimento)
         .subscribe(() => {

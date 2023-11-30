@@ -15,7 +15,7 @@ import { User } from 'app/models/user';
     templateUrl: './page.component.html',
     styleUrls: ['./page.component.scss']
 })
-export class PageComponent implements OnInit, OnDestroy, AfterViewInit {
+export class PageComponent implements OnInit, OnDestroy {
 
     @Input() appearance: FuseVerticalNavigationAppearance;
     @Input() autoCollapse: boolean;
@@ -80,43 +80,43 @@ export class PageComponent implements OnInit, OnDestroy, AfterViewInit {
                     id: 'empreendimento',
                     title: 'Empreendimento',
                     type: 'basic',
-                    icon: 'mat_solid:admin_panel_settings',
+                    //icon: 'mat_solid:admin_panel_settings',
                     link: 'admin/empreendimentos/lista',
                 }  
                 ,
                 {
                     id: 'obras',
-                    title: 'Obras',
+                    title: 'Cadastrar Obra',
                     type: 'basic',
-                    icon: 'mat_solid:admin_panel_settings',
-                    link: 'admin/empreendimentos/obras'
+                    //icon: 'mat_solid:admin_panel_settings',
+                    link: 'admin/empreendimentos/cadastrar-obras'
                 },
                 {
                     id: 'lista-obras',
-                    title: 'Lista Obras',
+                    title: 'Listar Obras',
                     type: 'basic',
-                    icon: 'mat_solid:admin_panel_settings',
+                    //icon: 'mat_solid:admin_panel_settings',
                     link: 'admin/empreendimentos/todas-obras'
                 },
                 {
                     id: 'tipoInfra',
                     title: 'Tipo Infraestrutura',
                     type: 'basic',
-                    icon: 'mat_solid:admin_panel_settings',
+                    //icon: 'mat_solid:admin_panel_settings',
                     link: 'admin/empreendimentos/tipo-infraestrutura'
                 },
                 {
                     id: 'intervencao',
                     title: 'Intervenção',
                     type: 'basic',
-                    icon: 'mat_solid:admin_panel_settings',
+                    //icon: 'mat_solid:admin_panel_settings',
                     link: 'admin/empreendimentos/intervencao'
                 },
                 {
                     id: 'situacao',
                     title: 'Situação',
                     type: 'basic',
-                    icon: 'mat_solid:admin_panel_settings',
+                    //icon: 'mat_solid:admin_panel_settings',
                     link: 'admin/empreendimentos/situacao'
                 }     
             ]
@@ -179,10 +179,6 @@ export class PageComponent implements OnInit, OnDestroy, AfterViewInit {
 
     }
 
-    ngAfterViewInit(): void {
-
-
-    }
 
     /**
      * On destroy
@@ -238,7 +234,8 @@ export class PageComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     profile(): void {
-        this._router.navigate(['/profile']);
+        const id = this.user.id;
+        this._router.navigate([`/profile/${id}`]);
     }
 
     /**

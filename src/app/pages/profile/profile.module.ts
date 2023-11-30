@@ -11,6 +11,7 @@ import { FuseCardModule } from '@fuse/components/card';
 import { SharedModule } from 'app/shared/shared.module';
 import { ProfileComponent } from './profile.component';
 import { profileRoutes } from './profile.routing';
+import { ProfileResolver } from './profile.resolver';
 
 
 @NgModule({
@@ -28,6 +29,9 @@ import { profileRoutes } from './profile.routing';
         MatTooltipModule,
         FuseCardModule,
         SharedModule
+    ],
+    providers:[
+        ProfileResolver
     ]
 })
 export class ProfileModule

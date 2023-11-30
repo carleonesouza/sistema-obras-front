@@ -28,7 +28,7 @@ export const pagesRoutes: Route[] = [
                         path: 'sign-out', loadChildren: () => import('app/pages/auth/sign-out/sign-out.module').then(m => m.AuthSignOutModule)
                     },
                     {
-                        path: '', loadChildren: () => import('app/pages/profile/profile.module').then(p => p.ProfileModule),
+                        path: 'profile', loadChildren: () => import('app/pages/profile/profile.module').then(p => p.ProfileModule),
                     },
                     { path: '401-unauthorized', component: Error401Component },
                     { path: 'error-500', component: Error500Component },

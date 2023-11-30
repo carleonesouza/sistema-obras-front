@@ -9,11 +9,9 @@ import { ObraTipoComponent } from '../obra-templates/obra-tipo.component';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { EmpreendimentosService } from '../empreendimentos.service';
 import { User } from 'app/models/user';
-import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ObraAereo } from 'app/models/obraAereo';
-import { Endereco } from 'app/models/endereco';
-import { Produto } from 'app/models/produto';
 import { IntervencoesService } from '../intervencoes.service';
 import { SituacaoService } from '../situacao.service';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
@@ -33,12 +31,14 @@ _moment.locale('en');
 })
 export class ObraAereaComponent implements OnInit {
 
-  @Input() obra: FormGroup;
+  @Input() obraForm: FormGroup;
   events: string[] = [];
   tipoObraSelecionada: string = '';
   editMode: boolean = false;
   produtos$: Observable<any>;
   produtos: any;
+  obra$: Observable<any>;
+  obra: any;
   infras: any;
   estados: any;
   intervecoes: any;
@@ -64,7 +64,7 @@ export class ObraAereaComponent implements OnInit {
 
 
   constructor(private _formBuilder: FormBuilder, public _tipoObraDialog: MatDialog, private cd: ChangeDetectorRef,
-    private empreendimentoService: EmpreendimentosService, private _router: Router, public _snackBar: MatSnackBar,
+    private empreendimentoService: EmpreendimentosService,  private _route: ActivatedRoute, public _snackBar: MatSnackBar,
     private intervencaoService: IntervencoesService, private situacaoService: SituacaoService) { }
 
 
@@ -134,11 +134,45 @@ export class ObraAereaComponent implements OnInit {
       })
 
     this.createObaForm();
+
+    if (this._route.snapshot.paramMap.get('id') !== 'add') {
+
+      this.loading = true;
+      this.obra$ = this.empreendimentoService.obra$;
+   
+     
+      this.empreendimentoService.obra$
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe((obra: any) => {
+
+          // Open the drawer in case it is closed
+      
+          this.createObaForm();
+          this.obraForm.reset();
+
+          // Get the Lista
+          this.obra = obra;
+
+          if (this.obra) {
+
+
+            console.log(this.obra)
+    
+            this.obraForm.patchValue(this.obra);
+           
+            this.loading = false;
+          }
+
+  
+        });
+
+
+    }
   }
 
 
   createObaForm(): FormGroup {
-    return this.obra = this._formBuilder.group({
+    return this.obraForm = this._formBuilder.group({
       id: [''],
       empreendimento: ['', [Validators.required]],
       tipo: ['', [Validators.required]],
@@ -184,71 +218,71 @@ export class ObraAereaComponent implements OnInit {
 
   initializeObraForm(type: string) {
 
-    this.obra.patchValue({ tipo: type })
+    this.obraForm.patchValue({ tipo: type })
 
     switch (type) {
       case 'aerea':
-        this.obra.addControl('codigoIATA', new FormControl('', Validators.required));
-        this.obra.addControl('tipoAviaoRecICAO', new FormControl('', Validators.required));
-        this.obra.addControl('extensao', new FormControl('', Validators.required));
-        this.obra.addControl('novaLargura', new FormControl('', Validators.required));
-        this.obra.addControl('novaAreaCriada', new FormControl('', Validators.required));
+        this.obraForm.addControl('codigoIATA', new FormControl('', Validators.required));
+        this.obraForm.addControl('tipoAviaoRecICAO', new FormControl('', Validators.required));
+        this.obraForm.addControl('extensao', new FormControl('', Validators.required));
+        this.obraForm.addControl('novaLargura', new FormControl('', Validators.required));
+        this.obraForm.addControl('novaAreaCriada', new FormControl('', Validators.required));
         break;
 
       case 'rodoviaria':
-        this.obra.addControl('rodovia', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('kmInicial', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('kmFinal', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('extensao', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('codigo', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('versao', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('rodovia', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('kmInicial', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('kmFinal', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('extensao', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('codigo', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('versao', this._formBuilder.control('', [Validators.required]));
         break;
 
       case 'portuaria':
-        this.obra.addControl('tipoEmbarcacao', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('ampliacaoCapacidade', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('novoCalado', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('novaLargura', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('novoComprimento', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('capacidadeDinamica', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('tipoEmbarcacao', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('ampliacaoCapacidade', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('novoCalado', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('novaLargura', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('novoComprimento', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('capacidadeDinamica', this._formBuilder.control('', [Validators.required]));
         break;
 
       case 'hidroviaria':
-        this.obra.addControl('situacaoHidrovia', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('temEclusa', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('temBarragem', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('tipoEmbarcacao', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('ampliacaoCapacidade', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('profundidadeMinima', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('profundidadeMaxima', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('comboiosCheia', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('comboiosEstiagem', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('novaLargura', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('novoComprimento', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('situacaoHidrovia', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('temEclusa', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('temBarragem', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('tipoEmbarcacao', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('ampliacaoCapacidade', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('profundidadeMinima', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('profundidadeMaxima', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('comboiosCheia', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('comboiosEstiagem', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('novaLargura', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('novoComprimento', this._formBuilder.control('', [Validators.required]));
         break;
 
       case 'ferroviaria':
-        this.obra.addControl('kmInicial', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('kmFinal', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('extensao', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('novaBitola', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('novaVelocidade', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('capacidadeDinamica', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('kmInicial', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('kmFinal', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('extensao', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('novaBitola', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('novaVelocidade', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('capacidadeDinamica', this._formBuilder.control('', [Validators.required]));
         break;
 
       case 'duto':
-        this.obra.addControl('tipo_duto', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('funcao_estrutura', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('materialTransportado', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('nivel_duto', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('codigoOrigem', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('codigoDestino', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('nomeXRL', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('extensao', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('espessura', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('vazaoProjeto', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('vazaoOperacional', this._formBuilder.control('', [Validators.required]));
-        this.obra.addControl('novaAreaImpactada', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('tipo_duto', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('funcao_estrutura', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('materialTransportado', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('nivel_duto', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('codigoOrigem', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('codigoDestino', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('nomeXRL', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('extensao', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('espessura', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('vazaoProjeto', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('vazaoOperacional', this._formBuilder.control('', [Validators.required]));
+        this.obraForm.addControl('novaAreaImpactada', this._formBuilder.control('', [Validators.required]));
         break;
 
       default:
@@ -260,7 +294,7 @@ export class ObraAereaComponent implements OnInit {
 
 
   get obrasControls(): { [key: string]: AbstractControl } {
-    return this.obra.controls;
+    return this.obraForm.controls;
   }
 
   compareFn(c1: any, c2: any): boolean {
@@ -287,7 +321,7 @@ export class ObraAereaComponent implements OnInit {
   }
 
   cancelEdit() {
-    this.obra.reset();
+    this.obraForm.reset();
     this.editMode = false;
   }
 
@@ -309,15 +343,15 @@ export class ObraAereaComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.obra) {
-      if (this.obra.get('tipo').value === 'aerea') {
-        const obraAerea = new ObraAereo(this.obra.value);
+    if (this.obraForm) {
+      if (this.obraForm.get('tipo').value === 'aerea') {
+        const obraAerea = new ObraAereo(this.obraForm.value);
         const user = new User(JSON.parse(localStorage.getItem('user')));
 
 
-        obraAerea.dataInicio = moment(this.obra.get('dataInicio').value).format('L');
-        obraAerea.dataConclusao = moment(this.obra.get('dataConclusao').value).format('L');
-        obraAerea.data_base_orcamento = moment(this.obra.get('data_base_orcamento').value).format('L');
+        obraAerea.dataInicio = moment(this.obraForm.get('dataInicio').value).format('L');
+        obraAerea.dataConclusao = moment(this.obraForm.get('dataConclusao').value).format('L');
+        obraAerea.data_base_orcamento = moment(this.obraForm.get('data_base_orcamento').value).format('L');
         obraAerea.empreendimento = obraAerea.empreendimento?.id;
         obraAerea.tipo_infraestrutura = obraAerea.tipo_infraestrutura?.id;
         obraAerea.produto = obraAerea.produto?.id;
@@ -337,12 +371,12 @@ export class ObraAereaComponent implements OnInit {
             });
           });
       }
-      else if (this.obra.get('tipo').value === 'duto') {
-        const obraDuto = new ObraDuto(this.obra.value);
+      else if (this.obraForm.get('tipo').value === 'duto') {
+        const obraDuto = new ObraDuto(this.obraForm.value);
         const user = new User(JSON.parse(localStorage.getItem('user')));
-        obraDuto.dataInicio = moment(this.obra.get('dataInicio').value).format('L');
-        obraDuto.dataConclusao = moment(this.obra.get('dataConclusao').value).format('L');
-        obraDuto.data_base_orcamento = moment(this.obra.get('data_base_orcamento').value).format('L');
+        obraDuto.dataInicio = moment(this.obraForm.get('dataInicio').value).format('L');
+        obraDuto.dataConclusao = moment(this.obraForm.get('dataConclusao').value).format('L');
+        obraDuto.data_base_orcamento = moment(this.obraForm.get('data_base_orcamento').value).format('L');
         obraDuto.empreendimento = obraDuto.empreendimento?.id;
         obraDuto.tipo_infraestrutura = obraDuto.tipo_infraestrutura?.id;
         obraDuto.produto = obraDuto.produto?.id;
@@ -366,12 +400,12 @@ export class ObraAereaComponent implements OnInit {
 
           });
       }
-      else if (this.obra.get('tipo').value === 'hidroviaria') {
-        const obraHidroviaria = new ObraHidroviaria(this.obra.value);
+      else if (this.obraForm.get('tipo').value === 'hidroviaria') {
+        const obraHidroviaria = new ObraHidroviaria(this.obraForm.value);
         const user = new User(JSON.parse(localStorage.getItem('user')));
-        obraHidroviaria.dataInicio = moment(this.obra.get('dataInicio').value).format('L');
-        obraHidroviaria.dataConclusao = moment(this.obra.get('dataConclusao').value).format('L');
-        obraHidroviaria.data_base_orcamento = moment(this.obra.get('data_base_orcamento').value).format('L');
+        obraHidroviaria.dataInicio = moment(this.obraForm.get('dataInicio').value).format('L');
+        obraHidroviaria.dataConclusao = moment(this.obraForm.get('dataConclusao').value).format('L');
+        obraHidroviaria.data_base_orcamento = moment(this.obraForm.get('data_base_orcamento').value).format('L');
         obraHidroviaria.empreendimento = obraHidroviaria.empreendimento?.id;
         obraHidroviaria.tipo_infraestrutura = obraHidroviaria.tipo_infraestrutura?.id;
         obraHidroviaria.produto = obraHidroviaria.produto?.id;
@@ -392,12 +426,12 @@ export class ObraAereaComponent implements OnInit {
 
           });
       }
-      else if (this.obra.get('tipo').value === 'ferroviaria') {
-        const obraFerroviaria = new ObraFerroviaria(this.obra.value);
+      else if (this.obraForm.get('tipo').value === 'ferroviaria') {
+        const obraFerroviaria = new ObraFerroviaria(this.obraForm.value);
         const user = new User(JSON.parse(localStorage.getItem('user')));
-        obraFerroviaria.dataInicio = moment(this.obra.get('dataInicio').value).format('L');
-        obraFerroviaria.dataConclusao = moment(this.obra.get('dataConclusao').value).format('L');
-        obraFerroviaria.data_base_orcamento = moment(this.obra.get('data_base_orcamento').value).format('L');
+        obraFerroviaria.dataInicio = moment(this.obraForm.get('dataInicio').value).format('L');
+        obraFerroviaria.dataConclusao = moment(this.obraForm.get('dataConclusao').value).format('L');
+        obraFerroviaria.data_base_orcamento = moment(this.obraForm.get('data_base_orcamento').value).format('L');
         obraFerroviaria.empreendimento = obraFerroviaria.empreendimento?.id;
         obraFerroviaria.tipo_infraestrutura = obraFerroviaria.tipo_infraestrutura?.id;
         obraFerroviaria.produto = obraFerroviaria.produto?.id;
@@ -418,12 +452,12 @@ export class ObraAereaComponent implements OnInit {
 
           });
       }
-      else if (this.obra.get('tipo').value === 'portuaria') {
-        const obraPortuaria = new ObraPortuaria(this.obra.value);
+      else if (this.obraForm.get('tipo').value === 'portuaria') {
+        const obraPortuaria = new ObraPortuaria(this.obraForm.value);
         const user = new User(JSON.parse(localStorage.getItem('user')));
-        obraPortuaria.dataInicio = moment(this.obra.get('dataInicio').value).format('L');
-        obraPortuaria.dataConclusao = moment(this.obra.get('dataConclusao').value).format('L');
-        obraPortuaria.data_base_orcamento = moment(this.obra.get('data_base_orcamento').value).format('L');
+        obraPortuaria.dataInicio = moment(this.obraForm.get('dataInicio').value).format('L');
+        obraPortuaria.dataConclusao = moment(this.obraForm.get('dataConclusao').value).format('L');
+        obraPortuaria.data_base_orcamento = moment(this.obraForm.get('data_base_orcamento').value).format('L');
         obraPortuaria.empreendimento = obraPortuaria.empreendimento?.id;
         obraPortuaria.tipo_infraestrutura = obraPortuaria.tipo_infraestrutura?.id;
         obraPortuaria.produto = obraPortuaria.produto?.id;
@@ -444,12 +478,12 @@ export class ObraAereaComponent implements OnInit {
 
           });
       }
-      else if (this.obra.get('tipo').value === 'rodoviaria') {
-        const obraRodoviaria = new ObraRodoviaria(this.obra.value);
+      else if (this.obraForm.get('tipo').value === 'rodoviaria') {
+        const obraRodoviaria = new ObraRodoviaria(this.obraForm.value);
         const user = new User(JSON.parse(localStorage.getItem('user')));
-        obraRodoviaria.dataInicio = moment(this.obra.get('dataInicio').value).format('L');
-        obraRodoviaria.dataConclusao = moment(this.obra.get('dataConclusao').value).format('L');
-        obraRodoviaria.data_base_orcamento = moment(this.obra.get('data_base_orcamento').value).format('L');
+        obraRodoviaria.dataInicio = moment(this.obraForm.get('dataInicio').value).format('L');
+        obraRodoviaria.dataConclusao = moment(this.obraForm.get('dataConclusao').value).format('L');
+        obraRodoviaria.data_base_orcamento = moment(this.obraForm.get('data_base_orcamento').value).format('L');
         obraRodoviaria.empreendimento = obraRodoviaria.empreendimento?.id;
         obraRodoviaria.tipo_infraestrutura = obraRodoviaria.tipo_infraestrutura?.id;
         obraRodoviaria.produto = obraRodoviaria.produto?.id;
@@ -482,7 +516,6 @@ export class ObraAereaComponent implements OnInit {
       }
     }
   }
-
 
 }
 

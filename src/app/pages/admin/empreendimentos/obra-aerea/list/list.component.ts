@@ -14,7 +14,7 @@ import { Observable, Subject, takeUntil, take, switchMap } from 'rxjs';
 export class ListObrasComponent implements OnInit, OnDestroy {
 
   obras: any[];
-  obras$: Observable<any[]>;
+  obras$: Observable<any>;
   obraCount: number = 0;
   totalElements: number = 0;
   pageSize = 0;
@@ -26,21 +26,17 @@ export class ListObrasComponent implements OnInit, OnDestroy {
     private _router: Router,
     public dialog: MatDialog,
     private _obraService: EmpreendimentosService
-  ) {
-
-   
-
-  }
+  ) { }
 
   ngOnInit() {
     this.obras$ = this._obraService.obras$;
-    this._obraService.getObras()
+    this.obras$
     .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((result) => {
-        this.obras = result.data;
-        this.obraCount = result.data.length;
-        this.pageSize = result.data.length;
-        this.totalElements = result.data.length;
+        this.obras = result;
+        this.obraCount = result.length;
+        this.pageSize = result.length;
+        this.totalElements = result.length;
       });
    }
 

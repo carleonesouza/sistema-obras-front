@@ -1,56 +1,195 @@
-<div class="flex flex-col flex-auto min-w-0">
+<div class="flex flex-col flex-auto w-full">
 
     <!-- Header -->
-    <div class="flex flex-col shadow bg-card">
+    <div class="flex flex-col w-full">
 
-        <!-- Cover image -->
-        <div class="h-40 lg:h-80 object-cover bg-slate-400"></div>
+        <!-- Header -->
+        <div class="relative w-full h-40 sm:h-48 px-8 sm:px-12 bg-accent-100 dark:bg-accent-700">
+            <!-- Background -->
+            <ng-container>
+                <img class="absolute inset-0 object-cover w-full h-full">
+            </ng-container>
+        
+        </div>
 
-        <!-- User info -->
-        <div class="flex flex-col flex-0 lg:flex-row items-center max-w-5xl w-full mx-auto px-8 lg:h-18 bg-card">
+        <div class="relative flex flex-col flex-auto items-center p-6 pt-0 sm:p-12 sm:pt-0" *ngIf="user">
+            <div class="w-full ">
 
-            <!-- Avatar -->
-            <div class="-mt-26 lg:-mt-22 rounded-full">
-                <img
-                    class="w-32 h-32 rounded-full ring-4 ring-bg-card"
-                    src="assets/images/logo/icon.svg"
-                    alt="User avatar">
+                <!-- Avatar and actions -->
+                <div class="flex flex-auto items-end -mt-16">
+                    <!-- Avatar -->
+                    <div
+                        class="flex items-center justify-center w-32 h-32 rounded-full overflow-hidden ring-4 ring-bg-card">
+
+                        <div
+                            class="flex items-center justify-center w-full h-full rounded overflow-hidden uppercase text-8xl font-bold leading-none bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
+                            {{user?.nome.charAt(0)}}
+                        </div>
+                    </div>
+                   
+                </div>
+
+            <div class="font-bold text-2xl flex w-full">
+                <ng-container>
+                    <!-- Header -->
+                    <div class="relative flex flex-col flex-auto px-2 sm:px-7 w-full">
+                        <div class="flex flex-col justify-center items-center w-full p-6" *ngIf="saving">
+                            <ng-container>
+                                <div>
+                                    <h3 class="text-3xl loader">Salvando dados
+                                        <span class="dot dot-1"></span>
+                                        <span class="dot dot-2"></span>
+                                        <span class="dot dot-3"></span>
+                                        <span class="dot dot-4"></span>
+                                    </h3>
+                                </div>
+                            </ng-container>
+                        </div>
+                        <!-- Form -->
+                        <form [formGroup]="userForm" (ngSubmit)="onSubmit()" novalidate *ngIf="!saving">
+
+                            <!-- Section -->
+                            <div class="w-full pt-3">
+                                <div class="mt-6 w-full">
+                                    <h3 class="text-3xl">Bem-vindo {{user?.nome}}!</h3>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-6 w-full mt-8 px-8 py-6 pb-4">
+                                <!-- Name -->
+                                <div class="sm:col-span-4">
+                                    <mat-form-field class="fuse-mat-no-subscript w-full">
+                                        <mat-label>Nome</mat-label>
+                                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:user'"
+                                            matPrefix></mat-icon>
+                                        <input [formControlName]="'nome'" matInput>
+                                    </mat-form-field>
+                                </div>
+                                <!-- Username -->
+                                <div class="sm:col-span-4">
+                                    <mat-form-field class="fuse-mat-no-subscript w-full">
+                                        <mat-label>Email</mat-label>
+                                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:mail'"
+                                            matPrefix></mat-icon>
+                                        <input [formControlName]="'email'" matInput>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="sm:col-span-4">
+                                    <mat-form-field class="fuse-mat-no-subscript w-full">
+                                        <mat-label>Telefone</mat-label>
+                                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:phone'"
+                                            matPrefix></mat-icon>
+                                        <input [formControlName]="'telefone'" mask="(00) 0 0000-0000"
+                                            [placeholder]="'Telefone'" matInput>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="sm:col-span-4">
+                                    <mat-form-field class="fuse-mat-no-subscript w-full">
+                                        <mat-label>Instituição Setor</mat-label>
+                                        <mat-icon class="icon-size-5" svgIcon="mat_solid:apartment"
+                                            matPrefix></mat-icon>
+                                        <input [formControlName]="'instituicao_setor'"
+                                            [placeholder]="'Instituição Setor'" matInput>
+                                    </mat-form-field>
+                                </div>
+
+
+                            </div>
+
+                            <!-- Divider -->
+                            <div class="mt-11 mb-10 border-t"></div>
+
+                            <ng-container>
+                                <!-- Section -->
+                                <div class="w-full">
+                                    <div class="mt-6 w-full">
+                                        <h3 class="text-3xl">Alterar Senha</h3>
+                                    </div>
+                                </div>
+                                <div class="grid sm:grid-cols-4 gap-6 w-full mt-8 px-8 py-6 pb-4">
+                                    <!-- Current password -->
+                                    <div class="sm:col-span-4">
+                                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                                            <mat-label>Senha</mat-label>
+                                            <!-- <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:key'" matPrefix></mat-icon> -->
+                                            <input matInput formControlName="senha" [type]="hide ? 'password' : 'text'"
+                                                maxlength="8">
+                                            <button mat-icon-button matSuffix (click)="hide = !hide" type="button"
+                                                [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                            </button>
+                                        </mat-form-field>
+                                    </div>
+                                    <!-- New password -->
+                                    <div class="sm:col-span-4">
+                                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                                            <mat-label>Confirmar Senha</mat-label>
+                                            <!-- <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:key'" matPrefix></mat-icon> -->
+                                            <input matInput formControlName="senha_confirmation"
+                                                [type]="hide_confirm ? 'password' : 'text'" maxlength="8"
+                                                appConfirmEqualValidator="senha">
+
+                                            <button mat-icon-button matSuffix (click)="hide_confirm = !hide_confirm" type="button"
+                                                [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide_confirm">
+                                                <mat-icon>{{hide_confirm ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                            </button>
+
+                                        </mat-form-field>
+                                        <mat-error
+                                            *ngIf="userControlsForm.senha_confirmation.invalid && (userControlsForm.senha_confirmation.dirty || userControlsForm.senha_confirmation.touched)"
+                                            class="mt-1 text-md text-hint">
+                                            Senhas não são iguais!
+                                        </mat-error>
+                                        <div class="mt-1 text-md text-hint">Mínimo de 8 caracteres. Deve incluir
+                                            números, letras
+                                            e
+                                            caracteres especiais.</div>
+                                        <!-- <div class="px-3 mr-1 -ml-2 sm:ml-0 w-full">
+                                            <ng-container>
+                                                <div class="flex items-center" id="troca-senha">
+                                                    <button class="w-8 h-8 min-h-8" mat-icon-button type="button"
+                                                        matTooltip="Troca Senha" (click)="updatePassword()">
+                                                        <mat-icon class="icon-size-5" [color]="'warn'"
+                                                            [svgIcon]="'mat_outline:published_with_changes'">
+                                                        </mat-icon>
+                                                    </button>
+                                                </div>
+                                            </ng-container>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <!-- Divider -->
+                            <div class="mt-11 mb-10 border-t"></div>
+                            <!-- Actions -->
+                            <div class="flex items-center justify-end mb-3">
+
+                                <!-- Inativar -->
+                                
+                                <!-- Cancel -->
+                                <button class="ml-auto" type="button" mat-button [matTooltip]="'Cancelar'"
+                                    (click)="cancelEdit()">
+                                    Cancelar
+                                </button>
+
+                                <!-- Save -->
+                                <button *ngIf="!editMode" class="ml-2" mat-flat-button [color]="'primary'" type="submit"
+                                    [matTooltip]="'Salvar'" [disabled]="userForm.invalid">
+                                    Salvar
+                                </button>
+
+                                <!-- Update -->
+                                <button *ngIf="editMode" class="ml-2" mat-flat-button type="button" [color]="'primary'"
+                                    [matTooltip]="'Atualizar'" [disabled]="userForm.invalid" (click)="updateUser()">
+                                    Atualizar
+                                </button>
+                            </div>
+                        </form>
+
+                    </div>
+                </ng-container>
             </div>
-
-            <!-- Details -->
-            <div class="flex flex-col items-center lg:items-start mt-4 lg:mt-0 lg:ml-8">
-                <div class="text-lg font-bold leading-none"></div>
-                <div class="text-secondary"></div>
-            </div>
-
-            <!-- Separator -->
-            <div class="hidden lg:flex h-8 mx-8 border-l-2"></div>
-
-           
-
-           
-
         </div>
 
     </div>
-
-    <!-- Main -->
-    <div class="flex flex-auto justify-center w-full max-w-5xl mx-auto p-6 sm:p-8">
-
-        <!-- Column -->
-        <div class="hidden lg:flex flex-col items-start mr-8">
-
-           <div class="font-bold text-2xl">
-            Em Breve...
-           </div>
-
-          
-
-       
-
-
-        </div>
-
-    </div>
-
-</div>

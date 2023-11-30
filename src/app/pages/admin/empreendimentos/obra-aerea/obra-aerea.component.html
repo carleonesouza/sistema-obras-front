@@ -1,7 +1,7 @@
 <ng-container *ngIf="!saving; else noItems">
     <div class="mt-6 w-full">
-        <div class="space-y-4 w-full">
-            <form [formGroup]="obra" (ngSubmit)="onSubmit()" enctype="multipart/form-data" novalidate>
+        <div class="w-full">
+            <form [formGroup]="obraForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data" novalidate>
                 <ng-container>
                     <div class="mt-6 w-full p-6">
                         <h3 class="text-3xl">Obra </h3>
@@ -10,7 +10,7 @@
                         <div class="flex flex-col px-8 py-6 pb-4 shadow-xl w-full">
                             <div class="mt-4 flex flex-wrap">
                                 <ng-container>
-                                    <div class="flex flex-wrap space-x-4 w-full">
+                                    <div class="flex flex-wrap sm:space-x-4 w-full">
                                         <div class="flex-auto">
                                             <mat-form-field appearance="outline" class="w-full">
                                                 <mat-label *ngIf="!isLoading">Selecione o Empreendimento </mat-label>
@@ -30,7 +30,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="flex flex-wrap space-x-4 w-full">
+                                    <div class="flex flex-wrap sm:space-x-4 w-full">
                                         <div class="flex-auto">
                                             <mat-form-field class=" w-full" appearance="outline">
                                                 <mat-label>Descrição</mat-label>
@@ -58,7 +58,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                    <div class="mt-4 flex flex-wrap sm:space-x-4 w-full">
                                         <div class="flex-auto">
                                             <mat-form-field class=" w-full" appearance="outline">
                                                 <mat-label>Valor Global</mat-label>
@@ -81,7 +81,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                    <div class="mt-4 flex flex-wrap sm:space-x-4 w-full">
                                         <div class="flex-auto">
                                             <mat-form-field class="flex-auto" appearance="outline">
                                                 <mat-label>Instrumento</mat-label>
@@ -112,7 +112,7 @@
 
                                     </div>
 
-                                    <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                    <div class="mt-4 flex flex-wrap sm:space-x-4 w-full">
                                         <div class="flex-auto">
                                             <mat-form-field class="w-full" appearance="outline">
                                                 <mat-label>Data Inicío</mat-label>
@@ -159,7 +159,7 @@
                                             </mat-form-field>
                                         </div>
                                     </div>
-                                    <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                    <div class="mt-4 flex flex-wrap sm:space-x-4 w-full">
                                         <div class="flex-auto">
                                             <mat-form-field appearance="outline" class="w-full">
                                                 <mat-label *ngIf="!isLoading">Produto</mat-label>
@@ -195,7 +195,7 @@
                                             </mat-form-field>
                                         </div>
                                     </div>
-                                    <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                    <div class="mt-4 flex flex-wrap sm:space-x-4 w-full">
                                         <div class="flex-auto">
                                             <mat-form-field appearance="outline" class="w-full">
                                                 <mat-label *ngIf="!isLoading">Situação</mat-label>
@@ -214,7 +214,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="mt-4 flex justify-between items-center space-x-4 w-full">
+                                    <div class="mt-4 flex sm:flex-wrap md:flex-nowrap justify-between items-center sm:space-x-4 md:space-x-4 w-full">
                                         <div class="flex-auto w-full">
                                             <mat-form-field class="w-full" appearance="fill">
                                                 <mat-label>Documentos Adicionais</mat-label>
@@ -232,9 +232,9 @@
                                                   
                                                 </div> 
                                              
-                                            </mat-form-field>
-                                          
+                                            </mat-form-field>                                          
                                         </div>
+
                                         <div class="flex-auto w-full">
                                             <mat-form-field class="w-full" appearance="fill">
                                                 <mat-label>Arquivo Georeferênciado</mat-label>
@@ -251,9 +251,9 @@
                                                  
                                             </mat-form-field>
                                         </div>
-                                        <div class="flex-auto ">
+                                        <div class="flex-auto sm:w-full md:w-auto">
                                             <button mat-fab color="primary" matTooltip="Fazer Upload do Arquivo Selecionado" 
-                                            class="hidden sm:flex icon-size-10" type="button" (click)="uploadFilesSelected()">
+                                            class="sm:flex icon-size-10" type="button" (click)="uploadFilesSelected()">
                                                 <mat-icon svgIcon="mat_solid:upload_file"></mat-icon>
                                                </button>  
                                         </div>
@@ -266,7 +266,7 @@
                                             <h3 class="text-3xl">Endereço</h3>
                                         </div>
                                         <ng-container>
-                                            <div class="flex flex-wrap space-x-4 w-full">
+                                            <div class="flex flex-wrap sm:space-x-4 w-full">
                                                 <div class="flex-auto">
                                                     <mat-form-field appearance="outline" class="w-full">
                                                         <mat-label *ngIf="!isLoading">Estado </mat-label>
@@ -295,7 +295,7 @@
                                                 </div>
 
                                             </div>
-                                            <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                            <div class="mt-4 flex flex-wrap sm:space-x-4 w-full">
                                                 <div class="flex-auto">
                                                     <mat-form-field class=" w-full" appearance="outline">
                                                         <mat-label>Latitude</mat-label>
@@ -324,7 +324,7 @@
                                         <div class="w-full pb-6">
                                             <h3 class="text-3xl">Tipo Obra: Aeroportuária </h3>
                                         </div>
-                                        <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                        <div class="mt-4 flex flex-wrap sm:space-x-4 w-full">
                                             <div class="flex-auto">
                                                 <mat-form-field class="w-full" appearance="outline">
                                                     <mat-label>Código IATA</mat-label>
@@ -336,7 +336,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                        <div class="mt-4 flex flex-wrap sm:space-x-4 w-full">
                                             <div class="flex-auto">
                                                 <mat-form-field class=" w-full" appearance="outline">
                                                     <mat-label>Tipo de Avião que será recebido com base
@@ -350,7 +350,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                        <div class="mt-4 flex flex-wrap sm:space-x-4 w-full">
                                             <div class="flex-auto">
                                                 <mat-form-field class=" w-full" appearance="outline">
                                                     <mat-label>Nova Extensão</mat-label>
@@ -387,7 +387,7 @@
                                         <div class="w-full pb-6">
                                             <h3 class="text-3xl">Tipo Obra: Rodoviária </h3>
                                         </div>
-                                        <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                        <div class="mt-4 flex flex-wrap sm:space-x-4 w-full">
                                             <div class="flex-auto">
                                                 <mat-form-field class="w-full" appearance="outline">
                                                     <mat-label>Rodovia</mat-label>
@@ -416,7 +416,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                        <div class="mt-4 flex flex-wrap sm:space-x-4 w-full">
                                             <div class="flex-auto">
                                                 <mat-form-field class=" w-full" appearance="outline">
                                                     <mat-label>Extensão KM</mat-label>
@@ -453,7 +453,7 @@
                                         <div class="w-full pb-6">
                                             <h3 class="text-3xl">Tipo Obra: Portuária</h3>
                                         </div>
-                                        <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                        <div class="mt-4 flex flex-wrap sm:space-x-4 w-full">
                                             <div class="flex-auto">
                                                 <mat-form-field class="w-full" appearance="outline">
                                                     <mat-label>Tipo Embarcação</mat-label>
@@ -475,7 +475,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                        <div class="mt-4 flex flex-wrap sm:space-x-4 w-full">
                                             <div class="flex-auto">
                                                 <mat-form-field class=" w-full" appearance="outline">
                                                     <mat-label>Nova Calado a ser Atendido pelo Porto</mat-label>
@@ -496,7 +496,7 @@
                                                 </mat-form-field>
                                             </div>
                                         </div>
-                                        <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                        <div class="mt-4 flex flex-wrap sm:space-x-4 w-full">
 
                                             <div class="flex-auto">
                                                 <mat-form-field class=" w-full" appearance="outline">
@@ -527,7 +527,7 @@
                                         <div class="w-full pb-6">
                                             <h3 class="text-3xl">Tipo Obra: Hidroviária</h3>
                                         </div>
-                                        <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                        <div class="mt-4 flex flex-wrap sm:space-x-4 w-full">
                                             <div class="flex-auto">
                                                 <mat-form-field class="w-full" appearance="outline">
                                                     <mat-label>Situação da Hidrovia</mat-label>
@@ -539,7 +539,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                        <div class="mt-4 flex flex-wrap sm:space-x-4 w-full">
                                             <div class="flex-auto">
                                                 <mat-form-field class=" w-full" appearance="outline">
                                                     <mat-label>Possui Barragem</mat-label>
@@ -561,7 +561,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                        <div class="mt-4 flex flex-wrap sm:space-x-4 w-full">
                                             <div class="flex-auto">
                                                 <mat-form-field class=" w-full" appearance="outline">
                                                     <mat-label>Tipo de Embarção que Poderá Utilizar a Nova
@@ -586,7 +586,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                        <div class="mt-4 flex flex-wrap sm:space-x-4 w-full">
                                             <div class="flex-auto">
                                                 <mat-form-field class=" w-full" appearance="outline">
                                                     <mat-label>Profundiade Mínima</mat-label>
@@ -608,7 +608,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                        <div class="mt-4 flex flex-wrap sm:space-x-4 w-full">
                                             <div class="flex-auto">
                                                 <mat-form-field class=" w-full" appearance="outline">
                                                     <mat-label>Comboios de Cheia</mat-label>
@@ -630,7 +630,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                        <div class="mt-4 flex flex-wrap sm:space-x-4 w-full">
                                             <div class="flex-auto">
                                                 <mat-form-field class=" w-full" appearance="outline">
                                                     <mat-label>Nova Largura</mat-label>
@@ -659,7 +659,7 @@
                                         <div class="w-full pb-6">
                                             <h3 class="text-3xl">Tipo Obra: Ferroviária</h3>
                                         </div>
-                                        <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                        <div class="mt-4 flex flex-wrap sm:space-x-4 w-full">
                                             <div class="flex-auto">
                                                 <mat-form-field class="w-full" appearance="outline">
                                                     <mat-label>KM Inicial</mat-label>
@@ -692,7 +692,7 @@
                                         </div>
 
 
-                                        <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                        <div class="mt-4 flex flex-wrap sm:space-x-4 w-full">
                                             <div class="flex-auto">
                                                 <mat-form-field class=" w-full" appearance="outline">
                                                     <mat-label>Nova Bitola </mat-label>
@@ -733,7 +733,7 @@
                                         <div class="w-full pb-6">
                                             <h3 class="text-3xl">Tipo Obra: Dutoviária</h3>
                                         </div>
-                                        <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                        <div class="mt-4 flex flex-wrap sm:space-x-4 w-full">
                                             <div class="flex-auto">
                                                 <mat-form-field appearance="outline" class="w-full">
                                                     <mat-label>Tipo do Duto </mat-label>
@@ -746,7 +746,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                        <div class="mt-4 flex flex-wrap sm:space-x-4 w-full">
                                             <div class="flex-auto">
                                                 <mat-form-field appearance="outline" class="w-full">
                                                     <mat-label>Função da Estrutura</mat-label>
@@ -771,7 +771,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                        <div class="mt-4 flex flex-wrap sm:space-x-4 w-full">
                                             <div class="flex-auto">
                                                 <mat-form-field appearance="outline" class="w-full">
                                                     <mat-label>Função da Estrutura</mat-label>
@@ -794,7 +794,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                        <div class="mt-4 flex flex-wrap sm:space-x-4 w-full">
                                             <div class="flex-auto">
                                                 <mat-form-field class=" w-full" appearance="outline">
                                                     <mat-label>Código de Destino</mat-label>
@@ -826,10 +826,10 @@
                                             </div>
                                         </div>
 
-                                        <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                        <div class="mt-4 flex gap-3 flex-wrap w-full">
 
                                             <div class="flex-auto">
-                                                <mat-form-field class=" w-full" appearance="outline">
+                                                <mat-form-field class="w-full" appearance="outline">
                                                     <mat-label>Espessura (m)</mat-label>
                                                     <mat-icon matPrefix class="hidden sm:flex icon-size-5"
                                                         [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
@@ -849,7 +849,7 @@
                                             </div>
 
                                             <div class="flex-auto">
-                                                <mat-form-field class=" w-full" appearance="outline">
+                                                <mat-form-field class="w-full" appearance="outline">
                                                     <mat-label>Vazão Operacional (m³/dia)</mat-label>
                                                     <mat-icon matPrefix class="hidden sm:flex icon-size-5"
                                                         [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
@@ -859,7 +859,7 @@
                                             </div>
 
                                             <div class="flex-auto">
-                                                <mat-form-field class=" w-full" appearance="outline">
+                                                <mat-form-field class="w-full" appearance="outline">
                                                     <mat-label>Nova Área Impactada (Ha)</mat-label>
                                                     <mat-icon matPrefix class="hidden sm:flex icon-size-5"
                                                         [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
@@ -917,7 +917,7 @@
 
                     <!-- Update -->
                     <button *ngIf="editMode" class="ml-2" mat-flat-button type="button" [color]="'primary'"
-                        [matTooltip]="'Atualizar'" [disabled]="obra.invalid" (click)="updateEmpreendimento()">
+                        [matTooltip]="'Atualizar'" [disabled]="obraForm.invalid" (click)="updateEmpreendimento()">
                         Atualizar
                     </button>
                 </div>

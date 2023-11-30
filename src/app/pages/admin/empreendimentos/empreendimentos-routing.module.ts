@@ -10,7 +10,7 @@ import { IntervencoesComponent } from './intervencoes/intervencoes.component';
 import { SituacaoComponent } from './situacao/situacao.component';
 import { ListObrasComponent } from './obra-aerea/list/list.component';
 import { ObraDetailsComponent } from './obra-aerea/details/details.component';
-import { ObraResolver } from './obra.resolver';
+import { ObraResolver, ObrasResolver } from './obra.resolver';
 
 
 const routes: Routes = [
@@ -35,12 +35,15 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'obras',
+        path: 'cadastrar-obras',
         component: ObraAereaComponent
       },
       {
         path:'todas-obras',
         component: ListObrasComponent,
+        resolve:{
+          obras: ObrasResolver
+        }
       },
       {
         path:'todas-obras/:id',

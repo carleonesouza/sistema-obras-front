@@ -1,41 +1,29 @@
-import { ActivatedRouteSnapshot, Resolve, ResolveFn, Router, RouterStateSnapshot } from '@angular/router';
-import { EmpreendimentosService } from './empreendimentos.service';
-import { Observable, catchError, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
+import {
+  Router, Resolve,
+  RouterStateSnapshot,
+  ActivatedRouteSnapshot
+} from '@angular/router';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { UsersService } from '../admin/settings/users/users.service';
 
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class ObrasResolver implements Resolve<boolean> {
 
-  constructor(private _empreendimentosService: EmpreendimentosService){}
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
-    return this._empreendimentosService.getObras();
-  }
-}
-
-
-
-@Injectable({
-  providedIn: 'root'
-})
-
-export class ObraResolver implements Resolve<any>
+export class ProfileResolver implements Resolve<any>
 {
     /**
      * Constructor
      */
     constructor(
-        private _empreendimentosService: EmpreendimentosService,
+        private _userService: UsersService,
         private _router: Router,
     ) {
     }
-  
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
 
     /**
      * Resolver
@@ -44,9 +32,8 @@ export class ObraResolver implements Resolve<any>
      * @param state
      */
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
-   
         if (route.paramMap.get('id') !== 'add') {
-            return this._empreendimentosService.getObra(route.paramMap.get('id'))
+            return this._userService.getUserById(route.paramMap.get('id'))
                 .pipe(
                     // Error here means the requested individuo is not available
                     catchError((error) => {
@@ -67,4 +54,3 @@ export class ObraResolver implements Resolve<any>
         }
     }
 }
-
