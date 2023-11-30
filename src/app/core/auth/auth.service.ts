@@ -159,6 +159,7 @@ export class AuthService {
      * Sign out
      */
     signOut(): Observable<any> {
+        const user = new User(JSON.parse(localStorage.getItem('user')));
 
         // Return the observable
         return this._httpClient.post(environment.apiManager + 'logout', {})
