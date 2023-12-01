@@ -10,6 +10,7 @@ export class User {
     senha?: string;
     profile?: Perfil;
     senha_confirmation: string;
+    senha_atual?: string;
     tipo_usuario_id: string;
     tipo_usuario: any;
     status?: boolean;

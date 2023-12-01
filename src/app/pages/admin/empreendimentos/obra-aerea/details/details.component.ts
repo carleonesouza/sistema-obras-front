@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DialogMessage } from 'app/utils/dialog-message ';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { EmpreendimentosService } from '../../empreendimentos.service';
@@ -77,6 +77,7 @@ export class ObraDetailsComponent implements OnInit {
     private _obraService: EmpreendimentosService,
     private _formBuilder: FormBuilder, 
     public _tipoObraDialog: MatDialog, 
+    private _router: Router,
     public _snackBar: MatSnackBar,
     private intervencaoService: IntervencoesService, 
     private situacaoService: SituacaoService
@@ -109,7 +110,6 @@ export class ObraDetailsComponent implements OnInit {
       .getAllEmpreendimentos()
       .subscribe((emprs) => {
         this.empreendimentos = emprs.data;
-        console.log(emprs)
         this.isLoading = false;
       });
 
@@ -182,7 +182,6 @@ export class ObraDetailsComponent implements OnInit {
 
           if (this.obra) {
             this.initializeObraForm(this.obra.tipo)
-            console.log(this.obra)
             this.obraForm.patchValue(this.obra)
             this.obraForm.patchValue({
               empreendimento: this.obra.empreendimento.empreendimento,
@@ -405,6 +404,8 @@ export class ObraDetailsComponent implements OnInit {
 
 
   onSubmit() {
+    console.log('Teste')
+
     if (this.obraForm) {
       if (this.obraForm.get('tipo').value === 'aerea') {
         const obraAerea = new ObraAereo(this.obraForm.value);
@@ -421,13 +422,14 @@ export class ObraDetailsComponent implements OnInit {
         obraAerea.intervencao = obraAerea.intervencao?.id;
         obraAerea.status = obraAerea.status?.id;
         obraAerea.uf = obraAerea.uf?.id;
-        obraAerea.arquivoGeorreferenciado = this.uploadFiles.get('arquivoGeorreferenciado').toString();
-        obraAerea.documentosAdicionais = this.uploadFiles.get('documentosAdicionais').toString()
+        obraAerea.arquivoGeorreferenciado = this.uploadFiles.get('arquivoGeorreferenciado')?.toString();;
+        obraAerea.documentosAdicionais = this.uploadFiles.get('documentosAdicionais')?.toString();;
 
-        this._obraService.addObra(obraAerea)
+        this._obraService.editObra(obraAerea)
           .pipe(takeUntil(this._unsubscribeAll))
           .subscribe(() => {
-            this._snackBar.open('Obra Salvo com Sucesso', 'Fechar', {
+            this._router.navigate(['admin/empreendimentos/todas-obras']);
+            this._snackBar.open('Obra Atualizada com Sucesso', 'Fechar', {
               duration: 3000
             });
           });
@@ -449,13 +451,14 @@ export class ObraDetailsComponent implements OnInit {
         obraDuto.tipo_duto = obraDuto.tipo_duto?.id;
         obraDuto.funcao_estrutura = obraDuto.funcao_estrutura?.id;
         obraDuto.nivel_duto = obraDuto.nivel_duto?.id;
-        obraDuto.arquivoGeorreferenciado = this.uploadFiles.get('arquivoGeorreferenciado').toString();
-        obraDuto.documentosAdicionais = this.uploadFiles.get('documentosAdicionais').toString()
+        obraDuto.arquivoGeorreferenciado = this.uploadFiles.get('arquivoGeorreferenciado')?.toString();;
+        obraDuto.documentosAdicionais = this.uploadFiles.get('documentosAdicionais')?.toString();
 
-        this._obraService.addObra(obraDuto)
+        this._obraService.editObra(obraDuto)
           .pipe(takeUntil(this._unsubscribeAll))
           .subscribe(() => {
-            this._snackBar.open('Obra Salvo com Sucesso', 'Fechar', {
+            this._router.navigate(['admin/empreendimentos/todas-obras']);
+            this._snackBar.open('Obra Atualizada com Sucesso', 'Fechar', {
               duration: 3000
             });
 
@@ -475,13 +478,14 @@ export class ObraDetailsComponent implements OnInit {
         obraHidroviaria.intervencao = obraHidroviaria.intervencao?.id;
         obraHidroviaria.status = obraHidroviaria.status?.id;
         obraHidroviaria.uf = obraHidroviaria.uf?.id;
-        obraHidroviaria.arquivoGeorreferenciado = this.uploadFiles.get('arquivoGeorreferenciado').toString();
-        obraHidroviaria.documentosAdicionais = this.uploadFiles.get('documentosAdicionais').toString()
+        obraHidroviaria.arquivoGeorreferenciado = this.uploadFiles.get('arquivoGeorreferenciado')?.toString();;
+        obraHidroviaria.documentosAdicionais = this.uploadFiles.get('documentosAdicionais')?.toString();
 
-        this._obraService.addObra(obraHidroviaria)
+        this._obraService.editObra(obraHidroviaria)
           .pipe(takeUntil(this._unsubscribeAll))
           .subscribe(() => {
-            this._snackBar.open('Obra Salvo com Sucesso', 'Fechar', {
+            this._router.navigate(['admin/empreendimentos/todas-obras']);
+            this._snackBar.open('Obra Atualizada com Sucesso', 'Fechar', {
               duration: 3000
             });
 
@@ -501,13 +505,14 @@ export class ObraDetailsComponent implements OnInit {
         obraFerroviaria.intervencao = obraFerroviaria.intervencao?.id;
         obraFerroviaria.status = obraFerroviaria.status?.id;
         obraFerroviaria.uf = obraFerroviaria.uf?.id;   
-        obraFerroviaria.arquivoGeorreferenciado = this.uploadFiles.get('arquivoGeorreferenciado').toString();
-        obraFerroviaria.documentosAdicionais = this.uploadFiles.get('documentosAdicionais').toString()
+        obraFerroviaria.arquivoGeorreferenciado = this.uploadFiles.get('arquivoGeorreferenciado')?.toString();;
+        obraFerroviaria.documentosAdicionais = this.uploadFiles.get('documentosAdicionais')?.toString();
 
-        this._obraService.addObra(obraFerroviaria)
+        this._obraService.editObra(obraFerroviaria)
           .pipe(takeUntil(this._unsubscribeAll))
           .subscribe(() => {
-            this._snackBar.open('Empreendimento Salvo com Sucesso', 'Fechar', {
+            this._router.navigate(['admin/empreendimentos/todas-obras']);
+            this._snackBar.open('Obra Atualizada com Sucesso', 'Fechar', {
               duration: 3000
             });
 
@@ -527,13 +532,14 @@ export class ObraDetailsComponent implements OnInit {
         obraPortuaria.intervencao = obraPortuaria.intervencao?.id;
         obraPortuaria.status = obraPortuaria.status?.id;
         obraPortuaria.uf = obraPortuaria.uf?.id;
-        obraPortuaria.arquivoGeorreferenciado = this.uploadFiles.get('arquivoGeorreferenciado').toString();
-        obraPortuaria.documentosAdicionais = this.uploadFiles.get('documentosAdicionais').toString()
+        obraPortuaria.arquivoGeorreferenciado = this.uploadFiles.get('arquivoGeorreferenciado')?.toString();;
+        obraPortuaria.documentosAdicionais = this.uploadFiles.get('documentosAdicionais')?.toString();
 
-        this._obraService.addObra(obraPortuaria)
+        this._obraService.editObra(obraPortuaria)
           .pipe(takeUntil(this._unsubscribeAll))
           .subscribe(() => {
-            this._snackBar.open('Obra Salvo com Sucesso', 'Fechar', {
+            this._router.navigate(['admin/empreendimentos/todas-obras']);
+            this._snackBar.open('Obra Atualizada com Sucesso', 'Fechar', {
               duration: 3000
             });
 
@@ -553,13 +559,14 @@ export class ObraDetailsComponent implements OnInit {
         obraRodoviaria.intervencao = obraRodoviaria.intervencao?.id;
         obraRodoviaria.status = obraRodoviaria.status?.id;
         obraRodoviaria.uf = obraRodoviaria.uf?.id;
-        obraRodoviaria.arquivoGeorreferenciado = this.uploadFiles.get('arquivoGeorreferenciado').toString();
-        obraRodoviaria.documentosAdicionais = this.uploadFiles.get('documentosAdicionais').toString()
+        obraRodoviaria.arquivoGeorreferenciado = this.uploadFiles.get('arquivoGeorreferenciado')?.toString();;
+        obraRodoviaria.documentosAdicionais = this.uploadFiles.get('documentosAdicionais')?.toString();
 
-        this._obraService.addObra(obraRodoviaria)
+        this._obraService.editObra(obraRodoviaria)
           .pipe(takeUntil(this._unsubscribeAll))
           .subscribe(() => {
-            this._snackBar.open('Obra Salvo com Sucesso', 'Fechar', {
+            this._router.navigate(['admin/empreendimentos/todas-obras']);
+            this._snackBar.open('Obra Atualizada com Sucesso', 'Fechar', {
               duration: 3000
             });
 
@@ -576,6 +583,7 @@ export class ObraDetailsComponent implements OnInit {
         });
       }
     }
+    
   }
 
 

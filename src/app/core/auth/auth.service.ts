@@ -4,8 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, ReplaySubject, of, throwError } from 'rxjs';
 import { AuthUtils } from 'app/core/auth/auth.utils';
 import { environment } from 'environments/environment';
-import { HandleError } from 'app/utils/handleErrors';
-import { catchError, switchMap, tap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 import { User } from 'app/models/user';
 import { Router } from '@angular/router';
 
@@ -113,20 +112,28 @@ export class AuthService {
 
         return this._httpClient.post(environment.apiManager + 'login', credentials).pipe(
             switchMap((response: any) => {
+                console.log(response);
 
-                // Store the access token in the local storage
-                this.accessToken = response.token;
+                if (response == undefined && response == null) {
+                    this._router.navigate(['sign-in']);
+                    return of(false);
 
-                // Set the authenticated flag to true
-                this._authenticated = true;
-                this.isLoggerIn = true;
+                } else {
+                    // Store the access token in the local storage
+                    this.accessToken = response.token;
 
-                // Store the user on the user service
-                this.user = response.user;
-                localStorage.setItem('user', JSON.stringify(response.user));
+                    // Set the authenticated flag to true
+                    this._authenticated = true;
+                    this.isLoggerIn = true;
 
-                // Return a new observable with the response
-                return of(response);
+                    // Store the user on the user service
+                    this.user = response.user;
+                    localStorage.setItem('user', JSON.stringify(response.user));
+
+                    // Return a new observable with the response
+                    return of(response);
+                }
+
             })
         );
     }
@@ -187,7 +194,7 @@ export class AuthService {
     check(): Observable<boolean> {
         // Check if the user is logged in
         if (!this._authenticated) {
-            
+            this.isLoggerIn = false;
             this._router.navigate(['sign-in']);
             return of(false);
         }

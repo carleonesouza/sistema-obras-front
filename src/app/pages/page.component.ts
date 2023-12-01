@@ -37,7 +37,7 @@ export class PageComponent implements OnInit, OnDestroy {
             icon: 'heroicons_outline:home',
             link: '/inicio'
         },
-        
+
         {
             id: 'admin',
             title: 'Administrativo',
@@ -65,7 +65,7 @@ export class PageComponent implements OnInit, OnDestroy {
                     type: 'basic',
                     icon: 'mat_solid:admin_panel_settings',
                     link: 'admin/setores/lista'
-                }                
+                }
             ]
         },
         {
@@ -75,14 +75,14 @@ export class PageComponent implements OnInit, OnDestroy {
             type: 'collapsable',
             icon: 'mat_outline:storefront',
             link: 'admin/empreendimentos/lista',
-            children:[
+            children: [
                 {
                     id: 'empreendimento',
                     title: 'Empreendimento',
                     type: 'basic',
                     //icon: 'mat_solid:admin_panel_settings',
                     link: 'admin/empreendimentos/lista',
-                }  
+                }
                 ,
                 {
                     id: 'obras',
@@ -118,7 +118,7 @@ export class PageComponent implements OnInit, OnDestroy {
                     type: 'basic',
                     //icon: 'mat_solid:admin_panel_settings',
                     link: 'admin/empreendimentos/situacao'
-                }     
+                }
             ]
         },
         {
@@ -163,16 +163,14 @@ export class PageComponent implements OnInit, OnDestroy {
         this.loginStatus$ = this._authService.isLoggedIn$;
 
         this.loginStatus$.subscribe((auth) => {
-            if (auth) {
-                this.user = new User(JSON.parse(localStorage.getItem('user')));
-              
-
-                  //Set menu for specific role
-            this.navigationData.map((item) => {
-            if (this.user?.tipo_usuario.descricao.toLowerCase() !== 'admin' && item.id === 'admin') {
-                item.hidden = () => true;
-            }
-        });
+            this.user = new User(JSON.parse(localStorage.getItem('user')));
+            if (auth !== undefined && auth !== null && this.user) {
+                //Set menu for specific role
+                this.navigationData.map((item) => {
+                    if (this.user?.tipo_usuario?.descricao.toLowerCase() !== 'admin' && item.id === 'admin') {
+                        item.hidden = () => true;
+                    }
+                });
             }
         });
 

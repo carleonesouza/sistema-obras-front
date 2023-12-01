@@ -41,7 +41,7 @@ export class UsersService {
   }
 
   getUserById(id): Observable<any> {
-    return this._httpClient.get<any>(environment.apiManager + 'usuarios/' + id).pipe(
+    return this._httpClient.get<any>(environment.apiManager + 'common-users/' + id).pipe(
       tap((result) => {
         this._user.next(result?.data);
       }),
@@ -56,6 +56,21 @@ export class UsersService {
         this._user.next(result.data);
       }),
       catchError(this.error.handleError<any>('addUsuario'))
+    );
+  }
+
+  updatePassword(user: any): Observable<any> {
+    return this._httpClient.put<any>(environment.apiManager + 'common-users/' + user.id, user).pipe(
+      tap((result) => {
+        const updatedUsers = this._users.value || [];
+        const userIndex = updatedUsers.findIndex((user) => user.id === user.id);
+        if (userIndex !== -1) {
+          updatedUsers[userIndex] = result.data;
+          this._users.next(updatedUsers);
+        }
+        this._user.next(result.data);
+      }),
+      catchError(this.error.handleError<any>('updateUser'))
     );
   }
 

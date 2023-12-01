@@ -33,6 +33,7 @@ export class ProfileComponent implements OnInit
     loading: boolean = false;
     hide = true;
     hide_confirm = true;
+    atual = true;
     user$: Observable<any>;
     roles$: Observable<any[]>;
     rotas$: Observable<any[]>;
@@ -108,6 +109,7 @@ export class ProfileComponent implements OnInit
         email: new FormControl('', [Validators.required, Validators.email]),
         telefone: new FormControl(''),
         senha: new FormControl(''),
+        senha_atual: new FormControl(''),
         senha_confirmation: new FormControl(''),
         tipo_usuario_id: new FormControl('')
       });
@@ -167,6 +169,36 @@ export class ProfileComponent implements OnInit
         this._router.navigate(['/admin/conta/lista']);
       }
       this.editMode = false;
+    }
+
+    updatePassword() {
+
+      if (this.userForm.valid) {
+        const user = new User();
+        this.saving = true;
+      
+        user.id = this.userForm.value?.id;
+        user.senha = this.userForm.value?.senha;
+        user.senha_confirmation = this.userForm.value?.senha_confirmation;
+        user.senha_atual = this.userForm.value?.senha_atual;
+        delete user.email;
+        delete user.instituicaoSetor;
+        delete user.telefone;
+        delete user.tipo_usuario;
+
+          this._usersService
+            .updatePassword(user)
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe(
+              () => {
+                this.saving = false;
+                // Toggle the edit mode off
+                this._snackBar.open('Senha Atualizada com Sucesso!', 'OK', { duration: 6000 });
+              }
+            );
+        
+      }
+  
     }
     
   

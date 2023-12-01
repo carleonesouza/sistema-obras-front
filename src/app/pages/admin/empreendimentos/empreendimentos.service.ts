@@ -235,6 +235,22 @@ export class EmpreendimentosService {
       );
   }
 
+  editObra(obra: any): Observable<any> {
+    return this._httpClient.put<any>(environment.apiManager + `obras/${obra.id}`, obra)
+    .pipe(
+      tap((result) => {
+        const updatedObras = this._obras.value || [];
+        const obraIndex = updatedObras.findIndex((obr) => obr.id === obra.id);
+        if (obraIndex !== -1) {
+          updatedObras[obraIndex] = result.data;
+          this._obras.next(updatedObras);
+        }
+        this._obra.next(result.data);
+      }),
+      catchError(this.error.handleError<any>('editObra'))
+    );
+  }
+
 
   editEmpreendimento(empreendimento: Empreendimento): Observable<any> {
     return this._httpClient.put<any>(environment.apiManager + `empreendimentos/${empreendimento.id}`, empreendimento)

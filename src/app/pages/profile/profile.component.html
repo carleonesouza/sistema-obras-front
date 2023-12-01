@@ -111,17 +111,32 @@
                                     <!-- Current password -->
                                     <div class="sm:col-span-4">
                                         <mat-form-field class="fuse-mat-no-subscript w-full">
-                                            <mat-label>Senha</mat-label>
+                                            <mat-label>Senha Atual</mat-label>
                                             <!-- <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:key'" matPrefix></mat-icon> -->
-                                            <input matInput formControlName="senha" [type]="hide ? 'password' : 'text'"
+                                            <input matInput formControlName="senha_atual" [type]="atual ? 'password' : 'text'"
                                                 maxlength="8">
-                                            <button mat-icon-button matSuffix (click)="hide = !hide" type="button"
+                                            <button mat-icon-button matSuffix (click)="atual = !atual" type="button"
                                                 [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                                                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                                <mat-icon>{{atual ? 'visibility_off' : 'visibility'}}</mat-icon>
                                             </button>
                                         </mat-form-field>
                                     </div>
                                     <!-- New password -->
+                                    <div class="sm:col-span-4">
+                                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                                            <mat-label>Nova Senha</mat-label>
+                                            <!-- <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:key'" matPrefix></mat-icon> -->
+                                            <input matInput formControlName="senha"
+                                                [type]="hide ? 'password' : 'text'" maxlength="8"
+                                                appConfirmEqualValidator="senha">
+
+                                            <button mat-icon-button matSuffix (click)="hide = !hide" type="button"
+                                                [attr.aria-label]="'Hide password'" [attr.aria-pressed]="atual">
+                                                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                            </button>
+
+                                        </mat-form-field>
+                                    </div>
                                     <div class="sm:col-span-4">
                                         <mat-form-field class="fuse-mat-no-subscript w-full">
                                             <mat-label>Confirmar Senha</mat-label>
@@ -145,9 +160,9 @@
                                             números, letras
                                             e
                                             caracteres especiais.</div>
-                                        <!-- <div class="px-3 mr-1 -ml-2 sm:ml-0 w-full">
+                                        <div class="px-3 mr-1 -ml-2 sm:ml-0 w-full">
                                             <ng-container>
-                                                <div class="flex items-center" id="troca-senha">
+                                                <div class="flex w-full justify-end" id="troca-senha">
                                                     <button class="w-8 h-8 min-h-8" mat-icon-button type="button"
                                                         matTooltip="Troca Senha" (click)="updatePassword()">
                                                         <mat-icon class="icon-size-5" [color]="'warn'"
@@ -156,7 +171,7 @@
                                                     </button>
                                                 </div>
                                             </ng-container>
-                                        </div> -->
+                                        </div>
                                     </div>
                                 </div>
                             </ng-container>
