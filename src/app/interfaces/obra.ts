@@ -1,4 +1,3 @@
-import { Endereco } from "app/models/endereco";
 
 export interface Obra {
     id: number;
@@ -7,11 +6,11 @@ export interface Obra {
     tipo: string; // Por exemplo, 'aero', 'duto', 'ferroviario', etc.
     tipo_infraestrutura: any;
     descricao: string;
+    responsavel: string;
     intervencao: any;
     status: any;
     funcao_estrutura: any;
     instrumento: string;
-    situacao: any;
     sim_nao: any;
     dataInicio: Date | string;
     dataConclusao: Date | string;

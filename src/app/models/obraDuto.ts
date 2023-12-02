@@ -16,7 +16,6 @@ export class ObraDuto implements Obra {
     arquivoGeorreferenciado?: string;
     valorGlobal: number;
     percentualFinanceiroExecutado: number;
-    
     materialTransportado: string;
     codigoOrigem: string;
     codigoDestino: string;
@@ -33,7 +32,7 @@ export class ObraDuto implements Obra {
     tipo_duto: any;
     nivel_duto:any;
     funcao_estrutura: any;
-    situacao: any;
+    responsavel: string;
     sim_nao: any;
     latitude: any;
     longitude: any;

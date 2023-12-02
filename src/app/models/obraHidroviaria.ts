@@ -1,5 +1,4 @@
 import { Obra } from "app/interfaces/obra";
-import { Endereco } from "./endereco";
 
 export class ObraHidroviaria implements Obra {
 
@@ -33,7 +32,7 @@ export class ObraHidroviaria implements Obra {
     produto: any;
     usuario_que_alterou: any;
     funcao_estrutura: any;
-    situacao: any;
+    responsavel: string;
     sim_nao: any;
     latitude: any;
     longitude: any;

@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { EmpreendimentosService } from '../../empreendimentos.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DialogAssociateComponent } from 'app/shared/dialog-association/dialog-associate.component';
-import { Observable, Subject, takeUntil, take, switchMap } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { ObrasService } from '../obras.service';
 
 
 @Component({
@@ -25,7 +25,7 @@ export class ListObrasComponent implements OnInit, OnDestroy {
     private _activatedRoute: ActivatedRoute,
     private _router: Router,
     public dialog: MatDialog,
-    private _obraService: EmpreendimentosService
+    private _obraService: ObrasService
   ) { }
 
   ngOnInit() {

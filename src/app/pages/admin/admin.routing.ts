@@ -16,6 +16,9 @@ const routes: Routes = [
         path: 'empreendimentos', loadChildren: () => import('app/pages/admin/empreendimentos/empreendimentos.module').then(emp => emp.EmpreendimentosModule),
       },
       {
+        path: 'obras', loadChildren: () => import('app/pages/admin/obras/obras.module').then(obra => obra.ObrasModule),
+      },
+      {
         path: 'iniciativas', loadChildren: () => import('app/pages/admin/iniciativas/iniciativas.module').then(c => c.IniciativasModule),
       },
       {

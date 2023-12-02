@@ -11,10 +11,7 @@ import { catchError, tap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class EmpreendimentosService {
-
-  private _empreendimentos: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
-  private _empreendimento: BehaviorSubject<any | null> = new BehaviorSubject(null);
+export class ObrasService {
 
   private _produtos: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
   private _produto: BehaviorSubject<any | null> = new BehaviorSubject(null);
@@ -24,6 +21,10 @@ export class EmpreendimentosService {
 
   private _obras: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
   private _obra: BehaviorSubject<any | null> = new BehaviorSubject(null);
+
+  private _sim_naos: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
+  private _sim_nao: BehaviorSubject<any | null> = new BehaviorSubject(null);
+
 
   private _statues: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
   private _status: BehaviorSubject<any | null> = new BehaviorSubject(null);
@@ -43,13 +44,6 @@ export class EmpreendimentosService {
   constructor(private _httpClient: HttpClient, private error: HandleError, public _snackBar: MatSnackBar) { }
 
 
-  get empreendimentos$(): Observable<any[]> {
-    return this._empreendimentos.asObservable();
-  }
-
-  get empreendimento$(): Observable<any> {
-    return this._empreendimento.asObservable();
-  }
 
   get produtos$(): Observable<any[]> {
     return this._produtos.asObservable();
@@ -85,6 +79,14 @@ export class EmpreendimentosService {
 
   get status$(): Observable<any> {
     return this._status.asObservable();
+  }
+
+  get sim_naos$(): Observable<any[]> {
+    return this._sim_naos.asObservable();
+  }
+
+  get sim_nao$(): Observable<any> {
+    return this._sim_nao.asObservable();
   }
 
   get tipo_dutos$(): Observable<any[]> {
@@ -127,10 +129,20 @@ export class EmpreendimentosService {
       .pipe(
         tap((result) => {
           const data = result?.data;
-          const statues = data;
-          this._statues.next(statues);
+          this._statues.next(data);
         }),
         catchError(this.error.handleError<any>('getAllStatues'))
+      );
+  }
+
+  getSimNaos() {
+    return this._httpClient.get<any>(environment.apiManager + 'simnao')
+      .pipe(
+        tap((result) => {
+          const data = result?.data;
+          this._statues.next(data);
+        }),
+        catchError(this.error.handleError<any>('getSimNaos'))
       );
   }
 
@@ -189,35 +201,13 @@ export class EmpreendimentosService {
     );
   }
 
-  getAllEmpreendimentos(page = 0, size = 10) {
-    
-    return this._httpClient.get<any>(environment.apiManager + 'empreendimentos')
-      .pipe(
-        tap((result) => {
-          let empreendimentos = result.data;       
-          empreendimentos = empreendimentos.sort((a, b) => a.nome.localeCompare(b.nome));   
-          this._empreendimentos.next(empreendimentos);
-        }),
-        catchError(this.error.handleError<any>('getAllempreendimentos'))
-      );
-  }
-
-
-  getEmpreendimentoById(id): Observable<any> {
-      return this._httpClient.get<any>(environment.apiManager + 'empreendimentos/'+id)
-      .pipe(
-        tap((result) => {
-          this._empreendimento.next(result);
-        }),
-        catchError(this.error.handleError<any>('getempreendimentoById'))
-      );
-  }
 
   getObras(page = 0, size = 10) {
     return this._httpClient.get<any>(environment.apiManager + 'obras')
       .pipe(
         tap((result) => {
-          const obras = result.data;          
+          let obras = result.data;     
+          obras = obras.sort((a, b) => a.descricao.localeCompare(b.descricao));       
           this._obras.next(obras);
         }),
         catchError(this.error.handleError<any>('getObras'))
@@ -253,38 +243,6 @@ export class EmpreendimentosService {
   }
 
 
-  editEmpreendimento(empreendimento: Empreendimento): Observable<any> {
-    return this._httpClient.put<any>(environment.apiManager + `empreendimentos/${empreendimento.id}`, empreendimento)
-    .pipe(
-      tap((result) => {
-        const updatedEmpreendimentos = this._empreendimentos.value || [];
-        const empreendimentoIndex = updatedEmpreendimentos.findIndex((empr) => empr.id === empreendimento.id);
-        if (empreendimentoIndex !== -1) {
-          updatedEmpreendimentos[empreendimentoIndex] = result.data;
-          this._empreendimentos.next(updatedEmpreendimentos);
-        }
-        this._empreendimento.next(result.data);
-      }),
-      catchError(this.error.handleError<any>('editEmpreendimento'))
-    );
-  }
-
-  deactivateActiveItem(empreendimento: Empreendimento): Observable<any>{
-    return this._httpClient.patch<any>(environment.apiManager + `empreendimentos/${empreendimento.id}`, empreendimento)
-    .pipe(
-      tap((result) => {
-        const updatedEmpreendimentos = this._empreendimento.value || [];
-        const EmpreendimentoIndex = updatedEmpreendimentos.findIndex((emp) => emp.id === empreendimento.id);
-        if (EmpreendimentoIndex !== -1) {
-          updatedEmpreendimentos[EmpreendimentoIndex] = result.data;
-          this._empreendimentos.next(updatedEmpreendimentos);
-        }
-        this._empreendimento.next(result.data);
-      }),
-      catchError(this.error.handleError<any>('deactivateActiveItem'))
-    );
-  }
-
   uploadFile(formData){
     return this._httpClient.post<any>(environment.apiManager + `upload-file`, formData)
     .pipe(
@@ -296,53 +254,27 @@ export class EmpreendimentosService {
   }
 
 
-  searchEmpreendimentoByObra(contratoId): Observable<any[]>{
-      return this._httpClient.get<any[]>(environment.apiManager + 'empreendimentos/busca-empreendimentos-por-contrato', {params: contratoId})
-      .pipe(
-        tap((empreendimentos) => {
-          this._empreendimentos.next(empreendimentos);
-        }),
-        catchError(this.error.handleError<any>('searchEmpreendimentoByObra'))
-      );
-  }
+  // searchEmpreendimentoByObra(contratoId): Observable<any[]>{
+  //     return this._httpClient.get<any[]>(environment.apiManager + 'empreendimentos/busca-empreendimentos-por-contrato', {params: contratoId})
+  //     .pipe(
+  //       tap((empreendimentos) => {
+  //         this._empreendimentos.next(empreendimentos);
+  //       }),
+  //       catchError(this.error.handleError<any>('searchEmpreendimentoByObra'))
+  //     );
+  // }
 
-  addEmpreendimento(empreendimento): Observable<any> {
-    return this._httpClient.post<any>(environment.apiManager + 'empreendimentos', empreendimento)
-      .pipe(
-        tap((result) => {
-          this._empreendimentos.next([...(this._empreendimentos.value || []), result.data]);
-          this._empreendimento.next(result.data);
-        }),
-        catchError(this.error.handleError<any>('addEmpreendimento'))
-      );
-  }
 
   addObra(obra: any): Observable<any> {
     return this._httpClient.post<any>(environment.apiManager + 'obras', obra)
       .pipe(
         tap((result) => {
-          this._obras.next([...(this._empreendimentos.value || []), result.data]);
+          this._obras.next([...(this._obras.value || []), result.data]);
           this._obra.next(result.data);
         }),
         catchError(this.error.handleError<any>('addObra'))
       );
   }
 
-  deleteEmpreendimento(empreendimento: Empreendimento): Observable<any> {
-    return this._httpClient.delete(environment.apiManager + 'empreendimentos'+empreendimento.id, {
-      body: empreendimento
-    })
-      .pipe(
-        tap(() => {
-          const updatedEmpreendimentos = this._empreendimentos.value || [];
-          const empreendimentoIndex = updatedEmpreendimentos.findIndex((empr) => empr.id === empreendimento.id);
-          if (empreendimentoIndex !== -1) {
-            updatedEmpreendimentos.splice(empreendimentoIndex, 1);
-            this._empreendimentos.next(updatedEmpreendimentos);
-          }
-        }),
-        catchError(this.error.handleError<any>('deleteEmpreendimento'))
-      );
-  }
 
 }

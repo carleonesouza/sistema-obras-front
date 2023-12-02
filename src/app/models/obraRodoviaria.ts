@@ -1,5 +1,4 @@
 import { Obra } from "app/interfaces/obra";
-import { Endereco } from "./endereco";
 
 export class ObraRodoviaria implements Obra {
 
@@ -14,7 +13,6 @@ export class ObraRodoviaria implements Obra {
     dataInicio: string | Date;
     dataConclusao: string | Date;
     documentosAdicionais?: string;
-    endereco: Endereco;
     arquivoGeorreferenciado?: string;
     valorGlobal: number;
     percentualFinanceiroExecutado: number;
@@ -29,7 +27,7 @@ export class ObraRodoviaria implements Obra {
     produto: any;
     usuario_que_alterou: any;
     funcao_estrutura: any;
-    situacao: any;
+    responsavel: string;
     sim_nao: any;
     latitude: any;
     longitude: any;
@@ -40,5 +38,6 @@ export class ObraRodoviaria implements Obra {
     public constructor(init?: Partial<ObraRodoviaria>) {
         Object.assign(this, init);
     }
+  
     
 };

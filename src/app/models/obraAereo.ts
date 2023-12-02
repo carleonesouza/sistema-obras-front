@@ -25,7 +25,7 @@ export class ObraAereo implements Obra {
     produto: any;
     usuario_que_alterou: any;
     funcao_estrutura: any;
-    situacao: any;
+    responsavel: string;
     sim_nao: any;
     latitude: any;
     longitude: any;

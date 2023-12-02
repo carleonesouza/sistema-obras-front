@@ -1,7 +1,7 @@
 import { ActivatedRouteSnapshot, Resolve, ResolveFn, Router, RouterStateSnapshot } from '@angular/router';
-import { EmpreendimentosService } from './empreendimentos.service';
 import { Observable, catchError, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { ObrasService } from './obras.service';
 
 
 
@@ -10,9 +10,9 @@ import { Injectable } from '@angular/core';
 })
 export class ObrasResolver implements Resolve<boolean> {
 
-  constructor(private _empreendimentosService: EmpreendimentosService){}
+  constructor(private _obraService: ObrasService){}
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
-    return this._empreendimentosService.getObras();
+    return this._obraService.getObras();
   }
 }
 
@@ -28,7 +28,7 @@ export class ObraResolver implements Resolve<any>
      * Constructor
      */
     constructor(
-        private _empreendimentosService: EmpreendimentosService,
+        private _obraService: ObrasService,
         private _router: Router,
     ) {
     }
@@ -44,9 +44,8 @@ export class ObraResolver implements Resolve<any>
      * @param state
      */
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
-   
         if (route.paramMap.get('id') !== 'add') {
-            return this._empreendimentosService.getObra(route.paramMap.get('id'))
+            return this._obraService.getObra(route.paramMap.get('id'))
                 .pipe(
                     // Error here means the requested individuo is not available
                     catchError((error) => {

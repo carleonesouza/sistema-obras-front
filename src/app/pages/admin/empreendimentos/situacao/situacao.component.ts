@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { SituacaoService } from '../situacao.service';
 import { Situacao } from 'app/models/situacao';
 import { Setor } from 'app/models/setor';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -28,7 +27,6 @@ export class SituacaoComponent implements OnInit {
 
   constructor(
     private _formBuilder: FormBuilder,
-    private _situacaoService: SituacaoService,
     public _snackBar: MatSnackBar,
     private _setoresService: SetorsService,
     public _dialog: DialogMessage,
@@ -221,18 +219,18 @@ export class SituacaoComponent implements OnInit {
       const setor = new Setor(this.situacaoForm.get('setor').value)
       situacao.setor = setor.id;
       
-      this._situacaoService
-        .addSituacao(situacao)
-        .pipe(takeUntil(this._unsubscribeAll))
-        .subscribe(
-          () => {          
-            //this._router.navigate(['/admin/iniciativas/lista']);
-            this._snackBar.open('Situação Salva com Sucesso','Fechar', {
-              duration: 3000
-            });
-            this.situacaoForm.reset();
-          });
-    }
+    //   this._situacaoService
+    //     .addSituacao(situacao)
+    //     .pipe(takeUntil(this._unsubscribeAll))
+    //     .subscribe(
+    //       () => {          
+    //         //this._router.navigate(['/admin/iniciativas/lista']);
+    //         this._snackBar.open('Situação Salva com Sucesso','Fechar', {
+    //           duration: 3000
+    //         });
+    //         this.situacaoForm.reset();
+    //       });
+     }
   }
 }
 

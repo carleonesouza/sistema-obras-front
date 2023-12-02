@@ -4,13 +4,9 @@ import { EmpreendimentosComponent } from './empreendimentos.component';
 import { ListComponent } from './list/list.component';
 import { EmpreendimentoResolver, EmpreendimentosResolver } from './empreendimentos.resolver';
 import { DetailsComponent } from './details/details.component';
-import { ObraAereaComponent } from './obra-aerea/obra-aerea.component';
 import { TipoInfraestruturaComponent } from './tipo-infraestrutura/tipo-infraestrutura.component';
 import { IntervencoesComponent } from './intervencoes/intervencoes.component';
 import { SituacaoComponent } from './situacao/situacao.component';
-import { ListObrasComponent } from './obra-aerea/list/list.component';
-import { ObraDetailsComponent } from './obra-aerea/details/details.component';
-import { ObraResolver, ObrasResolver } from './obra.resolver';
 
 
 const routes: Routes = [
@@ -33,23 +29,7 @@ const routes: Routes = [
             }
           }
         ]
-      },
-      {
-        path: 'cadastrar-obras',
-        component: ObraAereaComponent
-      },
-      {
-        path:'todas-obras',
-        component: ListObrasComponent,
-        resolve:{
-          obras: ObrasResolver
-        }
-      },
-      {
-        path:'todas-obras/:id',
-        component: ObraDetailsComponent,
-        resolve: { obra: ObraResolver }
-      },
+      },      
       {
         path: 'tipo-infraestrutura',
         component: TipoInfraestruturaComponent
@@ -57,10 +37,6 @@ const routes: Routes = [
       {
         path: 'intervencao',
         component: IntervencoesComponent
-      },
-      {
-        path: 'situacao',
-        component: SituacaoComponent
       }
     ]
   }

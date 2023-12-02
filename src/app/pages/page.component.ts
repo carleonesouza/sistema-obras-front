@@ -65,61 +65,64 @@ export class PageComponent implements OnInit, OnDestroy {
                     type: 'basic',
                     icon: 'mat_solid:admin_panel_settings',
                     link: 'admin/setores/lista'
-                }
-            ]
-        },
-        {
-            id: 'empreendimento',
-            title: 'Empreendimento',
-            subtitle: '',
-            type: 'collapsable',
-            icon: 'mat_outline:storefront',
-            link: 'admin/empreendimentos/lista',
-            children: [
-                {
-                    id: 'empreendimento',
-                    title: 'Empreendimento',
-                    type: 'basic',
-                    //icon: 'mat_solid:admin_panel_settings',
-                    link: 'admin/empreendimentos/lista',
-                }
-                ,
-                {
-                    id: 'obras',
-                    title: 'Cadastrar Obra',
-                    type: 'basic',
-                    //icon: 'mat_solid:admin_panel_settings',
-                    link: 'admin/empreendimentos/cadastrar-obras'
-                },
-                {
-                    id: 'lista-obras',
-                    title: 'Listar Obras',
-                    type: 'basic',
-                    //icon: 'mat_solid:admin_panel_settings',
-                    link: 'admin/empreendimentos/todas-obras'
                 },
                 {
                     id: 'tipoInfra',
                     title: 'Tipo Infraestrutura',
                     type: 'basic',
-                    //icon: 'mat_solid:admin_panel_settings',
+                    icon: 'mat_solid:business',
                     link: 'admin/empreendimentos/tipo-infraestrutura'
                 },
                 {
                     id: 'intervencao',
                     title: 'Intervenção',
                     type: 'basic',
-                    //icon: 'mat_solid:admin_panel_settings',
+                    icon: 'mat_solid:ballot',
                     link: 'admin/empreendimentos/intervencao'
                 },
-                {
-                    id: 'situacao',
-                    title: 'Situação',
-                    type: 'basic',
-                    //icon: 'mat_solid:admin_panel_settings',
-                    link: 'admin/empreendimentos/situacao'
-                }
             ]
+        },
+        {
+            id: 'empreendimento',
+            title: 'Empreendimento',
+            subtitle: '',
+            type: 'basic',
+            icon: 'mat_outline:storefront',
+            link: 'admin/empreendimentos/lista',
+            
+        },
+        {
+            id: 'obra',
+            title: 'Obras',
+            subtitle: '',
+            type: 'basic',
+            icon: 'mat_outline:construction',
+            link: 'admin/obras/lista',
+            // children: [
+            //     {
+            //         id: 'empreendimento',
+            //         title: 'Empreendimento',
+            //         type: 'basic',
+            //         //icon: 'mat_solid:admin_panel_settings',
+            //         link: 'admin/empreendimentos/lista',
+            //     }
+            //     ,
+            //     {
+            //         id: 'obras',
+            //         title: 'Cadastrar Obra',
+            //         type: 'basic',
+            //         //icon: 'mat_solid:admin_panel_settings',
+            //         link: 'admin/empreendimentos/cadastrar-obras'
+            //     },
+            //     {
+            //         id: 'lista-obras',
+            //         title: 'Listar Obras',
+            //         type: 'basic',
+            //         //icon: 'mat_solid:admin_panel_settings',
+            //         link: 'admin/empreendimentos/todas-obras'
+            //     },
+               
+            // ]
         },
         {
             id: 'iniciativa',
