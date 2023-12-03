@@ -1,0 +1,216 @@
+
+<div class="flex flex-col w-full">
+
+    <ng-container *ngIf="!loading; else noItems">
+        <!-- View mode -->
+        <ng-container *ngIf="!editMode && !creating">
+
+            <!-- Header -->
+            <div class="relative w-full h-40 sm:h-48 px-8 sm:px-12 bg-accent-100 dark:bg-accent-700">
+                <!-- Background -->
+                <ng-container>
+                    <img class="absolute inset-0 object-cover w-full h-full">
+                </ng-container>
+                <!-- Close button -->
+                <div class="flex items-center justify-end w-full max-w-3xl mx-auto pt-6">
+                    <button mat-icon-button (click)="closeDrawer()" [matTooltip]="'Fechar'" [routerLink]="['../']">
+                        <mat-icon class="text-black" [svgIcon]="'heroicons_outline:x'"></mat-icon>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Empreendimento -->
+            <div class="relative flex flex-col flex-auto items-center p-6 pt-0 sm:p-12 sm:pt-0" *ngIf="intervencao">
+                <div class="w-full max-w-3xl">
+
+                    <!-- Avatar and actions -->
+                    <div class="flex flex-auto items-end -mt-16">
+                        <!-- Avatar -->
+                        <div
+                            class="flex items-center justify-center w-32 h-32 rounded-full overflow-hidden ring-4 ring-bg-card">
+
+                            <div
+                                class="flex items-center justify-center w-full h-full rounded overflow-hidden uppercase text-8xl font-bold leading-none bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
+                                {{intervencao?.descricao.charAt(0)}}
+                            </div>
+                        </div>
+                        <!-- Actions -->
+                        <div class="flex items-center ml-auto mb-1">
+                            <button mat-raised-button [color]="'primary'" [matTooltip]="'Editar'"
+                                (click)="toggleEditMode(true)">
+                                <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:pencil-alt'"></mat-icon>
+                                <span class="ml-2">Editar</span>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Name -->
+                    <div class="mt-3 text-4xl font-bold truncate">{{intervencao.descricao}}</div>
+                    <div class="mt-6">
+                        <mat-chip-list aria-label="Fish selection">
+                            <mat-chip *ngIf="intervencao?.status === '1'" class="ind-active">Ativo</mat-chip>
+                            <mat-chip *ngIf="intervencao?.status === '0'" class="ind-deactived">Encerrado</mat-chip>
+                        </mat-chip-list>
+                    </div>
+
+                    <div class="mt-6 w-full">
+                        <h3 class="text-3xl">Detalhes</h3>
+                    </div>
+
+                    <div class="flex flex-col mt-4 pt-3 space-y-2">
+
+                        <ng-container>
+                            <div class="flex">
+                                <div class="min-w-0 space-y-1 w-full">
+                                    <ng-container>
+                                        <div
+                                            class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
+                                            <mat-icon class="mr-2"
+                                                [svgIcon]="'heroicons_outline:document-text'"></mat-icon>
+                                            <div class="font-mono text-primary-500">
+                                                Descrição: {{intervencao.descricao }}
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                        <ng-container>
+                            <div class="flex">
+                                <div class="min-w-0 space-y-1 w-full">
+                                    <ng-container>
+                                        <div
+                                            class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
+                                            <mat-icon class="mr-2"
+                                                [svgIcon]="'heroicons_outline:calculator'"></mat-icon>
+                                            <div class="font-mono text-primary-500">Setor:
+                                                {{intervencao.setor.setor.descricao}}</div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>                  
+
+                </div>
+            </div>
+        </ng-container>
+
+        <!-- Edit mode -->
+        <ng-container *ngIf="editMode || creating">
+            <!-- Header -->
+            <div class="relative w-full h-40 sm:h-48 px-8 sm:px-12 bg-accent-100 dark:bg-accent-700">
+
+                <!-- Close button -->
+                <div class="flex items-center justify-end w-full max-w-3xl mx-auto pt-6">
+                    <button mat-icon-button (click)="closeDrawer()" [matTooltip]="'Close'" [routerLink]="['../']">
+                        <mat-icon class="text-black" [svgIcon]="'heroicons_outline:x'"></mat-icon>
+                    </button>
+                </div>
+                <div>
+                    <h2 class="text-4xl">{{title}}</h2>
+                </div>
+            </div>
+
+            <!-- Individuo form -->
+            <div class="relative flex flex-col flex-auto px-2 sm:px-7">
+                <div class="flex flex-col justify-center items-center w-full p-6" *ngIf="saving">
+                    <ng-container>
+                        <div>
+                            <h3 class="text-3xl loader">Salvando dados
+                                <span class="dot dot-1"></span>
+                                <span class="dot dot-2"></span>
+                                <span class="dot dot-3"></span>
+                                <span class="dot dot-4"></span>
+                            </h3>
+                        </div>
+                    </ng-container>
+                </div>
+                <!-- Form -->
+                <form [formGroup]="intervencaoForm" (ngSubmit)="onSubmit()" novalidate *ngIf="!saving">
+
+                    <div class="mt-6 w-full">
+                        <h3 class="text-3xl">Informações</h3>
+                    </div>
+                    <!-- Identificação -->
+                    <div class="flex flex-col w-full">
+                        <!-- Name -->
+                        <div class="sm:col-span-4 mt-4">
+                            <mat-form-field class=" w-full">
+                                <mat-label>Descrição</mat-label>
+                                <mat-icon matPrefix class="hidden sm:flex icon-size-5"
+                                    [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
+                                <input matInput formControlName="descricao" [placeholder]="'Descrição'">
+                            </mat-form-field>
+                        </div>
+                     
+                        <div class="sm:col-span-4 mt-3 w-full">
+                            <div class="flex-auto w-full">
+                                <mat-form-field class="w-full" appearance="fill" >
+                                    <mat-label>Setor</mat-label>
+                                    <mat-icon class="mr-2" svgIcon="mat_solid:admin_panel_settings"></mat-icon>
+                                    <input matInput aria-label="Setor" [matAutocomplete]="auto"
+                                        formControlName="setor">
+    
+                                    <mat-spinner *ngIf="isLoading" diameter="20" matSuffix>
+                                    </mat-spinner>
+                                    <mat-autocomplete #auto="matAutocomplete"
+                                        [displayWith]="itemDisplayFn">
+                                        <mat-option *ngFor="let setor of setores" [value]="setor" [id]="setor.id">
+                                            {{ setor.descricao }}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                            </div>
+                        </div>  
+
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="mt-11 mb-10 border-t"></div>
+
+                    <!-- Actions -->
+                    <div class="flex items-center justify-end mb-3">
+
+                        <!-- Inativar -->
+                        <mat-slide-toggle *ngIf="editMode" class="mt-2" [color]="'warn'"
+                            [checked]="!intervencao.status" (change)="desativaEmpreendimento($event)"
+                            [matTooltip]="'Inativar'">Inativar
+                        </mat-slide-toggle>
+                        <!-- Cancel -->
+                        <button class="ml-auto" type="button" mat-button [matTooltip]="'Cancelar'"
+                            (click)="cancelEdit()">
+                            Cancelar
+                        </button>
+
+                        <!-- Save -->
+                        <button *ngIf="!editMode" class="ml-2" mat-flat-button [color]="'primary'" type="submit"
+                            [matTooltip]="'Salvar'" [disabled]="intervencaoForm.invalid">
+                            Salvar
+                        </button>
+
+                        <!-- Update -->
+                        <button *ngIf="editMode" class="ml-2" mat-flat-button type="button" [color]="'primary'"
+                            [matTooltip]="'Atualizar'" [disabled]="intervencaoForm.invalid"
+                            (click)="updateEmpreendimento()">
+                            Atualizar
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </ng-container>
+
+    </ng-container>
+
+    <!-- No Items -->
+    <ng-template #noItems>
+        <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center loader">Carregando
+            Intervenção
+            <span class="dot dot-1"></span>
+            <span class="dot dot-2"></span>
+            <span class="dot dot-3"></span>
+            <span class="dot dot-4"></span>
+        </div>
+    </ng-template>
+</div>

@@ -96,7 +96,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
           if (this.user) {
             this.userForm.patchValue(this.user);
             this.userForm.patchValue({
-              tipo_usuario_id: user.tipoUsuario
+              tipo_usuario: user.tipo_usuario
             })
             
             this.loading = false;
@@ -130,7 +130,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
       telefone: new FormControl(''),
       senha: new FormControl(''),
       senha_confirmation: new FormControl(''),
-      tipo_usuario_id: new FormControl('')
+      tipo_usuario: new FormControl('')
     });
   }
 
@@ -203,7 +203,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
       const user = new User(this.userForm.value);
      this.saving = true;
       const perfil =  new Perfil(this.userForm.get('tipo_usuario_id').value);
-      user.tipo_usuario_id = perfil.id;
+      user.tipo_usuario = perfil.id;
       
       if(user.senha == null && this.user.senha_confirmation == null){
         delete user.senha
@@ -263,7 +263,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
       const user = new User(this.userForm.value);
      this.saving = true;
       const perfil =  new Perfil(this.userForm.get('tipo_usuario_id').value);
-      user.tipo_usuario_id = perfil.id;
+      user.tipo_usuario = perfil.id;
 
       if (user) {
         this._usersService

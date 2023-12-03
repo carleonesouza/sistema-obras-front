@@ -2,7 +2,7 @@ export class TipoInfraestrutura {
 
     id?: string;
     descricao: string;
-    setor_id: any;
+    setor: any;
     status?: boolean;
 
     public constructor(init?: Partial<TipoInfraestrutura>) {

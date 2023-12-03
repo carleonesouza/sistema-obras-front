@@ -71,14 +71,14 @@ export class PageComponent implements OnInit, OnDestroy {
                     title: 'Tipo Infraestrutura',
                     type: 'basic',
                     icon: 'mat_solid:business',
-                    link: 'admin/empreendimentos/tipo-infraestrutura'
+                    link: 'admin/empreendimentos/tipo-infraestrutura/lista'
                 },
                 {
                     id: 'intervencao',
                     title: 'Intervenção',
                     type: 'basic',
                     icon: 'mat_solid:ballot',
-                    link: 'admin/empreendimentos/intervencao'
+                    link: 'admin/empreendimentos/intervencoes/lista'
                 },
             ]
         },

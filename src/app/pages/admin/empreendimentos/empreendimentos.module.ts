@@ -14,10 +14,6 @@ import { EmpreendimentosComponent } from './empreendimentos.component';
 import { ListComponent } from './list/list.component';
 import { DetailsComponent } from './details/details.component';
 import { ObraTipoComponent } from './obra-templates/obra-tipo.component';
-import { IntervencoesService } from './intervencoes.service';
-import { TipoInfraestruturaService } from './tipo-infraestrutura/tipo-infraestrutura.service';
-import { IntervencoesComponent } from './intervencoes/intervencoes.component';
-import { TipoInfraestruturaComponent } from './tipo-infraestrutura/tipo-infraestrutura.component';
 import { PercentageMaskDirective } from 'app/directives/parcentage-mask.directive';
 
 
@@ -38,8 +34,6 @@ export const customCurrencyMaskConfig: CurrencyMaskConfig = {
    ListComponent,
    ObraTipoComponent,
    DetailsComponent,
-   TipoInfraestruturaComponent,
-   IntervencoesComponent,
    PercentageMaskDirective
   ],
   imports: [
@@ -52,8 +46,6 @@ export const customCurrencyMaskConfig: CurrencyMaskConfig = {
   providers:[
     EmpreendimentosService,
     EmpreendimentosResolver,
-    IntervencoesService,
-    TipoInfraestruturaService,
     EmpreendimentoResolver,
     HandleError,
     CurrencyPipe,

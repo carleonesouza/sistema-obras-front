@@ -1,0 +1,19 @@
+<app-list-items
+[items$]= "infras$"
+[listCount]="infraCount"
+[listName]="'Tipo Infraestrutura'"
+[listNames]="'Tipo Infraestruturas'"
+[itemNome]="'descricao'"
+[placeHolder] = "'Digite a descrição'"
+[pageSlice]="infras"
+[itemId]="'id'"
+[include]="false"
+[totalElements]="totalElements"
+(searchItem)="searchItem($event)"
+(addItem)="createItem($event)"
+(associa)="associaItem($event)"
+(syncList)="syncListas($event)"
+(eventPages)="onPageChange($event)" 
+></app-list-items>
+
+

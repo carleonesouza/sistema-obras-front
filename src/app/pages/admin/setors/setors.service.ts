@@ -28,9 +28,9 @@ export class SetorsService {
     return this._httpClient.get<any>(environment.apiManager + 'setores')
       .pipe(
         tap((result) => {
-          const data = result?.data;
-          const setores = data;
-          this._setores.next(setores);
+          let data = result?.data;
+          data = data.sort((a, b) => a.descricao.localeCompare(b.descricao));
+          this._setores.next(data);
         }),
         catchError(this.error.handleError<any>('getSetores'))
       );

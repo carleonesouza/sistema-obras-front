@@ -1,0 +1,19 @@
+<app-list-items
+[items$]= "intervencoes$"
+[listCount]="intervencoesCount"
+[listName]="'Intervenção'"
+[listNames]="'Intervenções'"
+[itemNome]="'descricao'"
+[placeHolder] = "'Digite a descrição'"
+[pageSlice]="intervencoes"
+[itemId]="'id'"
+[include]="false"
+[totalElements]="totalElements"
+(searchItem)="searchItem($event)"
+(addItem)="createItem($event)"
+(associa)="associaItem($event)"
+(syncList)="syncListas($event)"
+(eventPages)="onPageChange($event)" 
+></app-list-items>
+
+

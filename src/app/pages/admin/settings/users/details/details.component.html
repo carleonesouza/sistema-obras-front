@@ -98,7 +98,7 @@
                                     <div
                                         class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
                                         <mat-icon class="mr-2" svgIcon="mat_outline:admin_panel_settings"></mat-icon>
-                                        <div class="font-mono">{{user.tipoUsuario.descricao }}</div>
+                                        <div class="font-mono">{{user.tipo_usuario.descricao }}</div>
                                     </div>
                                 </ng-container>
                             </div>
@@ -340,7 +340,7 @@
                             <mat-form-field class="w-full" appearance="fill">
                                 <mat-label>Perfil</mat-label>
                                 <mat-icon class="mr-2" [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                <input matInput aria-label="Perfil" [matAutocomplete]="auto" formControlName="tipo_usuario_id">
+                                <input matInput aria-label="Perfil" [matAutocomplete]="auto" formControlName="tipo_usuario">
 
                                 <mat-spinner *ngIf="isLoadingPerfis" diameter="20" matSuffix>
                                 </mat-spinner>

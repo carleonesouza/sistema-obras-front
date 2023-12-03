@@ -18,6 +18,7 @@ import { DateAdapter, MAT_DATE_FORMATS, NativeDateAdapter } from '@angular/mater
 import { MatDialog } from '@angular/material/dialog';
 import { SetorsService } from '../../setors/setors.service';
 import { User } from 'app/models/user';
+import { NaturezaEmpreendimento } from 'app/models/naturezaEmpreendimento';
 
 @Component({
   selector: 'app-details-empreendimentos',
@@ -46,6 +47,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
   obrasEmpreendimento: any;
   setores$: Observable<any>;
   setores: any;
+  naturezas$: Observable<any>;
+  naturezas: any;
   empreendimento: Empreendimento;
   saving: boolean;
   panelOpenState = false;
@@ -71,6 +74,11 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this._setoresService.getSetores().subscribe((result)=>{
       this.setores = result.data;
     });
+
+    this._empreendimentoService.getNaturezaEmpreendimentos()
+    .subscribe((nat)=>{
+      this.naturezas = nat.data;
+    })
     // Open the drawer
     this._listItemsComponent.matDrawer.open();
     this._changeDetectorRef.markForCheck();
@@ -136,6 +144,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
       id: [''],
       nome: ['', [Validators.required]],
       responsavel: ['', [Validators.required]],
+      natureza_empreendimento: ['', [Validators.required]],      
       setor: ['', [Validators.required]],
       obras: this._formBuilder.array([]),
       user: [''],
@@ -209,6 +218,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
       this.saving = true;
       const empreendimento = new Empreendimento(this.empreendimentoForm.value);
       const user = new User(JSON.parse(localStorage.getItem('user')));
+      const naturezaEmpreendimento = new NaturezaEmpreendimento(this.empreendimentoForm.get('natureza_empreendimento').value)
+      empreendimento.natureza_empreendimento = naturezaEmpreendimento?.id;
       empreendimento.usuario_que_alterou = user.id;
       this._empreendimentoService
         .editEmpreendimento(empreendimento)
@@ -249,8 +260,10 @@ export class DetailsComponent implements OnInit, OnDestroy {
       const empreendimento = new Empreendimento(this.empreendimentoForm.value);
       const user = new User(JSON.parse(localStorage.getItem('user')));
       const setor = new Setor(this.empreendimentoForm.get('setor').value)
-      empreendimento.user = user.id;
-      empreendimento.setor = setor.id;
+      const naturezaEmpreendimento = new NaturezaEmpreendimento(this.empreendimentoForm.get('natureza_empreendimento').value)
+      empreendimento.natureza_empreendimento = naturezaEmpreendimento?.id;
+      empreendimento.user = user?.id;
+      empreendimento.setor = setor?.id;      
       delete empreendimento.id;
       this.saving = true;
       this.closeDrawer().then(() => true);

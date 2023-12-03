@@ -22,6 +22,10 @@ export class ObrasService {
   private _obras: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
   private _obra: BehaviorSubject<any | null> = new BehaviorSubject(null);
 
+  private _bitolas: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
+  private _bitola: BehaviorSubject<any | null> = new BehaviorSubject(null);
+
+
   private _sim_naos: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
   private _sim_nao: BehaviorSubject<any | null> = new BehaviorSubject(null);
 
@@ -51,6 +55,14 @@ export class ObrasService {
 
   get produto$(): Observable<any> {
     return this._produto.asObservable();
+  }
+
+  get bitolas$(): Observable<any[]> {
+    return this._bitolas.asObservable();
+  }
+
+  get bitola$(): Observable<any> {
+    return this._bitola.asObservable();
   }
 
   get infras$(): Observable<any[]> {
@@ -140,7 +152,7 @@ export class ObrasService {
       .pipe(
         tap((result) => {
           const data = result?.data;
-          this._statues.next(data);
+          this._sim_naos.next(data);
         }),
         catchError(this.error.handleError<any>('getSimNaos'))
       );
@@ -187,6 +199,17 @@ export class ObrasService {
         this._funcao_estruturas.next(funcaoEstruturas);
       }),
       catchError(this.error.handleError<any>('getFuncaoEstruturas'))
+    );
+  }
+
+  getBitolas(): Observable<any> {
+    return this._httpClient.get<any>(environment.apiManager + 'bitolas')
+    .pipe(
+      tap((result) => {
+        const bitolas = result.data;          
+        this._bitolas.next(bitolas);
+      }),
+      catchError(this.error.handleError<any>('getBitolas'))
     );
   }
 

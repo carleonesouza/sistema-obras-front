@@ -90,6 +90,22 @@
                             </div>
                         </ng-container>
 
+                        <ng-container>
+                            <div class="flex">
+                                <div class="min-w-0 space-y-1 w-full">
+                                    <ng-container>
+                                        <div
+                                            class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
+                                            <mat-icon class="mr-2"
+                                                [svgIcon]="'heroicons_outline:calculator'"></mat-icon>
+                                            <div class="font-mono text-primary-500">Natureza Empreendimento:
+                                                {{empreendimento.natureza_empreendimento.natureza_empreendimento.descricao}}</div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </ng-container>
+
                     </div>
                     <ng-container *ngIf="obrasEmpreendimento">
 
@@ -1193,6 +1209,25 @@
                                         [displayWith]="itemDisplayFn">
                                         <mat-option *ngFor="let setor of setores" [value]="setor" [id]="setor.id">
                                             {{ setor.descricao }}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="sm:col-span-4 mt-8">
+                            <div class="flex-auto w-full">
+                                <mat-form-field class="w-full" appearance="fill">
+                                    <mat-label>Natureza do Empreendimento</mat-label>
+                                    <mat-icon class="mr-2" svgIcon="mat_solid:admin_panel_settings"></mat-icon>
+                                    <input matInput aria-label="Natureza do Empreendimento" [matAutocomplete]="auto"
+                                        [formControl]="empreendimentoControlsForm.natureza_empreendimento">
+
+                                    <mat-spinner *ngIf="isLoading" diameter="20" matSuffix></mat-spinner>
+                                    <mat-autocomplete #auto="matAutocomplete" [compareWith]="compareFn"
+                                        [displayWith]="itemDisplayFn">
+                                        <mat-option *ngFor="let natureza of naturezas" [value]="natureza" [id]="natureza.id">
+                                            {{ natureza.descricao }}
                                         </mat-option>
                                     </mat-autocomplete>
                                 </mat-form-field>

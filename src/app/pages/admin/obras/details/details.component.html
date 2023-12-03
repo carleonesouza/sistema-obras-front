@@ -823,6 +823,9 @@
                     <form [formGroup]="obraForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data" novalidate>
                         <ng-container>
                             <div class="mt-6 w-full p-6">
+                                <h3 class="text-3xl">Obra {{tipoObraSelecionada}}</h3>
+                            </div>
+                            <div class="mt-6 w-full p-6" *ngIf="!creating">
                                 <h3 class="text-3xl">Obra {{obra?.tipo.charAt(0).toUpperCase() +
                                     obra?.tipo.slice(1)}}</h3>
                             </div>
@@ -833,19 +836,43 @@
                                             <div class="flex flex-wrap space-x-4 w-full">
                                                 <div class="flex-auto">
                                                     <mat-form-field appearance="outline" class="w-full">
-                                                        <mat-label *ngIf="!isLoading">Selecione o Empreendimento
+                                                        <mat-label *ngIf="!isLoading">Selecione o Setor
                                                         </mat-label>
                                                         <mat-label *ngIf="isLoading">
-                                                            <div class="select-placeholder-container justify-around">
+                                                            <div class="select-placeholder-container justify-between">
                                                                 <span>Loading...</span>
                                                                 <mat-spinner class="spinner"
                                                                     diameter="20"></mat-spinner>
                                                             </div>
                                                         </mat-label>
 
-                                                        <mat-select formControlName="empreendimento">
+                                                        <mat-select formControlName="empreendimento"  [(ngModel)]="selectedSetor"
+                                                        (selectionChange)="selectedSetorObra($event)">
+                                                            <mat-option *ngFor="let setor of setores"
+                                                                [value]="setor">
+                                                                {{ setor.descricao }}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+
+                                            <div class="flex flex-wrap space-x-4 w-full">
+                                                <div class="flex-auto">
+                                                    <mat-form-field appearance="outline" class="w-full">
+                                                        <mat-label *ngIf="!isLoading">Selecione o Empreendimento
+                                                        </mat-label>
+                                                        <mat-label *ngIf="isLoading">
+                                                            <div class="select-placeholder-container justify-between">
+                                                                <span>Loading...</span>
+                                                                <mat-spinner class="spinner"
+                                                                    diameter="20"></mat-spinner>
+                                                            </div>
+                                                        </mat-label>
+
+                                                        <mat-select formControlName="empreendimento" [(ngModel)]="selected">
                                                             <mat-option *ngFor="let empre of empreendimentos"
-                                                                [value]="selected">
+                                                                [value]="empre">
                                                                 {{ empre.nome }}
                                                             </mat-option>
                                                         </mat-select>
@@ -857,8 +884,11 @@
                                                 <div class="flex-auto">
                                                     <mat-form-field class=" w-full" appearance="outline">
                                                         <mat-label>Descrição</mat-label>
-                                                        <mat-icon matPrefix class="hidden sm:flex icon-size-5"
-                                                            [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
+                                                        <mat-icon matPrefix class="hidden sm:flex icon-size-5">
+                                                            <span class="material-symbols-outlined">
+                                                                description
+                                                                </span>
+                                                        </mat-icon>
                                                         <input matInput formControlName="descricao"
                                                             [placeholder]="'Descrição'">
                                                     </mat-form-field>
@@ -1155,7 +1185,7 @@
                                             </div>
 
                                             <!-- Início Tipo Aeroporto -->
-                                            <ng-container *ngIf="tipoObraSelecionada ==='aerea'">
+                                            <ng-container *ngIf="tipoObraSelecionada ==='Aeroportuário'">
                                                 <div class="w-full pb-6">
                                                     <h3 class="text-3xl">Tipo Obra: Aeroportuária </h3>
                                                 </div>
@@ -1218,7 +1248,7 @@
                                             <!--Fim Tipo Aeroporto-->
 
                                             <!-- Início Tipo Rodoviária -->
-                                            <ng-container *ngIf="tipoObraSelecionada ==='rodoviaria'">
+                                            <ng-container *ngIf="tipoObraSelecionada ==='Rodoviário'">
                                                 <div class="w-full pb-6">
                                                     <h3 class="text-3xl">Tipo Obra: Rodoviária </h3>
                                                 </div>
@@ -1264,19 +1294,19 @@
                                                     </div>
                                                     <div class="flex-auto">
                                                         <mat-form-field class=" w-full" appearance="outline">
-                                                            <mat-label>Código</mat-label>
+                                                            <mat-label>Código PNV/SRE</mat-label>
                                                             <mat-icon matPrefix class="hidden sm:flex icon-size-5"
                                                                 [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
-                                                            <input matInput formControlName="codigo" type="number"
+                                                            <input matInput formControlName="codigo" type="text"
                                                                 [placeholder]="'Código'">
                                                         </mat-form-field>
                                                     </div>
                                                     <div class="flex-auto">
                                                         <mat-form-field class=" w-full" appearance="outline">
-                                                            <mat-label>Versão</mat-label>
+                                                            <mat-label>Versão PNV/SRE</mat-label>
                                                             <mat-icon matPrefix class="hidden sm:flex icon-size-5"
                                                                 [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
-                                                            <input matInput formControlName="versao" type="number"
+                                                            <input matInput formControlName="versao" type="text"
                                                                 [placeholder]="'Versão'">
                                                         </mat-form-field>
                                                     </div>
@@ -1285,7 +1315,7 @@
                                             <!--Fim Tipo Rodoviária-->
 
                                             <!-- Início Tipo Portuária -->
-                                            <ng-container *ngIf="tipoObraSelecionada ==='portuaria'">
+                                            <ng-container *ngIf="tipoObraSelecionada ==='Portuário'">
                                                 <div class="w-full pb-6">
                                                     <h3 class="text-3xl">Tipo Obra: Portuária</h3>
                                                 </div>
@@ -1300,7 +1330,28 @@
                                                         </mat-form-field>
                                                     </div>
                                                     <div class="flex-auto">
-                                                        <mat-form-field class="w-full" appearance="outline">
+                                                        <mat-form-field appearance="outline" class="w-full">
+                                                            <mat-label *ngIf="!isLoading">Haverá Ampliação na Capacidade de
+                                                                Passageiros, de Carga
+                                                                ou
+                                                                Ambos? 
+                                                            </mat-label>
+                                                            <mat-label *ngIf="isLoading">
+                                                                <div class="select-placeholder-container justify-between">
+                                                                    <span>Loading...</span>
+                                                                    <mat-spinner class="spinner"
+                                                                        diameter="20"></mat-spinner>
+                                                                </div>
+                                                            </mat-label>
+    
+                                                            <mat-select formControlName="ampliacaoCapacidade"  [(ngModel)]="selectedSetor">
+                                                                <mat-option *ngFor="let simnao of simnaos"
+                                                                    [value]="simnao">
+                                                                    {{ simnao.descricao }}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                        <!-- <mat-form-field class="w-full" appearance="outline">
                                                             <mat-label>Ampliação da Capacidade de Passageiros, de
                                                                 Carga ou
                                                                 Ambos</mat-label>
@@ -1308,7 +1359,7 @@
                                                                 [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
                                                             <input matInput formControlName="ampliacaoCapacidade"
                                                                 [placeholder]="'Ampliação da Capacidade'">
-                                                        </mat-form-field>
+                                                        </mat-form-field> -->
                                                     </div>
                                                 </div>
 
@@ -1362,7 +1413,7 @@
                                             <!--Fim Tipo Portuária-->
 
                                             <!-- Início Tipo Hidroviária -->
-                                            <ng-container *ngIf="tipoObraSelecionada ==='hidroviaria'">
+                                            <ng-container *ngIf="tipoObraSelecionada ==='Hidroviário'">
                                                 <div class="w-full pb-6">
                                                     <h3 class="text-3xl">Tipo Obra: Hidroviária</h3>
                                                 </div>
@@ -1380,27 +1431,67 @@
 
                                                 <div class="mt-4 flex flex-wrap space-x-4 w-full">
                                                     <div class="flex-auto">
-                                                        <mat-form-field class=" w-full" appearance="outline">
+
+                                                        <mat-form-field appearance="outline" class="w-full">
+                                                            <mat-label *ngIf="!isLoading">Possui Barragem
+                                                            </mat-label>
+                                                            <mat-label *ngIf="isLoading">
+                                                                <div class="select-placeholder-container justify-between">
+                                                                    <span>Loading...</span>
+                                                                    <mat-spinner class="spinner"
+                                                                        diameter="20"></mat-spinner>
+                                                                </div>
+                                                            </mat-label>
+    
+                                                            <mat-select formControlName="temBarragem"  [(ngModel)]="selectedSetor">
+                                                                <mat-option *ngFor="let simnao of simnaos"
+                                                                    [value]="simnao">
+                                                                    {{ simnao.descricao }}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+
+                                                        <!-- <mat-form-field class=" w-full" appearance="outline">
                                                             <mat-label>Possui Barragem</mat-label>
                                                             <mat-icon matPrefix class="hidden sm:flex icon-size-5"
                                                                 [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
                                                             <input matInput formControlName="temBarragem"
                                                                 [placeholder]="'Possui Barragem'">
-                                                        </mat-form-field>
+                                                        </mat-form-field> -->
                                                     </div>
 
                                                     <div class="flex-auto">
-                                                        <mat-form-field class="w-full" appearance="outline">
+                                                        <mat-form-field appearance="outline" class="w-full">
+                                                            <mat-label *ngIf="!isLoading">Possui Eclusa
+                                                            </mat-label>
+                                                            <mat-label *ngIf="isLoading">
+                                                                <div class="select-placeholder-container justify-between">
+                                                                    <span>Loading...</span>
+                                                                    <mat-spinner class="spinner"
+                                                                        diameter="20"></mat-spinner>
+                                                                </div>
+                                                            </mat-label>
+    
+                                                            <mat-select formControlName="temEclusa"  [(ngModel)]="selectedSetor">
+                                                                <mat-option *ngFor="let simnao of simnaos"
+                                                                    [value]="simnao">
+                                                                    {{ simnao.descricao }}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+
+                                                        <!-- <mat-form-field class="w-full" appearance="outline">
                                                             <mat-label>Possui Eclusa</mat-label>
                                                             <mat-icon matPrefix class="hidden sm:flex icon-size-5"
                                                                 [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
                                                             <input matInput formControlName="temEclusa"
                                                                 [placeholder]="'Possui Eclusa'">
-                                                        </mat-form-field>
+                                                        </mat-form-field> -->
                                                     </div>
                                                 </div>
 
                                                 <div class="mt-4 flex flex-wrap space-x-4 w-full">
+
                                                     <div class="flex-auto">
                                                         <mat-form-field class=" w-full" appearance="outline">
                                                             <mat-label>Tipo de Embarção que Poderá Utilizar a Nova
@@ -1413,17 +1504,35 @@
                                                         </mat-form-field>
                                                     </div>
                                                     <div class="flex-auto">
-                                                        <mat-form-field class=" w-full" appearance="outline">
-                                                            <mat-label> Haverá Ampliação na Capacidade de
+                                                        <mat-form-field appearance="outline" class="w-full">
+                                                            <mat-label *ngIf="!isLoading">Haverá Ampliação na Capacidade de
                                                                 Passageiros, de Carga
                                                                 ou
-                                                                Ambos? </mat-label>
+                                                                Ambos? 
+                                                            </mat-label>
+                                                            <mat-label *ngIf="isLoading">
+                                                                <div class="select-placeholder-container justify-between">
+                                                                    <span>Loading...</span>
+                                                                    <mat-spinner class="spinner"
+                                                                        diameter="20"></mat-spinner>
+                                                                </div>
+                                                            </mat-label>
+    
+                                                            <mat-select formControlName="ampliacaoCapacidade"  [(ngModel)]="selectedSetor">
+                                                                <mat-option *ngFor="let simnao of simnaos"
+                                                                    [value]="simnao">
+                                                                    {{ simnao.descricao }}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                        <!-- <mat-form-field class=" w-full" appearance="outline">
+                                                            <mat-label> </mat-label>
                                                             <mat-icon matPrefix class="hidden sm:flex icon-size-5"
                                                                 [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
                                                             <input matInput formControlName="ampliacaoCapacidade"
                                                                 type="text"
                                                                 [placeholder]="'Haverá Ampliação na Capacidade de Passageiros, de Carga ou Ambos?'">
-                                                        </mat-form-field>
+                                                        </mat-form-field> -->
                                                     </div>
                                                 </div>
 
@@ -1496,7 +1605,7 @@
                                             <!--Fim Tipo Hidroviária-->
 
                                             <!-- Início Tipo Ferroviária -->
-                                            <ng-container *ngIf="tipoObraSelecionada ==='ferroviaria'">
+                                            <ng-container *ngIf="tipoObraSelecionada ==='Ferroviário'">
                                                 <div class="w-full pb-6">
                                                     <h3 class="text-3xl">Tipo Obra: Ferroviária</h3>
                                                 </div>
@@ -1535,13 +1644,32 @@
 
                                                 <div class="mt-4 flex flex-wrap space-x-4 w-full">
                                                     <div class="flex-auto">
-                                                        <mat-form-field class=" w-full" appearance="outline">
-                                                            <mat-label>Nova Bitola </mat-label>
+
+                                                        <mat-form-field appearance="outline" class="w-full">
+                                                            <mat-label *ngIf="!isLoading">Nova Bitola</mat-label>
+                                                            <mat-label *ngIf="isLoading">
+                                                                <div class="select-placeholder-container justify-between">
+                                                                    <span>Loading...</span>
+                                                                    <mat-spinner class="spinner"
+                                                                        diameter="20"></mat-spinner>
+                                                                </div>
+                                                            </mat-label>
+    
+                                                            <mat-select formControlName="bitola"  [(ngModel)]="selectedSetor">
+                                                                <mat-option *ngFor="let bitola of bitolas"
+                                                                    [value]="bitola">
+                                                                    {{ bitola.descricao }}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+
+                                                        <!-- <mat-form-field class=" w-full" appearance="outline">
+                                                            <mat-label> </mat-label>
                                                             <mat-icon matPrefix class="hidden sm:flex icon-size-5"
                                                                 [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
-                                                            <input matInput formControlName="novaBitola" type="number"
+                                                            <input matInput formControlName="bitola" type="number"
                                                                 [placeholder]="'Nova Bitola'">
-                                                        </mat-form-field>
+                                                        </mat-form-field> -->
                                                     </div>
 
                                                     <div class="flex-auto">
@@ -1570,7 +1698,7 @@
                                             <!--Fim Tipo Ferroviária-->
 
                                             <!-- Início Tipo Dutoviária -->
-                                            <ng-container *ngIf="tipoObraSelecionada ==='duto'">
+                                            <ng-container *ngIf="tipoObraSelecionada ==='Dutoviário'">
                                                 <div class="w-full pb-6">
                                                     <h3 class="text-3xl">Tipo Obra: Dutoviária</h3>
                                                 </div>
@@ -1730,7 +1858,7 @@
 
                             <!-- Inativar -->
                             <mat-slide-toggle *ngIf="editMode" class="mt-2" [color]="'warn'" [checked]="!obra.status"
-                                (change)="desativaEmpreendimento($event)" [matTooltip]="'Inativar'">Inativar
+                                (change)="desativaObra($event)" [matTooltip]="'Inativar'">Inativar
                             </mat-slide-toggle>
                             <!-- Cancel -->
                             <button class="ml-auto" type="button" mat-button [matTooltip]="'Cancelar'"
@@ -1739,10 +1867,10 @@
                             </button>
 
                             <!-- Adiciona Tipo Obra -->
-                            <button *ngIf="!editMode" class="ml-2" mat-flat-button [color]="'accent'" type="button"
+                            <!-- <button *ngIf="!editMode" class="ml-2" mat-flat-button [color]="'accent'" type="button"
                                 (click)="adicionarTipoObra()" [matTooltip]="'Escolha o Tipo da Obra'">
                                 Tipo Obra
-                            </button>
+                            </button> -->
 
                             <!-- Adiciona Tipo Obra -->
                             <!-- <button *ngIf="!editMode" class="ml-2" mat-flat-button [color]="'accent'" type="button"

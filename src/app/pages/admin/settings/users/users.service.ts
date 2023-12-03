@@ -32,9 +32,9 @@ export class UsersService {
   getAllUsers(first = 1, last = 20): Observable<any[]> {
     return this._httpClient.get<any>(environment.apiManager + 'usuarios').pipe(
       tap((result) => {
-        const data = result?.data;
-        const users = data;
-        this._users.next(users);
+        let data = result?.data;
+        data = data.sort((a, b) => a.nome.localeCompare(b.nome));   
+        this._users.next(data);
       }),
       catchError(this.error.handleError<any>('getAllUsers'))
     );

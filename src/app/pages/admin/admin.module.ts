@@ -9,15 +9,14 @@ import { FuseSplashScreenModule } from '@fuse/services/splash-screen';
 import { SharedModule } from 'app/shared/shared.module';
 import { MaterialAppModule } from 'material-app.module';
 import { NgApexchartsModule } from 'ng-apexcharts';
-
-
 import { AdminComponent } from './admin.component';
 import { IniciativasComponent } from './iniciativas/iniciativas.component';
+
 
 @NgModule({
   declarations: [
     AdminComponent,
-    IniciativasComponent
+    IniciativasComponent,
   ],
   imports: [
     CommonModule,

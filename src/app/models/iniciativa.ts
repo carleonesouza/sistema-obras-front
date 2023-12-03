@@ -4,7 +4,7 @@ export class Iniciativa {
     id: string;
     nome: string;
     responsavel?: string;
-    ele_principal_afetado: string;
+    descricao: string;
     expectativa: string;
     instrumento: string;
     setor: any;

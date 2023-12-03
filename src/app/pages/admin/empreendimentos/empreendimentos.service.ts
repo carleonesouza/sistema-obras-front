@@ -25,18 +25,12 @@ export class EmpreendimentosService {
   private _obras: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
   private _obra: BehaviorSubject<any | null> = new BehaviorSubject(null);
 
+  private _naturezas: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
+  private _natureza: BehaviorSubject<any | null> = new BehaviorSubject(null);
+
+
   private _statues: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
   private _status: BehaviorSubject<any | null> = new BehaviorSubject(null);
-
-  private _tipo_dutos: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
-  private _tipo_duto: BehaviorSubject<any | null> = new BehaviorSubject(null);
-
-  private _funcao_estruturas: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
-  private _funcao_estrutura: BehaviorSubject<any | null> = new BehaviorSubject(null);
-
-  private _nivel_dutos: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
-  private _nivel_duto: BehaviorSubject<any | null> = new BehaviorSubject(null);
-
 
   private _estados: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
  
@@ -87,28 +81,13 @@ export class EmpreendimentosService {
     return this._status.asObservable();
   }
 
-  get tipo_dutos$(): Observable<any[]> {
-    return this._tipo_dutos.asObservable();
+
+  get naturezas$(): Observable<any[]> {
+    return this._naturezas.asObservable();
   }
 
-  get tipo_duto$(): Observable<any> {
-    return this._tipo_duto.asObservable();
-  }
-
-  get funcao_estruturas$(): Observable<any[]> {
-    return this._funcao_estruturas.asObservable();
-  }
-
-  get funcao_estrutura$(): Observable<any> {
-    return this._funcao_estrutura.asObservable();
-  }
-
-  get nivel_dutos$(): Observable<any[]> {
-    return this._nivel_dutos.asObservable();
-  }
-
-  get nivel_duto$(): Observable<any> {
-    return this._nivel_duto.asObservable();
+  get natureza$(): Observable<any> {
+    return this._natureza.asObservable();
   }
 
   getAllProdutos(): Observable<any> {
@@ -156,36 +135,16 @@ export class EmpreendimentosService {
     );
   }
 
-  getTipoDutos(): Observable<any> {
-    return this._httpClient.get<any>(environment.apiManager + 'tipo-dutos')
-    .pipe(
-      tap((result) => {
-        const tipoDutos = result.data;          
-        this._tipo_dutos.next(tipoDutos);
-      }),
-      catchError(this.error.handleError<any>('getTipoDutos'))
-    );
-  }
 
-  getFuncaoEstruturas(): Observable<any> {
-    return this._httpClient.get<any>(environment.apiManager + 'funcao-estruturas')
-    .pipe(
-      tap((result) => {
-        const funcaoEstruturas = result.data;          
-        this._funcao_estruturas.next(funcaoEstruturas);
-      }),
-      catchError(this.error.handleError<any>('getFuncaoEstruturas'))
-    );
-  }
 
-  getNivelDutos(): Observable<any> {
-    return this._httpClient.get<any>(environment.apiManager + 'nivel-dutos')
+  getNaturezaEmpreendimentos(): Observable<any> {
+    return this._httpClient.get<any>(environment.apiManager + 'natureza-empreendimentos')
     .pipe(
       tap((result) => {
-        const nivelDutos = result.data;          
-        this._nivel_dutos.next(nivelDutos);
+        const naturezas = result.data;          
+        this._naturezas.next(naturezas);
       }),
-      catchError(this.error.handleError<any>('getNivelDutos'))
+      catchError(this.error.handleError<any>('getNaturezaEmpreendimentos'))
     );
   }
 

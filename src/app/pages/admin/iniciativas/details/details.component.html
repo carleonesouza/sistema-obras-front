@@ -85,8 +85,8 @@
                                             class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
                                             <mat-icon class="mr-2" [svgIcon]="'mat_solid:adjust'"></mat-icon>
                                             <div class="text-primary-500">
-                                                <span class="font-bold mr-2">Elemento Principal Afetado:</span>
-                                                {{iniciativa.ele_principal_afetado}}
+                                                <span class="font-bold mr-2">Descrição:</span>
+                                                {{iniciativa.descricao}}
                                             </div>
                                         </div>
                                     </ng-container>
@@ -233,11 +233,11 @@
 
                     <div class="mt-8 w-full">
                         <mat-form-field class="w-full">
-                            <mat-label>Elemento Principal Afetado</mat-label>
+                            <mat-label>Descrição </mat-label>
                             <mat-icon matPrefix class="hidden sm:flex icon-size-5" svgIcon="mat_solid:adjust">
                             </mat-icon>
-                            <input matInput [formControl]="iniciativaControls.ele_principal_afetado"
-                                [placeholder]="'Elemento Principal Afetado'">
+                            <input matInput [formControl]="iniciativaControls.descricao"
+                                [placeholder]="'Descrição'">
                         </mat-form-field>
                     </div>
 

@@ -23,14 +23,38 @@ export class TipoInfraestruturaService {
     return this._tipoInfra.asObservable();
   }
 
-  getAllInfras(): Observable<any> {
+  getAllInfras(page = 0, size = 10): Observable<any> {
     return this._httpClient.get<any>(environment.apiManager + 'tipos-infra')
     .pipe(
       tap((result) => {
-        const infras = result.data;          
+        let infras = result.data;  
+        infras = infras.sort((a, b) => a.descricao.localeCompare(b.descricao));           
         this._tiposInfras.next(infras);
       }),
       catchError(this.error.handleError<any>('getAllInfras'))
+    );
+  }
+
+  getInfraById(id): Observable<any> {
+    return this._httpClient.get<any>(environment.apiManager + `tipos-infra/${id}`)
+    .pipe(
+      tap((result) => {
+        const infra = result.data;          
+        this._tipoInfra.next(infra);
+      }),
+      catchError(this.error.handleError<any>('getInfraById'))
+    );
+  }
+
+  getInfrasBySetorId(setor): Observable<any> {
+    return this._httpClient.get<any>(environment.apiManager + `tipos-infra/setor/${setor}`)
+    .pipe(
+      tap((result) => {
+        let infras = result.data;  
+        infras = infras.sort((a, b) => a.descricao.localeCompare(b.descricao));           
+        this._tiposInfras.next(infras);
+      }),
+      catchError(this.error.handleError<any>('getInfrasBySetorId'))
     );
   }
 
@@ -45,5 +69,15 @@ export class TipoInfraestruturaService {
         catchError(this.error.handleError<any>('addTipoInfraestrutura'))
       );
   }
+
+  searchTipoObraByDescription(contratoId): Observable<any[]>{
+    return this._httpClient.get<any[]>(environment.apiManager + 'empreendimentos/busca-empreendimentos-por-contrato', {params: contratoId})
+    .pipe(
+      tap((infra) => {
+        this._tiposInfras.next(infra);
+      }),
+      catchError(this.error.handleError<any>('searchTipoObraByDescription'))
+    );
+}
 
 }

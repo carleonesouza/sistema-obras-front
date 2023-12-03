@@ -7,6 +7,7 @@ export class Empreendimento {
     setor: any;
     obras: any;
     user: any;
+    natureza_empreendimento: any;
     usuario_que_alterou: any;
     status: any;
 
