@@ -1,4 +1,6 @@
 import { Obra } from "app/interfaces/obra";
+import { Municipio } from "./municipio";
+import { Produto } from "./produto";
 
 export class ObraDuto implements Obra {
 
@@ -27,7 +29,6 @@ export class ObraDuto implements Obra {
     novaAreaImpactada: number;
     user: any;
     tipo_infraestrutura: any;
-    produto: any;
     usuario_que_alterou: any;
     tipo_duto: any;
     nivel_duto:any;
@@ -36,7 +37,8 @@ export class ObraDuto implements Obra {
     sim_nao: any;
     latitude: any;
     longitude: any;
-    municipio: any;
+    produtos: Produto[];
+    municipios: Municipio[];
     uf: any;
     data_base_orcamento: string | Date;
         

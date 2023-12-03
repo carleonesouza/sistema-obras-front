@@ -1,4 +1,6 @@
 import { Obra } from "app/interfaces/obra";
+import { Municipio } from "./municipio";
+import { Produto } from "./produto";
 
 export class ObraFerroviaria implements Obra {
 
@@ -21,7 +23,6 @@ export class ObraFerroviaria implements Obra {
     extensao: number;
     novaBitola: string;
     novaVelocidade: number;
-    produto: any;
     capacidadeDinamica: number;
     user: any;
     tipo_infraestrutura: any;
@@ -31,9 +32,10 @@ export class ObraFerroviaria implements Obra {
     sim_nao: any;
     latitude: any;
     longitude: any;
-    municipio: any;
     uf: any;
     data_base_orcamento: string | Date;
+    produtos: Produto[];
+    municipios: Municipio[];
     
     public constructor(init?: Partial<ObraFerroviaria>) {
         Object.assign(this, init);

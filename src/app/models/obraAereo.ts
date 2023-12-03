@@ -1,4 +1,6 @@
 import { Obra } from "app/interfaces/obra";
+import { Municipio } from "./municipio";
+import { Produto } from "./produto";
 
 export class ObraAereo implements Obra {
 
@@ -22,20 +24,21 @@ export class ObraAereo implements Obra {
     extensao: number;
     novaLargura: number;
     novaAreaCriada: number;
-    produto: any;
     usuario_que_alterou: any;
     funcao_estrutura: any;
     responsavel: string;
     sim_nao: any;
     latitude: any;
     longitude: any;
-    municipio: any;
+    produtos: Produto[];
+    municipios: Municipio[];
     uf: any;
     data_base_orcamento: string | Date;
         
     public constructor(init?: Partial<ObraAereo>) {
         Object.assign(this, init);
     }
+    
  
      
 };

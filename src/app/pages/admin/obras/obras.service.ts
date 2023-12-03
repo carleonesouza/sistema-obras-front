@@ -25,10 +25,11 @@ export class ObrasService {
   private _bitolas: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
   private _bitola: BehaviorSubject<any | null> = new BehaviorSubject(null);
 
-
   private _sim_naos: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
   private _sim_nao: BehaviorSubject<any | null> = new BehaviorSubject(null);
 
+  private _municipios: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
+  private _municipio: BehaviorSubject<any | null> = new BehaviorSubject(null);
 
   private _statues: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
   private _status: BehaviorSubject<any | null> = new BehaviorSubject(null);
@@ -79,6 +80,14 @@ export class ObrasService {
 
   get obra$(): Observable<any> {
     return this._obra.asObservable();
+  }
+
+  get municipios$(): Observable<any[]> {
+    return this._municipios.asObservable();
+  }
+
+  get municipio$(): Observable<any> {
+    return this._municipio.asObservable();
   }
 
   get estados$(): Observable<any[]> {
@@ -177,6 +186,18 @@ export class ObrasService {
         this._estados.next(estados);
       }),
       catchError(this.error.handleError<any>('getEstados'))
+    );
+  }
+
+  
+  getMunicipios(estado): Observable<any> {
+    return this._httpClient.get<any>(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estado}/municipios`)
+    .pipe(
+      tap((result) => {
+        const municipios = result;          
+        this._municipios.next(municipios);
+      }),
+      catchError(this.error.handleError<any>('getMunicipios'))
     );
   }
 

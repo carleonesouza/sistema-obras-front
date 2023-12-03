@@ -1,3 +1,5 @@
+import { Municipio } from "app/models/municipio";
+import { Produto } from "app/models/produto";
 
 export interface Obra {
     id: number;
@@ -18,10 +20,10 @@ export interface Obra {
     arquivoGeorreferenciado?: string; // Opcional, pode ser um URL para download
     valorGlobal: number;
     percentualFinanceiroExecutado: number;
-    produto: any;
+    produtos: Array<Produto>;
     latitude: any;
     longitude:any;
-    municipio: any;
+    municipios: Array<Municipio>;
     uf: any;
     usuario_que_alterou: any;
     data_base_orcamento: Date | string;
