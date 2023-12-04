@@ -1,13 +1,14 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import { DialogMessage } from 'app/utils/dialog-message ';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
-import moment, * as _moment from 'moment';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { MatDatepicker, MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { ObraAereo } from 'app/models/obraAereo';
 import { User } from 'app/models/user';
 import { ObraDuto } from 'app/models/obraDuto';
@@ -15,19 +16,41 @@ import { ObraHidroviaria } from 'app/models/obraHidroviaria';
 import { ObraFerroviaria } from 'app/models/obraFerroviaria';
 import { ObraPortuaria } from 'app/models/obraPortuaria';
 import { ObraRodoviaria } from 'app/models/obraRodoviaria';
-import { Setor } from 'app/models/setor';
 import { ObrasService } from '../obras.service';
 import { IntervencoesService } from '../../empreendimentos/intervencoes/intervencoes.service';
 import { EmpreendimentosService } from '../../empreendimentos/empreendimentos.service';
-import { ObraTipoComponent } from '../../empreendimentos/obra-templates/obra-tipo.component';
 import { SetorsService } from '../../setors/setors.service';
 import { TipoInfraestruturaService } from '../../empreendimentos/tipoInfraestruturas/tipo-infraestrutura.service';
+import {default as _rollupMoment, Moment} from 'moment';
+import * as _moment from 'moment';
+const moment = _rollupMoment || _moment;
 _moment.locale('en');
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'MM/YYYY',
+  },
+  display: {
+    dateInput: 'MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 
 @Component({
   selector: 'app-obra-details',
   templateUrl: './details.component.html',
-  styleUrls: ['./details.component.scss']
+  styleUrls: ['./details.component.scss'],
+  providers: [
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+    },
+
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+  ],
 })
 export class ObraDetailsComponent implements OnInit {
 
@@ -76,6 +99,7 @@ export class ObraDetailsComponent implements OnInit {
   selectedTipoDuto: any;
   selectedSetor: any;
   selectedNivelDuto: any;
+  selectedMunicipio:any
   selectedFuncaoEstrutura: any
   isLoading: boolean = false;
   selectedFile: File | null = null;
@@ -276,6 +300,16 @@ export class ObraDetailsComponent implements OnInit {
       this.uploadFiles.append('documentosAdicionais', this.selectedFile);
     }
 
+  }
+
+  setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>, event) {
+    const ctrlValue =  this.obraForm.get('dataConclusao').value!;
+    console.log(datepicker)
+
+    // ctrlValue.month(normalizedMonthAndYear.month());
+    // ctrlValue.year(normalizedMonthAndYear.year());
+    // this.obraForm.get('dataConclusao').setValue(ctrlValue);
+    datepicker.close();
   }
 
   geoDocs(event: any) {
