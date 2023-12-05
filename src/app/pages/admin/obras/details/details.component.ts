@@ -130,7 +130,6 @@ export class ObraDetailsComponent implements OnInit {
     this._obraService
       .getAllProdutos()
       .subscribe((prods) => {
-
         this.produtos = prods.data
       });
    
@@ -140,14 +139,6 @@ export class ObraDetailsComponent implements OnInit {
       .subscribe((estados) => {
         this.estados = estados.data;
       })
-
-
-    this._empreendimentosService
-      .getAllEmpreendimentos()
-      .subscribe((emprs) => {
-        this.empreendimentos = emprs.data;
-        this.isLoading = false;
-      });
 
     this.statues$ = this._obraService
       .getAllStatues();
@@ -183,6 +174,7 @@ export class ObraDetailsComponent implements OnInit {
       .getSetores();
     this.setores$.subscribe((res) => {
       this.setores = res.data;
+      this.isLoading = false;
     })
 
     this.nivelDutos$ = this._obraService
@@ -302,13 +294,21 @@ export class ObraDetailsComponent implements OnInit {
 
   }
 
-  setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>, event) {
+  setDataConclusao(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
     const ctrlValue =  this.obraForm.get('dataConclusao').value!;
-    console.log(datepicker)
+     this.obraForm.get('dataConclusao').setValue(normalizedMonthAndYear.toDate());
+    datepicker.close();
+  }
 
-    // ctrlValue.month(normalizedMonthAndYear.month());
-    // ctrlValue.year(normalizedMonthAndYear.year());
-    // this.obraForm.get('dataConclusao').setValue(ctrlValue);
+  setDataInicio(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
+    const ctrlValue =  this.obraForm.get('dataInicio').value!;
+     this.obraForm.get('dataInicio').setValue(normalizedMonthAndYear.toDate());
+    datepicker.close();
+  }
+
+  setDataBaseOorcamento(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
+    const ctrlValue =  this.obraForm.get('data_base_orcamento').value!;
+     this.obraForm.get('data_base_orcamento').setValue(normalizedMonthAndYear.toDate());
     datepicker.close();
   }
 
@@ -341,6 +341,12 @@ export class ObraDetailsComponent implements OnInit {
       this.initializeObraForm(event.value?.descricao);
       this.tipoObraSelecionada = event.value?.descricao;
 
+      this._empreendimentosService
+      .getEmpreendimentosBySetor(event.value?.id)
+      .subscribe((emprs) => {
+        this.empreendimentos = emprs.data;
+      });
+
       this._tipoInfraService
       .getInfrasBySetorId(event.value?.id)
       .subscribe((result)=>{
@@ -356,7 +362,7 @@ export class ObraDetailsComponent implements OnInit {
   }
 
   createMunicipioForms() {
-    return new FormGroup({
+    return this._formBuilder.group({
       id: new FormControl(''),
       nome: new FormControl(''),
       uf: new FormControl('')
@@ -364,7 +370,7 @@ export class ObraDetailsComponent implements OnInit {
   }
 
   createProdutoForms() {
-    return new FormGroup({
+    return  this._formBuilder.group({
       id: new FormControl(''),
       descricao: new FormControl('')
     });
@@ -482,9 +488,11 @@ export class ObraDetailsComponent implements OnInit {
 
   addProdutoField(): void {
 
-    const produtoFormGroup = this._formBuilder.group({ descricao: [''] });
+    //const produtoFormGroup = this._formBuilder.group({ descricao: [''] });
+    const control = <FormArray>this.obrasControls['produtos'];
+    control.push(this.createProdutoForms())
 
-    (this.obraForm.get('produtos') as FormArray).push(produtoFormGroup);
+    //(this.obraForm.get('produtos') as FormArray).push(produtoFormGroup);
     // Mark for check
     this._changeDetectorRef.markForCheck();
   }
@@ -766,7 +774,15 @@ export class ObraDetailsComponent implements OnInit {
         obraAerea.data_base_orcamento = moment(this.obraForm.get('data_base_orcamento').value).format('L');
         obraAerea.empreendimento = obraAerea.empreendimento?.id;
         obraAerea.tipo_infraestrutura = obraAerea.tipo_infraestrutura?.id;
-        //obraAerea.produto = obraAerea.produto?.id;
+        obraAerea.municipios = obraAerea.municipios.map((item:any) => {
+           item.nome = item.nome.nome
+           item.uf = obraAerea.uf?.id;
+           return item;
+          });
+        obraAerea.produtos = obraAerea.produtos.map((item:any) => {
+          item.id = item.descricao.id
+          return item;
+         });
         obraAerea.user = user.id;
         obraAerea.intervencao = obraAerea.intervencao?.id;
         obraAerea.status = obraAerea.status?.id;
@@ -791,7 +807,15 @@ export class ObraDetailsComponent implements OnInit {
         obraDuto.data_base_orcamento = moment(this.obraForm.get('data_base_orcamento').value).format('L');
         obraDuto.empreendimento = obraDuto.empreendimento?.id;
         obraDuto.tipo_infraestrutura = obraDuto.tipo_infraestrutura?.id;
-        //obraDuto.produto = obraDuto.produto?.id;
+        obraDuto.municipios = obraDuto.municipios.map((item:any) => {
+          item.nome = item.nome.nome
+          item.uf = obraDuto.uf?.id;
+          return item;
+         });
+         obraDuto.produtos = obraDuto.produtos.map((item:any) => {
+         item.id = item.descricao.id
+         return item;
+        });
         obraDuto.user = user.id;
         obraDuto.intervencao = obraDuto.intervencao?.id;
         obraDuto.status = obraDuto.status?.id;
@@ -820,7 +844,15 @@ export class ObraDetailsComponent implements OnInit {
         obraHidroviaria.data_base_orcamento = moment(this.obraForm.get('data_base_orcamento').value).format('L');
         obraHidroviaria.empreendimento = obraHidroviaria.empreendimento?.id;
         obraHidroviaria.tipo_infraestrutura = obraHidroviaria.tipo_infraestrutura?.id;
-        //obraHidroviaria.produto = obraHidroviaria.produto?.id;
+        obraHidroviaria.municipios = obraHidroviaria.municipios.map((item:any) => {
+          item.nome = item.nome.nome
+          item.uf = obraHidroviaria.uf?.id;
+          return item;
+         });
+         obraHidroviaria.produtos = obraHidroviaria.produtos.map((item:any) => {
+         item.id = item.descricao.id
+         return item;
+        });
         obraHidroviaria.user = user.id;
         obraHidroviaria.intervencao = obraHidroviaria.intervencao?.id;
         obraHidroviaria.status = obraHidroviaria.status?.id;
@@ -846,7 +878,15 @@ export class ObraDetailsComponent implements OnInit {
         obraFerroviaria.data_base_orcamento = moment(this.obraForm.get('data_base_orcamento').value).format('L');
         obraFerroviaria.empreendimento = obraFerroviaria.empreendimento?.id;
         obraFerroviaria.tipo_infraestrutura = obraFerroviaria.tipo_infraestrutura?.id;
-        //obraFerroviaria.produto = obraFerroviaria.produto?.id;
+        obraFerroviaria.municipios = obraFerroviaria.municipios.map((item:any) => {
+          item.nome = item.nome.nome
+          item.uf = obraFerroviaria.uf?.id;
+          return item;
+         });
+         obraFerroviaria.produtos = obraFerroviaria.produtos.map((item:any) => {
+         item.id = item.descricao.id
+         return item;
+        });
         obraFerroviaria.user = user.id;
         obraFerroviaria.intervencao = obraFerroviaria.intervencao?.id;
         obraFerroviaria.status = obraFerroviaria.status?.id;
@@ -872,7 +912,15 @@ export class ObraDetailsComponent implements OnInit {
         obraPortuaria.data_base_orcamento = moment(this.obraForm.get('data_base_orcamento').value).format('L');
         obraPortuaria.empreendimento = obraPortuaria.empreendimento?.id;
         obraPortuaria.tipo_infraestrutura = obraPortuaria.tipo_infraestrutura?.id;
-        //obraPortuaria.produto = obraPortuaria.produto?.id;
+        obraPortuaria.municipios = obraPortuaria.municipios.map((item:any) => {
+          item.nome = item.nome.nome
+          item.uf = obraPortuaria.uf?.id;
+          return item;
+         });
+         obraPortuaria.produtos = obraPortuaria.produtos.map((item:any) => {
+         item.id = item.descricao.id
+         return item;
+        });
         obraPortuaria.user = user.id;
         obraPortuaria.intervencao = obraPortuaria.intervencao?.id;
         obraPortuaria.status = obraPortuaria.status?.id;
@@ -898,7 +946,15 @@ export class ObraDetailsComponent implements OnInit {
         obraRodoviaria.data_base_orcamento = moment(this.obraForm.get('data_base_orcamento').value).format('L');
         obraRodoviaria.empreendimento = obraRodoviaria.empreendimento?.id;
         obraRodoviaria.tipo_infraestrutura = obraRodoviaria.tipo_infraestrutura?.id;
-        //obraRodoviaria.produto = obraRodoviaria.produto?.id;
+        obraRodoviaria.municipios = obraRodoviaria.municipios.map((item:any) => {
+          item.nome = item.nome.nome
+          item.uf = obraRodoviaria.uf?.id;
+          return item;
+         });
+         obraRodoviaria.produtos = obraRodoviaria.produtos.map((item:any) => {
+         item.id = item.descricao.id
+         return item;
+        });
         obraRodoviaria.user = user.id;
         obraRodoviaria.intervencao = obraRodoviaria.intervencao?.id;
         obraRodoviaria.status = obraRodoviaria.status?.id;

@@ -8,7 +8,7 @@ export class Iniciativa {
     expectativa: string;
     instrumento: string;
     setor: any;
-    usuario: any;
+    user: any;
     usuario_que_alterou: any;
     status?: any;
 

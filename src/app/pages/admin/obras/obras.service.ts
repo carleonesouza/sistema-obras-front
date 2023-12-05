@@ -245,7 +245,6 @@ export class ObrasService {
     );
   }
 
-
   getObras(page = 0, size = 10) {
     return this._httpClient.get<any>(environment.apiManager + 'obras')
       .pipe(

@@ -14,7 +14,6 @@ import { EmpreendimentosComponent } from './empreendimentos.component';
 import { ListComponent } from './list/list.component';
 import { DetailsComponent } from './details/details.component';
 import { ObraTipoComponent } from './obra-templates/obra-tipo.component';
-import { PercentageMaskDirective } from 'app/directives/parcentage-mask.directive';
 
 
 export const customCurrencyMaskConfig: CurrencyMaskConfig = {
@@ -34,7 +33,6 @@ export const customCurrencyMaskConfig: CurrencyMaskConfig = {
    ListComponent,
    ObraTipoComponent,
    DetailsComponent,
-   PercentageMaskDirective
   ],
   imports: [
     CommonModule,

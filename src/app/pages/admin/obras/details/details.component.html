@@ -1010,6 +1010,8 @@
                                                         <mat-datepicker-toggle matSuffix [for]="InicioDatepicker">
                                                         </mat-datepicker-toggle>
                                                         <mat-datepicker disabled="false"
+                                                        startView="year"
+                                                        (monthSelected)="setDataInicio($event,InicioDatepicker)"
                                                             #InicioDatepicker></mat-datepicker>
                                                     </mat-form-field>
                                                 </div>
@@ -1025,7 +1027,7 @@
                                                         </mat-datepicker-toggle>
                                                         <mat-datepicker disabled="false"
                                                         startView="year"
-                                                        (monthSelected)="setMonthAndYear($event, ConclusaoDatepicker)"
+                                                        (monthSelected)="setDataConclusao($event, ConclusaoDatepicker)"
                                                             #ConclusaoDatepicker></mat-datepicker>
                                                     </mat-form-field>
                                                 </div>
@@ -1040,6 +1042,8 @@
                                                         <mat-datepicker-toggle matSuffix [for]="BaseDatepicker">
                                                         </mat-datepicker-toggle>
                                                         <mat-datepicker disabled="false"
+                                                        startView="year"
+                                                        (monthSelected)="setDataBaseOorcamento($event,BaseDatepicker)"
                                                             #BaseDatepicker></mat-datepicker>
                                                     </mat-form-field>
                                                 </div>
@@ -1086,8 +1090,7 @@
                                                                                     diameter="20"></mat-spinner>
                                                                             </div>
                                                                         </mat-label>
-                                                                        <mat-select formControlName="descricao"
-                                                                        [(ngModel)]="selectedProduto">
+                                                                        <mat-select formControlName="descricao" matInput>
                                                                             <mat-option *ngFor="let prod of produtos"
                                                                                 [value]="prod">
                                                                                 {{ prod.descricao }}

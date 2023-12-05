@@ -47,6 +47,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   obrasEmpreendimento: any;
   setores$: Observable<any>;
   setores: any;
+  selectedNatureza:any;
   naturezas$: Observable<any>;
   naturezas: any;
   empreendimento: Empreendimento;
@@ -71,6 +72,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     
+    this.isLoading = true;
     this._setoresService.getSetores().subscribe((result)=>{
       this.setores = result.data;
     });
@@ -78,6 +80,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this._empreendimentoService.getNaturezaEmpreendimentos()
     .subscribe((nat)=>{
       this.naturezas = nat.data;
+      this.isLoading = false;
     })
     // Open the drawer
     this._listItemsComponent.matDrawer.open();
@@ -112,11 +115,12 @@ export class DetailsComponent implements OnInit, OnDestroy {
           if (this.empreendimento) {
 
             this.obrasEmpreendimento = this.empreendimento?.obras;
+            this.selectedNatureza = this.empreendimento?.natureza_empreendimento?.natureza_empreendimento
     
             this.empreendimentoForm.patchValue(this.empreendimento);
             this.empreendimentoForm.patchValue({
               setor: this.empreendimento.setor.setor,
-              status: parseInt(this.empreendimento.status)
+              natureza_empreendimento: this.empreendimento?.natureza_empreendimento
             });
             this.loading = false;
           }

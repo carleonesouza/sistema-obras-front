@@ -135,7 +135,16 @@ export class EmpreendimentosService {
     );
   }
 
-
+  getEmpreendimentosBySetor(setor): Observable<any> {
+    return this._httpClient.get<any>(environment.apiManager + `empreendimentos/setor/${setor}`)
+    .pipe(
+      tap((result) => {
+        const empreends = result.data;          
+        this._empreendimentos.next(empreends);
+      }),
+      catchError(this.error.handleError<any>('getEmpreendimentosBySetor'))
+    );
+  }
 
   getNaturezaEmpreendimentos(): Observable<any> {
     return this._httpClient.get<any>(environment.apiManager + 'natureza-empreendimentos')

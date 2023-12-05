@@ -13,6 +13,8 @@ import { Setor } from 'app/models/setor';
 import { User } from 'app/models/user';
 import { DialogMessage } from 'app/utils/dialog-message ';
 import { Status } from 'app/models/status';
+import { EmpreendimentosService } from '../../empreendimentos/empreendimentos.service';
+import { ObrasService } from '../../obras/obras.service';
 
 interface Expectativa {
   value: string;
@@ -39,6 +41,8 @@ export class DetailsComponent implements OnInit, OnDestroy{
   statues: any;
   selectedStatus;
   iniciativa: any;
+  sim_naos$: Observable<any>;
+  sim_naos:any;
   expectativas: Expectativa[] = [
     {value: 'SIM'},
     {value: 'NÃO'},
@@ -51,12 +55,29 @@ export class DetailsComponent implements OnInit, OnDestroy{
     public _snackBar: MatSnackBar,
     private _activateRoute: ActivatedRoute,
     private _setoresService: SetorsService,
+    private _obraService: ObrasService,
     public _dialog: DialogMessage,
     private _iniciativasService: IniciativasService,
     private _router: Router,
     public dialog: MatDialog) {}
 
   ngOnInit(): void {
+
+    this.setores$ = this._setoresService.getSetores();
+    this.setores$.subscribe((result) =>{
+      this.setores = result.data;
+    })
+
+    this.statues$ = this._iniciativasService.getAllStatues();
+    this.statues$.subscribe((res) =>{       
+      this.statues = res.data;
+    })
+
+    this.sim_naos$ = this._obraService.getSimNaos();
+    this.sim_naos$.subscribe((res) =>{       
+      this.sim_naos = res.data;
+    })
+
      // Open the drawer
      this._listItemComponent.matDrawer.open();
      this._changeDetectorRef.markForCheck();
@@ -66,30 +87,14 @@ export class DetailsComponent implements OnInit, OnDestroy{
       this.title = 'Nova Iniciativa';
       this.createIniciativaForm();
 
-      this.setores$ = this._setoresService.getSetores();
-      this.setores$.subscribe((result) =>{
-        this.setores = result.data;
-      })
-
-      this.statues$ = this._iniciativasService.getAllStatues();
-      this.statues$.subscribe((res) =>{       
-        this.statues = res.data;
-      })
+     
     }
 
     if (this._activateRoute.snapshot.paramMap.get('id') !== 'add') {
 
       this.loading = true;
       this.iniciativa$ = this._iniciativasService.iniciativa$;
-      this.setores$ = this._setoresService.getSetores();
-      this.setores$.subscribe((result) =>{
-        this.setores = result.data;
-      })
-
-      this.statues$ = this._iniciativasService.getAllStatues();
-      this.statues$.subscribe((res) =>{       
-        this.statues = res.data;
-      })
+      
 
       this.iniciativa$
         .subscribe((iniciativa) => {
@@ -136,7 +141,7 @@ export class DetailsComponent implements OnInit, OnDestroy{
       expectativa: new FormControl('', Validators.required),
       instrumento: new FormControl('', Validators.required),
       setor: new FormControl(''),
-      usuario: new FormControl(''),
+      user: new FormControl(''),
       usuario_que_alterou: new FormControl(''),
       status: new FormControl()
     });
@@ -251,7 +256,7 @@ export class DetailsComponent implements OnInit, OnDestroy{
       iniciativa.setor = setor.id;
       iniciativa.status = status.id;
 
-      delete iniciativa.usuario;
+      delete iniciativa.user;
            
       if (iniciativa) {
         this._iniciativasService
@@ -279,7 +284,7 @@ export class DetailsComponent implements OnInit, OnDestroy{
       const setor = new Setor(this.iniciativaForm.get('setor').value)
       const status = new Status(this.iniciativaForm.get('status').value)
       iniciativa.setor = setor.id;
-      iniciativa.usuario = user.id;
+      iniciativa.user = user.id;
       iniciativa.status = status.id;
 
       delete iniciativa.id;
