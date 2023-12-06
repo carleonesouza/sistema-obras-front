@@ -200,6 +200,39 @@ export class ProfileComponent implements OnInit
       }
   
     }
+
+    updateUser() {
+      if (this.userForm.valid) {
+        const user = new User(this.userForm.value);
+       this.saving = true;
+        const perfil =  new Perfil(this.userForm.get('tipo_usuario').value);
+        user.tipo_usuario = perfil.id;
+        
+        if(user.senha == null && this.user.senha_confirmation == null){
+          delete user.senha
+          delete user.senha_confirmation
+        }
+         
+        if (user) {
+          this._usersService
+            .updateUser(user)
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe(
+              () => {
+                this.saving = false;
+                this.toggleEditMode(false);
+                //this._router.navigate(['/admin/conta/lista']);
+                this._snackBar.open('Usuário Atualizado com Sucesso', 'Fechar', {
+                  duration: 3000
+                });
+                this.userForm.reset();
+              },
+            );
+        }
+      }
+    }
+  
+   
     
   
     onSubmit() {
@@ -207,7 +240,7 @@ export class ProfileComponent implements OnInit
         const user = new User(this.userForm.value);
        this.saving = true;
         const perfil =  new Perfil(this.userForm.get('tipo_usuario_id').value);
-        user.tipo_usuario_id = perfil.id;
+        user.tipo_usuario = perfil.id;
   
         if (user) {
           this._usersService
@@ -217,7 +250,7 @@ export class ProfileComponent implements OnInit
               () => {
                 this.saving = false;
                 this.toggleEditMode(false);
-                this._router.navigate(['/admin/conta/lista']);
+                //this._router.navigate(['/admin/conta/lista']);
                 this._snackBar.open('Usuário Salvo com Sucesso', 'Fechar', {
                   duration: 3000
                 });

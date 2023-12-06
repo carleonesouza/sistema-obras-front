@@ -202,7 +202,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
     if (this.userForm.valid) {
       const user = new User(this.userForm.value);
      this.saving = true;
-      const perfil =  new Perfil(this.userForm.get('tipo_usuario_id').value);
+      const perfil =  new Perfil(this.userForm.get('tipo_usuario').value);
       user.tipo_usuario = perfil.id;
       
       if(user.senha == null && this.user.senha_confirmation == null){
@@ -219,7 +219,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
               this.saving = false;
               this.toggleEditMode(false);
               this.closeDrawer().then(() => true);
-              this._router.navigate(['/admin/conta/lista']);
+              this._router.navigate(['/inicio']);
               this._snackBar.open('Usuário Atualizado com Sucesso', 'Fechar', {
                 duration: 3000
               });
@@ -246,7 +246,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
               this.saving = false;
               this.toggleEditMode(false);
               this.closeDrawer().then(() => true);
-              this._router.navigate(['/admin/conta/lista']);
+              this._router.navigate(['/inicio']);
               this._snackBar.open('Usuário Removido com Sucesso', 'Fechar', {
                 duration: 3000
               });
@@ -274,7 +274,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
               this.saving = false;
               this.toggleEditMode(false);
               this.closeDrawer().then(() => true);
-              this._router.navigate(['/admin/conta/lista']);
+              this._router.navigate(['/inicio']);
               this._snackBar.open('Usuário Salvo com Sucesso', 'Fechar', {
                 duration: 3000
               });
