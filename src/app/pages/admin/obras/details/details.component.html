@@ -94,16 +94,26 @@
                                         class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
                                         <mat-icon class="mr-2" [svgIcon]="'mat_solid:date_range'"></mat-icon>
                                         <div class="font-mono text-primary-500">
-                                            <span class="font-bold">Data Conclusão: </span>{{obra?.dataConclusao }}
+                                            <span class="font-bold">Data Conclusão: </span>{{obra?.dataConclusao | date: 'dd/yyyy'}}
                                         </div>
                                     </div>
+                                </div>
+                                <div class="flex justify-between gap-3 pb-2">
                                     <div
                                         class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
                                         <mat-icon class="mr-2" [svgIcon]="'mat_solid:date_range'"></mat-icon>
                                         <div class="font-mono text-primary-500">
-                                            <span class="font-bold">Data Início: </span>{{obra?.dataInicio}}
+                                            <span class="font-bold">Data Início: </span>{{obra?.dataInicio | date: 'dd/yyyy'}}
                                         </div>
                                     </div>
+
+                                    <div
+                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <mat-icon class="mr-2" [svgIcon]="'mat_solid:date_range'"></mat-icon>
+                                    <div class="font-mono text-primary-500">
+                                        <span class="font-bold">Data Base do Orçamento: </span>{{obra?.data_base_orcamento | date: 'dd/yyyy'}}
+                                    </div>
+                                </div>
 
                                 </div>
                             </ng-container>
@@ -129,17 +139,8 @@
 
                                 </div>
                             </ng-container>
-
                             <ng-container>
                                 <div class="flex justify-between gap-3 pb-2">
-
-                                    <div
-                                        class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                        <mat-icon class="mr-2" [svgIcon]="'mat_solid:my_location'"></mat-icon>
-                                        <div class="font-mono text-primary-500">
-                                            <span class="font-bold">Município: </span>{{obra?.municipio }}
-                                        </div>
-                                    </div>
                                     <div
                                         class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
                                         <mat-icon class="mr-2" [svgIcon]="'mat_solid:my_location'"></mat-icon>
@@ -150,6 +151,19 @@
 
                                 </div>
                             </ng-container>
+
+                            <ng-container>
+                                <div class="flex justify-between gap-3 pb-2" 
+                                *ngFor="let municipio of obra?.municipios; let i = index;">
+                                    <div
+                                        class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                        <mat-icon class="mr-2" [svgIcon]="'mat_solid:my_location'"></mat-icon>
+                                        <div class="font-mono text-primary-500">
+                                            <span class="font-bold">Município: </span>{{ municipio.nome}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>                          
 
                             <ng-container>
                                 <div class="flex justify-between gap-3 pb-2">
@@ -225,21 +239,22 @@
                                         <div class="font-mono text-primary-500">
                                             <span class="font-bold">Status:</span> {{ obra?.status.status?.descricao }}
                                         </div>
-                                    </div>
-
-                                    <div
-                                        class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                        <mat-icon class="mr-2" [svgIcon]="'mat_solid:inventory_2'"></mat-icon>
-                                        <div class="font-mono text-primary-500">
-                                            <span class="font-bold"> Produto:</span> {{
-                                            obra?.produto?.produto?.descricao }}
-                                        </div>
-                                    </div>
+                                    </div>                                  
 
                                 </div>
                             </ng-container>
 
-
+                            <ng-container *ngFor="let produto of obra?.produtos; let i = index;">
+                                <div class="flex justify-between gap-3 pb-2">
+                                    <div
+                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <mat-icon class="mr-2" [svgIcon]="'mat_solid:inventory_2'"></mat-icon>
+                                    <div class="font-mono text-primary-500">
+                                        <span class="font-bold"> Produto:</span> {{ produto.descricao }}
+                                    </div>
+                                </div>
+                                </div>
+                            </ng-container>
 
                             <ng-container>
                                 <div class="flex justify-between gap-3 pb-2">
@@ -264,10 +279,8 @@
                                 </div>
                             </ng-container>
 
-
-
                             <!--Obra Áerea-->
-                            <ng-container *ngIf="obra?.tipo ==='aerea'">
+                            <ng-container *ngIf="obra?.tipo ==='Aeroportuário'">
 
                                 <ng-container>
                                     <div class="flex justify-between gap-3 pb-2">
@@ -319,7 +332,7 @@
                             </ng-container>
 
                             <!--Obra Dutovária-->
-                            <ng-container *ngIf="obra?.tipo ==='duto'">
+                            <ng-container *ngIf="obra?.tipo ==='Dutoviário'">
                                 <ng-container>
                                     <div class="flex justify-between gap-3 pb-2">
                                         <div
@@ -483,7 +496,7 @@
                             </ng-container>
 
                             <!--Obra Hidroviária-->
-                            <ng-container *ngIf="obra?.tipo ==='hidroviaria'">
+                            <ng-container *ngIf="obra?.tipo ==='Hidroviário'">
                                 <ng-container>
                                     <div class="flex justify-between gap-3 pb-2">
                                         <div
@@ -607,7 +620,7 @@
                             </ng-container>
 
                             <!--Obra Ferroviária-->
-                            <ng-container *ngIf="obra?.tipo ==='ferroviaria'">
+                            <ng-container *ngIf="obra?.tipo ==='Ferroviário'">
                                 <ng-container>
                                     <div class="flex justify-between gap-3 pb-2">
                                         <div
@@ -641,7 +654,7 @@
                                             </mat-icon>
                                             <div class="font-mono text-primary-500">
                                                 <span class="font-bold">Nova Bitola:</span> {{
-                                                obra?.novaBitola }}
+                                                obra?.bitola?.bitola.descricao }}
                                             </div>
                                         </div>
 
@@ -679,7 +692,7 @@
                             </ng-container>
 
                             <!--Obra Portuária-->
-                            <ng-container *ngIf="obra?.tipo ==='portuaria'">
+                            <ng-container *ngIf="obra?.tipo ==='Portuário'">
                                 <ng-container>
                                     <div class="flex justify-between gap-3 pb-2">
                                         <div
@@ -748,7 +761,7 @@
                             </ng-container>
 
                             <!--Obra Rodoviária-->
-                            <ng-container *ngIf="obra?.tipo ==='rodoviaria'">
+                            <ng-container *ngIf="obra?.tipo ==='Rodoviário'">
                                 <ng-container>
                                     <div class="flex justify-between gap-3 pb-2">
                                         <div
@@ -846,8 +859,7 @@
                                                             </div>
                                                         </mat-label>
 
-                                                        <mat-select formControlName="empreendimento"
-                                                            [(ngModel)]="selectedSetor"
+                                                        <mat-select
                                                             (selectionChange)="selectedSetorObra($event)">
                                                             <mat-option *ngFor="let setor of setores" [value]="setor">
                                                                 {{ setor.descricao }}
@@ -1632,8 +1644,7 @@
                                                                 </div>
                                                             </mat-label>
 
-                                                            <mat-select formControlName="temBarragem"
-                                                                [(ngModel)]="selectedSetor">
+                                                            <mat-select formControlName="temBarragem">
                                                                 <mat-option *ngFor="let simnao of simnaos"
                                                                     [value]="simnao">
                                                                     {{ simnao.descricao }}
@@ -1663,8 +1674,7 @@
                                                                 </div>
                                                             </mat-label>
 
-                                                            <mat-select formControlName="temEclusa"
-                                                                [(ngModel)]="selectedSetor">
+                                                            <mat-select formControlName="temEclusa">
                                                                 <mat-option *ngFor="let simnao of simnaos"
                                                                     [value]="simnao">
                                                                     {{ simnao.descricao }}
@@ -1715,8 +1725,7 @@
                                                                 </div>
                                                             </mat-label>
 
-                                                            <mat-select formControlName="ampliacaoCapacidade"
-                                                                [(ngModel)]="selectedSetor">
+                                                            <mat-select formControlName="ampliacaoCapacidade">
                                                                 <mat-option *ngFor="let simnao of simnaos"
                                                                     [value]="simnao">
                                                                     {{ simnao.descricao }}
@@ -1879,8 +1888,7 @@
                                                                 </div>
                                                             </mat-label>
 
-                                                            <mat-select formControlName="bitola"
-                                                                [(ngModel)]="selectedSetor">
+                                                            <mat-select formControlName="bitola">
                                                                 <mat-option *ngFor="let bitola of bitolas"
                                                                     [value]="bitola">
                                                                     {{ bitola.descricao }}

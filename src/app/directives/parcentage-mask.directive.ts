@@ -27,7 +27,7 @@ export class PercentageMaskDirective implements ControlValueAccessor {
 
   writeValue(value: any): void {
     if (value !== undefined) {
-      this.renderer.setProperty(this.el.nativeElement, 'value', this.transform(value.toString()));
+      this.renderer.setProperty(this.el.nativeElement, 'value', this.transform(value?.toString()));
     }
   }
 

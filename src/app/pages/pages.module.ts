@@ -20,6 +20,7 @@ import { AuthInterceptor } from 'app/core/auth/auth.interceptor';
 import { PageComponent } from './page.component';
 import { PagesService } from './pages.service';
 import { PagesResolver } from './pages.resolver';
+import { HomeComponent } from './home/home.component';
 
 
 registerLocaleData(localePt, 'pt-BR');
@@ -35,6 +36,7 @@ const maskConfig: Partial<IConfig> = { validation: false};
 @NgModule({
   declarations: [
     PageComponent,
+    HomeComponent
 
   ],
   imports: [

@@ -21,7 +21,7 @@ export class ObraFerroviaria implements Obra {
     kmInicial: number;
     kmFinal: number;
     extensao: number;
-    novaBitola: string;
+    bitola: any;
     novaVelocidade: number;
     capacidadeDinamica: number;
     user: any;

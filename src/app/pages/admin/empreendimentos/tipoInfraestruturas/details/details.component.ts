@@ -263,6 +263,7 @@ export class DetailsTipoInfraestruturaComponent implements OnInit {
         .pipe(takeUntil(this._unsubscribeAll))
         .subscribe(
           () => {
+            this.closeDrawer().then(() => true);
             this._router.navigate(['/admin/empreendimentos/tipo-infraestrutura/lista']);
             this._snackBar.open('Tipo Infraestrutura Salva com Sucesso', 'Fechar', {
               duration: 3000

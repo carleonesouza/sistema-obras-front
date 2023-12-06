@@ -262,11 +262,11 @@ export class DetailsIntervencaoComponent implements OnInit {
         .pipe(takeUntil(this._unsubscribeAll))
         .subscribe(
           () => {
-
+            this.closeDrawer().then(() => true);
             this._router.navigate(['/admin/empreendimentos/intervencoes/lista']);
             this._snackBar.open('Intervenção Salva com Sucesso', 'Fechar', {
               duration: 3000
-            });
+            });           
             this.intervencaoForm.reset();
           });
     }

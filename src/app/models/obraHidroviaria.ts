@@ -19,10 +19,10 @@ export class ObraHidroviaria implements Obra {
     valorGlobal: number;
     percentualFinanceiroExecutado: number;
     situacaoHidrovia: string;
-    temEclusa: string;
-    temBarragem: string;
-    tipoEmbarcacao: string;
-    ampliacaoCapacidade: string;
+    temEclusa: any;
+    temBarragem: any;
+    tipoEmbarcacao: any;
+    ampliacaoCapacidade: any;
     profundidadeMinima: number;
     profundidadeMaxima: number;
     comboiosCheia: string;

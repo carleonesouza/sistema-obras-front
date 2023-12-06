@@ -19,7 +19,7 @@ export class ObraPortuaria implements Obra {
     valorGlobal: number;
     percentualFinanceiroExecutado: number;
     tipoEmbarcacao: string;
-    ampliacaoCapacidade: string;
+    ampliacaoCapacidade: any;
     novoCalado: string;
     novaLargura: number;
     novoComprimento: number;    
