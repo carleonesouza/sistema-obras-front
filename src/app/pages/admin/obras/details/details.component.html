@@ -835,7 +835,7 @@
                 <div class="w-full">
                     <form [formGroup]="obraForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data" novalidate>
                         <ng-container>
-                            <div class="mt-6 w-full p-6">
+                            <div class="mt-6 w-full p-6" *ngIf="creating">
                                 <h3 class="text-3xl">Obra {{tipoObraSelecionada}}</h3>
                             </div>
                             <div class="mt-6 w-full p-6" *ngIf="!creating">
@@ -859,8 +859,8 @@
                                                             </div>
                                                         </mat-label>
 
-                                                        <mat-select
-                                                            (selectionChange)="selectedSetorObra($event)">
+                                                        <mat-select formControlName="tipo"
+                                                            (selectionChange)="selectedSetorObra($event)" [compareWith]="compareSetores">
                                                             <mat-option *ngFor="let setor of setores" [value]="setor">
                                                                 {{ setor.descricao }}
                                                             </mat-option>
@@ -882,8 +882,7 @@
                                                             </div>
                                                         </mat-label>
 
-                                                        <mat-select formControlName="empreendimento"
-                                                            [(ngModel)]="selected">
+                                                        <mat-select formControlName="empreendimento" [compareWith]="compareEmpreend">
                                                             <mat-option *ngFor="let empre of empreendimentos"
                                                                 [value]="empre">
                                                                 {{ empre.nome }}
@@ -933,8 +932,7 @@
                                                                     diameter="20"></mat-spinner>
                                                             </div>
                                                         </mat-label>
-                                                        <mat-select formControlName="intervencao" 
-                                                        [(ngModel)]="selectedIntervencao">
+                                                        <mat-select formControlName="intervencao"  [compareWith]="compareEmpreend">
                                                             <mat-option *ngFor="let intervencao of intervecoes"
                                                                 [value]="intervencao">
                                                                 {{ intervencao.descricao }}
@@ -999,8 +997,7 @@
                                                                     diameter="20"></mat-spinner>
                                                             </div>
                                                         </mat-label>
-                                                        <mat-select formControlName="tipo_infraestrutura"
-                                                        [(ngModel)]="selectedTipoInfra">
+                                                        <mat-select formControlName="tipo_infraestrutura"  [compareWith]="compareEmpreend">
                                                             <mat-option *ngFor="let infra of infras"
                                                                 [value]="infra">
                                                                 {{ infra.descricao }}
@@ -1072,8 +1069,7 @@
                                                                     diameter="20"></mat-spinner>
                                                             </div>
                                                         </mat-label>
-                                                        <mat-select formControlName="status"
-                                                        [(ngModel)]="selectedStatus">
+                                                        <mat-select formControlName="status"  [compareWith]="compareEmpreend">
                                                             <mat-option *ngFor="let status of statues"
                                                                 [value]="status" [id]="status.id">
                                                                 {{ status.descricao }}
@@ -1086,7 +1082,7 @@
                                             <!--Produtos-->
                                             <div class="mt-2 mb-2 w-full">
                                                 <ng-container formArrayName="produtos"
-                                                    *ngFor="let produto of produtosControls; index as i;">
+                                                    *ngFor="let produto of produtosControls; let i = index;">
                                                     <div class="flex flex-col w-full">
                                                         <ng-container [formGroupName]="i">
                                                             <div class="mt-4 flex flex-wrap space-x-4 w-full">
@@ -1102,8 +1098,8 @@
                                                                                     diameter="20"></mat-spinner>
                                                                             </div>
                                                                         </mat-label>
-                                                                        <mat-select formControlName="descricao" matInput>
-                                                                            <mat-option *ngFor="let prod of produtos"
+                                                                        <mat-select formControlName="descricao" matInput [compareWith]="compareProdutos">
+                                                                            <mat-option *ngFor="let prod of produtos"  [id]="prod.id"
                                                                                 [value]="prod">
                                                                                 {{ prod.descricao }}
                                                                             </mat-option>
@@ -1217,7 +1213,7 @@
                                                                     </div>
                                                                 </mat-label>
                                                                 <mat-select formControlName="uf"  
-                                                                (selectionChange)="selectedEstaoObra($event)">
+                                                                (selectionChange)="selectedEstaoObra($event)"  [compareWith]="compareEmpreend">
                                                                     <mat-option *ngFor="let estado of estados"
                                                                         [value]="estado">
                                                                         {{ estado.sigla }}
@@ -1240,10 +1236,10 @@
 
                                                         <ng-container formArrayName="municipios"
                                                             *ngFor="let municipio of municipiosControls; index as i;">
-                                                            <div class="flex flex-col w-full">
+                                                            <div class="mt-4 flex flex-wrap w-full justify-items-center items-center">
                                                                 <ng-container [formGroupName]="i">
-                                                                    <div class="mt-4 flex flex-wrap space-x-4 w-full">
-                                                                        <div class="flex-auto">
+                                                                   
+                                                                        <div class="flex-auto sm:w-full md:w-11/12">
                                                                             <mat-form-field appearance="outline" class="w-full">
                                                                                 <mat-label
                                                                                     *ngIf="!isLoadingMunicipio">Municípios</mat-label>
@@ -1255,21 +1251,20 @@
                                                                                             diameter="20"></mat-spinner>
                                                                                     </div>
                                                                                 </mat-label>
-                                                                                <mat-select formControlName="nome">
+                                                                                <mat-select formControlName="nome" [compareWith]="compareMunicipios">
                                                                                     <mat-option *ngFor="let municipio of municpios"
                                                                                         [value]="municipio">
                                                                                         {{ municipio.nome }}
                                                                                     </mat-option>
                                                                                 </mat-select>
                                                                             </mat-form-field>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="flex flex-col sm:flex-row sm:items-center">
+                                                                        </div>                                                               
+                                                                    <div class="flex flex-auto">
         
-                                                                        <div class="hidden sm:flex flex-auto"></div>
-                                                                        <div class="flex items-center">
+                                                                       
+                                                                        <div class="grid justify-items-center">
                                                                             <!-- Remove TipoDocumento-->
-                                                                            <div class="px-3 mr-1 -ml-2 sm:ml-0">
+                                                                            <div class="p-1 justify-items-center items-center">
                                                                                 <ng-container *ngIf="!(first && last)">
                                                                                     <div class="flex items-center">
                                                                                         <button class="w-8 h-8 min-h-8"
