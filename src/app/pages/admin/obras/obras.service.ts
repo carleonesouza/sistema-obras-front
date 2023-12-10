@@ -269,6 +269,26 @@ export class ObrasService {
       );
   }
 
+  removeProduto(obra, produto){
+    return this._httpClient.put<any>(environment.apiManager + `obras/produto/${obra.id}`, produto)
+    .pipe(
+      tap((result) => {
+          return result
+      }),
+      catchError(this.error.handleError<any>('removeProduto'))
+    );
+  }
+
+  removeMunicipio(obra, municipio){
+    return this._httpClient.put<any>(environment.apiManager + `obras/municipio/${obra.id}`, municipio)
+    .pipe(
+      tap((result) => {
+        return result
+      }),
+      catchError(this.error.handleError<any>('removeMunicipio'))
+    );
+  }
+
   editObra(obra: any): Observable<any> {
     return this._httpClient.put<any>(environment.apiManager + `obras/${obra.id}`, obra)
     .pipe(
