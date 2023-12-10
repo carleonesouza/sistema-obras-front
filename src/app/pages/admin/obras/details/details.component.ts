@@ -750,8 +750,10 @@ export class ObraDetailsComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
-          const produto = result.value?.id
-          this._obraService.removeProduto(this.obra, produto)
+               
+          this._obraService.removeProduto(this.obra,  {
+            id: produto.value?.id
+          })
           .subscribe((res)=>{
             console.log(res)
             this._snackBar.open('Produto Removido com Sucesso', 'Fechar', {
@@ -792,8 +794,10 @@ export class ObraDetailsComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
-          const municipio = result.value?.id
-          this._obraService.removeMunicipio(this.obra, municipio)
+        
+          this._obraService.removeMunicipio(this.obra,  {
+            id: municipio.value?.id
+          })
           .subscribe((res)=>{
             console.log(res)
             this._snackBar.open('Município Removido com Sucesso', 'Fechar', {
