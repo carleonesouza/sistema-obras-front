@@ -30,13 +30,13 @@ export class ListObrasComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.obras$ = this._obraService.obras$;
-    this.obras$
+    this._obraService.getObras()
     .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((result) => {
-        this.obras = result;
-        this.obraCount = result.length;
-        this.pageSize = result.length;
-        this.totalElements = result.length;
+        this.obras = result.data;
+        this.obraCount = result?.meta?.to;
+        this.pageSize = result?.meta?.per_page;
+        this.totalElements = result?.meta?.per_page;
       });
    }
 
@@ -50,13 +50,15 @@ export class ListObrasComponent implements OnInit, OnDestroy {
     const startIndex = event.pageIndex * event.pageSize;
     let endIndex = startIndex + event.pageSize;
 
-    this._obraService.getObras(event?.pageIndex + 1, endIndex)
+    this._obraService.getObras(endIndex)
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((result) => {
         if (result) {
-          this.obras = result;
-          this.obraCount = result.length;
-          this.obraCount = result.length;
+          this.obras = result.data;
+          this.obraCount = result?.meta?.to;
+          this.pageSize = result?.meta?.per_page;
+          this.totalElements = result?.meta?.per_page;
+
           if (endIndex > result.length) {
             endIndex = result.length;
           }

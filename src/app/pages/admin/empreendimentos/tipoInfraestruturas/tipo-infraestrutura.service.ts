@@ -23,8 +23,9 @@ export class TipoInfraestruturaService {
     return this._tipoInfra.asObservable();
   }
 
-  getAllInfras(page = 0, size = 10): Observable<any> {
-    return this._httpClient.get<any>(environment.apiManager + 'tipos-infra')
+  getAllInfras(itemsPerPage = 15): Observable<any> {
+    return this._httpClient.get<any>(environment.apiManager + 'tipos-infra', {
+      params:{ itemsPerPage }})
     .pipe(
       tap((result) => {
         let infras = result.data;  

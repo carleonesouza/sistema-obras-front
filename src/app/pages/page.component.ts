@@ -79,7 +79,7 @@ export class PageComponent implements OnInit, OnDestroy {
                     type: 'basic',
                     icon: 'mat_solid:ballot',
                     link: 'admin/empreendimentos/intervencoes/lista'
-                },
+                }
             ]
         },
         {

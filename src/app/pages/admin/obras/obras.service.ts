@@ -45,7 +45,7 @@ export class ObrasService {
 
 
   private _estados: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
- 
+
   constructor(private _httpClient: HttpClient, private error: HandleError, public _snackBar: MatSnackBar) { }
 
 
@@ -136,13 +136,13 @@ export class ObrasService {
 
   getAllProdutos(): Observable<any> {
     return this._httpClient.get<any>(environment.apiManager + 'produtos')
-    .pipe(
-      tap((result) => {
-        const produtos = result.data;          
-        this._produtos.next(produtos);
-      }),
-      catchError(this.error.handleError<any>('getAllProdutos'))
-    );
+      .pipe(
+        tap((result) => {
+          const produtos = result.data;
+          this._produtos.next(produtos);
+        }),
+        catchError(this.error.handleError<any>('getAllProdutos'))
+      );
   }
 
   getAllStatues() {
@@ -169,151 +169,154 @@ export class ObrasService {
 
   getAllInfras(): Observable<any> {
     return this._httpClient.get<any>(environment.apiManager + 'tipos-infra')
-    .pipe(
-      tap((result) => {
-        const infras = result.data;          
-        this._infraEstruturas.next(infras);
-      }),
-      catchError(this.error.handleError<any>('getAllInfras'))
-    );
+      .pipe(
+        tap((result) => {
+          const infras = result.data;
+          this._infraEstruturas.next(infras);
+        }),
+        catchError(this.error.handleError<any>('getAllInfras'))
+      );
   }
 
   getEstados(): Observable<any> {
     return this._httpClient.get<any>(environment.apiManager + 'estados')
-    .pipe(
-      tap((result) => {
-        const estados = result.data;          
-        this._estados.next(estados);
-      }),
-      catchError(this.error.handleError<any>('getEstados'))
-    );
+      .pipe(
+        tap((result) => {
+          const estados = result.data;
+          this._estados.next(estados);
+        }),
+        catchError(this.error.handleError<any>('getEstados'))
+      );
   }
 
-  
+
   getMunicipios(estado): Observable<any> {
     return this._httpClient.get<any>(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estado}/municipios`)
-    .pipe(
-      tap((result) => {
-        const municipios = result;          
-        this._municipios.next(municipios);
-      }),
-      catchError(this.error.handleError<any>('getMunicipios'))
-    );
+      .pipe(
+        tap((result) => {
+          const municipios = result;
+          this._municipios.next(municipios);
+        }),
+        catchError(this.error.handleError<any>('getMunicipios'))
+      );
   }
 
   getTipoDutos(): Observable<any> {
     return this._httpClient.get<any>(environment.apiManager + 'tipo-dutos')
-    .pipe(
-      tap((result) => {
-        const tipoDutos = result.data;          
-        this._tipo_dutos.next(tipoDutos);
-      }),
-      catchError(this.error.handleError<any>('getTipoDutos'))
-    );
+      .pipe(
+        tap((result) => {
+          const tipoDutos = result.data;
+          this._tipo_dutos.next(tipoDutos);
+        }),
+        catchError(this.error.handleError<any>('getTipoDutos'))
+      );
   }
 
   getFuncaoEstruturas(): Observable<any> {
     return this._httpClient.get<any>(environment.apiManager + 'funcao-estruturas')
-    .pipe(
-      tap((result) => {
-        const funcaoEstruturas = result.data;          
-        this._funcao_estruturas.next(funcaoEstruturas);
-      }),
-      catchError(this.error.handleError<any>('getFuncaoEstruturas'))
-    );
+      .pipe(
+        tap((result) => {
+          const funcaoEstruturas = result.data;
+          this._funcao_estruturas.next(funcaoEstruturas);
+        }),
+        catchError(this.error.handleError<any>('getFuncaoEstruturas'))
+      );
   }
 
   getBitolas(): Observable<any> {
     return this._httpClient.get<any>(environment.apiManager + 'bitolas')
-    .pipe(
-      tap((result) => {
-        const bitolas = result.data;          
-        this._bitolas.next(bitolas);
-      }),
-      catchError(this.error.handleError<any>('getBitolas'))
-    );
+      .pipe(
+        tap((result) => {
+          const bitolas = result.data;
+          this._bitolas.next(bitolas);
+        }),
+        catchError(this.error.handleError<any>('getBitolas'))
+      );
   }
 
   getNivelDutos(): Observable<any> {
     return this._httpClient.get<any>(environment.apiManager + 'nivel-dutos')
-    .pipe(
-      tap((result) => {
-        const nivelDutos = result.data;          
-        this._nivel_dutos.next(nivelDutos);
-      }),
-      catchError(this.error.handleError<any>('getNivelDutos'))
-    );
-  }
-
-  getObras(page = 0, size = 10) {
-    return this._httpClient.get<any>(environment.apiManager + 'obras')
       .pipe(
         tap((result) => {
-          let obras = result.data;     
-          obras = obras.sort((a, b) => a.descricao.localeCompare(b.descricao));       
+          const nivelDutos = result.data;
+          this._nivel_dutos.next(nivelDutos);
+        }),
+        catchError(this.error.handleError<any>('getNivelDutos'))
+      );
+  }
+
+  getObras(itemsPerPage = 10) {
+    return this._httpClient.get<any>(`${environment.apiManager}obras`, {
+      params: { itemsPerPage }
+    })
+      .pipe(
+        tap((result) => {
+          let obras = result.data;
+          obras = obras.sort((a, b) => a.descricao.localeCompare(b.descricao));
           this._obras.next(obras);
         }),
         catchError(this.error.handleError<any>('getObras'))
       );
   }
 
+
   getObra(id) {
     return this._httpClient.get<any>(environment.apiManager + `obras/${id}`)
       .pipe(
         tap((result) => {
-          const obra = result.data;          
+          const obra = result.data;
           this._obra.next(obra);
-          return result.data; 
+          return result.data;
         }),
         catchError(this.error.handleError<any>('getObra'))
       );
   }
 
-  removeProduto(obra, produto){
+  removeProduto(obra, produto) {
     return this._httpClient.put<any>(environment.apiManager + `obras/produto/${obra.id}`, produto)
-    .pipe(
-      tap((result) => {
+      .pipe(
+        tap((result) => {
           return result
-      }),
-      catchError(this.error.handleError<any>('removeProduto'))
-    );
+        }),
+        catchError(this.error.handleError<any>('removeProduto'))
+      );
   }
 
-  removeMunicipio(obra, municipio){
+  removeMunicipio(obra, municipio) {
     return this._httpClient.put<any>(environment.apiManager + `obras/municipio/${obra.id}`, municipio)
-    .pipe(
-      tap((result) => {
-        return result
-      }),
-      catchError(this.error.handleError<any>('removeMunicipio'))
-    );
+      .pipe(
+        tap((result) => {
+          return result
+        }),
+        catchError(this.error.handleError<any>('removeMunicipio'))
+      );
   }
 
   editObra(obra: any): Observable<any> {
     return this._httpClient.put<any>(environment.apiManager + `obras/${obra.id}`, obra)
-    .pipe(
-      tap((result) => {
-        const updatedObras = this._obras.value || [];
-        const obraIndex = updatedObras.findIndex((obr) => obr.id === obra.id);
-        if (obraIndex !== -1) {
-          updatedObras[obraIndex] = result.data;
-          this._obras.next(updatedObras);
-        }
-        this._obra.next(result.data);
-      }),
-      catchError(this.error.handleError<any>('editObra'))
-    );
+      .pipe(
+        tap((result) => {
+          const updatedObras = this._obras.value || [];
+          const obraIndex = updatedObras.findIndex((obr) => obr.id === obra.id);
+          if (obraIndex !== -1) {
+            updatedObras[obraIndex] = result.data;
+            this._obras.next(updatedObras);
+          }
+          this._obra.next(result.data);
+        }),
+        catchError(this.error.handleError<any>('editObra'))
+      );
   }
 
 
-  uploadFile(formData){
+  uploadFile(formData) {
     return this._httpClient.post<any>(environment.apiManager + `upload-file`, formData)
-    .pipe(
-      tap((result) => {
-        return result;
-      }),
-      catchError(this.error.handleError<any>('uploadFile'))
-    );
+      .pipe(
+        tap((result) => {
+          return result;
+        }),
+        catchError(this.error.handleError<any>('uploadFile'))
+      );
   }
 
 

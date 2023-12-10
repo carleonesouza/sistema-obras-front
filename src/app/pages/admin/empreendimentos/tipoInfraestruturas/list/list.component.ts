@@ -28,17 +28,17 @@ export class ListTipoInfraestruturasComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-   
+
     this.infras$ = this._tipoInfraService.tiposInfras$;
-    this.infras$
-    .pipe(takeUntil(this._unsubscribeAll))
+    this._tipoInfraService.getAllInfras()
+      .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((result) => {
-        this.infras = result;
-        this.infraCount = result.length;
-        this.pageSize = result.length;
-        this.totalElements = result.length;
+        this.infras = result.data;
+        this.infraCount = result?.meta?.to;
+        this.pageSize = result?.meta?.per_page;
+        this.totalElements = result?.meta?.per_page;
       });
-   }
+  }
 
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
@@ -50,12 +50,14 @@ export class ListTipoInfraestruturasComponent implements OnInit, OnDestroy {
     const startIndex = event.pageIndex * event.pageSize;
     let endIndex = startIndex + event.pageSize;
 
-    this._tipoInfraService.getAllInfras(event?.pageIndex + 1, endIndex)
+    this._tipoInfraService.getAllInfras(endIndex)
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((result) => {
         if (result) {
-          this.infras = result;
-          this.infraCount = result.length;
+          this.infras = result.data;
+          this.infraCount = result?.meta?.to;
+          this.pageSize = result?.meta?.per_page;
+          this.totalElements = result?.meta?.per_page;
           if (endIndex > result.length) {
             endIndex = result.length;
           }
@@ -69,19 +71,19 @@ export class ListTipoInfraestruturasComponent implements OnInit, OnDestroy {
     }
   }
 
-  associaItem(event){
+  associaItem(event) {
     this.openDialog(event);
   }
 
   //Associar Produto a Contrato
   openDialog(event): void {
-    if(this.infras && event){
+    if (this.infras && event) {
       const dialogRef = this.dialog.open(DialogAssociateComponent, {
         width: '550px',
         data: this.infras,
       });
       dialogRef.afterClosed().subscribe((result) => {
-        if(result != null || result !== undefined){
+        if (result != null || result !== undefined) {
           const association = {
             cliente: result,
             keycloakId: event?.id
@@ -96,8 +98,8 @@ export class ListTipoInfraestruturasComponent implements OnInit, OnDestroy {
 
   }
 
-  syncListas(event){
-      console.log(event);
+  syncListas(event) {
+    console.log(event);
   }
 
   searchItem(event) {

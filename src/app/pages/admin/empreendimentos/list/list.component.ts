@@ -30,13 +30,13 @@ export class ListComponent implements OnInit, OnDestroy {
   ) {
 
     this.empreendimentos$ = this._empreendimentoService.empreendimentos$;
-    this.empreendimentos$
+    this._empreendimentoService.getAllEmpreendimentos()
     .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((result) => {
-        this.empreendimentos = result;
-        this.empreendimentoCount = result.length;
-        this.pageSize = result.length;
-        this.totalElements = result.length;
+        this.empreendimentos = result.data;
+        this.empreendimentoCount = result?.meta?.to;
+        this.pageSize = result?.meta?.per_page;
+        this.totalElements = result?.meta?.per_page;
       });
 
   }
@@ -53,12 +53,14 @@ export class ListComponent implements OnInit, OnDestroy {
     const startIndex = event.pageIndex * event.pageSize;
     let endIndex = startIndex + event.pageSize;
 
-    this._empreendimentoService.getAllEmpreendimentos(event?.pageIndex + 1, endIndex)
+    this._empreendimentoService.getAllEmpreendimentos(endIndex)
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((result) => {
         if (result) {
-          this.empreendimentos = result;
-          this.empreendimentoCount = result.length;
+          this.empreendimentos = result.data;
+          this.empreendimentoCount = result?.meta?.to;
+          this.pageSize = result?.meta?.per_page;
+          this.totalElements = result?.meta?.per_page;
           if (endIndex > result.length) {
             endIndex = result.length;
           }

@@ -157,9 +157,9 @@ export class EmpreendimentosService {
     );
   }
 
-  getAllEmpreendimentos(page = 0, size = 10) {
-    
-    return this._httpClient.get<any>(environment.apiManager + 'empreendimentos')
+  getAllEmpreendimentos(itemsPerPage = 10) {    
+    return this._httpClient.get<any>(environment.apiManager + 'empreendimentos', {
+      params:{ itemsPerPage }})
       .pipe(
         tap((result) => {
           let empreendimentos = result.data;       

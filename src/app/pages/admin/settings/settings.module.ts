@@ -15,7 +15,6 @@ import { settingsRoutes } from './settings.routing';
 import { MaterialAppModule } from 'material-app.module';
 import { SettingsService } from './settings.service';
 import { UsersComponent } from './users/users.component';
-import { DirectiveModule } from 'app/directives/directive.module';
 
 @NgModule({
     declarations: [
