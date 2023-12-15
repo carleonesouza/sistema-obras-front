@@ -143,6 +143,11 @@ export class ObraDetailsComponent implements OnInit {
 
     if (this._route.snapshot.url[1].path === 'add') {
 
+      this.setores$ = this._setoresService.getSetores();
+      this.setores$.subscribe((result) =>{
+        console.log(result)
+        this.setores = result.data;
+      })
       this.creating = true;
       this.title = 'Nova Obra';
       this.createObaForm();
@@ -441,7 +446,7 @@ export class ObraDetailsComponent implements OnInit {
   }
 
   compareSetores(c1: any, c2: any): boolean {
-    return c1 && c2 ? c1.id === c2.id : c1 === c2;
+    return c1 && c2 ? c1.descricao === c2 : c1 === c2;
   }
 
   compareEmpreend(c1: any, c2: any): boolean {
@@ -823,7 +828,7 @@ export class ObraDetailsComponent implements OnInit {
     }
   }
 
-  ClearForm() {
+  clearForm() {
     if (this.creating) {
       this.obraForm.reset();
       this.editMode = false;
