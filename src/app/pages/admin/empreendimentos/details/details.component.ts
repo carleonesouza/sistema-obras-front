@@ -119,7 +119,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
     
             this.empreendimentoForm.patchValue(this.empreendimento);
             this.empreendimentoForm.patchValue({
-              setor: this.empreendimento.setor.setor,
+              setor: this.empreendimento?.setor?.setor,
               natureza_empreendimento: this.empreendimento?.natureza_empreendimento
             });
             this.loading = false;
