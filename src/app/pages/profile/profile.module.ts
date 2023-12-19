@@ -12,6 +12,7 @@ import { SharedModule } from 'app/shared/shared.module';
 import { ProfileComponent } from './profile.component';
 import { profileRoutes } from './profile.routing';
 import { ProfileResolver } from './profile.resolver';
+import { DirectiveModule } from 'app/directives/directive.module';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { ProfileResolver } from './profile.resolver';
         MatDividerModule,
         MatFormFieldModule,
         MatIconModule,
+        DirectiveModule,
         MatInputModule,
         MatMenuModule,
         MatTooltipModule,

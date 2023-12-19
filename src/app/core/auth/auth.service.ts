@@ -138,6 +138,33 @@ export class AuthService {
         );
     }
 
+        /**
+     * Sign up
+     *
+     * @param user
+     */
+        signUp(user: User): Observable<any> {
+            return this._httpClient.post(environment.apiManager + 'register/', user).pipe(
+                switchMap((response: any) => {
+    
+                    // Store the access token in the local storage
+                    this.accessToken = response.accessToken;
+    
+                    // Set the authenticated flag to true
+                    this._authenticated = true;
+                    this.isLoggerIn = true;
+    
+                    // Store the user on the user service
+                    this.user = response.user;
+                    localStorage.setItem('user', JSON.stringify(response.user));
+    
+                    // Return a new observable with the response
+                    return of(response);
+                })
+            );
+        }
+    
+
     /**
      * Sign in using the access token
      */

@@ -18,12 +18,14 @@ import { FuseSplashScreenModule } from '@fuse/services/splash-screen';
 import { MaterialAppModule } from 'material-app.module';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { DirectiveModule } from 'app/directives/directive.module';
 
 const maskConfig: Partial<IConfig> = { validation: false};
 
 @NgModule({
     declarations: [
-        AuthSignUpComponent
+        AuthSignUpComponent,
+        
     ],
     imports     : [
         RouterModule.forChild(authSignupRoutes),
@@ -36,6 +38,7 @@ const maskConfig: Partial<IConfig> = { validation: false};
         MatInputModule,
         MatProgressSpinnerModule,
         FuseCardModule,
+        DirectiveModule,
         FuseAlertModule,
         SharedModule,
         FuseDrawerModule,

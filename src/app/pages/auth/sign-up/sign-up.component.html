@@ -1,15 +1,49 @@
-<div class="flex flex-col flex-auto min-w-0 p-5">
-
-
-    <!-- Header -->
-    <div class="bg-card flex rounded-2xl">
-        <div class="flex w-auto items-center justify-center bg-gray-800 dark:border-l rounded-l-2xl">
-            <div class="flex-0 w-16 h-16 rounded-full overflow-hidden">
-                <img src="assets/images/logo/icon.svg" class="w-full h-full object-cover">
+<div class="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0">
+    <div
+        class="relative hidden md:flex flex-auto items-center justify-center w-1/2 h-full p-16 lg:px-28 overflow-hidden bg-gray-800 dark:border-l">
+        <!-- Background - @formatter:off -->
+        <!-- Rings -->
+        <svg class="absolute inset-0 pointer-events-none" viewBox="0 0 960 540" width="100%" height="100%"
+            preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+            <g class="text-gray-700 opacity-25" fill="none" stroke="currentColor" stroke-width="100">
+                <circle r="234" cx="196" cy="23"></circle>
+                <circle r="234" cx="790" cy="491"></circle>
+            </g>
+        </svg>
+        <!-- Dots -->
+        <svg class="absolute -top-16 -right-16 text-gray-700" viewBox="0 0 220 192" width="220" height="192"
+            fill="none">
+            <defs>
+                <pattern id="837c3e70-6c3a-44e6-8854-cc48c737b659" x="0" y="0" width="20" height="20"
+                    patternUnits="userSpaceOnUse">
+                    <rect x="0" y="0" width="4" height="4" fill="currentColor"></rect>
+                </pattern>
+            </defs>
+            <rect width="220" height="192" fill="url(#837c3e70-6c3a-44e6-8854-cc48c737b659)"></rect>
+        </svg>
+        <!-- @formatter:on -->
+        <!-- Content -->
+        <div class="z-10 relative w-full max-w-2xl">
+            <div class="text-7xl font-bold leading-none text-gray-100">
+                <div>Bem-vindo</div>
+                <div>à nossa comunidade</div>
             </div>
+            <div class="mt-6 text-lg tracking-tight leading-6 text-gray-400">
+                Cadastro de Ações PELT
+            </div>
+
         </div>
-        <div class="flex flex-col md:flex sm:w-auto w-70 py-8 px-4 sm:p-12 md:p-16 sm:rounded-2xl
-             md:rounded-none sm:shadow md:shadow-none">
+    </div>
+    <div
+        class="md:flex md:items-center md:justify-center w-full sm:w-auto md:h-full md:w-full py-8 px-4 sm:p-6 md:p-2 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none sm:bg-card">
+        <div class="w-full md:w-full sm:w-80 mx-auto sm:mx-0 md:p-8">
+
+            <!-- Logo -->
+            <div class="w-12">
+                <img src="assets/images/logo/favicon.png">
+            </div>
+
+            <!-- Title -->
             <div
                 class="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate ng-star-inserted">
                 Cadastro</div>
@@ -20,228 +54,102 @@
                     </a>.
                 </div>
             </div>
-        </div>
+            <!-- Alert -->
+            <fuse-alert class="mt-8 mb-4 pb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false"
+                [type]="alert.type" [@shake]="alert.type === 'error'">
+                {{alert.message}}
+            </fuse-alert>
+            <form [formGroup]="signUpForm" (ngSubmit)="signUp()" novalidate class="w-full">
 
-    </div>
-
-    <div class="flex w-full p-7 justify-center" *ngIf="showAlert">
-        <!-- Alert -->
-        <fuse-alert class="mt-8 -mb-4 w-full" [appearance]="'outline'" [showIcon]="false" [type]="alert.type"
-            [@shake]="alert.type === 'error'">
-            {{alert.message}}
-
-        </fuse-alert>
-    </div>
-
-
-    <div class="flex w-full mt-5 mb-5">
-
-        <mat-stepper linear #stepper [formGroup]="signUpForm" class="rounded-2xl flex-col justify-center w-full">
-            <mat-step [stepControl]="signature">
-                <form [formGroup]="signature">
-                    <ng-template matStepLabel>Obter chave pública de acesso</ng-template>
-                    <mat-form-field class="w-full mb-5" appearance="outline">
-                        <mat-label>E-mail</mat-label>
-                        <input matInput formControlName="email" />
-                        <mat-icon class="icon-size-5 mr-2" matPrefix [svgIcon]="'heroicons_solid:mail'"></mat-icon>
-                        <mat-error *ngIf="signature.controls.email?.hasError('required')">
-                            Email é obrigatório
-                        </mat-error>
-                        <mat-error *ngIf="signature.controls.email?.hasError('required')">
-                            Por favor digite um e-mail válido
-                        </mat-error>
-                    </mat-form-field>
-                    <mat-form-field class="w-full" [ngClass]="'apikey'" appearance="outline">
-                        <mat-label>Chave Pública</mat-label>
-                        <input id="apiKeyS" matInput formControlName="apiKey" disabled />
-                        <mat-icon class="icon-size-5 mr-2" matPrefix
-                            [svgIcon]="'heroicons_solid:badge-check'"></mat-icon>
-                        <button mat-button matSuffix mat-flat-button [cdkCopyToClipboard]="apiToken" matTooltip="Copiar"
-                            aria-label="copy">
-                            <mat-icon>content_copy</mat-icon>
-                        </button>
-                    </mat-form-field>
-                    <div class="flex flex-row mt-9 justify-end w-full">
-                        <button *ngIf="obter" mat-button [color]="'primary'" (click)="getPublicKey()">Obter
-                            Chave</button>
-                        <button *ngIf="!obter" mat-button [color]="'primary'" matStepperNext>Próximo</button>
-                    </div>
-                </form>
-            </mat-step>
-            <mat-step [stepControl]="store">
-                <form [formGroup]="store">
-                    <ng-template matStepLabel>Cadatro da Loja</ng-template>
-                    <mat-form-field class="w-full" appearance="outline">
-                        <mat-label>Nome Loja</mat-label>
-                        <input id="name" matInput formControlName="name" />
-                        <mat-icon class="icon-size-5 mr-2" matPrefix
-                            [svgIcon]="'heroicons_solid:office-building'"></mat-icon>
-                        <mat-error *ngIf="store.controls.name?.hasError('required')">
-                            Nome é obrigatório
-                        </mat-error>
-                    </mat-form-field>
-
-                    <div class="flex flex-col sm:flex-row md:w-full md:space-x-4 sm:space-x-0 sm:w-full">
-                        <mat-form-field class="flex-auto w-auto md:w-full sm:w-full" appearance="outline">
-                            <mat-label>CNPJ</mat-label>
-                            <input id="cnpj" matInput formControlName="cnpj" mask="00.000.000/0000-00" />
-                            <mat-icon class="icon-size-5 mr-2" matPrefix
-                                [svgIcon]="'heroicons_solid:identification'"></mat-icon>
-                        </mat-form-field>
-
-                        <mat-form-field class="flex-auto w-auto md:w-full sm:w-full" appearance="outline">
-                            <mat-label>Tefone</mat-label>
-                            <input id="phone" matInput formControlName="phone" mask="(00) 0 0000-0000" />
-                            <mat-icon class="icon-size-5 mr-2" matPrefix [svgIcon]="'heroicons_solid:phone'"></mat-icon>
-                            <mat-error *ngIf="store.controls.phone?.hasError('required')">
-                                Telefone é obrigatório
-                            </mat-error>
-
-                        </mat-form-field>
-                    </div>
-
-                    <mat-form-field class="w-full" appearance="outline">
-                        <mat-label>E-mail</mat-label>
-                        <input id="owner" matInput formControlName="owner" />
-                        <mat-icon class="icon-size-5 mr-2" matPrefix [svgIcon]="'heroicons_solid:mail'"></mat-icon>
-                        <mat-error *ngIf="store.controls.owner?.hasError('required')">
-                            Email é obrigatório
-                        </mat-error>
-                        <mat-error *ngIf="store.controls.owner?.hasError('owner')">
-                            Por favor digite um e-mail válido
-                        </mat-error>
-                    </mat-form-field>
-
-
-
-                    <mat-form-field class="w-full" [ngClass]="'apikey'" appearance="outline">
-                        <mat-label>Api Key</mat-label>
-                        <input id="apiKey" matInput formControlName="apiKey" disabled />
-                        <mat-icon class="icon-size-5 mr-2" matPrefix
-                            [svgIcon]="'heroicons_solid:badge-check'"></mat-icon>
-                        <button mat-button matSuffix mat-flat-button [cdkCopyToClipboard]="apiToken" matTooltip="Copiar"
-                            aria-label="copy">
-                            <mat-icon>content_copy</mat-icon>
-                        </button>
-                    </mat-form-field>
-                    <div class="flex flex-row mt-9 justify-end w-full">
-                        <button mat-button matStepperPrevious>Voltar</button>
-                        <button mat-button [color]="'primary'" (click)=" registerStore()"
-                            matStepperNext>Próximo</button>
-                    </div>
-                </form>
-            </mat-step>
-            <mat-step [stepControl]="user">
-                <form [formGroup]="user">
-                    <ng-template matStepLabel>Cadastro do Usuário</ng-template>
+                <div class="flex flex-col mt-4 w-full">
                     <mat-form-field class="w-full" appearance="outline">
                         <mat-label>Nome Completo</mat-label>
-                        <input id="fullName" matInput formControlName="fullName" />
+                        <input id="fullName" matInput [formControlName]="'nome'" />
                         <mat-icon class="icon-size-5 mr-2" matPrefix
                             [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
-                        <mat-error *ngIf="user.controls.fullName?.hasError('required')">
+                        <mat-error *ngIf="signUpForm.controls.nome?.hasError('required')">
                             Nome completo é obrigatório
                         </mat-error>
                     </mat-form-field>
 
-                    <div class="flex flex-col sm:flex-row md:w-full md:space-x-4 sm:space-x-0 sm:w-full">
-                        <mat-form-field class="flex-auto w-auto md:w-full sm:w-full" appearance="outline">
-                            <mat-label>CPF</mat-label>
-                            <input matInput [placeholder]="'CPF'" matInput id="cpf" formControlName="cpf"
-                                [spellcheck]="false" mask="000.000.000-00" appCpfValidator />
-                            <mat-icon class="icon-size-5 mr-1" matPrefix
-                                [svgIcon]="'heroicons_solid:identification'"></mat-icon>
-                            <mat-error *ngIf="user.controls.cpf?.hasError('valido')"
-                                class="cross-validation-error-message alert">
-                                CPF Inválido!
-                            </mat-error>
-                        </mat-form-field>
-
-                        <mat-form-field class="flex-auto w-auto md:w-full sm:w-full" appearance="outline">
-                            <mat-label>Telefone</mat-label>
-                            <input matInput [placeholder]="'Telefone'" matInput formControlName="phone"
-                                mask="(00) 0 0000-0000" />
-                            <mat-icon class="icon-size-5 mr-1" matPrefix [svgIcon]="'heroicons_solid:phone'"></mat-icon>
-                            <mat-error *ngIf="user.controls.phone?.hasError('required')">
-                                Telefone é obrigatório
-                            </mat-error>
-                        </mat-form-field>
-                    </div>
-
                     <mat-form-field class="w-full" appearance="outline">
                         <mat-label>E-mail</mat-label>
-                        <input id="email" matInput formControlName="email" />
+                        <input id="email" matInput [formControlName]="'email'" />
                         <mat-icon class="icon-size-5 mr-2" matPrefix [svgIcon]="'heroicons_solid:mail'"></mat-icon>
-                        <mat-error *ngIf="user.controls.email?.hasError('required')">
+                        <mat-error *ngIf="signUpForm.controls.email?.hasError('required')">
                             Email é obrigatório
                         </mat-error>
-                        <mat-error *ngIf="user.controls.email?.hasError('email')">
+                        <mat-error *ngIf="signUpForm.controls.email?.hasError('email')">
                             Por favor digite um e-mail válido
                         </mat-error>
                     </mat-form-field>
-                    <div class="flex">
-                    <mat-form-field class="w-full" appearance="outline">
-                        <mat-label>Senha</mat-label>
-                        <input id="password" matInput formControlName="password" />
-                        <mat-icon class="icon-size-5 mr-2" matPrefix [svgIcon]="'heroicons_solid:key'"></mat-icon>
-                        <mat-error *ngIf="user.controls.password?.hasError('required')">
-                            Senha é obrigatório
+
+                    <mat-form-field class="flex-auto w-auto md:w-full sm:w-full" appearance="outline">
+                        <mat-label>Telefone</mat-label>
+                        <input matInput [placeholder]="'Telefone'" matInput [formControlName]="'telefone'"
+                            mask="(00) 0 0000-0000" />
+                        <mat-icon class="icon-size-5 mr-1" matPrefix [svgIcon]="'heroicons_solid:phone'"></mat-icon>
+                        <mat-error *ngIf="signUpForm.controls.telefone?.hasError('required')">
+                            Telefone é obrigatório
                         </mat-error>
-                        
                     </mat-form-field>
-                    </div>
 
-                    <!-- <div class="flex">
-                        <mat-form-field class="w-full" appearance="outline">
-                            <mat-label>Senha</mat-label>
-                            <input id="password" matInput type="password" formControlName="password" #passwordField/>
-                            <mat-icon class="icon-size-5 mr-2" matPrefix [svgIcon]="'heroicons_solid:key'"></mat-icon>
-                            <button mat-icon-button type="button" (click)="
-            passwordField.type === 'password'
-                ? (passwordField.type = 'text')
-                : (passwordField.type = 'password')
-        " matSuffix>
-                                <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'password'"
-                                    [svgIcon]="'heroicons_solid:eye'"></mat-icon>
-                                <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'text'"
-                                    [svgIcon]="'heroicons_solid:eye-off'"></mat-icon>
-                            </button>
-                            <mat-error> Senha é obrigatório </mat-error>
-                        </mat-form-field>
-                    </div> -->
+                    <mat-form-field class="flex-auto w-auto md:w-full sm:w-full" appearance="outline">
+                        <mat-label>Instituição Setor</mat-label>
+                        <mat-icon class="icon-size-5" svgIcon="mat_solid:apartment" matPrefix></mat-icon>
+                        <input [formControlName]="'instituicao_setor'" [placeholder]="'Instituição Setor'" matInput>
+                        <mat-error *ngIf="signUpForm.controls.instituicao_setor?.hasError('required')">
+                            Instituição Setor é obrigatório
+                        </mat-error>
+                    </mat-form-field>
 
 
-                    <div class="inline-flex items-end w-full mt-1.5 pt-4">
-                        <mat-checkbox [color]="'primary'" formControlName="agreements">
-                            <span>Eu concordo com os</span>
-                            <a class="ml-1 text-primary-500 hover:underline" [routerLink]="['./']">Termos de Serviço
-                            </a>
-                            <span>e a</span>
-                            <a class="ml-1 text-primary-500 hover:underline" [routerLink]="['./']">Política de
-                                Privacidade
-                            </a>
-                        </mat-checkbox>
-                    </div>
-
-                    <!-- <button class="fuse-mat-button-large w-full mt-6" mat-flat-button [color]="'primary'"
-                        [disabled]="signUpForm.invalid">
-                        <span *ngIf="!signUpForm.invalid">
-                            Cadastrar
-                        </span>
-                       
-                    </button> -->
-
-                    <div class="flex flex-row mt-9 justify-end w-full">
-                        <button mat-button matStepperPrevious>Voltar</button>
-                        <button mat-button [disabled]="signUpForm.invalid" (click)="signUp();stepper.reset()">Finalizar
-
-                            <mat-progress-spinner class="ml-2" *ngIf="signUpForm.disabled" [diameter]="24"
-                                [mode]="'indeterminate'"></mat-progress-spinner>
+                </div>
+                <!-- Current password -->
+                <div class="flex">
+                    <mat-form-field class="fuse-mat-no-subscript w-full" appearance="outline">
+                        <mat-label>Senha</mat-label>
+                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:key'" matPrefix></mat-icon>
+                        <input matInput formControlName="senha" [type]="hide ? 'password' : 'text'" maxlength="8">
+                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                            [attr.aria-pressed]="hide" type="button">
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                         </button>
-                    </div>
-                </form>
-            </mat-step>
-        </mat-stepper>
+                    </mat-form-field>
+                </div>
+                <!-- New password -->
+                <div class="flex flex-col">
+                    <mat-form-field class="fuse-mat-no-subscript w-full" appearance="outline">
+                        <mat-label>Confirmar Senha</mat-label>
+                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:key'" matPrefix></mat-icon>
+                        <input matInput formControlName="senha_confirmation" [type]="hide_confirm ? 'password' : 'text'"
+                            maxlength="8" appConfirmEqualValidator="senha">
 
+                        <button mat-icon-button matSuffix (click)="hide_confirm = !hide_confirm"[attr.aria-label]="'Hide password'"
+                            [attr.aria-pressed]="hide_confirm" type="button">
+                            <mat-icon>{{hide_confirm ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                    </mat-form-field>
+                    <mat-error
+                        *ngIf="userControlsForm.senha_confirmation.invalid && (userControlsForm.senha_confirmation.dirty || userControlsForm.senha_confirmation.touched)"
+                        class="text-md text-red-600">
+                        Senhas não são iguais!
+                    </mat-error>
+                    <div class="mt-1 text-md text-hint">
+                        Mínimo de 8 caracteres. Deve incluir números, letras
+                        e caracteres especiais.</div>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex items-center justify-end mt-2">
+                    <!-- Save -->
+                    <button class="ml-2" mat-flat-button [color]="'primary'" type="submit" [matTooltip]="'Salvar'"
+                        [disabled]="signUpForm.invalid">
+                        Salvar
+                    </button>
+                </div>
+            </form>
+
+        </div>
     </div>
 </div>

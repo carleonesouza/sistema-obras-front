@@ -7,6 +7,13 @@
            
             <!-- Title -->
             <div class="mt-4 text-4xl font-extrabold tracking-tight leading-tight">Cadastro de Ações PELT</div>
+            <div class="flex items-baseline mt-0.5 font-medium">
+                <div>Não tem uma conta?</div>
+                <a
+                    class="ml-1 text-primary-500 hover:underline"
+                    [routerLink]="['/sign-up']">Sign up
+                </a>
+            </div>
             
             <!-- Alert -->
             <fuse-alert class="mt-4 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false"

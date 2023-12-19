@@ -428,7 +428,7 @@ export class ObraDetailsComponent implements OnInit {
       descricao: ['', [Validators.required]],
       intervencao: ['', [Validators.required]],
       status: ['', [Validators.required]],
-      instrumento: ['', [Validators.required]],
+      instrumento: [''],
       dataInicio: [{ value: '', disabled: true }, [Validators.required]],
       dataConclusao: [{ value: '', disabled: true }, [Validators.required]],
       data_base_orcamento: [{ value: '', disabled: true }, [Validators.required]],

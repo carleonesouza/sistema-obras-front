@@ -32,7 +32,17 @@ export class RolesService {
   getAllRoles(): Observable<any[]>{
     return this._httpClient.get<any>(environment.apiManager+'tipo-usuarios').
     pipe(
-      delay(500),
+      tap((result) => {
+        const data  = result.data;
+        this._roles.next(data);
+      }),
+      catchError(this.error.handleError<any>('getAllRoles'))
+    );
+  }
+
+  getPerfil(): Observable<any[]>{
+    return this._httpClient.get<any>(environment.apiManager+'perfil').
+    pipe(
       tap((result) => {
         const data  = result.data;
         this._roles.next(data);

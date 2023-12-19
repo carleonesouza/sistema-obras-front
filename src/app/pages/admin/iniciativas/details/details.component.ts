@@ -46,7 +46,7 @@ export class DetailsComponent implements OnInit, OnDestroy{
   expectativas: Expectativa[] = [
     {value: 'SIM'},
     {value: 'NÃO'},
-   
+    {value: 'N/A'},
   ];
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -139,7 +139,7 @@ export class DetailsComponent implements OnInit, OnDestroy{
       responsavel: new FormControl('', Validators.required),
       descricao: new FormControl('', Validators.required),
       expectativa: new FormControl('', Validators.required),
-      instrumento: new FormControl('', Validators.required),
+      instrumento: new FormControl(''),
       setor: new FormControl(''),
       user: new FormControl(''),
       usuario_que_alterou: new FormControl(''),

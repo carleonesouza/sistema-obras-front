@@ -47,6 +47,7 @@ export const pagesRoutes: Route[] = [
         children: [
 
             { path: 'sign-in', loadChildren: () => import('app/pages/auth/sign-in/sign-in.module').then(m => m.AuthSignInModule) },
+            { path: 'sign-up', loadChildren: () => import('app/pages/auth/sign-up/sign-up.module').then(m => m.AuthSignUpModule) }
 
         ]
     }
