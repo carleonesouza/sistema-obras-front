@@ -35,6 +35,21 @@ h3:after{
     display: flex;
     align-items: center;
   }
+
+ .progress-container {
+    width: 100%;
+    background-color: #eee;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.progress-bar {
+    height: 20px;
+    background-color: #4caf50;
+    border-radius: 4px;
+    width: 0%;
+}
+
  
   /**
  * ==============================================
@@ -120,10 +135,6 @@ h3:after{
   
   .example-headers-align .mat-form-field + .mat-form-field {
     margin-left: 8px;
-  }
-
-  .progress-bar {
-    padding: 0;
   }
   
   .progress {

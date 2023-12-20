@@ -24,6 +24,7 @@ import { TipoInfraestruturaService } from '../../empreendimentos/tipoInfraestrut
 import { default as _rollupMoment, Moment } from 'moment';
 import * as _moment from 'moment';
 import { Bitola } from 'app/models/bitola';
+import { HttpEventType } from '@angular/common/http';
 const moment = _rollupMoment || _moment;
 _moment.locale('en');
 
@@ -92,6 +93,8 @@ export class ObraDetailsComponent implements OnInit {
   isLoading: boolean = false;
   selectedFile: File | null = null;
   arquivoGeo: File | null = null;
+  uploadProgress: number = 0;
+  uploadGeorreferenciado: number = 0;
   uploadFiles = new FormData();
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   isLoadingMunicipio: boolean = false;
@@ -144,8 +147,7 @@ export class ObraDetailsComponent implements OnInit {
     if (this._route.snapshot.url[1].path === 'add') {
 
       this.setores$ = this._setoresService.getSetores();
-      this.setores$.subscribe((result) =>{
-        console.log(result)
+      this.setores$.subscribe((result) => {
         this.setores = result.data;
       })
       this.creating = true;
@@ -479,8 +481,54 @@ export class ObraDetailsComponent implements OnInit {
       const file: File = event.target.files[0];
       this.selectedFile = event.target.files[0];
       this.uploadFiles.append('documentosAdicionais', this.selectedFile);
+
+      if (this.uploadFiles.has('documentosAdicionais')) {
+        this._obraService.uploadFile(this.uploadFiles).subscribe(event => {
+          this.uploadFiles.set('documentosAdicionais', event?.body?.documentosAdicionais)
+
+          if (event.type === HttpEventType.UploadProgress && event.total) {
+            this.uploadProgress = Math.round(100 * event.loaded / event.total);
+          } else if (event.type === HttpEventType.Response) {
+            this.uploadProgress = 100;
+            this._snackBar.open('Arquivo Salvo com Sucesso', 'Fechar', { duration: 3000 });
+          }
+        }, error => {
+          // Handle error
+          this.uploadProgress = 0;
+          this._snackBar.open('Erro ao fazer Upload ' + error, 'Fechar', { duration: 3000 });
+          console.error('Upload error:', error);
+        });
+      }
     }
 
+  }
+
+  geoDocs(event: any) {
+
+    if (event.target.files && event.target.files.length) {
+      const file: File = event.target.files[0];
+      this.arquivoGeo = event.target.files[0];
+      this.uploadFiles.append('arquivoGeorreferenciado', this.arquivoGeo)
+
+      if (this.uploadFiles.has('arquivoGeorreferenciado')) {
+        this._obraService.uploadFile(this.uploadFiles).subscribe(event => {
+
+          this.uploadFiles.set('arquivoGeorreferenciado', event?.body?.arquivoGeorreferenciado)
+
+          if (event.type === HttpEventType.UploadProgress && event.total) {
+            this.uploadGeorreferenciado = Math.round(100 * event.loaded / event.total);
+          } else if (event.type === HttpEventType.Response) {
+            this.uploadGeorreferenciado = 100;
+            this._snackBar.open('Arquivo Salvo com Sucesso', 'Fechar', { duration: 3000 });
+          }
+        }, error => {
+          // Handle error
+          this.uploadGeorreferenciado = 0;
+          this._snackBar.open('Erro ao fazer Upload ' + error, 'Fechar', { duration: 3000 });
+          console.error('Upload error:', error);
+        });
+      }
+    }
   }
 
   setDataConclusao(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
@@ -499,14 +547,6 @@ export class ObraDetailsComponent implements OnInit {
     const ctrlValue = this.obraForm.get('data_base_orcamento').value!;
     this.obraForm.get('data_base_orcamento').setValue(normalizedMonthAndYear.toDate());
     datepicker.close();
-  }
-
-  geoDocs(event: any) {
-    if (event.target.files && event.target.files.length) {
-      const file: File = event.target.files[0];
-      this.arquivoGeo = event.target.files[0];
-      this.uploadFiles.append('arquivoGeorreferenciado', this.arquivoGeo)
-    }
   }
 
   fixDateFormat(dateString: string): string {
@@ -755,16 +795,16 @@ export class ObraDetailsComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
-               
-          this._obraService.removeProduto(this.obra,  {
+
+          this._obraService.removeProduto(this.obra, {
             id: produto.value?.id
           })
-          .subscribe((res)=>{
-            console.log(res)
-            this._snackBar.open('Produto Removido com Sucesso', 'Fechar', {
-              duration: 3000
-            });
-          })
+            .subscribe((res) => {
+              console.log(res)
+              this._snackBar.open('Produto Removido com Sucesso', 'Fechar', {
+                duration: 3000
+              });
+            })
 
           produtoFormArray.removeAt(index);
         }
@@ -799,16 +839,16 @@ export class ObraDetailsComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
-        
-          this._obraService.removeMunicipio(this.obra,  {
+
+          this._obraService.removeMunicipio(this.obra, {
             id: municipio.value?.id
           })
-          .subscribe((res)=>{
-            console.log(res)
-            this._snackBar.open('Município Removido com Sucesso', 'Fechar', {
-              duration: 3000
-            });
-          })
+            .subscribe((res) => {
+              console.log(res)
+              this._snackBar.open('Município Removido com Sucesso', 'Fechar', {
+                duration: 3000
+              });
+            })
 
           municipioFormArray.removeAt(index);
         }
@@ -1101,21 +1141,29 @@ export class ObraDetailsComponent implements OnInit {
 
   }
 
+
   uploadFilesSelected() {
 
     if (this.uploadFiles.has('documentosAdicionais') || this.uploadFiles.has('arquivoGeorreferenciado')) {
+      this._obraService.uploadFile(this.uploadFiles).subscribe(event => {
+        this.uploadFiles.set('documentosAdicionais', event?.body?.documentosAdicionais)
+        this.uploadFiles.set('arquivoGeorreferenciado', event?.body?.arquivoGeorreferenciado)
 
-      this._obraService
-        .uploadFile(this.uploadFiles)
-        .subscribe((e) => {
-          this.uploadFiles.set('documentosAdicionais', e.documentosAdicionais)
-          this.uploadFiles.set('arquivoGeorreferenciado', e.arquivoGeorreferenciado)
-          this._snackBar.open('Arquivos Salvos com Sucesso', 'Fechar', {
-            duration: 3000
-          });
-        })
+        if (event.type === HttpEventType.UploadProgress && event.total) {
+          this.uploadProgress = Math.round(100 * event.loaded / event.total);
+        } else if (event.type === HttpEventType.Response) {
+          this.uploadProgress = 100;
+          this._snackBar.open('Arquivos Salvos com Sucesso', 'Fechar', { duration: 3000 });
+        }
+      }, error => {
+        // Handle error
+        this.uploadProgress = 0;
+        this._snackBar.open('Erro ao fazer Upload ' + error, 'Fechar', { duration: 3000 });
+        console.error('Upload error:', error);
+      });
     }
   }
+
 
   onSubmit() {
     if (this.obraForm) {

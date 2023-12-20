@@ -44,12 +44,6 @@
                     </div>
                     <!-- Name -->
                     <div class="mt-3 text-4xl font-bold truncate">{{user.nome}}</div>
-                    <!-- <div class="mt-6">
-                        <mat-chip-list aria-label="Fish selection">
-                            <mat-chip *ngIf="user.status" class="ind-active">Ativo</mat-chip>
-                            <mat-chip *ngIf="!user.status" class="ind-deactived">Removido</mat-chip>
-                        </mat-chip-list>
-                    </div> -->
 
                     <div class="mt-6 w-full">
                         <h3 class="text-3xl">Detalhes</h3>
@@ -118,54 +112,6 @@
                             </div>
                         </div>
                     </ng-container>
-                    
-
-                    <!-- <div class="mt-6 w-full">
-                        <h3 class="text-3xl">Documentos </h3>
-                    </div> -->
-
-                    <!-- <div>
-
-                        <ng-container>
-                            <div class="flex w-full mb-4  mt-4 pb-3">
-                                <div class="min-w-0 space-y-1 w-full">
-                                    <ng-container>
-                                        <div
-                                            class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2"
-                                                [svgIcon]="'heroicons_outline:identification'"></mat-icon>
-                                            <div class="font-mono">{{user.cpf | mask:'000.000.000-00' }}</div>
-                                        </div>
-                                    </ng-container>
-                                </div>
-                            </div>
-                        </ng-container>
-
-                    </div> -->
-
-                    <!-- Address -->
-                    <!-- <ng-container *ngIf="user.address">
-                        <div class="mt-6 w-full">
-                            <h3 class="text-3xl">Endereço</h3>
-                        </div>
-                        <div class="flex sm:items-center w-full mt-3">
-                            <div class="space-y-4 w-full">
-                                <ng-container>                                    
-                                    <div
-                                        class="flex flex-col md:flex-row space-x-4 leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                        <mat-icon class="mr-2" [svgIcon]="'heroicons_outline:location-marker'">
-                                        </mat-icon>
-                                        <div class="ml-4 md:ml-2">{{user.address.street}}</div>
-                                        <div><span class="font-bold">CEP: </span>{{user.address.zipCode |
-                                            mask:'00.000-000'}}</div>
-                                        <div><span class="font-bold">Bai./Cid./Est.: </span>{{user.address.neighborhood}}</div>
-
-                                    </div>
-                                </ng-container>
-                            </div>
-                        </div>
-                    </ng-container> -->
-
                 </div>
             </div>
         </ng-container>
@@ -185,7 +131,6 @@
                     <h2 class="text-4xl">{{title}}</h2>
                 </div>
             </div>
-
             <!-- Individuo form -->
             <div class="relative flex flex-col flex-auto px-2 sm:px-7">
                 <div class="flex flex-col justify-center items-center w-full p-6" *ngIf="saving">
@@ -241,93 +186,10 @@
                                 <mat-icon class="icon-size-5" svgIcon="mat_solid:apartment" matPrefix></mat-icon>
                                 <input [formControlName]="'instituicao_setor'"  [placeholder]="'Instituição Setor'" matInput>
                             </mat-form-field>
-                        </div>
-
-                        <!-- <div class="sm:col-span-4">
-                            <div class="flex-auto mr-2 w-full">
-                                <mat-form-field appearance="fill" class="w-full">
-                                    <mat-label>CPF</mat-label>
-                                    <input formControlName="cpf" matInput [placeholder]="'Número do CPF'"
-                                        [spellcheck]="false" mask="000.000.000-00" />
-                                    <mat-error
-                                        *ngIf="userForm?.get('cpf').hasError('valido') && (userControlsForm.cpf.touched || userControlsForm.cpf.dirty)"
-                                        class="cross-validation-error-message alert">
-                                        CPF Inválido!
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
-
-                        </div> -->
+                        </div>                      
                     </div>
                     <!-- Divider -->
                     <div class="my-10 border-t"></div>
-                    <!-- Endereços -->
-                    <!-- <div>
-                        <div class="space-y-4">
-                            <ng-container formGroupName="address">
-                                <div class="mt-6 w-full">
-                                    <h3 class="text-3xl">Endereço</h3>
-                                </div>
-                                <div class="flex flex-col px-8 py-6 pb-4 shadow-xl"
-                                    [ngClass]="{'bg-removed': address?.get('status')?.value === false, 'bg-alert': address?.get('status')?.value === true}">
-                                    <div class="mt-2">
-                                        <ng-container>
-                                            <div class="flex flex-col justify-end sm:flex-row sm:items-center w-full">
-                                                <div class="hidden sm:flex flex-auto"></div>
-                                                <div class="flex justify-end">
-                                                    <div class="px-3 mr-1 -ml-2 sm:ml-0"
-                                                        *ngIf="address?.get('status')?.value === false">
-                                                        <mat-icon class="color-alert" matTooltip="Inativo"
-                                                            aria-hidden="true" svgIcon="mat_outline:remove_moderator">
-                                                        </mat-icon>
-                                                    </div>
-                                                    <div class="px-3 mr-1 -ml-2 sm:ml-0"
-                                                        *ngIf="address?.get('status')?.value === true">
-                                                        <mat-icon color="warn" matTooltip="Removido" aria-hidden="true"
-                                                            svgIcon="mat_outline:gpp_maybe"></mat-icon>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="mt-6 flex flex-wrap">
-                                                <div class="flex-auto mr-2">
-                                                    <mat-form-field class=" w-full">
-                                                        <mat-label>Rua</mat-label>
-                                                        <mat-icon matPrefix class="hidden sm:flex icon-size-5"
-                                                            [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
-                                                        <input matInput formControlName="street"
-                                                            [placeholder]="'Rua e número'">
-                                                    </mat-form-field>
-                                                </div>
-                                                <div class="flex-auto">
-                                                    <mat-form-field class=" w-full">
-                                                        <mat-label>CEP</mat-label>
-                                                        <mat-icon matPrefix class="hidden sm:flex icon-size-5"
-                                                            [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
-                                                        <input matInput formControlName="zipCode" mask="00.000-000"
-                                                            [placeholder]="'XX.XXX-XXX'">
-                                                    </mat-form-field>
-                                                </div>
-                                            </div>
-                                            <div class="mt-6">
-                                                <mat-form-field class="w-full">
-                                                    <mat-label>Bairro/Cidade/Estado</mat-label>
-                                                    <mat-icon matPrefix class="hidden sm:flex icon-size-5"
-                                                        [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
-                                                    <input matInput formControlName="neighborhood" [placeholder]="'Bairro'">
-                                                </mat-form-field>
-                                            </div>
-                                        </ng-container>
-                                    </div>
-                                    <hr class="border-b mt-4 mb-1">
-                                </div>
-                            </ng-container>
-                        </div>
-
-                    </div> -->
-                    <!-- Divider -->
-                    <!-- <div class="my-10 border-t"></div> -->
-
                     <!-- Section -->
                     <div class="w-full">
                         <div class="mt-6 w-full">

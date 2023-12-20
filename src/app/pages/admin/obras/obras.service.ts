@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Empreendimento } from 'app/models/empreendimento';
@@ -310,7 +310,10 @@ export class ObrasService {
 
 
   uploadFile(formData) {
-    return this._httpClient.post<any>(environment.apiManager + `upload-file`, formData)
+    return this._httpClient.post<any>(environment.apiManager + `upload-file`, formData, {
+      reportProgress: true,
+      observe: 'events'
+    })
       .pipe(
         tap((result) => {
           return result;
@@ -319,16 +322,17 @@ export class ObrasService {
       );
   }
 
+  searchObra(tipo: string): Observable<any> {
+    const params = new HttpParams().set('term', tipo); // 'term' is the query parameter name
 
-  // searchEmpreendimentoByObra(contratoId): Observable<any[]>{
-  //     return this._httpClient.get<any[]>(environment.apiManager + 'empreendimentos/busca-empreendimentos-por-contrato', {params: contratoId})
-  //     .pipe(
-  //       tap((empreendimentos) => {
-  //         this._empreendimentos.next(empreendimentos);
-  //       }),
-  //       catchError(this.error.handleError<any>('searchEmpreendimentoByObra'))
-  //     );
-  // }
+    return this._httpClient.get<any>(`${environment.apiManager}search`, { params })
+      .pipe(
+        tap((obras) => {
+          this._obras.next(obras.data);
+        }),
+        catchError(this.error.handleError<any>('searchObra'))
+      );
+  }
 
 
   addObra(obra: any): Observable<any> {

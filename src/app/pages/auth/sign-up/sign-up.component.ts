@@ -22,18 +22,17 @@ export class AuthSignUpComponent implements OnInit {
     @ViewChild('signUpNgForm') signUpNgForm: NgForm;
     obter = true;
     hide = true;
+    loading: boolean = false;
     isLinear = false;
     hide_confirm = true;
     perfis$: Observable<any>;
-    perfil: Perfil;
+    perfis: any;
     alert: { type: FuseAlertType; message: string } = {
         type: 'success',
         message: ''
     };
     signUpForm: FormGroup;
     showAlert: boolean = false;
-    loading: boolean = false;
-
     /**
      * Constructor
      */
@@ -53,20 +52,37 @@ export class AuthSignUpComponent implements OnInit {
     /**
      * On init
      */
-    ngOnInit(): void {
+    ngOnInit(): void {    
+        this.createUserForm();
 
-        // Create all forms
-        this.signUpForm = this._formBuilder.group({
-            id: new FormControl(''),
-            nome: new FormControl('', Validators.required),
-            instituicao_setor: new FormControl('', Validators.required),
-            email: new FormControl('', [Validators.required, Validators.email]),
-            telefone: new FormControl(''),
-            senha: new FormControl(''),
-            senha_confirmation: new FormControl(''),
-            tipo_usuario: new FormControl('')
-        });
+        this._perfilService.getPerfil()
+        .subscribe((result: any) => {
+            this.loading = true;
+            if (result) {
+                result?.data.map((item) =>{
+                    
+                    if(item?.descricao.toLowerCase() === String('EDITOR').toLowerCase()){                       
+                        this.loading = false;
+                        this.signUpForm.patchValue({
+                            tipo_usuario : item
+                        })
+                    }
+                })
+           
+               }
+        })
+
+        
     }
+
+    compareFn(c1: any, c2: any): boolean {
+     
+        return c1 && c2 ? c1.descricao === c2 : c2 === c1.id;
+      }
+        
+      itemDisplayFn(item: Perfil) {
+        return item ? item.descricao : '';
+      }
 
 
     // -----------------------------------------------------------------------------------------------------
@@ -76,6 +92,19 @@ export class AuthSignUpComponent implements OnInit {
     get userControlsForm(): { [key: string]: AbstractControl } {
         return this.signUpForm.controls;
     }
+
+    createUserForm() {
+        this.signUpForm = this._formBuilder.group({
+          id: new FormControl(''),
+          nome: new FormControl('', Validators.required),
+          instituicao_setor: new FormControl('', Validators.required),
+          email: new FormControl('', [Validators.required, Validators.email]),
+          telefone: new FormControl(''),
+          senha: new FormControl(''),
+          senha_confirmation: new FormControl(''),
+          tipo_usuario: new FormControl('')
+        });
+      }
 
 
     /**
@@ -87,16 +116,10 @@ export class AuthSignUpComponent implements OnInit {
             return;
         }
 
-        this.perfis$ = this._perfilService.getPerfil();
         const user = new User(this.signUpForm.value);
-
-        this.perfis$.subscribe((result) => {
-            if (result) {
-                this.perfil = new Perfil(result.data.find(item => item?.descricao.toLowerCase() === String('EDITOR').toLowerCase()));
-                user.tipo_usuario = this.perfil?.id;
-            }
-        })
-
+        const perfil =  new Perfil(this.signUpForm.get('tipo_usuario').value);
+        user.tipo_usuario = perfil.id;
+    
         // Disable the form
         this.signUpForm.disable();
 

@@ -59,7 +59,7 @@
                 [type]="alert.type" [@shake]="alert.type === 'error'">
                 {{alert.message}}
             </fuse-alert>
-            <form [formGroup]="signUpForm" (ngSubmit)="signUp()" novalidate class="w-full">
+            <form [formGroup]="signUpForm" (ngSubmit)="signUp()" novalidate class="w-full" *ngIf="!loading">
 
                 <div class="flex flex-col mt-4 w-full">
                     <mat-form-field class="w-full" appearance="outline">
@@ -150,6 +150,15 @@
                 </div>
             </form>
 
+            <ng-container *ngIf="loading">
+                <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center loader">Carregando
+                    Usuário
+                    <span class="dot dot-1"></span>
+                    <span class="dot dot-2"></span>
+                    <span class="dot dot-3"></span>
+                    <span class="dot dot-4"></span>
+                </div>
+            </ng-container>
         </div>
     </div>
 </div>

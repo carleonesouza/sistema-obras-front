@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DialogAssociateComponent } from 'app/shared/dialog-association/dialog-associate.component';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, switchMap, take, takeUntil } from 'rxjs';
 import { ObrasService } from '../obras.service';
 
 
@@ -31,14 +31,14 @@ export class ListObrasComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.obras$ = this._obraService.obras$;
     this._obraService.getObras()
-    .pipe(takeUntil(this._unsubscribeAll))
+      .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((result) => {
         this.obras = result.data;
         this.obraCount = result?.meta?.to;
         this.pageSize = result?.meta?.per_page;
         this.totalElements = result?.meta?.per_page;
       });
-   }
+  }
 
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
@@ -58,7 +58,6 @@ export class ListObrasComponent implements OnInit, OnDestroy {
           this.obraCount = result?.meta?.to;
           this.pageSize = result?.meta?.per_page;
           this.totalElements = result?.meta?.per_page;
-
           if (endIndex > result.length) {
             endIndex = result.length;
           }
@@ -72,49 +71,51 @@ export class ListObrasComponent implements OnInit, OnDestroy {
     }
   }
 
-  associaItem(event){
+  associaItem(event) {
     this.openDialog(event);
   }
 
   //Associar Produto a Contrato
   openDialog(event): void {
-    if(this.obras && event){
+    if (this.obras && event) {
       const dialogRef = this.dialog.open(DialogAssociateComponent, {
         width: '550px',
         data: this.obras,
       });
       dialogRef.afterClosed().subscribe((result) => {
-        if(result != null || result !== undefined){
+        if (result != null || result !== undefined) {
           const association = {
             cliente: result,
             keycloakId: event?.id
           };
-
-          //this._accountService.associateUserCustomer(association);
-
-          console.log(association);
         }
       });
     }
-
   }
 
-  syncListas(event){
-      console.log(event);
+  syncListas(event) {
+    console.log(event);
   }
 
   searchItem(event) {
-//     if (event.target.value !== '' && event.target.valeu !== null && event.target.value !== undefined) {
-//       this.obras$.pipe(
-//         take(1),
-//         takeUntil(this._unsubscribeAll),
-//         switchMap((e) => {
-//  //this._obraService.searchEmpreendimentoByObra(event.target.value)
-//         }
-        
-         
-//         )
-//       ).subscribe();
-//     }
-  }
+    const searchTerm = event.target.value;
+
+    if (searchTerm) {
+        this.obras$.pipe(
+            take(1),
+            takeUntil(this._unsubscribeAll),
+            switchMap(() => this._obraService.searchObra(searchTerm))
+        ).subscribe(
+            (result) => {
+              this.obraCount = result?.meta?.to;
+              this.pageSize = result?.meta?.per_page;
+              this.totalElements = result?.meta?.per_page;
+            },
+            (error) => {
+                console.error('Search error:', error);
+            }
+        );
+    }
+}
+
 }
