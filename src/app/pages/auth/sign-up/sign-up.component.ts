@@ -9,6 +9,7 @@ import { Perfil } from 'app/models/perfil';
 import { User } from 'app/models/user';
 import { RolesService } from 'app/pages/admin/settings/roles/roles.service';
 import { Observable } from 'rxjs';
+import { environment } from 'environments/environment';
 
 
 @Component({
@@ -33,6 +34,7 @@ export class AuthSignUpComponent implements OnInit {
     };
     signUpForm: FormGroup;
     showAlert: boolean = false;
+    recaptcha: string | undefined;
     /**
      * Constructor
      */
@@ -43,6 +45,7 @@ export class AuthSignUpComponent implements OnInit {
         private _perfilService: RolesService,
         public _snackBar: MatSnackBar
     ) {
+        this.recaptcha = environment.recaptcha.siteKey;
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -101,6 +104,7 @@ export class AuthSignUpComponent implements OnInit {
           email: new FormControl('', [Validators.required, Validators.email]),
           telefone: new FormControl(''),
           senha: new FormControl(''),
+          recaptcha: new FormControl(['', Validators.required],),
           senha_confirmation: new FormControl(''),
           tipo_usuario: new FormControl('')
         });
@@ -113,6 +117,9 @@ export class AuthSignUpComponent implements OnInit {
     signUp(): void {
         // Do nothing if the form is invalid
         if (this.signUpForm.invalid) {
+            for (const control of Object.keys(this.signUpForm.controls)) {
+                this.signUpForm.controls[control].markAsTouched();
+            }
             return;
         }
 

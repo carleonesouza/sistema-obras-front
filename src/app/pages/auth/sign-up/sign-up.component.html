@@ -140,12 +140,22 @@
                         e caracteres especiais.</div>
                 </div>
 
+                <div class="mt-2">
+                    <re-captcha [siteKey]="recaptcha" data-sitekey="recaptcha" class="g-recaptcha" id="recaptcha" name="recaptcha" [formControl]="userControlsForm.recaptcha" required 
+                [class.is-invalid]="userControlsForm.recaptcha.invalid && ( userControlsForm.recaptcha.dirty || userControlsForm.recaptcha.touched)"></re-captcha>
+                <div *ngIf="'recaptcha.invalid && (recaptcha.dirty || recaptcha.touched)'" class="invalid-feedback">
+                    <div *ngIf="signUpForm.get('recaptcha').hasError('required')" class="text-red-700">This field is required.</div>
+                </div>
+                </div>
+
                 <!-- Actions -->
                 <div class="flex items-center justify-end mt-2">
                     <!-- Save -->
                     <button class="ml-2" mat-flat-button [color]="'primary'" type="submit" [matTooltip]="'Salvar'"
                         [disabled]="signUpForm.invalid">
                         Salvar
+                        <mat-progress-spinner *ngIf="signUpForm.disabled" [diameter]="24" [mode]="'indeterminate'">
+                        </mat-progress-spinner>
                     </button>
                 </div>
             </form>

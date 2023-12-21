@@ -19,6 +19,9 @@ import { MaterialAppModule } from 'material-app.module';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { DirectiveModule } from 'app/directives/directive.module';
+import { RECAPTCHA_SETTINGS, RecaptchaFormsModule, RecaptchaModule, RecaptchaSettings, RecaptchaV3Module } from 'ng-recaptcha';
+import { environment } from 'environments/environment';
+
 
 const maskConfig: Partial<IConfig> = { validation: false};
 
@@ -40,6 +43,10 @@ const maskConfig: Partial<IConfig> = { validation: false};
         FuseCardModule,
         DirectiveModule,
         FuseAlertModule,
+        RecaptchaV3Module,
+        FuseCardModule,
+        RecaptchaFormsModule,
+        RecaptchaModule,
         SharedModule,
         FuseDrawerModule,
         FuseSplashScreenModule,
@@ -47,7 +54,14 @@ const maskConfig: Partial<IConfig> = { validation: false};
         FuseFindByKeyPipeModule,
         MaterialAppModule,
     
-    ]
+    ],
+    providers:[
+        {
+            provide: RECAPTCHA_SETTINGS,
+            useValue: {
+              siteKey: environment.recaptcha.siteKey,
+            } as RecaptchaSettings,
+        }]
 })
 export class AuthSignUpModule
 {
