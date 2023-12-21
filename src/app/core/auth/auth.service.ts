@@ -144,7 +144,7 @@ export class AuthService {
      * @param user
      */
         signUp(user: User): Observable<any> {
-            return this._httpClient.post(environment.apiManager + 'register/', user).pipe(
+            return this._httpClient.post(environment.apiManager + 'register', user).pipe(
                 switchMap((response: any) => {
     
                     // Store the access token in the local storage
