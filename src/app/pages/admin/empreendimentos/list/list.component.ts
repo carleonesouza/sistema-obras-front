@@ -36,7 +36,7 @@ export class ListComponent implements OnInit, OnDestroy {
         this.empreendimentos = result.data;
         this.empreendimentoCount = result?.meta?.to;
         this.pageSize = result?.meta?.per_page;
-        this.totalElements = result?.meta?.per_page;
+        this.totalElements = 100;
       });
 
   }
@@ -60,9 +60,9 @@ export class ListComponent implements OnInit, OnDestroy {
           this.empreendimentos = result.data;
           this.empreendimentoCount = result?.meta?.to;
           this.pageSize = result?.meta?.per_page;
-          this.totalElements = result?.meta?.per_page;
-          if (endIndex > result.length) {
-            endIndex = result.length;
+          this.totalElements = 100;
+          if (endIndex > result.data.length) {
+            endIndex = result.data.length;
           }
         }
       });
@@ -91,10 +91,6 @@ export class ListComponent implements OnInit, OnDestroy {
             cliente: result,
             keycloakId: event?.id
           };
-
-          //this._accountService.associateUserCustomer(association);
-
-          console.log(association);
         }
       });
     }
@@ -106,14 +102,24 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   searchItem(event) {
-    if (event.target.value !== '' && event.target.valeu !== null && event.target.value !== undefined) {
-      this.empreendimentos$.pipe(
-        take(1),
-        takeUntil(this._unsubscribeAll),
-        switchMap(() =>
-          this._empreendimentoService.searchEmpreendimentoByObra(event.target.value)
-        )
-      ).subscribe();
+    const searchTerm = event.target.value;
+
+    if (searchTerm) {
+        this.empreendimentos$.pipe(
+            take(1),
+            takeUntil(this._unsubscribeAll),
+            switchMap(() => this._empreendimentoService.searchEmpreendimentoByObra(searchTerm))
+        ).subscribe(
+            (result) => {
+              this.empreendimentoCount = result?.meta?.to;
+              this.pageSize = result?.meta?.per_page;
+              this.totalElements = 100;
+            },
+            (error) => {
+                console.error('Search error:', error);
+            }
+        );
     }
-  }
+}
+
 }

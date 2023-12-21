@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HandleError } from 'app/utils/handleErrors';
@@ -23,8 +23,9 @@ export class IntervencoesService {
     return this._intervencao.asObservable();
   }
 
-  getIntervencoes(page = 0, size = 10): Observable<any> {
-    return this._httpClient.get<any>(environment.apiManager + 'intervencoes')
+  getIntervencoes(itemsPerPage=15): Observable<any> {
+    return this._httpClient.get<any>(environment.apiManager + 'intervencoes',{
+      params:{ itemsPerPage }})
       .pipe(
         tap((result) => {
           let inter = result.data;
@@ -69,11 +70,12 @@ export class IntervencoesService {
       );
   }
 
-  searchItemByDescription(contratoId): Observable<any[]> {
-    return this._httpClient.get<any[]>(environment.apiManager + 'empreendimentos/busca-empreendimentos-por-contrato', { params: contratoId })
+  searchItemByDescription(tipo): Observable<any>{
+    const params = new HttpParams().set('term', tipo);
+    return this._httpClient.get<any>(`${environment.apiManager}intervencoes/search`, { params })
       .pipe(
-        tap((intervecao) => {
-          this._intervencoes.next(intervecao);
+        tap((result) => {
+          this._intervencoes.next(result.data);
         }),
         catchError(this.error.handleError<any>('searchItemByDescription'))
       );

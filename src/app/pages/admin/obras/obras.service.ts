@@ -323,9 +323,8 @@ export class ObrasService {
   }
 
   searchObra(tipo: string): Observable<any> {
-    const params = new HttpParams().set('term', tipo); // 'term' is the query parameter name
-
-    return this._httpClient.get<any>(`${environment.apiManager}search`, { params })
+    const params = new HttpParams().set('term', tipo);
+    return this._httpClient.get<any>(`${environment.apiManager}obras/search`, { params })
       .pipe(
         tap((obras) => {
           this._obras.next(obras.data);

@@ -36,7 +36,7 @@ export class ListTipoInfraestruturasComponent implements OnInit, OnDestroy {
         this.infras = result.data;
         this.infraCount = result?.meta?.to;
         this.pageSize = result?.meta?.per_page;
-        this.totalElements = result?.meta?.per_page;
+        this.totalElements = 100;
       });
   }
 
@@ -57,9 +57,9 @@ export class ListTipoInfraestruturasComponent implements OnInit, OnDestroy {
           this.infras = result.data;
           this.infraCount = result?.meta?.to;
           this.pageSize = result?.meta?.per_page;
-          this.totalElements = result?.meta?.per_page;
-          if (endIndex > result.length) {
-            endIndex = result.length;
+          this.totalElements = 100;
+          if (endIndex > result.data.length) {
+            endIndex = result.data.length;
           }
         }
       });
@@ -88,10 +88,6 @@ export class ListTipoInfraestruturasComponent implements OnInit, OnDestroy {
             cliente: result,
             keycloakId: event?.id
           };
-
-          //this._accountService.associateUserCustomer(association);
-
-          console.log(association);
         }
       });
     }
@@ -103,14 +99,23 @@ export class ListTipoInfraestruturasComponent implements OnInit, OnDestroy {
   }
 
   searchItem(event) {
-    if (event.target.value !== '' && event.target.valeu !== null && event.target.value !== undefined) {
-      this.infras$.pipe(
-        take(1),
-        takeUntil(this._unsubscribeAll),
-        switchMap(() =>
-          this._tipoInfraService.searchTipoObraByDescription(event.target.value)
-        )
-      ).subscribe();
+    const searchTerm = event.target.value;
+
+    if (searchTerm) {
+        this.infras$.pipe(
+            take(1),
+            takeUntil(this._unsubscribeAll),
+            switchMap(() => this._tipoInfraService.searchTipoInfraestrutura(searchTerm))
+        ).subscribe(
+            (result) => {
+              this.infraCount = result?.meta?.to;
+              this.pageSize = result?.meta?.per_page;
+              this.totalElements = 100;
+            },
+            (error) => {
+                console.error('Search error:', error);
+            }
+        );
     }
-  }
+}
 }

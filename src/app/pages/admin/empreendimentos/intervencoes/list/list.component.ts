@@ -32,11 +32,12 @@ export class ListIntevercoesComponent implements OnInit, OnDestroy {
     this.intervencoes$ = this._intervencaoService.intervencoes$;
     this.intervencoes$
     .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((result) => {
+      .subscribe((result:any) => {
         this.intervencoes = result;
         this.intervencoesCount = result.length;
-        this.pageSize = result.length;
-        this.totalElements = result.length;
+        this.intervencoesCount = result?.meta?.to;
+        this.pageSize = result?.meta?.per_page;
+        this.totalElements = 100;
       });
    }
 
@@ -50,14 +51,16 @@ export class ListIntevercoesComponent implements OnInit, OnDestroy {
     const startIndex = event.pageIndex * event.pageSize;
     let endIndex = startIndex + event.pageSize;
 
-    this._intervencaoService.getIntervencoes(event?.pageIndex + 1, endIndex)
+    this._intervencaoService.getIntervencoes(endIndex)
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((result) => {
         if (result) {
-          this.intervencoes = result;
-          this.intervencoesCount = result.length;
-          if (endIndex > result.length) {
-            endIndex = result.length;
+          this.intervencoes = result.data;
+          this.intervencoesCount = result?.meta?.to;
+          this.pageSize = result?.meta?.per_page;
+          this.totalElements = 100;
+          if (endIndex > result.data.length) {
+            endIndex = result.data.length;
           }
         }
       });
@@ -86,10 +89,6 @@ export class ListIntevercoesComponent implements OnInit, OnDestroy {
             cliente: result,
             keycloakId: event?.id
           };
-
-          //this._accountService.associateUserCustomer(association);
-
-          console.log(association);
         }
       });
     }
@@ -101,14 +100,23 @@ export class ListIntevercoesComponent implements OnInit, OnDestroy {
   }
 
   searchItem(event) {
-    if (event.target.value !== '' && event.target.valeu !== null && event.target.value !== undefined) {
-      this.intervencoes$.pipe(
-        take(1),
-        takeUntil(this._unsubscribeAll),
-        switchMap(() =>
-          this._intervencaoService.searchItemByDescription(event.target.value)
-        )
-      ).subscribe();
+    const searchTerm = event.target.value;
+
+    if (searchTerm) {
+        this.intervencoes$.pipe(
+            take(1),
+            takeUntil(this._unsubscribeAll),
+            switchMap(() => this._intervencaoService.searchItemByDescription(searchTerm))
+        ).subscribe(
+            (result) => {
+              this.intervencoesCount = result?.meta?.to;
+              this.pageSize = result?.meta?.per_page;
+              this.totalElements = 100;
+            },
+            (error) => {
+                console.error('Search error:', error);
+            }
+        );
     }
-  }
+}
 }

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Iniciativa } from 'app/models/iniciativa';
@@ -36,8 +36,10 @@ export class IniciativasService {
   }
 
 
-  getAllIniciativas() {
-    return this._httpClient.get<any>(environment.apiManager + 'iniciativas')
+  getAllIniciativas(itemsPerPage=15) {
+    return this._httpClient.get<any>(environment.apiManager + 'iniciativas', {
+      params: { itemsPerPage }
+    })
       .pipe(
         tap((result) => {
           const data = result?.data;
@@ -132,6 +134,17 @@ export class IniciativasService {
           }
         }),
         catchError(this.error.handleError<any>('deleteIniciativa'))
+      );
+  }
+
+  searchIniciativas(tipo: string): Observable<any> {
+    const params = new HttpParams().set('term', tipo);
+    return this._httpClient.get<any>(`${environment.apiManager}iniciativas/search`, { params })
+      .pipe(
+        tap((iniciativas) => {
+          this._iniciativas.next(iniciativas.data);
+        }),
+        catchError(this.error.handleError<any>('searchIniciativas'))
       );
   }
 

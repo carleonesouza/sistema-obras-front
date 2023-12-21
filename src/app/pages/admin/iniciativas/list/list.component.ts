@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { IniciativasService } from '../iniciativas.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, switchMap, take, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-list',
@@ -22,19 +22,21 @@ export class ListComponent implements OnInit, OnDestroy {
     private _activatedRoute: ActivatedRoute,
     private _router: Router,
     private _iniciativasService: IniciativasService
-  ) {  }
+  ) { }
 
   ngOnInit() {
 
     this.iniciativas$ = this._iniciativasService.iniciativas$;
 
     this.iniciativas$
-    .pipe(
-      takeUntil(this._unsubscribeAll))
-    .subscribe((result) => {
-      this.iniciativas = result;
-      this.iniciativasCount = result.length;
-    });
+      .pipe(
+        takeUntil(this._unsubscribeAll))
+      .subscribe((result: any) => {
+        this.iniciativas = result.data;
+        this.iniciativasCount = result.length;
+        this.pageSize = result?.meta?.per_page;
+        this.totalElements = 100;
+      });
 
   }
 
@@ -46,24 +48,48 @@ export class ListComponent implements OnInit, OnDestroy {
 
   onPageChange(event): void {
     const startIndex = event.pageIndex * event.pageSize;
-    const endIndex = startIndex + event.pageSize;
+    let endIndex = startIndex + event.pageSize;
 
-    // this._exameService.getListasExames(0, endIndex)
-    // .pipe(takeUntil(this._unsubscribeAll))
-    // .subscribe((result) =>{
-    //   if( result['content']){
-    //     this.exames = result['content'];
-    //     this.examesCount  = result['size'];
-    //     if(endIndex >  result['content'].length){
-    //       endIndex =  result['content'].length;
-    //     }
-    //   }
-    // });
+    this._iniciativasService.getAllIniciativas(endIndex)
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((result) => {
+        if (result) {
+          this.iniciativas = result.data;
+          this.iniciativasCount = result?.meta?.to;
+          this.pageSize = result?.meta?.per_page;
+          this.pageSize = result?.meta?.per_page;
+          this.totalElements = 100;
+          if (endIndex > result.data.length) {
+            endIndex = result.data.length;
+          }
+        }
+      });
   }
 
   createItem(event) {
-    if(event){
+    if (event) {
       this._router.navigate(['./add'], { relativeTo: this._activatedRoute });
+    }
+  }
+
+  searchItem(event) {
+    const searchTerm = event.target.value;
+
+    if (searchTerm) {
+      this.iniciativas$.pipe(
+        take(1),
+        takeUntil(this._unsubscribeAll),
+        switchMap(() => this._iniciativasService.searchIniciativas(searchTerm))
+      ).subscribe(
+        (result) => {
+          this.iniciativasCount = result?.meta?.to;
+          this.pageSize = result?.meta?.per_page;
+          this.totalElements = 100;
+        },
+        (error) => {
+          console.error('Search error:', error);
+        }
+      );
     }
   }
 

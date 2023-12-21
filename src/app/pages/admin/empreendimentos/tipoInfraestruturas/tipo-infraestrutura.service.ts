@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HandleError } from 'app/utils/handleErrors';
@@ -71,13 +71,16 @@ export class TipoInfraestruturaService {
       );
   }
 
-  searchTipoObraByDescription(contratoId): Observable<any[]>{
-    return this._httpClient.get<any[]>(environment.apiManager + 'empreendimentos/busca-empreendimentos-por-contrato', {params: contratoId})
+
+searchTipoInfraestrutura(tipo: string): Observable<any> {
+  const params = new HttpParams().set('term', tipo); // 'term' is the query parameter name
+
+  return this._httpClient.get<any>(`${environment.apiManager}tipos-infra/search`, { params })
     .pipe(
-      tap((infra) => {
-        this._tiposInfras.next(infra);
+      tap((tipo) => {
+        this._tiposInfras.next(tipo.data);
       }),
-      catchError(this.error.handleError<any>('searchTipoObraByDescription'))
+      catchError(this.error.handleError<any>('searchTipoInfraestrutura'))
     );
 }
 

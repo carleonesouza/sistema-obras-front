@@ -36,7 +36,7 @@ export class ListObrasComponent implements OnInit, OnDestroy {
         this.obras = result.data;
         this.obraCount = result?.meta?.to;
         this.pageSize = result?.meta?.per_page;
-        this.totalElements = result?.meta?.per_page;
+        this.totalElements = 100;
       });
   }
 
@@ -57,9 +57,10 @@ export class ListObrasComponent implements OnInit, OnDestroy {
           this.obras = result.data;
           this.obraCount = result?.meta?.to;
           this.pageSize = result?.meta?.per_page;
-          this.totalElements = result?.meta?.per_page;
-          if (endIndex > result.length) {
-            endIndex = result.length;
+          this.pageSize = result?.meta?.per_page;
+          this.totalElements = 100;
+          if (endIndex > result.data.length) {
+            endIndex = result.data.length;
           }
         }
       });
@@ -109,7 +110,7 @@ export class ListObrasComponent implements OnInit, OnDestroy {
             (result) => {
               this.obraCount = result?.meta?.to;
               this.pageSize = result?.meta?.per_page;
-              this.totalElements = result?.meta?.per_page;
+              this.totalElements = 100;
             },
             (error) => {
                 console.error('Search error:', error);

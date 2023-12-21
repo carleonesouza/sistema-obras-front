@@ -139,7 +139,8 @@
                                                             <ng-container>
                                                                 <div
                                                                     class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                    <mat-icon class="mr-2" [svgIcon]="'mat_solid:room_preferences'"></mat-icon>
+                                                                    <mat-icon class="mr-2"
+                                                                        [svgIcon]="'mat_solid:room_preferences'"></mat-icon>
                                                                     <div class="font-mono text-primary-500">
                                                                         Descrição: {{obra?.descricao }}
                                                                     </div>
@@ -155,7 +156,8 @@
                                                             <ng-container>
                                                                 <div
                                                                     class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                    <mat-icon class="mr-2" [svgIcon]="'mat_solid:date_range'"></mat-icon>
+                                                                    <mat-icon class="mr-2"
+                                                                        [svgIcon]="'mat_solid:date_range'"></mat-icon>
                                                                     <div class="font-mono text-primary-500">
                                                                         Data Inicío: {{obra?.dataInicio}}
                                                                     </div>
@@ -171,7 +173,8 @@
                                                             <ng-container>
                                                                 <div
                                                                     class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                    <mat-icon class="mr-2" [svgIcon]="'mat_solid:date_range'"></mat-icon>
+                                                                    <mat-icon class="mr-2"
+                                                                        [svgIcon]="'mat_solid:date_range'"></mat-icon>
                                                                     <div class="font-mono text-primary-500">
                                                                         Data Conclusão: {{obra?.dataConclusao }}
                                                                     </div>
@@ -187,7 +190,8 @@
                                                             <ng-container>
                                                                 <div
                                                                     class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                    <mat-icon class="mr-2" [svgIcon]="'mat_solid:date_range'"></mat-icon>
+                                                                    <mat-icon class="mr-2"
+                                                                        [svgIcon]="'mat_solid:date_range'"></mat-icon>
                                                                     <div class="font-mono text-primary-500">
                                                                         Data Conclusão: {{obra?.data_base_orcamento}}
                                                                     </div>
@@ -204,7 +208,7 @@
                                                                 <div
                                                                     class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
                                                                     <mat-icon class="mr-2"
-                                                                        [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
+                                                                        [svgIcon]="'mat_solid:map'"></mat-icon>
                                                                     <div class="font-mono text-primary-500">
                                                                         Latitude: {{obra?.latitude }}
                                                                     </div>
@@ -221,7 +225,7 @@
                                                                 <div
                                                                     class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
                                                                     <mat-icon class="mr-2"
-                                                                        [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
+                                                                        [svgIcon]="'mat_solid:map'"></mat-icon>
                                                                     <div class="font-mono text-primary-500">
                                                                         Longitude: {{obra?.longitude }}
                                                                     </div>
@@ -235,12 +239,16 @@
                                                     <div class="flex p-2">
                                                         <div class="min-w-0 w-full">
                                                             <ng-container>
-                                                                <div
-                                                                    class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                    <mat-icon class="mr-2"
-                                                                        [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                    <div class="font-mono text-primary-500">
-                                                                        Município: {{obra?.municipio }}
+                                                                <div class="flex justify-between gap-3 pb-2"
+                                                                    *ngFor="let municipio of obra?.municipios; let i = index;">
+                                                                    <div
+                                                                        class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                        <mat-icon class="mr-2"
+                                                                            [svgIcon]="'mat_solid:my_location'"></mat-icon>
+                                                                        <div class="font-mono text-primary-500">
+                                                                            <span class="font-bold">Município: </span>{{
+                                                                            municipio.nome}}
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </ng-container>
@@ -255,7 +263,7 @@
                                                                 <div
                                                                     class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
                                                                     <mat-icon class="mr-2"
-                                                                        [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
+                                                                        [svgIcon]="'mat_solid:my_location'"></mat-icon>
                                                                     <div class="font-mono text-primary-500">
                                                                         Estado: {{obra?.uf.uf.descricao }}
                                                                     </div>
@@ -272,7 +280,7 @@
                                                                 <div
                                                                     class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
                                                                     <mat-icon class="mr-2"
-                                                                        [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
+                                                                        [svgIcon]="'mat_solid:folder'"></mat-icon>
                                                                     <div class="font-mono text-primary-500">
                                                                         Documentos Adicionais:
                                                                         {{obra?.documentosAdicionais }}
@@ -290,7 +298,7 @@
                                                                 <div
                                                                     class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
                                                                     <mat-icon class="mr-2"
-                                                                        [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
+                                                                        [svgIcon]="'mat_solid:folder'"></mat-icon>
                                                                     <div class="font-mono text-primary-500">
                                                                         Arquivo Georeferênciado:
                                                                         {{obra?.arquivoGeorreferenciado }}
@@ -308,7 +316,7 @@
                                                                 <div
                                                                     class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
                                                                     <mat-icon class="mr-2"
-                                                                        [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
+                                                                        [svgIcon]="'mat_solid:attach_money'"></mat-icon>
                                                                     <div class="font-mono text-primary-500">
                                                                         Valor Global: {{obra?.valorGlobal |
                                                                         currency:'BRL'
@@ -326,8 +334,7 @@
                                                             <ng-container>
                                                                 <div
                                                                     class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                    <mat-icon class="mr-2"
-                                                                        [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
+                                                                    <mat-icon class="mr-2">percent</mat-icon>
                                                                     <div class="font-mono text-primary-500">
                                                                         Percentual Financeiro Executado:
                                                                         {{obra?.percentualFinanceiroExecutado }}%
@@ -345,7 +352,7 @@
                                                                 <div
                                                                     class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
                                                                     <mat-icon class="mr-2"
-                                                                        [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
+                                                                        [svgIcon]="'mat_solid:add_road'"></mat-icon>
                                                                     <div class="font-mono text-primary-500">
                                                                         Extensão: {{ obra?.extensao }} (em metros)
                                                                     </div>
@@ -362,25 +369,7 @@
                                                                 <div
                                                                     class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
                                                                     <mat-icon class="mr-2"
-                                                                        [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                    <div class="font-mono text-primary-500">
-                                                                        Situação: {{ obra?.situacao?.situacao?.descricao
-                                                                        }}
-                                                                    </div>
-                                                                </div>
-                                                            </ng-container>
-                                                        </div>
-                                                    </div>
-                                                </ng-container>
-
-                                                <ng-container>
-                                                    <div class="flex p-2">
-                                                        <div class="min-w-0 w-full">
-                                                            <ng-container>
-                                                                <div
-                                                                    class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                    <mat-icon class="mr-2"
-                                                                        [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
+                                                                        [svgIcon]="'mat_solid:fact_check'"></mat-icon>
                                                                     <div class="font-mono text-primary-500">
                                                                         Status: {{ obra?.status.status?.descricao }}
                                                                     </div>
@@ -393,13 +382,17 @@
                                                 <ng-container>
                                                     <div class="flex p-2">
                                                         <div class="min-w-0 w-full">
-                                                            <ng-container>
-                                                                <div
-                                                                    class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                    <mat-icon class="mr-2"
-                                                                        [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                    <div class="font-mono text-primary-500">
-                                                                        Produto: {{ obra?.produto?.produto?.descricao }}
+                                                            <ng-container
+                                                                *ngFor="let produto of obra?.produtos; let i = index;">
+                                                                <div class="flex justify-between gap-3 pb-2">
+                                                                    <div
+                                                                        class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                        <mat-icon class="mr-2"
+                                                                            [svgIcon]="'mat_solid:inventory_2'"></mat-icon>
+                                                                        <div class="font-mono text-primary-500">
+                                                                            <span class="font-bold"> Produto:</span> {{
+                                                                            produto.descricao }}
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </ng-container>
@@ -414,7 +407,7 @@
                                                                 <div
                                                                     class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
                                                                     <mat-icon class="mr-2"
-                                                                        [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
+                                                                        [svgIcon]="'mat_solid:construction'"></mat-icon>
                                                                     <div class="font-mono text-primary-500">
                                                                         Tipo Infraestrutura: {{
                                                                         obra?.tipo_infraestrutura?.tipo_infraestrutura?.descricao
@@ -433,7 +426,7 @@
                                                                 <div
                                                                     class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
                                                                     <mat-icon class="mr-2"
-                                                                        [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
+                                                                        [svgIcon]="'mat_solid:room_preferences'"></mat-icon>
                                                                     <div class="font-mono text-primary-500">
                                                                         Intervenção: {{
                                                                         obra?.intervencao?.intervencao?.descricao }}
@@ -445,699 +438,566 @@
                                                 </ng-container>
 
                                                 <!--Obra Áerea-->
-                                                <ng-container *ngIf="obra?.tipo ==='aerea'">
-
+                                                <ng-container *ngIf="obra?.tipo ==='Aeroportuário'">
                                                     <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            Código IATA: {{ obra?.codigoIATA }}
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
+                                                        <div class="flex justify-between gap-3 pb-2">
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2"
+                                                                    [svgIcon]="'mat_solid:code'"></mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold"> Código IATA:</span> {{
+                                                                    obra?.codigoIATA }}
+                                                                </div>
+                                                            </div>
+
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2"
+                                                                    [svgIcon]="'mat_solid:flight'"></mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">Tipo de Avião que será
+                                                                        Recebido com base no
+                                                                        Cadastro da
+                                                                        ICAO:</span> {{ obra?.tipoAviaoRecICAO }}
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </ng-container>
 
                                                     <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            Tipo de Avião que será Recebido com base no
-                                                                            Cadastro da
-                                                                            ICAO: {{ obra?.tipoAviaoRecICAO }}
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
+                                                        <div class="flex justify-between gap-3 pb-2">
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2"
+                                                                    [svgIcon]="'mat_solid:grass'"></mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">Nova Área Criada:</span> {{
+                                                                    obra?.novaAreaCriada
+                                                                    }}
+                                                                </div>
                                                             </div>
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2"
+                                                                    [svgIcon]="'mat_solid:straighten'"></mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">Nova Largura:</span> {{
+                                                                    obra?.novaLargura }} (em
+                                                                    metros)
+                                                                </div>
+                                                            </div>
+
                                                         </div>
                                                     </ng-container>
-
-                                                    <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            Nova Área Criada: {{ obra?.novaAreaCriada }}
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
-                                                            </div>
-                                                        </div>
-                                                    </ng-container>
-
-                                                    <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            Nova Largura: {{ obra?.novaLargura }} (em
-                                                                            metros)
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
-                                                            </div>
-                                                        </div>
-                                                    </ng-container>
-
                                                 </ng-container>
 
                                                 <!--Obra Dutovária-->
-                                                <ng-container *ngIf="obra?.tipo ==='duto'">
+                                                <ng-container *ngIf="obra?.tipo ==='Dutoviário'">
                                                     <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            Tipo de Duto: {{
-                                                                            obra?.tipo_duto?.tipo_duto?.descricao
-                                                                            }}
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
+                                                        <div class="flex justify-between gap-3 pb-2">
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2">
+                                                                    <span class="material-symbols-outlined">
+                                                                        valve
+                                                                    </span></mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">Tipo de Duto:</span> {{
+                                                                    obra?.tipo_duto?.tipo_duto?.descricao
+                                                                    }}
+                                                                </div>
                                                             </div>
+
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2"
+                                                                    [svgIcon]="'mat_solid:home_work'"></mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">Função da Estrutura:</span>
+                                                                    {{
+                                                                    obra?.funcao_estrutura?.funcao_estrutura?.descricao
+                                                                    }}
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </ng-container>
+
+
+                                                    <ng-container>
+                                                        <div class="flex justify-between gap-3 pb-2">
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2">
+                                                                    <span class="material-symbols-outlined">
+                                                                        tools_level
+                                                                    </span>
+                                                                </mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">Nível do Duto:</span> {{
+                                                                    obra?.nivel_duto?.nivel_duto?.descricao }}
+                                                                </div>
+                                                            </div>
+
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2"
+                                                                    [svgIcon]="'mat_solid:emoji_transportation'"></mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">Material
+                                                                        Transportado:</span> {{
+                                                                    obra?.materialTransportado }}
+                                                                </div>
+                                                            </div>
+
                                                         </div>
                                                     </ng-container>
 
                                                     <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            Função da Estrutura: {{
-                                                                            obra?.funcao_estrutura?.funcao_estrutura?.descricao
-                                                                            }}
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
+                                                        <div class="flex justify-between gap-3 pb-2">
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2"
+                                                                    [svgIcon]="'mat_solid:trip_origin'"></mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">Código de Origem: </span>{{
+                                                                    obra?.codigoOrigem
+                                                                    }}
+                                                                </div>
                                                             </div>
+
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2"
+                                                                    [svgIcon]="'mat_solid:pin_drop'"></mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">Código de Destino:</span> {{
+                                                                    obra?.codigoDestino
+                                                                    }}
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </ng-container>
+                                                    
+                                                    <ng-container>
+                                                        <div class="flex justify-between gap-3 pb-2">
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2">
+                                                                    <span class="material-symbols-outlined">
+                                                                        signature
+                                                                    </span>
+                                                                </mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">Nome XRL:</span> {{
+                                                                    obra?.nomeXRL }}
+                                                                </div>
+                                                            </div>
+
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2">
+                                                                    <span class="material-symbols-outlined">
+                                                                        bia
+                                                                    </span>
+                                                                </mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">Espessura:</span> {{
+                                                                    obra?.espessura }} (em
+                                                                    metros)
+                                                                </div>
+                                                            </div>
+
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2">
+                                                                    <span class="material-symbols-outlined">
+                                                                        format_text_overflow
+                                                                    </span></mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">Vazão do Projeto:</span> {{
+                                                                    obra?.vazaoProjeto
+                                                                    }}
+                                                                    (m³/dia)
+                                                                </div>
+                                                            </div>
+
                                                         </div>
                                                     </ng-container>
 
                                                     <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            Nível do Duto: {{
-                                                                            obra?.nivel_duto?.nivel_duto?.descricao }}
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
+                                                        <div class="flex justify-between gap-3 pb-2">
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2">
+                                                                    <span class="material-symbols-outlined">
+                                                                        rebase_edit
+                                                                    </span>
+                                                                </mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">Vazão Operacional:</span> {{
+                                                                    obra?.vazaoOperacional
+                                                                    }}
+                                                                    (m³/dia)
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </ng-container>
 
-                                                    <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            Material Transportado: {{
-                                                                            obra?.materialTransportado }}
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2">
+                                                                    <span class="material-symbols-outlined">
+                                                                        sword_rose
+                                                                    </span>
+                                                                </mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">Nova Área Impactada:</span>
+                                                                    {{
+                                                                    obra?.novaAreaImpactada
+                                                                    }}
+                                                                    (Hac.)
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </ng-container>
 
-                                                    <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            Código de Origem: {{ obra?.codigoOrigem }}
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
-                                                            </div>
-                                                        </div>
-                                                    </ng-container>
-
-                                                    <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            Código de Destino: {{ obra?.codigoDestino }}
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
-                                                            </div>
-                                                        </div>
-                                                    </ng-container>
-
-                                                    <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            Nome XRL: {{ obra?.nomeXRL }}
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
-                                                            </div>
-                                                        </div>
-                                                    </ng-container>
-
-                                                    <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            Espessura: {{ obra?.espessura }} (em metros)
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
-                                                            </div>
-                                                        </div>
-                                                    </ng-container>
-
-                                                    <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            Vazão do Projeto: {{ obra?.vazaoProjeto }}
-                                                                            (m³/dia)
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
-                                                            </div>
-                                                        </div>
-                                                    </ng-container>
-
-                                                    <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            Vazão Operacional: {{ obra?.vazaoOperacional
-                                                                            }}
-                                                                            (m³/dia)
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
-                                                            </div>
-                                                        </div>
-                                                    </ng-container>
-
-                                                    <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            Nova Área Impactada: {{
-                                                                            obra?.novaAreaImpactada
-                                                                            }}
-                                                                            (Hac.)
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
-                                                            </div>
                                                         </div>
                                                     </ng-container>
 
                                                 </ng-container>
 
                                                 <!--Obra Hidroviária-->
-                                                <ng-container *ngIf="obra?.tipo ==='hidroviaria'">
+                                                <ng-container *ngIf="obra?.tipo ==='Hidroviário'">
                                                     <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            Situação da Hidrovia: {{
-                                                                            obra?.situacaoHidrovia
-                                                                            }}
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
+                                                        <div class="flex justify-between gap-3 pb-2">
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2"
+                                                                    [svgIcon]="'mat_solid:sailing'"></mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">Situação da Hidrovia:</span>
+                                                                    {{
+                                                                    obra?.situacaoHidrovia
+                                                                    }}
+                                                                </div>
                                                             </div>
+
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2"><span
+                                                                        class="material-symbols-outlined">
+                                                                        gate
+                                                                    </span></mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">A Hidrovia tem Eclusa:
+                                                                    </span>{{ obra?.temEclusa
+                                                                    }}
+                                                                </div>
+                                                            </div>
+
                                                         </div>
                                                     </ng-container>
 
                                                     <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            A Hidrovia tem Eclusa: {{ obra?.temEclusa }}
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
+                                                        <div class="flex justify-between gap-3 pb-2">
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2"
+                                                                    [svgIcon]="'mat_solid:border_all'"></mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">A Hidrovia tem
+                                                                        Barragem:</span> {{
+                                                                    obra?.temBarragem }}
+                                                                </div>
                                                             </div>
+
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2"
+                                                                    [svgIcon]="'mat_solid:directions_boat'"></mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">Tipo de Embarcação:
+                                                                    </span>{{
+                                                                    obra?.tipoEmbarcacao
+                                                                    }}
+                                                                </div>
+                                                            </div>
+
                                                         </div>
                                                     </ng-container>
 
                                                     <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            A Hidrovia tem Barragem: {{
-                                                                            obra?.temBarragem }}
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
+                                                        <div class="flex justify-between gap-3 pb-2">
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2"
+                                                                    [svgIcon]="'mat_solid:houseboat'"></mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">Haverá Ampliação na
+                                                                        Capacidade de
+                                                                        Passageiros,
+                                                                        de Carga
+                                                                        ou
+                                                                        Ambos: </span>{{ obra?.ampliacaoCapacidade }}
+                                                                </div>
                                                             </div>
+                                                        </div>
+                                                        <div class="flex justify-between gap-3 pb-2">
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2">
+                                                                    <span class="material-symbols-outlined">
+                                                                        flex_direction
+                                                                    </span>
+                                                                </mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">Profundida Mínima: </span>{{
+                                                                    obra?.profundidadeMinima
+                                                                    }}
+                                                                </div>
+                                                            </div>
+
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2">
+                                                                    <span class="material-symbols-outlined">
+                                                                        footprint
+                                                                    </span>
+                                                                </mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">Profundida Máxima:</span> {{
+                                                                    obra?.profundidadeMaxima }}
+                                                                </div>
+                                                            </div>
+
                                                         </div>
                                                     </ng-container>
 
                                                     <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            Tipo de Embarcação: {{ obra?.tipoEmbarcacao
-                                                                            }}
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
+                                                        <div class="flex justify-between gap-3 pb-2">
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2">diversity_3</mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">Comboios de Cheia:</span> {{
+                                                                    obra?.comboiosCheia
+                                                                    }}
+                                                                </div>
                                                             </div>
+
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2"
+                                                                    [svgIcon]="'mat_solid:reduce_capacity'"></mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">Comboios de Estiagem:</span>
+                                                                    {{
+                                                                    obra?.comboiosEstiagem }}
+                                                                </div>
+                                                            </div>
+
                                                         </div>
                                                     </ng-container>
-
-                                                    <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            Haverá Ampliação na Capacidade de
-                                                                            Passageiros,
-                                                                            de Carga
-                                                                            ou
-                                                                            Ambos: {{ obra?.ampliacaoCapacidade }}
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
-                                                            </div>
-                                                        </div>
-                                                    </ng-container>
-
-                                                    <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            Profundida Mínima: {{
-                                                                            obra?.profundidadeMinima
-                                                                            }}
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
-                                                            </div>
-                                                        </div>
-                                                    </ng-container>
-
-                                                    <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            Profundida Máxima: {{
-                                                                            obra?.profundidadeMaxima
-                                                                            }}
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
-                                                            </div>
-                                                        </div>
-                                                    </ng-container>
-
-                                                    <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            Comboios de Cheia: {{ obra?.comboiosCheia }}
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
-                                                            </div>
-                                                        </div>
-                                                    </ng-container>
-
-                                                    <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            Comboios de Estiagem: {{
-                                                                            obra?.comboiosEstiagem
-                                                                            }}
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
-                                                            </div>
-                                                        </div>
-                                                    </ng-container>
-
                                                 </ng-container>
 
                                                 <!--Obra Ferroviária-->
-                                                <ng-container *ngIf="obra?.tipo ==='ferroviaria'">
+                                                <ng-container *ngIf="obra?.tipo ==='Ferroviário'">
                                                     <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            KM Inicial: {{
-                                                                            obra?.kmInicial
-                                                                            }}
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
+                                                        <div class="flex justify-between gap-3 pb-2">
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2"
+                                                                    [svgIcon]="'mat_solid:directions'"></mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">KM Inicial:</span> {{
+                                                                    obra?.kmInicial
+                                                                    }}
+                                                                </div>
                                                             </div>
+
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2">
+                                                                    <span class="material-symbols-outlined">
+                                                                        signpost
+                                                                    </span>
+                                                                </mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">KM Final:</span> {{
+                                                                    obra?.kmFinal }}
+                                                                </div>
+                                                            </div>
+
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2">
+                                                                    <span class="material-symbols-outlined">
+                                                                        package_2
+                                                                    </span>
+                                                                </mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">Nova Bitola:</span> {{
+                                                                    obra?.bitola?.bitola.descricao }}
+                                                                </div>
+                                                            </div>
+
                                                         </div>
                                                     </ng-container>
 
                                                     <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            KM Final: {{ obra?.kmFinal }}
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
+                                                        <div class="flex justify-between gap-3 pb-2">
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2">
+                                                                    <span class="material-symbols-outlined">
+                                                                        directions_alt
+                                                                    </span>
+                                                                </mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">Nova Velocidade:</span> {{
+                                                                    obra?.novaVelocidade
+                                                                    }}
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </ng-container>
 
-                                                    <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            Nova Bitola: {{
-                                                                            obra?.novaBitola }}
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2"
+                                                                    [svgIcon]="'mat_solid:360'"></mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">Capacidade Dinâmica:</span>
+                                                                    {{
+                                                                    obra?.capacidadeDinamica }}
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </ng-container>
 
-                                                    <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            Nova Velocidade: {{ obra?.novaVelocidade }}
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
-                                                            </div>
-                                                        </div>
-                                                    </ng-container>
-
-                                                    <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            Capacidade Dinâmica: {{
-                                                                            obra?.capacidadeDinamica }}
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
-                                                            </div>
                                                         </div>
                                                     </ng-container>
                                                 </ng-container>
 
                                                 <!--Obra Portuária-->
-                                                <ng-container *ngIf="obra?.tipo ==='portuaria'">
+                                                <ng-container *ngIf="obra?.tipo ==='Portuário'">
                                                     <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            Tipo Embarcação: {{
-                                                                            obra?.tipoEmbarcacao
-                                                                            }}
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
+                                                        <div class="flex justify-between gap-3 pb-2">
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2"
+                                                                    [svgIcon]="'mat_solid:directions_boat'"></mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">Tipo Embarcação:</span> {{
+                                                                    obra?.tipoEmbarcacao
+                                                                    }}
+                                                                </div>
                                                             </div>
+                                                        </div>
+                                                    </ng-container>
+                                                    <ng-container>
+                                                        <div class="flex justify-between gap-3 pb-2">
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2">
+                                                                    <span class="material-symbols-outlined">
+                                                                        hallway
+                                                                    </span>
+                                                                </mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">Haverá Ampliação na
+                                                                        Capacidade de
+                                                                        Passageiros,
+                                                                        de Carga
+                                                                        ou
+                                                                        Ambos:</span> {{ obra?.ampliacaoCapacidade }}
+                                                                </div>
+                                                            </div>
+
                                                         </div>
                                                     </ng-container>
 
                                                     <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            Haverá Ampliação na Capacidade de
-                                                                            Passageiros,
-                                                                            de Carga
-                                                                            ou
-                                                                            Ambos: {{ obra?.ampliacaoCapacidade }}
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
+                                                        <div class="flex justify-between gap-3 pb-2">
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2">
+                                                                    <span class="material-symbols-outlined">
+                                                                        settings_panorama
+                                                                    </span>
+                                                                </mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">Novo Calado:</span> {{
+                                                                    obra?.novoCalado }}
+                                                                </div>
                                                             </div>
+
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2">
+                                                                    <span class="material-symbols-outlined">
+                                                                        hallway
+                                                                    </span>
+                                                                </mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">Capacidade Dinâmica:</span>
+                                                                    {{
+                                                                    obra?.capacidadeDinamica }}
+                                                                </div>
+                                                            </div>
+
                                                         </div>
                                                     </ng-container>
 
-                                                    <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            Novo Calado: {{
-                                                                            obra?.novoCalado }}
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
-                                                            </div>
-                                                        </div>
-                                                    </ng-container>
-
-                                                    <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            Capacidade Dinâmica: {{
-                                                                            obra?.capacidadeDinamica }}
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
-                                                            </div>
-                                                        </div>
-                                                    </ng-container>
                                                 </ng-container>
 
                                                 <!--Obra Rodoviária-->
-                                                <ng-container *ngIf="obra?.tipo ==='rodoviaria'">
+                                                <ng-container *ngIf="obra?.tipo ==='Rodoviário'">
                                                     <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            KM Inicial: {{
-                                                                            obra?.kmInicial
-                                                                            }}
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
+                                                        <div class="flex justify-between gap-3 pb-2">
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2"
+                                                                    [svgIcon]="'mat_solid:directions'"></mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">KM Inicial:</span> {{
+                                                                    obra?.kmInicial
+                                                                    }}
+                                                                </div>
                                                             </div>
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2">
+                                                                    <span class="material-symbols-outlined">
+                                                                        signpost
+                                                                    </span>
+                                                                </mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">KM Final:</span> {{
+                                                                    obra?.kmFinal }}
+                                                                </div>
+                                                            </div>
+
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2"
+                                                                    [svgIcon]="'mat_solid:trip_origin'"></mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">Código:</span> {{
+                                                                    obra?.codigo }}
+                                                                </div>
+                                                            </div>
+
+                                                            <div
+                                                                class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                                                <mat-icon class="mr-2">
+                                                                    <span class="material-symbols-outlined">
+                                                                        conversion_path
+                                                                    </span>
+                                                                </mat-icon>
+                                                                <div class="font-mono text-primary-500">
+                                                                    <span class="font-bold">Versão:</span> {{
+                                                                    obra?.versao }}
+                                                                </div>
+                                                            </div>
+
                                                         </div>
                                                     </ng-container>
-
-                                                    <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            KM Final: {{ obra?.kmFinal }}
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
-                                                            </div>
-                                                        </div>
-                                                    </ng-container>
-
-                                                    <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            Código: {{
-                                                                            obra?.codigo }}
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
-                                                            </div>
-                                                        </div>
-                                                    </ng-container>
-
-                                                    <ng-container>
-                                                        <div class="flex p-2">
-                                                            <div class="min-w-0 w-full">
-                                                                <ng-container>
-                                                                    <div
-                                                                        class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                                                        <mat-icon class="mr-2"
-                                                                            [svgIcon]="'heroicons_outline:book-open'"></mat-icon>
-                                                                        <div class="font-mono text-primary-500">
-                                                                            Versão: {{ obra?.versao }}
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-container>
-                                                            </div>
-                                                        </div>
-                                                    </ng-container>
-
                                                 </ng-container>
 
                                             </div>
@@ -1242,9 +1102,8 @@
                                             <mat-spinner class="spinner" diameter="20"></mat-spinner>
                                         </div>
                                     </mat-label>
-                                    <mat-select formControlName="natureza_empreendimento"
-                                    [compareWith]="compareFn"
-                                    [(ngModel)]="selectedNatureza">
+                                    <mat-select formControlName="natureza_empreendimento" [compareWith]="compareFn"
+                                        [(ngModel)]="selectedNatureza">
                                         <mat-option *ngFor="let natureza of naturezas" [value]="natureza"
                                             [id]="natureza.id">
                                             {{ natureza.descricao }}

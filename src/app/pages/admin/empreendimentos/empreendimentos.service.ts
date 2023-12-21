@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Empreendimento } from 'app/models/empreendimento';
@@ -264,11 +264,12 @@ export class EmpreendimentosService {
   }
 
 
-  searchEmpreendimentoByObra(contratoId): Observable<any[]>{
-      return this._httpClient.get<any[]>(environment.apiManager + 'empreendimentos/busca-empreendimentos-por-contrato', {params: contratoId})
+  searchEmpreendimentoByObra(tipo): Observable<any>{
+    const params = new HttpParams().set('term', tipo);
+    return this._httpClient.get<any>(`${environment.apiManager}empreendimentos/search`, { params })
       .pipe(
-        tap((empreendimentos) => {
-          this._empreendimentos.next(empreendimentos);
+        tap((empree) => {
+          this._empreendimentos.next(empree.data);
         }),
         catchError(this.error.handleError<any>('searchEmpreendimentoByObra'))
       );
