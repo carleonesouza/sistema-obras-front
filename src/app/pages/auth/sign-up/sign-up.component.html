@@ -110,7 +110,7 @@
                     <mat-form-field class="fuse-mat-no-subscript w-full" appearance="outline">
                         <mat-label>Senha</mat-label>
                         <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:key'" matPrefix></mat-icon>
-                        <input matInput formControlName="senha" [type]="hide ? 'password' : 'text'" maxlength="8">
+                        <input matInput formControlName="senha" [type]="hide ? 'password' : 'text'" minlength="8">
                         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                             [attr.aria-pressed]="hide" type="button">
                             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
@@ -123,7 +123,7 @@
                         <mat-label>Confirmar Senha</mat-label>
                         <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:key'" matPrefix></mat-icon>
                         <input matInput formControlName="senha_confirmation" [type]="hide_confirm ? 'password' : 'text'"
-                            maxlength="8" appConfirmEqualValidator="senha">
+                            minlength="8" appConfirmEqualValidator="senha">
 
                         <button mat-icon-button matSuffix (click)="hide_confirm = !hide_confirm"[attr.aria-label]="'Hide password'"
                             [attr.aria-pressed]="hide_confirm" type="button">

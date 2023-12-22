@@ -139,7 +139,7 @@ export class DetailsComponent implements OnInit, OnDestroy{
       responsavel: new FormControl('', Validators.required),
       descricao: new FormControl('', Validators.required),
       expectativa: new FormControl('', Validators.required),
-      instrumento: new FormControl(''),
+      instrumento: [''],
       setor: new FormControl(''),
       user: new FormControl(''),
       usuario_que_alterou: new FormControl(''),
