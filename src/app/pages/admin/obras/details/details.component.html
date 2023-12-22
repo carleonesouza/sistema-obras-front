@@ -66,7 +66,7 @@
                                     class="flex items-center  w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
                                     <mat-icon class="mr-2" [svgIcon]="'heroicons_outline:document-text'"></mat-icon>
                                     <div class="font-mono text-primary-500">
-                                        <span class="font-bold">Responsável:
+                                        <span class="font-bold">Responsável Empreendimento:
                                         </span>{{obra.empreendimento.empreendimento.responsavel}}
                                     </div>
                                 </div>
@@ -88,6 +88,14 @@
                         <div class="flex flex-col">
                             <ng-container>
                                 <div class="flex justify-between gap-3 pb-2">
+                                    <div
+                                        class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                        <mat-icon class="mr-2" [svgIcon]="'mat_solid:date_range'"></mat-icon>
+                                        <div class="font-mono text-primary-500">
+                                            <span class="font-bold">Responsável Obra : </span>{{ obra?.responsavel }}
+                                        </div>
+                                    </div>
+                             
                                     <div
                                         class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
                                         <mat-icon class="mr-2" [svgIcon]="'mat_solid:date_range'"></mat-icon>

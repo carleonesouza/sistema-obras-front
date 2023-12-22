@@ -224,7 +224,10 @@ export class DetailsComponent implements OnInit, OnDestroy {
       const user = new User(JSON.parse(localStorage.getItem('user')));
       const naturezaEmpreendimento = new NaturezaEmpreendimento(this.empreendimentoForm.get('natureza_empreendimento').value)
       empreendimento.natureza_empreendimento = naturezaEmpreendimento?.id;
+      empreendimento.user = user?.id;
+      empreendimento.setor = empreendimento.setor?.id;    
       empreendimento.usuario_que_alterou = user.id;
+      delete empreendimento.obras;
       this._empreendimentoService
         .editEmpreendimento(empreendimento)
         .subscribe(() => {

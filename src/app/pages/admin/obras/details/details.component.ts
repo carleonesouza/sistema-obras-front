@@ -483,13 +483,13 @@ export class ObraDetailsComponent implements OnInit {
       this.uploadFiles.append('documentosAdicionais', this.selectedFile);
 
       if (this.uploadFiles.has('documentosAdicionais')) {
-        this._obraService.uploadFile(this.uploadFiles).subscribe(event => {
-          this.uploadFiles.set('documentosAdicionais', event?.body?.documentosAdicionais)
+        this._obraService.uploadFile(this.uploadFiles).subscribe(event => {         
 
           if (event.type === HttpEventType.UploadProgress && event.total) {
             this.uploadProgress = Math.round(100 * event.loaded / event.total);
           } else if (event.type === HttpEventType.Response) {
             this.uploadProgress = 100;
+            this.uploadFiles.set('documentosAdicionais', event?.body?.documentosAdicionais)
             this._snackBar.open('Arquivo Salvo com Sucesso', 'Fechar', { duration: 3000 });
           }
         }, error => {
@@ -511,14 +511,13 @@ export class ObraDetailsComponent implements OnInit {
       this.uploadFiles.append('arquivoGeorreferenciado', this.arquivoGeo)
 
       if (this.uploadFiles.has('arquivoGeorreferenciado')) {
-        this._obraService.uploadFile(this.uploadFiles).subscribe(event => {
-
-          this.uploadFiles.set('arquivoGeorreferenciado', event?.body?.arquivoGeorreferenciado)
+        this._obraService.uploadFile(this.uploadFiles).subscribe(event => {         
 
           if (event.type === HttpEventType.UploadProgress && event.total) {
             this.uploadGeorreferenciado = Math.round(100 * event.loaded / event.total);
           } else if (event.type === HttpEventType.Response) {
             this.uploadGeorreferenciado = 100;
+            this.uploadFiles.set('arquivoGeorreferenciado', event?.body?.arquivoGeorreferenciado)
             this._snackBar.open('Arquivo Salvo com Sucesso', 'Fechar', { duration: 3000 });
           }
         }, error => {
@@ -1190,8 +1189,8 @@ export class ObraDetailsComponent implements OnInit {
         obraAerea.intervencao = obraAerea.intervencao?.id;
         obraAerea.status = obraAerea.status?.id;
         obraAerea.uf = obraAerea.uf?.id;
-        obraAerea.arquivoGeorreferenciado = this.uploadFiles.get('arquivoGeorreferenciado').toString();
-        obraAerea.documentosAdicionais = this.uploadFiles.get('documentosAdicionais').toString()
+        obraAerea.arquivoGeorreferenciado = this.uploadFiles?.get('arquivoGeorreferenciado')?.toString();
+        obraAerea.documentosAdicionais = this.uploadFiles?.get('documentosAdicionais')?.toString()
 
         this._obraService.addObra(obraAerea)
           .pipe(takeUntil(this._unsubscribeAll))
@@ -1231,8 +1230,8 @@ export class ObraDetailsComponent implements OnInit {
         obraDuto.tipo_duto = obraDuto.tipo_duto?.id;
         obraDuto.funcao_estrutura = obraDuto.funcao_estrutura?.id;
         obraDuto.nivel_duto = obraDuto.nivel_duto?.id;
-        obraDuto.arquivoGeorreferenciado = this.uploadFiles.get('arquivoGeorreferenciado').toString();
-        obraDuto.documentosAdicionais = this.uploadFiles.get('documentosAdicionais').toString()
+        obraDuto.arquivoGeorreferenciado = this.uploadFiles?.get('arquivoGeorreferenciado')?.toString();
+        obraDuto.documentosAdicionais = this.uploadFiles?.get('documentosAdicionais')?.toString()
 
         this._obraService.addObra(obraDuto)
           .pipe(takeUntil(this._unsubscribeAll))
@@ -1273,8 +1272,8 @@ export class ObraDetailsComponent implements OnInit {
         obraHidroviaria.intervencao = obraHidroviaria.intervencao?.id;
         obraHidroviaria.status = obraHidroviaria.status?.id;
         obraHidroviaria.uf = obraHidroviaria.uf?.id;
-        obraHidroviaria.arquivoGeorreferenciado = this.uploadFiles.get('arquivoGeorreferenciado').toString();
-        obraHidroviaria.documentosAdicionais = this.uploadFiles.get('documentosAdicionais').toString()
+        obraHidroviaria.arquivoGeorreferenciado = this.uploadFiles?.get('arquivoGeorreferenciado')?.toString();
+        obraHidroviaria.documentosAdicionais = this.uploadFiles?.get('documentosAdicionais')?.toString()
 
         this._obraService.addObra(obraHidroviaria)
           .pipe(takeUntil(this._unsubscribeAll))
@@ -1313,8 +1312,8 @@ export class ObraDetailsComponent implements OnInit {
         obraFerroviaria.intervencao = obraFerroviaria.intervencao?.id;
         obraFerroviaria.status = obraFerroviaria.status?.id;
         obraFerroviaria.uf = obraFerroviaria.uf?.id;
-        obraFerroviaria.arquivoGeorreferenciado = this.uploadFiles.get('arquivoGeorreferenciado').toString();
-        obraFerroviaria.documentosAdicionais = this.uploadFiles.get('documentosAdicionais').toString()
+        obraFerroviaria.arquivoGeorreferenciado = this.uploadFiles?.get('arquivoGeorreferenciado')?.toString();
+        obraFerroviaria.documentosAdicionais = this.uploadFiles?.get('documentosAdicionais')?.toString()
 
         this._obraService.addObra(obraFerroviaria)
           .pipe(takeUntil(this._unsubscribeAll))
@@ -1352,8 +1351,8 @@ export class ObraDetailsComponent implements OnInit {
         obraPortuaria.intervencao = obraPortuaria.intervencao?.id;
         obraPortuaria.status = obraPortuaria.status?.id;
         obraPortuaria.uf = obraPortuaria.uf?.id;
-        obraPortuaria.arquivoGeorreferenciado = this.uploadFiles.get('arquivoGeorreferenciado').toString();
-        obraPortuaria.documentosAdicionais = this.uploadFiles.get('documentosAdicionais').toString()
+        obraPortuaria.arquivoGeorreferenciado = this.uploadFiles?.get('arquivoGeorreferenciado')?.toString();
+        obraPortuaria.documentosAdicionais = this.uploadFiles?.get('documentosAdicionais')?.toString()
 
         this._obraService.addObra(obraPortuaria)
           .pipe(takeUntil(this._unsubscribeAll))
@@ -1390,8 +1389,8 @@ export class ObraDetailsComponent implements OnInit {
         obraRodoviaria.intervencao = obraRodoviaria.intervencao?.id;
         obraRodoviaria.status = obraRodoviaria.status?.id;
         obraRodoviaria.uf = obraRodoviaria.uf?.id;
-        obraRodoviaria.arquivoGeorreferenciado = this.uploadFiles.get('arquivoGeorreferenciado').toString();
-        obraRodoviaria.documentosAdicionais = this.uploadFiles.get('documentosAdicionais').toString()
+        obraRodoviaria.arquivoGeorreferenciado = this.uploadFiles?.get('arquivoGeorreferenciado')?.toString();
+        obraRodoviaria.documentosAdicionais = this.uploadFiles?.get('documentosAdicionais')?.toString()
 
         this._obraService.addObra(obraRodoviaria)
           .pipe(takeUntil(this._unsubscribeAll))
