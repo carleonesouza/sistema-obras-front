@@ -79,6 +79,13 @@ export class PageComponent implements OnInit, OnDestroy {
                     type: 'basic',
                     icon: 'mat_solid:ballot',
                     link: 'admin/empreendimentos/intervencoes/lista'
+                },
+                {
+                    id: 'logs',
+                    title: 'Logs',
+                    type: 'basic',
+                    icon: 'mat_solid:text_snippet',
+                    link: 'admin/logs'
                 }
             ]
         },

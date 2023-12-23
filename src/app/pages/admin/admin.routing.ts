@@ -24,6 +24,9 @@ const routes: Routes = [
       {
         path: 'setores', loadChildren: () => import('app/pages/admin/setors/setors.module').then(s => s.SetorsModule),
       },
+      {
+        path: 'logs', loadChildren: () => import('app/pages/admin/logs/logs.module').then(log => log.LogsModule),
+      }
     ]
   }
 ];
