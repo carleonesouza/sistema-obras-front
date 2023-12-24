@@ -21,8 +21,9 @@ export class LogsService {
   getLogs() {
     return this._httpClient.get<any>(environment.apiManager + 'logs')
       .pipe(
-        tap((result) => {       
-          this._logs.next(result);
+        tap((logs) => { 
+          const data = logs.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());   
+          this._logs.next(data);
         }),
         catchError(this.error.handleError<any>('getLogs'))
       );
