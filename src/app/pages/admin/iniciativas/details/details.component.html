@@ -57,25 +57,37 @@
 
                     <div class="mt-6">
 
-
                         <ng-container>
                             <div class="flex w-full mb-3 mt-2">
                                 <div class="min-w-0 space-y-1 w-full">
                                     <ng-container>
                                         <div
-                                            class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2" [svgIcon]="'mat_outline:description'"></mat-icon>
-                                            <div class="text-primary-500">
-                                                <span class="font-bold mr-2">Responsável:</span>
-                                                {{iniciativa.responsavel}}
+                                            class="flex items-center justify-between leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
+                                            <div class="flex">
+                                                <mat-icon class="mr-2" [svgIcon]="'mat_outline:description'"></mat-icon>
+                                                <div class="text-primary-500">
+                                                    <span class="font-bold mr-2">Responsável:</span>
+                                                    {{iniciativa.responsavel}}
+                                                </div>
+                                            </div>
+                                            <div class="flex">
+                                                <button mat-icon-button aria-label="button Informações"
+                                                    matTooltipPosition="above"
+                                                    matTooltip="
+                                                O responsável é o órgão ou departamento incumbido do acompanhamento e/ou execução daquela iniciativa. 
+                                                Deve ser relacionado à gestão, seja subcontratando seus executores ou acompanhando seu andamento.">
+                                                    <mat-icon>
+                                                        <span class="material-symbols-outlined">
+                                                            info
+                                                        </span>
+                                                    </mat-icon>
+                                                </button>
                                             </div>
                                         </div>
                                     </ng-container>
                                 </div>
                             </div>
                         </ng-container>
-
-
 
                         <ng-container>
                             <div class="flex w-full mb-3 mt-2">
@@ -94,18 +106,29 @@
                             </div>
                         </ng-container>
 
-
-
                         <ng-container>
                             <div class="flex w-full mb-3 mt-2">
                                 <div class="min-w-0 space-y-1 w-full">
                                     <ng-container>
                                         <div
-                                            class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2" [svgIcon]="'mat_solid:add_reaction'"></mat-icon>
-                                            <div class="text-primary-500">
-                                                <span class="font-bold mr-2">Expectativa de Parceria:</span>
-                                                {{iniciativa.expectativa}}
+                                            class="flex items-center justify-between leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
+                                            <div class="flex">
+                                                <mat-icon class="mr-2" [svgIcon]="'mat_solid:add_reaction'"></mat-icon>
+                                                <div class="text-primary-500">
+                                                    <span class="font-bold mr-2">Expectativa de Parceria:</span>
+                                                    {{iniciativa.expectativa}}
+                                                </div>
+                                            </div>
+                                            <div class="flex">
+                                                <button mat-icon-button aria-label="button Informações"
+                                                    matTooltipPosition="above"
+                                                    matTooltip="Indicação se há a expectativa de parceria ou não entre entes públicos e entes privados.">
+                                                    <mat-icon>
+                                                        <span class="material-symbols-outlined">
+                                                            info
+                                                        </span>
+                                                    </mat-icon>
+                                                </button>
                                             </div>
                                         </div>
                                     </ng-container>
@@ -113,25 +136,35 @@
                             </div>
                         </ng-container>
 
-
-
                         <ng-container>
                             <div class="flex w-full mb-3 mt-2">
                                 <div class="min-w-0 space-y-1 w-full">
                                     <ng-container>
                                         <div
-                                            class="flex items-center leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2" [svgIcon]="'mat_solid:add_road'"></mat-icon>
-                                            <div class="text-primary-500">
-                                                <span class="font-bold mr-2">Instrumento:</span>
-                                                {{iniciativa.instrumento}}
+                                            class="flex items-center justify-between leading-6 w-full p-3 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
+                                            <div class="flex">
+                                                <mat-icon class="mr-2" [svgIcon]="'mat_solid:add_road'"></mat-icon>
+                                                <div class="text-primary-500">
+                                                    <span class="font-bold mr-2">Instrumento:</span>
+                                                    {{iniciativa.instrumento}}
+                                                </div>
+                                            </div>
+                                            <div class="flex">
+                                                <button mat-icon-button aria-label="button Informações"
+                                                    matTooltipPosition="above" matTooltip="O instrumento diz respeito a algum objeto de valor jurídico atrelado à iniciativa. 
+                                                Pode ser um número de contrato, um processo SEI ou similares.">
+                                                    <mat-icon>
+                                                        <span class="material-symbols-outlined">
+                                                            info
+                                                        </span>
+                                                    </mat-icon>
+                                                </button>
                                             </div>
                                         </div>
                                     </ng-container>
                                 </div>
                             </div>
                         </ng-container>
-
 
                         <ng-container>
                             <div class="flex w-full mb-3 mt-2">
@@ -224,10 +257,14 @@
                     <div class="mt-8 w-full">
                         <mat-form-field class="w-full">
                             <mat-label>Responsável</mat-label>
-                            <mat-icon matPrefix class="hidden sm:flex">
+                            <mat-icon matPrefix class="hidden sm:flex" [svgIcon]="'heroicons_solid:location-marker'"
+                                matTooltipPosition="above"
+                                matTooltip="
+                            O responsável é o órgão ou departamento incumbido do acompanhamento e/ou execução daquela iniciativa. 
+                            Deve ser relacionado à gestão, seja subcontratando seus executores ou acompanhando seu andamento.">
                                 <span class="material-symbols-outlined">
-                                    contact_page
-                                    </span>
+                                    info
+                                </span>
                             </mat-icon>
                             <input matInput [formControl]="iniciativaControls.responsavel"
                                 [placeholder]="'Responsável'">
@@ -235,7 +272,7 @@
                     </div>
 
                     <div class="mt-8 w-full">
-                       
+
                         <mat-form-field class="w-full">
                             <mat-label>Descrição </mat-label>
                             <mat-icon matPrefix class="hidden sm:flex icon-size-5" svgIcon="mat_solid:description">
@@ -269,20 +306,30 @@
                     <div class="mt-8 w-full flex space-x-4">
                         <mat-form-field class="w-full">
                             <mat-label>Expectativa de Parceria</mat-label>
-                            <mat-icon class="mr-2" svgIcon="mat_solid:add_reaction"></mat-icon>
-
+                            <mat-icon matPrefix class="hidden sm:flex" [svgIcon]="'heroicons_solid:location-marker'"
+                                matTooltipPosition="above"
+                                matTooltip="Indicação se há a expectativa de parceria ou não entre entes públicos e entes privados.">
+                                <span class="material-symbols-outlined">
+                                    info
+                                </span>
+                            </mat-icon>
                             <mat-select [formControl]="iniciativaControls.expectativa">
                                 <mat-option *ngFor="let expectativa of expectativas" [value]="expectativa.value">
                                     {{ expectativa.value }}
                                 </mat-option>
                             </mat-select>
-                        </mat-form-field>                       
+                        </mat-form-field>
                     </div>
 
                     <div class="mt-8 w-full flex space-x-4">
                         <mat-form-field class="w-full">
                             <mat-label>Instrumento</mat-label>
-                            <mat-icon matPrefix class="hidden sm:flex icon-size-5" svgIcon="mat_solid:add_road">
+                            <mat-icon matPrefix class="hidden sm:flex" [svgIcon]="'heroicons_solid:location-marker'"
+                                matTooltipPosition="above" matTooltip="O instrumento diz respeito a algum objeto de valor jurídico atrelado à iniciativa. 
+                            Pode ser um número de contrato, um processo SEI ou similares.">
+                                <span class="material-symbols-outlined">
+                                    info
+                                </span>
                             </mat-icon>
                             <input matInput [formControl]="iniciativaControls.instrumento"
                                 [placeholder]="'Instrumento'">

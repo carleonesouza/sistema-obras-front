@@ -63,42 +63,90 @@
                         <ng-container>
                             <div class="flex justify-between gap-3 pb-2">
                                 <div
-                                    class="flex items-center  w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                    <mat-icon class="mr-2" [svgIcon]="'heroicons_outline:document-text'"></mat-icon>
+                                    class="flex items-center justify-between w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <div class="flex">
+                                        <mat-icon class="mr-2" [svgIcon]="'heroicons_outline:document-text'"></mat-icon>
                                     <div class="font-mono text-primary-500">
                                         <span class="font-bold">Responsável Empreendimento:
                                         </span>{{obra.empreendimento.empreendimento.responsavel}}
                                     </div>
+                                    </div>
+
+                                    <div class="flex">
+                                        <button mat-icon-button aria-label="button Informações"
+                                            matTooltipPosition="above" matTooltip="
+                                            O responsável é o órgão ou departamento incumbido do acompanhamento e/ou execução daquele empreendimento. 
+                                            Deve ser relacionado à gestão daquele empreendimento, seja subcontratando seus executores ou acompanhando seu andamento.">
+                                            <mat-icon>
+                                                <span class="material-symbols-outlined">
+                                                    info
+                                                </span>
+                                            </mat-icon>
+                                        </button>
+                                    </div>
                                 </div>
 
                                 <div
-                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                    <mat-icon class="mr-2" [svgIcon]="'mat_solid:room_preferences'"></mat-icon>
-                                    <div class="font-mono text-primary-500">
-                                        <span class="font-bold">Descrição: </span>{{obra?.descricao }}
+                                    class="flex items-center justify-between leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <div class="flex">
+                                        <mat-icon class="mr-2" [svgIcon]="'mat_solid:room_preferences'"></mat-icon>
+                                        <div class="font-mono text-primary-500">
+                                            <span class="font-bold">Descrição: </span>{{obra?.descricao }}
+                                        </div>
+                                    </div>
+                                    <div class="flex">
+                                        <button mat-icon-button aria-label="button Informações"
+                                            matTooltipPosition="above"
+                                            matTooltip="
+                                            Descrição sucinta da obra ou serviço, nome da infraestrutura e onde será realizado.">
+                                            <mat-icon>
+                                                <span class="material-symbols-outlined">
+                                                    info
+                                                </span>
+                                            </mat-icon>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </ng-container>
                     </div>
-
-
                     <!--Informações Comuns-->
                     <ng-container>
                         <div class="flex flex-col">
                             <ng-container>
                                 <div class="flex justify-between gap-3 pb-2">
                                     <div
-                                        class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                        <mat-icon class="mr-2" [svgIcon]="'mat_solid:date_range'"></mat-icon>
-                                        <div class="font-mono text-primary-500">
-                                            <span class="font-bold">Responsável Obra : </span>{{ obra?.responsavel }}
+                                        class="flex items-center justify-between leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                        <div class="flex">
+                                            <mat-icon class="mr-2" [svgIcon]="'mat_solid:date_range'"></mat-icon>
+                                            <div class="font-mono text-primary-500">
+                                                <span class="font-bold">Responsável Obra : </span>{{ obra?.responsavel
+                                                }}
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <button mat-icon-button aria-label="button Informações"
+                                                matTooltipPosition="above"
+                                                matTooltip="
+                                                O responsável é o órgão ou departamento incumbido do acompanhamento e/ou execução daquela obra. 
+                                                Deve ser relacionado à gestão, seja subcontratando seus executores ou acompanhando seu andamento.">
+                                                <mat-icon>
+                                                    <span class="material-symbols-outlined">
+                                                        info
+                                                    </span>
+                                                </mat-icon>
+                                            </button>
                                         </div>
                                     </div>
-                             
+
                                     <div
                                         class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                        <mat-icon class="mr-2" [svgIcon]="'mat_solid:date_range'"></mat-icon>
+                                        <mat-icon class="mr-2" matTooltipPosition="above"
+                                            matTooltip="Mês e ano previstos/reais para término da execução da obra.">
+                                            <span class="material-symbols-outlined">
+                                                info
+                                            </span>
+                                        </mat-icon>
                                         <div class="font-mono text-primary-500">
                                             <span class="font-bold">Data Conclusão: </span>{{obra?.dataConclusao | date:
                                             'dd/yyyy'}}
@@ -108,7 +156,12 @@
                                 <div class="flex justify-between gap-3 pb-2">
                                     <div
                                         class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                        <mat-icon class="mr-2" [svgIcon]="'mat_solid:date_range'"></mat-icon>
+                                        <mat-icon class="mr-2" matTooltipPosition="above"
+                                            matTooltip="Mês e ano previstos/reais para início da execução da obra.">
+                                            <span class="material-symbols-outlined">
+                                                info
+                                            </span>
+                                        </mat-icon>
                                         <div class="font-mono text-primary-500">
                                             <span class="font-bold">Data Início: </span>{{obra?.dataInicio | date:
                                             'dd/yyyy'}}
@@ -117,7 +170,12 @@
 
                                     <div
                                         class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                        <mat-icon class="mr-2" [svgIcon]="'mat_solid:date_range'"></mat-icon>
+                                        <mat-icon class="mr-2" matTooltipPosition="above"
+                                            matTooltip="Mês e ano em que orçamento da obra foi realizado.">
+                                            <span class="material-symbols-outlined">
+                                                info
+                                            </span>
+                                        </mat-icon>
                                         <div class="font-mono text-primary-500">
                                             <span class="font-bold">Data Base do Orçamento:
                                             </span>{{obra?.data_base_orcamento | date: 'dd/yyyy'}}
@@ -130,24 +188,53 @@
                             <ng-container>
                                 <div class="flex justify-between gap-3 pb-2">
                                     <div
-                                        class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                        <mat-icon class="mr-2" [svgIcon]="'mat_solid:map'"></mat-icon>
-                                        <div class="font-mono text-primary-500">
-                                            <span class="font-bold">Latitude: </span>{{obra?.latitude }}
+                                        class="flex items-center justify-between leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                        <div class="flex">
+                                            <mat-icon class="mr-2" [svgIcon]="'mat_solid:map'"></mat-icon>
+                                            <div class="font-mono text-primary-500">
+                                                <span class="font-bold">Latitude: </span>{{obra?.latitude }}
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <button mat-icon-button aria-label="button Informações"
+                                                matTooltipPosition="above" matTooltip="
+                                                Inserir apenas no caso de ser uma obra pontual e se o arquivo georreferenciado não estiver sido 
+                                                cadastrado no formulário (Ex.: OAE, Terminal etc.), 
+                                                não sendo necessário no caso de intervenções nas vias.">
+                                                <mat-icon>
+                                                    <span class="material-symbols-outlined">
+                                                        info
+                                                    </span>
+                                                </mat-icon>
+                                            </button>
                                         </div>
                                     </div>
 
                                     <div
-                                        class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                        <mat-icon class="mr-2" [svgIcon]="'mat_solid:map'"></mat-icon>
-                                        <div class="font-mono text-primary-500">
-                                            <span class="font-bold">Longitude: </span>{{obra?.longitude }}
+                                        class="flex items-center justify-between leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                        <div class="flex">
+                                            <mat-icon class="mr-2" [svgIcon]="'mat_solid:map'"></mat-icon>
+                                            <div class="font-mono text-primary-500">
+                                                <span class="font-bold">Longitude: </span>{{obra?.longitude }}
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <button mat-icon-button aria-label="button Informações"
+                                                matTooltipPosition="above" matTooltip="
+                                                Inserir apenas no caso de ser uma obra pontual e se o arquivo georreferenciado não estiver sido 
+                                                cadastrado no formulário (Ex.: OAE, Terminal etc.), 
+                                                não sendo necessário no caso de intervenções nas vias">
+                                                <mat-icon>
+                                                    <span class="material-symbols-outlined">
+                                                        info
+                                                    </span>
+                                                </mat-icon>
+                                            </button>
                                         </div>
                                     </div>
-
-
                                 </div>
                             </ng-container>
+
                             <ng-container>
                                 <div class="flex justify-between gap-3 pb-2">
                                     <div
@@ -165,8 +252,13 @@
                                 <div class="flex justify-between gap-3 pb-2"
                                     *ngFor="let municipio of obra?.municipios; let i = index;">
                                     <div
-                                        class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                        <mat-icon class="mr-2" [svgIcon]="'mat_solid:my_location'"></mat-icon>
+                                        class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">                                                                                      
+                                                <mat-icon class="mr-2" matTooltipPosition="above"
+                                                matTooltip="Lista de Municípios que serão impactados pela obra.">
+                                                    <span class="material-symbols-outlined">
+                                                        info
+                                                    </span>
+                                                </mat-icon>                                          
                                         <div class="font-mono text-primary-500">
                                             <span class="font-bold">Município: </span>{{ municipio.nome}}
                                         </div>
@@ -178,22 +270,50 @@
                                 <div class="flex justify-between gap-3 pb-2">
 
                                     <div
-                                        class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                        <mat-icon class="mr-2" [svgIcon]="'mat_solid:folder'"></mat-icon>
+                                        class="flex items-center justify-between leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                        <div class="flex">
+                                            <mat-icon class="mr-2" [svgIcon]="'mat_solid:folder'"></mat-icon>
                                         <div class="font-mono text-primary-500">
                                             <span class="font-bold">Documentos Adicionais:
                                             </span>{{obra?.documentosAdicionais }}
                                         </div>
+                                        </div>
+                                        <div class="flex">
+                                            <button mat-icon-button aria-label="button Informações"
+                                                matTooltipPosition="above"
+                                                matTooltip="Estudos, projetos, planilhas ou qualquer documento que contenha mais informações sobre a obra.">
+                                                <mat-icon>
+                                                    <span class="material-symbols-outlined">
+                                                        info
+                                                    </span>
+                                                </mat-icon>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="flex justify-between gap-3 pb-2">
                                     <div
-                                        class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                        <mat-icon class="mr-2" [svgIcon]="'mat_solid:folder'"></mat-icon>
+                                        class="flex items-center justify-between leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                        <div class="flex">
+                                            <mat-icon class="mr-2" [svgIcon]="'mat_solid:folder'"></mat-icon>
                                         <div class="font-mono text-primary-500">
                                             <span class="font-bold">Arquivo Georreferenciado: </span>
                                             {{obra?.arquivoGeorreferenciado }}
                                         </div>
+                                        </div>
+                                        <div class="flex">
+                                            <button mat-icon-button aria-label="button Informações"
+                                                matTooltipPosition="above"
+                                                matTooltip="Arquivo contendo informações para que seja possível localizar a obra. 
+                                                Esse arquivo deve ser, preferencialmente, em algum formato compatível com GIS (Shapefiles, GeoDataBase, GeoPackage, KMZ, KML, GeoJson, GeoPDF ou similares). 
+                                                Se não estiver disponível, anexar arquivos com imagem ou PDF.">
+                                                <mat-icon>
+                                                    <span class="material-symbols-outlined">
+                                                        info
+                                                    </span>
+                                                </mat-icon>
+                                            </button>
+                                        </div>
                                     </div>
 
                                 </div>
@@ -203,44 +323,68 @@
                                 <div class="flex justify-between gap-3 pb-2">
 
                                     <div
-                                        class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                        <mat-icon class="mr-2" [svgIcon]="'mat_solid:attach_money'"></mat-icon>
+                                        class="flex items-center justify-between leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                        <div class="flex">
+                                            <mat-icon class="mr-2" [svgIcon]="'mat_solid:attach_money'"></mat-icon>
                                         <div class="font-mono text-primary-500">
                                             <span class="font-bold">Valor Global:</span> {{obra?.valorGlobal |
                                             currency:'BRL' }}
                                         </div>
+                                        </div>
+                                        <div class="flex">
+                                            <button mat-icon-button aria-label="button Informações"
+                                                matTooltipPosition="above"
+                                                matTooltip="Valor total previsto/real a ser dispendido na execução da obra.">
+                                                <mat-icon>
+                                                    <span class="material-symbols-outlined">
+                                                        info
+                                                    </span>
+                                                </mat-icon>
+                                            </button>
+                                        </div>
                                     </div>
 
                                     <div
-                                        class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                        <mat-icon class="mr-2">percent</mat-icon>
+                                        class="flex items-center justify-between leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                        <div class="flex">
+                                            <mat-icon class="mr-2">percent</mat-icon>
                                         <div class="font-mono text-primary-500">
                                             <span class="font-bold">Percentual Financeiro Executado:</span>
                                             {{obra?.percentualFinanceiroExecutado }}%
                                         </div>
-                                    </div>
-
-                                </div>
-                            </ng-container>
-
-
-
-                            <ng-container>
-                                <div class="flex justify-between gap-3 pb-2">
-
-                                    <div
-                                        class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                        <mat-icon class="mr-2" [svgIcon]="'mat_solid:add_road'"></mat-icon>
-                                        <div class="font-mono text-primary-500">
-                                            <span class="font-bold">Extensão:</span> {{ obra?.extensao }} (em metros)
+                                        </div>
+                                        <div class="flex">
+                                            <button mat-icon-button aria-label="button Informações"
+                                                matTooltipPosition="above"
+                                                matTooltip="Quanto em termos percentuais já foi executado do Valor Global indicado.">
+                                                <mat-icon>
+                                                    <span class="material-symbols-outlined">
+                                                        info
+                                                    </span>
+                                                </mat-icon>
+                                            </button>
                                         </div>
                                     </div>
 
                                 </div>
                             </ng-container>
+
                             <ng-container>
                                 <div class="flex justify-between gap-3 pb-2">
+                                    <div
+                                        class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                        <mat-icon class="mr-2" [svgIcon]="'mat_solid:add_road'"></mat-icon>
+                                        <div class="font-mono text-primary-500">
+                                            <span class="font-bold">Nova Extensão:</span> {{ obra?.extensao }} (em
+                                            metros)
+                                        </div>
+                                    </div>
 
+                                </div>
+                            </ng-container>
+
+                            <ng-container>
+                                <div class="flex justify-between gap-3 pb-2">
                                     <div
                                         class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
                                         <mat-icon class="mr-2" [svgIcon]="'mat_solid:fact_check'"></mat-icon>
@@ -248,20 +392,28 @@
                                             <span class="font-bold">Status:</span> {{ obra?.status.status?.descricao }}
                                         </div>
                                     </div>
-
                                 </div>
                             </ng-container>
+
                             <ng-container *ngFor="let produto of obra?.produtos; let i = index;">
                                 <div class="flex justify-between gap-3 pb-2">
                                     <div
                                         class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                        <mat-icon class="mr-2" [svgIcon]="'mat_solid:inventory_2'"></mat-icon>
+                                        <mat-icon class="mr-2"  matTooltipPosition="above"
+                                        matTooltip="
+                                        Lista de todos os produtos previstos para serem transportados pelo modo de transporte que fará uso da infraestrutura que receberá a obra cadastrada. 
+                                        Os produtos “Automóveis” e “Ônibus” dizem respeito ao transporte de pessoas em carros particulares ou veículos de transporte coletivo. 
+                                        Todos os outros são oriundos da lista de produtos considerados na elaboração do Plano Nacional de Logística.">
+                                        <span class="material-symbols-outlined">
+                                            info
+                                        </span></mat-icon>
                                         <div class="font-mono text-primary-500">
                                             <span class="font-bold"> Produto:</span> {{ produto.descricao }}
                                         </div>
                                     </div>
                                 </div>
                             </ng-container>
+
                             <ng-container>
                                 <div class="flex justify-between gap-3 pb-2">
                                     <div
@@ -315,7 +467,7 @@
                                             <mat-icon class="mr-2" [svgIcon]="'mat_solid:grass'"></mat-icon>
                                             <div class="font-mono text-primary-500">
                                                 <span class="font-bold">Nova Área Criada:</span> {{ obra?.novaAreaCriada
-                                                }}
+                                                }} (em metros²)
                                             </div>
                                         </div>
                                         <div
@@ -360,7 +512,6 @@
 
                                     </div>
                                 </ng-container>
-
 
                                 <ng-container>
                                     <div class="flex justify-between gap-3 pb-2">
@@ -412,8 +563,6 @@
 
                                     </div>
                                 </ng-container>
-
-
 
                                 <ng-container>
                                     <div class="flex justify-between gap-3 pb-2">
@@ -504,7 +653,7 @@
                                             <mat-icon class="mr-2" [svgIcon]="'mat_solid:sailing'"></mat-icon>
                                             <div class="font-mono text-primary-500">
                                                 <span class="font-bold">Situação da Hidrovia:</span> {{
-                                                obra?.situacaoHidrovia
+                                                obra?.situacaoHidrovia?.descricao
                                                 }}
                                             </div>
                                         </div>
@@ -515,8 +664,8 @@
                                                     gate
                                                 </span></mat-icon>
                                             <div class="font-mono text-primary-500">
-                                                <span class="font-bold">A Hidrovia tem Eclusa: </span>{{ obra?.temEclusa
-                                                }}
+                                                <span class="font-bold">A Hidrovia tem Eclusa: </span>
+                                                {{ obra?.temEclusa?.descricao }}
                                             </div>
                                         </div>
 
@@ -530,7 +679,7 @@
                                             <mat-icon class="mr-2" [svgIcon]="'mat_solid:border_all'"></mat-icon>
                                             <div class="font-mono text-primary-500">
                                                 <span class="font-bold">A Hidrovia tem Barragem:</span> {{
-                                                obra?.temBarragem }}
+                                                obra?.temBarragem?.descricao }}
                                             </div>
                                         </div>
 
@@ -539,8 +688,7 @@
                                             <mat-icon class="mr-2" [svgIcon]="'mat_solid:directions_boat'"></mat-icon>
                                             <div class="font-mono text-primary-500">
                                                 <span class="font-bold">Tipo de Embarcação: </span>{{
-                                                obra?.tipoEmbarcacao
-                                                }}
+                                                obra?.tipoEmbarcacao }}
                                             </div>
                                         </div>
 
@@ -557,7 +705,8 @@
                                                     Passageiros,
                                                     de Carga
                                                     ou
-                                                    Ambos: </span>{{ obra?.ampliacaoCapacidade }}
+                                                    Ambos: </span>{{
+                                                obra?.ampliacaoCapacidade?.descricao }}
                                             </div>
                                         </div>
                                     </div>
@@ -571,8 +720,7 @@
                                             </mat-icon>
                                             <div class="font-mono text-primary-500">
                                                 <span class="font-bold">Profundida Mínima: </span>{{
-                                                obra?.profundidadeMinima
-                                                }}
+                                                obra?.profundidadeMinima }} (em metros)
                                             </div>
                                         </div>
 
@@ -585,7 +733,7 @@
                                             </mat-icon>
                                             <div class="font-mono text-primary-500">
                                                 <span class="font-bold">Profundida Máxima:</span> {{
-                                                obra?.profundidadeMaxima }}
+                                                obra?.profundidadeMaxima }} (em metros)
                                             </div>
                                         </div>
 
@@ -661,24 +809,52 @@
                                 <ng-container>
                                     <div class="flex justify-between gap-3 pb-2">
                                         <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2">
-                                                <span class="material-symbols-outlined">
-                                                    directions_alt
-                                                </span>
-                                            </mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">Nova Velocidade:</span> {{ obra?.novaVelocidade
-                                                }}
+                                            class="flex items-center justify-between leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                            <div class="flex">
+                                                <mat-icon class="mr-2">
+                                                    <span class="material-symbols-outlined">
+                                                        directions_alt
+                                                    </span>
+                                                </mat-icon>
+                                                <div class="font-mono text-primary-500">
+                                                    <span class="font-bold">Nova Velocidade:</span> {{
+                                                    obra?.novaVelocidade
+                                                    }} (KM/h)
+                                                </div>
+                                            </div>
+                                            <div class="flex">
+                                                <button mat-icon-button aria-label="button Informações"
+                                                    matTooltipPosition="above"
+                                                    matTooltip="Velocidade Operacional da via em Km/h após a conclusão das obras.">
+                                                    <mat-icon>
+                                                        <span class="material-symbols-outlined">
+                                                            info
+                                                        </span>
+                                                    </mat-icon>
+                                                </button>
                                             </div>
                                         </div>
 
                                         <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2" [svgIcon]="'mat_solid:360'"></mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">Capacidade Dinâmica:</span> {{
-                                                obra?.capacidadeDinamica }}
+                                            class="flex items-center justify-between leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                            <div class="flex">
+                                                <mat-icon class="mr-2" [svgIcon]="'mat_solid:360'"></mat-icon>
+                                                <div class="font-mono text-primary-500">
+                                                    <span class="font-bold">Capacidade Dinâmica:</span> {{
+                                                    obra?.capacidadeDinamica }} (T/ano)
+                                                </div>
+                                            </div>
+                                            <div class="flex">
+                                                <button mat-icon-button aria-label="button Informações"
+                                                    matTooltipPosition="above"
+                                                    matTooltip="
+                                                    Capacidade de movimentação da infraestrutura ferroviária em toneladas/ano após a conclusão das obras.">
+                                                    <mat-icon>
+                                                        <span class="material-symbols-outlined">
+                                                            info
+                                                        </span>
+                                                    </mat-icon>
+                                                </button>
                                             </div>
                                         </div>
 
@@ -709,7 +885,7 @@
                                             class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
                                             <mat-icon class="mr-2">
                                                 <span class="material-symbols-outlined">
-                                                    hallway
+                                                    360
                                                 </span>
                                             </mat-icon>
                                             <div class="font-mono text-primary-500">
@@ -717,7 +893,7 @@
                                                     Passageiros,
                                                     de Carga
                                                     ou
-                                                    Ambos:</span> {{ obra?.ampliacaoCapacidade }}
+                                                    Ambos:</span> {{ obra?.ampliacaoCapacidade?.descricao }} (T/ano)
                                             </div>
                                         </div>
 
@@ -735,20 +911,33 @@
                                             </mat-icon>
                                             <div class="font-mono text-primary-500">
                                                 <span class="font-bold">Novo Calado:</span> {{
-                                                obra?.novoCalado }}
+                                                obra?.novoCalado }} (em metros)
                                             </div>
                                         </div>
 
                                         <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2">
-                                                <span class="material-symbols-outlined">
-                                                    hallway
-                                                </span>
-                                            </mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">Capacidade Dinâmica:</span> {{
-                                                obra?.capacidadeDinamica }}
+                                            class="flex items-center justify-between leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                            <div class="flex">
+                                                <mat-icon class="mr-2">
+                                                    <span class="material-symbols-outlined">
+                                                        360
+                                                    </span>
+                                                </mat-icon>
+                                                <div class="font-mono text-primary-500">
+                                                    <span class="font-bold">Capacidade Dinâmica:</span> {{
+                                                    obra?.capacidadeDinamica }} (T/ano)
+                                                </div>
+                                            </div>
+                                            <div class="flex">
+                                                <button mat-icon-button aria-label="button Informações"
+                                                    matTooltipPosition="above"
+                                                    matTooltip="Capacidade de movimentação da infraestrutura portuária em toneladas/ano após a conclusão das obras..">
+                                                    <mat-icon>
+                                                        <span class="material-symbols-outlined">
+                                                            info
+                                                        </span>
+                                                    </mat-icon>
+                                                </button>
                                             </div>
                                         </div>
 
@@ -762,7 +951,32 @@
                                 <ng-container>
                                     <div class="flex justify-between gap-3 pb-2">
                                         <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                            class="flex items-center justify-between leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                            <div class="flex">
+                                                <mat-icon class="mr-2" [svgIcon]="'mat_solid:trip_origin'"></mat-icon>
+                                                <div class="font-mono text-primary-500">
+                                                    <span class="font-bold">Rodivia:</span> {{
+                                                    obra?.rodovia }}
+                                                </div>
+                                            </div>
+                                            <div class="flex">
+                                                <button mat-icon-button aria-label="button Informações"
+                                                    matTooltipPosition="above"
+                                                    matTooltip="
+                                                Nome da rodovia onde a obra será realizada. Caso seja uma rodovia federal, utilizar o s
+                                                eguinte padrão: “BR-” + número da rodovia + “/” + sigla da UF (Ex.: BR-381/MG). 
+                                                No caso de uma rodovia estadual utilizar o seguinte padrão: sigla da rodovia + número da rodovia (Ex.: MG-050, MGT-750).">
+                                                    <mat-icon>
+                                                        <span class="material-symbols-outlined">
+                                                            info
+                                                        </span>
+                                                    </mat-icon>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div
+                                            class="flex items-center justify-between leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
                                             <mat-icon class="mr-2" [svgIcon]="'mat_solid:directions'"></mat-icon>
                                             <div class="font-mono text-primary-500">
                                                 <span class="font-bold">KM Inicial:</span> {{
@@ -783,11 +997,25 @@
                                         </div>
 
                                         <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2" [svgIcon]="'mat_solid:trip_origin'"></mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">Código:</span> {{
-                                                obra?.codigo }}
+                                            class="flex items-center justify-between leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                            <div class="flex">
+                                                <mat-icon class="mr-2" [svgIcon]="'mat_solid:trip_origin'"></mat-icon>
+                                                <div class="font-mono text-primary-500">
+                                                    <span class="font-bold">Código PNV/SRE:</span> {{
+                                                    obra?.codigo }}
+                                                </div>
+                                            </div>
+                                            <div class="flex">
+                                                <button mat-icon-button aria-label="button Informações"
+                                                    matTooltipPosition="above" matTooltip="
+                                                    Inserir os códigos PNV ou SER que a obra engloba, utilizar o seguinte padrão: código + “;” + 
+                                                    código (Ex,: 900AMG1210; 120CMG0190-01; 434EMG0200-01)">
+                                                    <mat-icon>
+                                                        <span class="material-symbols-outlined">
+                                                            info
+                                                        </span>
+                                                    </mat-icon>
+                                                </button>
                                             </div>
                                         </div>
 
@@ -802,10 +1030,10 @@
                                                 <span class="font-bold">Versão:</span> {{ obra?.versao }}
                                             </div>
                                         </div>
-
                                     </div>
                                 </ng-container>
                             </ng-container>
+                            <!--Obra Rodoviária-->
                         </div>
                     </ng-container>
                 </div>
@@ -855,8 +1083,7 @@
                                                                     diameter="20"></mat-spinner>
                                                             </div>
                                                         </mat-label>
-                                                        <mat-select formControlName="tipo"
-                                                            [disabled]="editMode"
+                                                        <mat-select formControlName="tipo" [disabled]="editMode"
                                                             (selectionChange)="selectedSetorObra($event)"
                                                             [compareWith]="compareSetores">
                                                             <mat-option *ngFor="let setor of setores" [value]="setor">
@@ -892,9 +1119,11 @@
                                                 <div class="flex-auto">
                                                     <mat-form-field class=" w-full" appearance="outline">
                                                         <mat-label>Descrição</mat-label>
-                                                        <mat-icon matPrefix class="hidden sm:flex">
+                                                        <mat-icon matPrefix class="hidden sm:flex"
+                                                            matTooltipPosition="above"
+                                                            matTooltip="Descrição sucinta da obra ou serviço, nome da infraestrutura e onde será realizado.">
                                                             <span class="material-symbols-outlined">
-                                                                description
+                                                                info
                                                             </span>
                                                         </mat-icon>
                                                         <input matInput formControlName="descricao"
@@ -904,9 +1133,13 @@
                                                 <div class="flex-auto">
                                                     <mat-form-field class=" w-full" appearance="outline">
                                                         <mat-label>Responsável</mat-label>
-                                                        <mat-icon matPrefix class="hidden sm:flex">
+                                                        <mat-icon matPrefix class="hidden sm:flex"
+                                                            matTooltipPosition="above"
+                                                            matTooltip="
+                                                        O responsável é o órgão ou departamento incumbido do acompanhamento e/ou execução daquela obra. 
+                                                        Deve ser relacionado à gestão, seja subcontratando seus executores ou acompanhando seu andamento.">
                                                             <span class="material-symbols-outlined">
-                                                                location_away
+                                                                info
                                                             </span>
                                                         </mat-icon>
                                                         <input matInput formControlName="responsavel"
@@ -939,9 +1172,11 @@
                                                 <div class="flex-auto">
                                                     <mat-form-field class=" w-full" appearance="outline">
                                                         <mat-label>Valor Global</mat-label>
-                                                        <mat-icon matPrefix class="hidden sm:flex">
+                                                        <mat-icon matPrefix class="hidden sm:flex"
+                                                            matTooltipPosition="above"
+                                                            matTooltip="Valor total previsto/real a ser dispendido na execução da obra.">
                                                             <span class="material-symbols-outlined">
-                                                                payments
+                                                                info
                                                             </span>
                                                         </mat-icon>
                                                         <input matInput formControlName="valorGlobal" currencyMask
@@ -951,9 +1186,11 @@
                                                 <div class="flex-auto">
                                                     <mat-form-field class=" w-full" appearance="outline">
                                                         <mat-label>Percentual Financeiro Executado</mat-label>
-                                                        <mat-icon matPrefix class="hidden sm:flex">
+                                                        <mat-icon matPrefix class="hidden sm:flex"
+                                                            matTooltipPosition="above"
+                                                            matTooltip="Quanto em termos percentuais já foi executado do Valor Global indicado.">
                                                             <span class="material-symbols-outlined">
-                                                                percent
+                                                                info
                                                             </span>
                                                         </mat-icon>
                                                         <input matInput formControlName="percentualFinanceiroExecutado"
@@ -967,9 +1204,12 @@
                                                     <mat-form-field class="w-full" appearance="outline">
                                                         <mat-label>Instrumento</mat-label>
                                                         <mat-icon matPrefix class="hidden sm:flex"
-                                                            [svgIcon]="'heroicons_solid:location-marker'">
+                                                            [svgIcon]="'heroicons_solid:location-marker'"
+                                                            matTooltipPosition="above"
+                                                            matTooltip="O instrumento diz respeito a algum objeto de valor jurídico atrelado à obra. 
+                                                            Pode ser um número de contrato, um processo SEI ou similares.">
                                                             <span class="material-symbols-outlined">
-                                                                engineering
+                                                                info
                                                             </span>
                                                         </mat-icon>
                                                         <input matInput formControlName="instrumento"
@@ -1001,6 +1241,14 @@
                                                 <div class="flex-auto">
                                                     <mat-form-field class="w-full" appearance="outline">
                                                         <mat-label>Data Início</mat-label>
+                                                        <mat-icon matPrefix class="hidden sm:flex"
+                                                            [svgIcon]="'heroicons_solid:location-marker'"
+                                                            matTooltipPosition="above"
+                                                            matTooltip="Mês e ano previstos/reais para início da execução da obra.">
+                                                            <span class="material-symbols-outlined">
+                                                                info
+                                                            </span>
+                                                        </mat-icon>
                                                         <input matInput formControlName="dataInicio"
                                                             [matDatepicker]="InicioDatepicker"
                                                             [placeholder]="'Data de Inicío'"
@@ -1015,6 +1263,14 @@
                                                 <div class="flex-auto">
                                                     <mat-form-field class="w-full" appearance="outline">
                                                         <mat-label>Data Conclusão</mat-label>
+                                                        <mat-icon matPrefix class="hidden sm:flex"
+                                                            [svgIcon]="'heroicons_solid:location-marker'"
+                                                            matTooltipPosition="above"
+                                                            matTooltip="Mês e ano previstos/reais para término da execução da obra.">
+                                                            <span class="material-symbols-outlined">
+                                                                info
+                                                            </span>
+                                                        </mat-icon>
                                                         <input matInput formControlName="dataConclusao"
                                                             [matDatepicker]="ConclusaoDatepicker"
                                                             [placeholder]="'Data de Conclusão'"
@@ -1029,6 +1285,14 @@
                                                 <div class="flex-auto">
                                                     <mat-form-field class="w-full" appearance="outline">
                                                         <mat-label>Data Base Orçamento</mat-label>
+                                                        <mat-icon matPrefix class="hidden sm:flex"
+                                                            [svgIcon]="'heroicons_solid:location-marker'"
+                                                            matTooltipPosition="above"
+                                                            matTooltip="Mês e ano em que orçamento da obra foi realizado.">
+                                                            <span class="material-symbols-outlined">
+                                                                info
+                                                            </span>
+                                                        </mat-icon>
                                                         <input matInput formControlName="data_base_orcamento"
                                                             [matDatepicker]="BaseDatepicker"
                                                             [placeholder]="'Data de Conclusão'"
@@ -1070,6 +1334,16 @@
                                                         <div class="flex-auto sm:w-full md:w-11/12">
                                                             <mat-form-field appearance="fill" class="w-full">
                                                                 <mat-label>Produtos</mat-label>
+                                                                <mat-icon matPrefix class="hidden sm:flex"
+                                                                    [svgIcon]="'heroicons_solid:location-marker'"
+                                                                    matTooltipPosition="above"
+                                                                    matTooltip="
+                                                        Lista de todos os produtos previstos para serem transportados pelo modo de transporte que fará uso da infraestrutura que receberá a obra cadastrada. 
+                                                        Os produtos “Automóveis” e “Ônibus” dizem respeito ao transporte de pessoas em carros particulares ou veículos de transporte coletivo. Todos os outros são oriundos da lista de produtos considerados na elaboração do Plano Nacional de Logística.">
+                                                                    <span class="material-symbols-outlined">
+                                                                        info
+                                                                    </span>
+                                                                </mat-icon>
                                                                 <!-- <mat-label *ngIf="isLoading">
                                                                     <div
                                                                         class="select-placeholder-container justify-between">
@@ -1111,8 +1385,13 @@
                                                 <div class="flex-auto w-full">
                                                     <mat-form-field class="w-full" appearance="fill">
                                                         <mat-label>Documentos Adicionais</mat-label>
-                                                        <mat-icon matPrefix class="hidden sm:flex icon-size-5"
-                                                            svgIcon="mat_solid:upload_file">
+                                                        <mat-icon matPrefix class="hidden sm:flex"
+                                                            [svgIcon]="'heroicons_solid:location-marker'"
+                                                            matTooltipPosition="above"
+                                                            matTooltip="Estudos, projetos, planilhas ou qualquer documento que contenha mais informações sobre a obra.">
+                                                            <span class="material-symbols-outlined">
+                                                                info
+                                                            </span>
                                                         </mat-icon>
                                                         <p *ngIf="selectedFile">{{ selectedFile.name }}</p>
                                                         <div class="file-input">
@@ -1121,18 +1400,27 @@
                                                                 formControlName="documentosAdicionais"
                                                                 placeholder="'Selecione o Arquivo para Upload'"
                                                                 accept=".pdf, .doc, .docx, .txt">
-                                                        </div>                                                       
+                                                        </div>
                                                     </mat-form-field>
                                                     <div class="progress-container">
-                                                        <div class="progress-bar" [style.width]="uploadProgress + '%'"></div>
+                                                        <div class="progress-bar" [style.width]="uploadProgress + '%'">
+                                                        </div>
                                                     </div>
-                                                    <p class="p-1" *ngIf="uploadProgress> 0">Upload Completo: {{ uploadProgress }}%</p>
+                                                    <p class="p-1" *ngIf="uploadProgress> 0">Upload Completo: {{
+                                                        uploadProgress }}%</p>
                                                 </div>
                                                 <div class="flex-auto w-full">
                                                     <mat-form-field class="w-full" appearance="fill">
                                                         <mat-label>Arquivo Georreferenciado</mat-label>
-                                                        <mat-icon matPrefix class="hidden sm:flex icon-size-5"
-                                                            svgIcon="mat_solid:upload_file">
+                                                        <mat-icon matPrefix class="hidden sm:flex"
+                                                            [svgIcon]="'heroicons_solid:location-marker'"
+                                                            matTooltipPosition="above" matTooltip="
+                                                        Arquivo contendo informações para que seja possível localizar a obra. 
+                                                        Esse arquivo deve ser, preferencialmente, em algum formato compatível com GIS (Shapefiles, GeoDataBase, GeoPackage, KMZ, KML, GeoJson, GeoPDF ou similares). 
+                                                        Se não estiver disponível, anexar arquivos com imagem ou PDF.">
+                                                            <span class="material-symbols-outlined">
+                                                                info
+                                                            </span>
                                                         </mat-icon>
                                                         <p *ngIf="arquivoGeo">{{ arquivoGeo.name }}</p>
                                                         <div class="file-input">
@@ -1144,13 +1432,15 @@
                                                         </div>
                                                     </mat-form-field>
                                                     <div class="progress-container">
-                                                        <div class="progress-bar" [style.width]="uploadGeorreferenciado + '%'"></div>
+                                                        <div class="progress-bar"
+                                                            [style.width]="uploadGeorreferenciado + '%'"></div>
                                                     </div>
-                                                    <p class="p-1" *ngIf="uploadGeorreferenciado> 0">Upload Completo: {{ uploadGeorreferenciado }}%</p>
+                                                    <p class="p-1" *ngIf="uploadGeorreferenciado> 0">Upload Completo: {{
+                                                        uploadGeorreferenciado }}%</p>
                                                 </div>
-                                                
+
                                             </div>
-                                            
+
                                             <!--Endereço-->
                                             <div class="mt-4 w-full">
                                                 <div class="w-full pb-6">
@@ -1197,6 +1487,14 @@
                                                                                     diameter="20"></mat-spinner>
                                                                             </div>
                                                                         </mat-label>
+                                                                        <mat-icon matPrefix class="hidden sm:flex"
+                                                                            [svgIcon]="'heroicons_solid:location-marker'"
+                                                                            matTooltipPosition="above"
+                                                                            matTooltip="Lista de Municípios que serão impactados pela obra.">
+                                                                            <span class="material-symbols-outlined">
+                                                                                info
+                                                                            </span>
+                                                                        </mat-icon>
                                                                         <mat-select formControlName="nome"
                                                                             [compareWith]="compareMunicipios">
                                                                             <mat-option
@@ -1231,9 +1529,14 @@
                                                         <div class="flex-auto">
                                                             <mat-form-field class=" w-full" appearance="outline">
                                                                 <mat-label>Latitude</mat-label>
-                                                                <mat-icon matPrefix class="hidden sm:flex">
+                                                                <mat-icon matPrefix class="hidden sm:flex"
+                                                                    [svgIcon]="'heroicons_solid:location-marker'"
+                                                                    matTooltipPosition="above"
+                                                                    matTooltip="
+                                                                Inserir apenas no caso de ser uma obra pontual e se o arquivo georreferenciado não estiver sido cadastrado no 
+                                                                formulário (Ex.: OAE, Terminal etc.), não sendo necessário no caso de intervenções nas vias.">
                                                                     <span class="material-symbols-outlined">
-                                                                        pin_drop
+                                                                        info
                                                                     </span>
                                                                 </mat-icon>
                                                                 <input matInput formControlName="latitude"
@@ -1243,9 +1546,14 @@
                                                         <div class="flex-auto">
                                                             <mat-form-field class=" w-full" appearance="outline">
                                                                 <mat-label>Longitude</mat-label>
-                                                                <mat-icon matPrefix class="hidden sm:flex">
+                                                                <mat-icon matPrefix class="hidden sm:flex"
+                                                                    [svgIcon]="'heroicons_solid:location-marker'"
+                                                                    matTooltipPosition="above"
+                                                                    matTooltip="
+                                                                Inserir apenas no caso de ser uma obra pontual e se o arquivo georreferenciado não estiver sido cadastrado no 
+                                                                formulário (Ex.: OAE, Terminal etc.), não sendo necessário no caso de intervenções nas vias.">
                                                                     <span class="material-symbols-outlined">
-                                                                        pin_drop
+                                                                        info
                                                                     </span>
                                                                 </mat-icon>
                                                                 <input matInput formControlName="longitude"
@@ -1294,7 +1602,7 @@
                                                 <div class="mt-4 flex flex-wrap space-x-4 w-full">
                                                     <div class="flex-auto">
                                                         <mat-form-field class=" w-full" appearance="outline">
-                                                            <mat-label>Nova Extensão</mat-label>
+                                                            <mat-label>Nova Extensão (m)</mat-label>
                                                             <mat-icon matPrefix class="hidden sm:flex">
                                                                 <span class="material-symbols-outlined">
                                                                     extension
@@ -1306,7 +1614,7 @@
                                                     </div>
                                                     <div class="flex-auto">
                                                         <mat-form-field class="w-full" appearance="outline">
-                                                            <mat-label>Nova Largura</mat-label>
+                                                            <mat-label>Nova Largura (m)</mat-label>
                                                             <mat-icon matPrefix class="hidden sm:flex">
                                                                 <span class="material-symbols-outlined">
                                                                     straighten
@@ -1318,7 +1626,7 @@
                                                     </div>
                                                     <div class="flex-auto">
                                                         <mat-form-field class="w-full" appearance="outline">
-                                                            <mat-label>Nova Área Criada</mat-label>
+                                                            <mat-label>Nova Área Criada (m²)</mat-label>
                                                             <mat-icon matPrefix class="hidden sm:flex">
                                                                 <span class="material-symbols-outlined">
                                                                     square_foot
@@ -1338,12 +1646,16 @@
                                                     <h3 class="text-3xl">Tipo Obra: Rodoviária </h3>
                                                 </div>
                                                 <div class="mt-4 flex flex-wrap space-x-4 w-full">
-                                                    <div class="flex-auto">
+                                                    <div class="flex-auto justify-between">
                                                         <mat-form-field class="w-full" appearance="outline">
                                                             <mat-label>Rodovia</mat-label>
-                                                            <mat-icon matPrefix class="hidden sm:flex">
+                                                            <mat-icon matPrefix class="hidden sm:flex"
+                                                                [svgIcon]="'heroicons_solid:location-marker'"
+                                                                matTooltipPosition="above"
+                                                                matTooltip="Nome da rodovia onde a obra será realizada. Caso seja uma rodovia federal, utilizar o seguinte padrão: “BR-” + número da rodovia + “/” + sigla da UF (Ex.: BR-381/MG). 
+                                                            No caso de uma rodovia estadual utilizar o seguinte padrão: sigla da rodovia + número da rodovia (Ex.: MG-050, MGT-750).">
                                                                 <span class="material-symbols-outlined">
-                                                                    route
+                                                                    info
                                                                 </span>
                                                             </mat-icon>
                                                             <input matInput formControlName="rodovia"
@@ -1388,12 +1700,15 @@
                                                                 [placeholder]="'Extensão'">
                                                         </mat-form-field>
                                                     </div>
-                                                    <div class="flex-auto">
+                                                    <div class="flex-auto justify-between">
                                                         <mat-form-field class=" w-full" appearance="outline">
                                                             <mat-label>Código PNV/SRE</mat-label>
-                                                            <mat-icon matPrefix class="hidden sm:flex">
+                                                            <mat-icon matPrefix class="hidden sm:flex"
+                                                                [svgIcon]="'heroicons_solid:location-marker'"
+                                                                matTooltipPosition="above"
+                                                                matTooltip="Inserir os códigos PNV ou SER que a obra engloba, utilizar o seguinte padrão: código + “;” + código (Ex,: 900AMG1210; 120CMG0190-01; 434EMG0200-01)">
                                                                 <span class="material-symbols-outlined">
-                                                                    trip_origin
+                                                                    info
                                                                 </span>
                                                             </mat-icon>
                                                             <input matInput formControlName="codigo" type="text"
@@ -1465,7 +1780,7 @@
                                                     <div class="flex-auto">
                                                         <mat-form-field class=" w-full" appearance="outline">
                                                             <mat-label>Nova Calado a ser Atendido pelo
-                                                                Porto</mat-label>
+                                                                Porto (m)</mat-label>
                                                             <mat-icon matPrefix class="hidden sm:flex">
                                                                 <span class="material-symbols-outlined">
                                                                     settings_panorama
@@ -1506,14 +1821,18 @@
                                                     </div>
                                                     <div class="flex-auto">
                                                         <mat-form-field class=" w-full" appearance="outline">
-                                                            <mat-label>Capacidade Dinâmica</mat-label>
-                                                            <mat-icon matPrefix class="hidden sm:flex">
+                                                            <mat-label>Capacidade Dinâmica (T/ano)</mat-label>
+                                                            <mat-icon matPrefix class="hidden sm:flex"
+                                                                [svgIcon]="'heroicons_solid:location-marker'"
+                                                                matTooltipPosition="above"
+                                                                matTooltip="Capacidade de movimentação da infraestrutura portuária em toneladas/ano após a conclusão das obras.">
                                                                 <span class="material-symbols-outlined">
-                                                                    hallway
+                                                                    info
                                                                 </span>
                                                             </mat-icon>
                                                             <input matInput formControlName="capacidadeDinamica"
-                                                                type="number" [placeholder]="'Capacidade Dinâmica'">
+                                                                type="text" appAcceptNumberAboveThousand
+                                                                [placeholder]="'Capacidade Dinâmica'" />
                                                         </mat-form-field>
                                                     </div>
                                                 </div>
@@ -1527,8 +1846,29 @@
                                                 </div>
                                                 <div class="mt-4 flex flex-wrap space-x-4 w-full">
                                                     <div class="flex-auto">
-                                                        <mat-form-field class="w-full" appearance="outline">
-                                                            <mat-label>Situação da Hidrovia</mat-label>
+
+                                                        <mat-form-field appearance="outline" class="w-full">
+                                                            <mat-label *ngIf="!isLoading">Situação da Hidrovia
+                                                            </mat-label>
+                                                            <mat-label *ngIf="isLoading">
+                                                                <div
+                                                                    class="select-placeholder-container justify-between">
+                                                                    <span>Loading...</span>
+                                                                    <mat-spinner class="spinner"
+                                                                        diameter="20"></mat-spinner>
+                                                                </div>
+                                                            </mat-label>
+
+                                                            <mat-select formControlName="situacaoHidrovia">
+                                                                <mat-option *ngFor="let situacao of situacoes"
+                                                                    [value]="situacao">
+                                                                    {{ situacao.descricao }}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+
+                                                        <!-- <mat-form-field class="w-full" appearance="outline">
+                                                            <mat-label></mat-label>
                                                             <mat-icon matPrefix class="hidden sm:flex">
                                                                 <span class="material-symbols-outlined">
                                                                     sailing
@@ -1536,7 +1876,7 @@
                                                             </mat-icon>
                                                             <input matInput formControlName="situacaoHidrovia"
                                                                 [placeholder]="'Situação da Hidrovia'">
-                                                        </mat-form-field>
+                                                        </mat-form-field> -->
                                                     </div>
                                                 </div>
                                                 <div class="mt-4 flex flex-wrap space-x-4 w-full">
@@ -1560,8 +1900,8 @@
                                                                 </mat-option>
                                                             </mat-select>
                                                         </mat-form-field>
-
                                                     </div>
+
                                                     <div class="flex-auto">
                                                         <mat-form-field appearance="outline" class="w-full">
                                                             <mat-label *ngIf="!isLoading">Possui Eclusa
@@ -1628,7 +1968,7 @@
                                                 <div class="mt-4 flex flex-wrap space-x-4 w-full">
                                                     <div class="flex-auto">
                                                         <mat-form-field class=" w-full" appearance="outline">
-                                                            <mat-label>Profundiade Mínima</mat-label>
+                                                            <mat-label>Profundiade Mínima (m)</mat-label>
                                                             <mat-icon matPrefix class="hidden sm:flex">
                                                                 <span class="material-symbols-outlined">
                                                                     flex_direction
@@ -1641,7 +1981,7 @@
 
                                                     <div class="flex-auto">
                                                         <mat-form-field class=" w-full" appearance="outline">
-                                                            <mat-label>Profundidade Máxima</mat-label>
+                                                            <mat-label>Profundidade Máxima (m)</mat-label>
                                                             <mat-icon matPrefix class="hidden sm:flex">
                                                                 <span class="material-symbols-outlined">
                                                                     footprint
@@ -1679,10 +2019,13 @@
                                                 <div class="mt-4 flex flex-wrap space-x-4 w-full">
                                                     <div class="flex-auto">
                                                         <mat-form-field class=" w-full" appearance="outline">
-                                                            <mat-label>Nova Largura</mat-label>
-                                                            <mat-icon matPrefix class="hidden sm:flex">
+                                                            <mat-label>Nova Largura (m)</mat-label>
+                                                            <mat-icon matPrefix class="hidden sm:flex"
+                                                                [svgIcon]="'heroicons_solid:location-marker'"
+                                                                matTooltipPosition="above"
+                                                                matTooltip="Largura média do trecho hidroviário após a obra.">
                                                                 <span class="material-symbols-outlined">
-                                                                    straighten
+                                                                    info
                                                                 </span>
                                                             </mat-icon>
                                                             <input matInput formControlName="novaLargura" type="number"
@@ -1691,10 +2034,13 @@
                                                     </div>
                                                     <div class="flex-auto">
                                                         <mat-form-field class=" w-full" appearance="outline">
-                                                            <mat-label>Novo Comprimento</mat-label>
-                                                            <mat-icon matPrefix class="hidden sm:flex">
+                                                            <mat-label>Novo Comprimento (m)</mat-label>
+                                                            <mat-icon matPrefix class="hidden sm:flex"
+                                                                [svgIcon]="'heroicons_solid:location-marker'"
+                                                                matTooltipPosition="above"
+                                                                matTooltip="Comprimento do trecho hidroviário após a obra.">
                                                                 <span class="material-symbols-outlined">
-                                                                    linear_scale
+                                                                    info
                                                                 </span>
                                                             </mat-icon>
                                                             <input matInput formControlName="novoComprimento"
@@ -1739,7 +2085,7 @@
 
                                                     <div class="flex-auto">
                                                         <mat-form-field class="w-full" appearance="outline">
-                                                            <mat-label>Extensão</mat-label>
+                                                            <mat-label>Extensão (m)</mat-label>
                                                             <mat-icon matPrefix class="hidden sm:flex">
                                                                 <span class="material-symbols-outlined">
                                                                     add_road
@@ -1774,22 +2120,29 @@
                                                     </div>
                                                     <div class="flex-auto">
                                                         <mat-form-field class=" w-full" appearance="outline">
-                                                            <mat-label>Capacidade Dinâmica</mat-label>
-                                                            <mat-icon matPrefix class="hidden sm:flex">
+                                                            <mat-label>Capacidade Dinâmica (T/ano)</mat-label>
+                                                            <mat-icon matPrefix class="hidden sm:flex"
+                                                                [svgIcon]="'heroicons_solid:location-marker'"
+                                                                matTooltipPosition="above"
+                                                                matTooltip="Capacidade de movimentação da infraestrutura ferroviária em toneladas/ano após a conclusão das obras.">
                                                                 <span class="material-symbols-outlined">
-                                                                    360
+                                                                    info
                                                                 </span>
                                                             </mat-icon>
                                                             <input matInput formControlName="capacidadeDinamica"
-                                                                type="number" [placeholder]="'Capacidade Dinâmica'">
+                                                                type="text" appAcceptNumberAboveThousand
+                                                                [placeholder]="'Capacidade Dinâmica'">
                                                         </mat-form-field>
                                                     </div>
                                                     <div class="flex-auto">
                                                         <mat-form-field class=" w-full" appearance="outline">
-                                                            <mat-label>Nova Velocidade</mat-label>
-                                                            <mat-icon matPrefix class="hidden sm:flex">
+                                                            <mat-label>Nova Velocidade (km/h)</mat-label>
+                                                            <mat-icon matPrefix class="hidden sm:flex"
+                                                                [svgIcon]="'heroicons_solid:location-marker'"
+                                                                matTooltipPosition="above"
+                                                                matTooltip="Velocidade Operacional da via em Km/h após a conclusão das obras.">
                                                                 <span class="material-symbols-outlined">
-                                                                    directions_alt
+                                                                    info
                                                                 </span>
                                                             </mat-icon>
                                                             <input matInput formControlName="novaVelocidade"
@@ -1985,7 +2338,7 @@
                             </button>
 
                             <button class="ml-auto" *ngIf="editMode" type="button" mat-button [matTooltip]="'Cancelar'"
-                            (click)="cancelEdit()">
+                                (click)="cancelEdit()">
                                 Cancelar
                             </button>
 
@@ -1997,8 +2350,7 @@
 
                             <!-- Update -->
                             <button *ngIf="editMode" class="ml-2" mat-flat-button type="button" [color]="'primary'"
-                                [matTooltip]="'Atualizar'"
-                                (click)="updateObra()">
+                                [matTooltip]="'Atualizar'" (click)="updateObra()">
                                 Atualizar
                             </button>
                         </div>

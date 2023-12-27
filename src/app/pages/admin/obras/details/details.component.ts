@@ -435,7 +435,7 @@ export class ObraDetailsComponent implements OnInit {
       dataConclusao: [{ value: '', disabled: true }, [Validators.required]],
       data_base_orcamento: [{ value: '', disabled: true }, [Validators.required]],
       documentosAdicionais: [''],
-      responsavel: [''],
+      responsavel: ['', [Validators.required]],
       arquivoGeorreferenciado: ['', [Validators.required]],
       produtos: this._formBuilder.array([this.createProdutoForms()]),
       municipios: this._formBuilder.array([this.createMunicipioForms()]),
@@ -636,6 +636,14 @@ export class ObraDetailsComponent implements OnInit {
           this.bitolas = res.data;
         })
       }
+
+      if (event.value?.descricao === 'Hidroviário') {
+        this.situacoes$ = this._obraService
+          .getSituacoes();
+        this.situacoes$.subscribe((res) => {
+          this.situacoes = res.data;
+        })
+      }
     }
   }
 
@@ -661,7 +669,7 @@ export class ObraDetailsComponent implements OnInit {
 
     switch (type) {
       case 'Aeroportuário':
-        this.obraForm.addControl('codigoIATA', new FormControl('', Validators.required));
+        this.obraForm.addControl('codigoIATA', new FormControl(''));
         this.obraForm.addControl('tipoAviaoRecICAO', this._formBuilder.control(''));
         this.obraForm.addControl('extensao', this._formBuilder.control(''));
         this.obraForm.addControl('novaLargura', this._formBuilder.control(''));
@@ -1255,6 +1263,7 @@ export class ObraDetailsComponent implements OnInit {
         obraHidroviaria.empreendimento = obraHidroviaria.empreendimento?.id;
         obraHidroviaria.ampliacaoCapacidade = obraHidroviaria.ampliacaoCapacidade.id;
         obraHidroviaria.temEclusa = obraHidroviaria.temEclusa.id;
+        obraHidroviaria.situacaoHidrovia = obraHidroviaria.situacaoHidrovia?.id;
         obraHidroviaria.temBarragem = obraHidroviaria.temBarragem.id;
         obraHidroviaria.tipo_infraestrutura = obraHidroviaria.tipo_infraestrutura?.id;
         obraHidroviaria.municipios = obraHidroviaria.municipios.map((item: any) => {

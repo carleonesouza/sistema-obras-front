@@ -13,6 +13,8 @@ import { ListObrasComponent } from './list/list.component';
 import { ObraDetailsComponent } from './details/details.component';
 import { ObraComponent } from './obra.component';
 import { PercentageMaskDirective } from 'app/directives/parcentage-mask.directive';
+import { AcceptNumberAboveThousandDirective } from 'app/directives/accept-number-above-thousand.directive';
+
 export const customCurrencyMaskConfig: CurrencyMaskConfig = {
   align: 'right',
   allowNegative: true,
@@ -29,7 +31,8 @@ export const customCurrencyMaskConfig: CurrencyMaskConfig = {
     ListObrasComponent,
     ObraDetailsComponent,
     ObraComponent,
-    PercentageMaskDirective
+    PercentageMaskDirective,
+    AcceptNumberAboveThousandDirective
   ],
   imports: [
     CommonModule,

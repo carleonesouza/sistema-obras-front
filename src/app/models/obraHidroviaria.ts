@@ -18,7 +18,7 @@ export class ObraHidroviaria implements Obra {
     arquivoGeorreferenciado?: string;
     valorGlobal: number;
     percentualFinanceiroExecutado: number;
-    situacaoHidrovia: string;
+    situacaoHidrovia: any;
     temEclusa: any;
     temBarragem: any;
     tipoEmbarcacao: any;
