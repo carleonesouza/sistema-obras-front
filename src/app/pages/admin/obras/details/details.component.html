@@ -974,7 +974,7 @@
                                             </div>
                                         </div>
                                         <div
-                                        class="flex items-center justify-between leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                        class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
                                         <mat-icon class="mr-2" [svgIcon]="'mat_solid:directions'"></mat-icon>
                                         <div class="font-mono text-primary-500">
                                             <span class="font-bold">KM Inicial:</span> {{
@@ -1279,9 +1279,6 @@
                                                         <mat-datepicker disabled="false" startView="year"
                                                             (monthSelected)="setDataInicio($event,InicioDatepicker)"
                                                             #InicioDatepicker></mat-datepicker>
-                                                            <mat-error *ngIf="obrasControls.dataInicio?.hasError('required')">
-                                                                Data Inicío é obrigatório
-                                                            </mat-error>
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="flex-auto">
@@ -1303,10 +1300,7 @@
                                                         </mat-datepicker-toggle>
                                                         <mat-datepicker disabled="false" startView="year"
                                                             (monthSelected)="setDataConclusao($event, ConclusaoDatepicker)"
-                                                            #ConclusaoDatepicker></mat-datepicker>
-                                                            <mat-error *ngIf="obrasControls.dataConclusao?.hasError('required')">
-                                                                Data Conclusão é obrigatório
-                                                            </mat-error>
+                                                            #ConclusaoDatepicker></mat-datepicker>                                                           
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="flex-auto">
@@ -1404,8 +1398,7 @@
                                                 <mat-icon class="icon-size-5"
                                                     [svgIcon]="'heroicons_solid:plus-circle'"></mat-icon>
                                                 <span
-                                                    class="ml-2 font-medium text-secondary group-hover:underline">Adicionar
-                                                    Outro
+                                                    class="ml-2 font-medium text-secondary group-hover:underline">Adicionar                                                    
                                                     Produto</span>
                                             </div>
                                             <div class="mt-4 flex justify-between items-center space-x-4 w-full">
@@ -1549,8 +1542,7 @@
                                                         <mat-icon class="icon-size-5"
                                                             [svgIcon]="'heroicons_solid:plus-circle'"></mat-icon>
                                                         <span
-                                                            class="ml-2 font-medium text-secondary group-hover:underline">Adicionar
-                                                            Outro Município</span>
+                                                            class="ml-2 font-medium text-secondary group-hover:underline">Adicionar Município</span>
                                                     </div>
                                                     <div class="mt-4 flex flex-wrap space-x-4 w-full">
                                                         <div class="flex-auto">
@@ -1794,7 +1786,7 @@
                                                             </mat-label>
 
                                                             <mat-select formControlName="ampliacaoCapacidade"
-                                                                [(ngModel)]="selectedSetor">
+                                                            [compareWith]="compareSetores">
                                                                 <mat-option *ngFor="let simnao of simnaos"
                                                                     [value]="simnao">
                                                                     {{ simnao.descricao }}

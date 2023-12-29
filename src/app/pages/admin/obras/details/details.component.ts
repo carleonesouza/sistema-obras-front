@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { DialogMessage } from 'app/utils/dialog-message ';
-import { Observable, Subject, takeUntil, map, of } from 'rxjs';
+import { Observable, Subject, takeUntil, forkJoin, catchError, of } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
@@ -118,327 +118,314 @@ export class ObraDetailsComponent implements OnInit {
   ngOnInit(): void {
 
     this.isLoading = true;
+    this.loading = true;
+    const combinedRequests = [];
 
-    this.produtos$ = this._obraService.getAllProdutos();
-    this.produtos$
-      .subscribe((prods) => {
-        this.produtos = prods.data
-        this.isLoading = false;
-      });
+    combinedRequests.push(this._obraService.getAllProdutos());
+    combinedRequests.push(this._obraService.getEstados());
+    combinedRequests.push(this._obraService.getAllStatues());
+    combinedRequests.push(this._obraService.getSimNaos());
+    combinedRequests.push(this._setoresService.getSetores());
 
 
-    this._obraService
-      .getEstados()
-      .subscribe((estados) => {
-        this.estados = estados.data;
+    forkJoin(combinedRequests).pipe(
+      catchError(error => {
+        console.error(error);
+        return of([]);
       })
+    ).subscribe(([produtosRes, estadosRes, statuesRes, simnaosRes, setoresRes]) => {
+      this.produtos = produtosRes ? produtosRes.data : [];
+      this.estados = estadosRes ? estadosRes.data : [];
+      this.statues = statuesRes ? statuesRes.data : [];
+      this.simnaos = simnaosRes ? simnaosRes.data : [];
+      this.setores = setoresRes ? setoresRes.data : this.setores;
+      this.isLoading = false;
 
-    this.statues$ = this._obraService
-      .getAllStatues();
-    this.statues$.subscribe((res) => {
-      this.statues = res.data;
+      if (this._route.snapshot.url[1].path === 'add') {
+
+        this.creating = true;
+        this.title = 'Nova Obra';
+        this.createObaForm();
+        this.loading = false;
+      }
+
+      if (this._route.snapshot.paramMap.get('id') !== 'add') {
+
+        this.creating = false;
+
+        this._obraService.obra$
+          .pipe(takeUntil(this._unsubscribeAll))
+          .subscribe((obra: any) => {
+            // Get the Lista
+            this.obra = obra;
+            this.createObaForm();
+            this.obraForm.reset();
+            this.handleObraData(obra);
+          });
+        this.loading = false;
+      }
+
     });
 
-    this.simnaos$ = this._obraService
-      .getSimNaos();
-    this.simnaos$.subscribe((res) => {
-      this.simnaos = res.data;
-    })
 
-    if (this._route.snapshot.url[1].path === 'add') {
+  }
 
-      this.setores$ = this._setoresService.getSetores();
-      this.setores$.subscribe((result) => {
-        this.setores = result.data;
-      })
-      this.creating = true;
-      this.title = 'Nova Obra';
-      this.createObaForm();
-    }
+  handleObraData(obra: any) {
+    if (this.obra) {
 
-    if (this._route.snapshot.paramMap.get('id') !== 'add') {
+      this.initializeObraForm(this.obra.tipo)
+      this.tipoObraSelecionada = this.obra.tipo;
 
-      this.loading = true;
-      this.creating = false;
+      this.tipo = this.setores.find((elem) => elem?.descricao === this.obra?.tipo)
 
-      this.obra$ = this._obraService.obra$;
+      this.setores.map((item) => {
+        if (item.descricao === this.obra.tipo) {
+          this.obraForm.patchValue({
+            tipo: item
+          })
+        }
+        this.loading = false;
+      });
 
-      this.obra$
-        .pipe(takeUntil(this._unsubscribeAll))
-        .subscribe((obra: any) => {
-          // Get the Lista
-          this.obra = obra;
-          this.createObaForm();
-          this.obraForm.reset();
+      if (this.tipo) {
 
+        this._empreendimentosService
+          .getEmpreendimentosBySetor(this.tipo?.id)
+          .subscribe((emprs) => {
+            this.empreendimentos = emprs.data;
 
-          if (this.obra) {
-            
-            this.initializeObraForm(this.obra.tipo)
-            this.tipoObraSelecionada = this.obra.tipo;
-
-            this.setores$ = this._setoresService.getSetores();
-            this.setores$.subscribe((data) => {
-              this.setores = data.data;
-             this.tipo = this.setores.find((elem) => elem?.descricao === this.obra?.tipo)
-             
-              data.data.map((item) => {
-                if (item.descricao === this.obra.tipo) {
-                  this.obraForm.patchValue({
-                    tipo: item
-                  })                 
-                }
-                this.loading = false;
-              });
-
-              if(this.tipo){
-
-                this._empreendimentosService
-                .getEmpreendimentosBySetor(this.tipo?.id)
-                .subscribe((emprs) => {
-                  this.empreendimentos = emprs.data;
-    
-                  emprs.data.map((result) => {
-                    if (result) {
-                      this.obraForm.patchValue({
-                        empreendimento: result
-                      })
-                    }
-                  })
-                });
-    
-              this._tipoInfraService
-                .getInfrasBySetorId(this.tipo?.id)
-                .subscribe((result) => {
-                  this.infras = result.data
-                  result.data.map((infra) => {
-                    if (infra) {
-                      this.obraForm.patchValue({
-                        tipo_infraestrutura: infra
-                      })
-                    }
-                  })
-                })
-    
-              this.intervencaoService
-                .getIntervencaoBySetorId(this.tipo?.id)
-                .subscribe((interv) => {
-                  this.intervecoes = interv.data;
-                  interv.data.map((intv) => {
-                    if (intv) {
-                      this.obraForm.patchValue({
-                        intervencao: intv
-                      })
-                    }
-                  })
+            emprs.data.map((result) => {
+              if (result) {
+                this.obraForm.patchValue({
+                  empreendimento: result
                 })
               }
-            });
-            
-            if (obra?.produtos) {
-              // Clear existing form groups in produtosFormArray
-              while (this.produtosFormArray.length !== 0) {
-                this.produtosFormArray.removeAt(0);
-              }
-              this.produtos$.subscribe((itens) => {
-                this.produtos = itens.data;
-                itens.data.map((prod) => {
-
-                  obra.produtos.forEach((item) => {
-                    if (prod.id === item.id) {
-                      // Create a new form group for each item
-                      const produtoFormGroup = this.createProdutoForms();
-
-                      // Patch the form group with values from the item
-                      produtoFormGroup.patchValue({
-                        id: item.id,
-                        descricao: item.descricao
-                      });
-
-                      // Push the form group to the form array
-                      this.produtosFormArray.push(produtoFormGroup);
-                    }
-                  })
-                })
-              });
-
-              // Patch the form array in the obraForm
-              this.obraForm.patchValue({
-                produtos: this.produtosFormArray.controls
-              });
-            }
-
-            if (obra?.municipios) {
-
-              // Clear existing form groups in produtosFormArray
-              while (this.municipiosFormArray.length !== 0) {
-                this.municipiosFormArray.removeAt(0);
-              }
-              this.municpios$ = this.obra?.uf?.uf ? this._obraService.getMunicipios(this.obra?.uf?.uf?.sigla) : of([]);
-
-              this.municpios$.subscribe((itens) => {
-
-                const flattenedArray = [].concat(...itens);
-
-                this.municpios = flattenedArray;
-
-                this.municpios.map((munic) => {
-
-                  obra.municipios.forEach((item) => {
-                    if (munic.nome === item.nome) {
-                      // Create a new form group for each item
-                      const municipioFormGroup = this.createMunicipioForms();
-
-                      // Patch the form group with values from the item
-                      municipioFormGroup.patchValue({
-                        id: item.id,
-                        nome: item.nome,
-                        uf: item.uf
-                      });
-
-                      // Push the form group to the form array
-                      this.municipiosFormArray.push(municipioFormGroup);
-                    }
-                  })
-                  this.isLoadingMunicipio = false
-                })
-              });
-
-              // Patch the form array in the obraForm
-              this.obraForm.patchValue({
-                municipios: this.municipiosFormArray.controls
-              });
-            }
-
-            this.obraForm.patchValue(this.obra)
-
-            if (obra.tipo === 'Hidroviário') {
-              this.simnaos$.subscribe((itens) => {
-                this.simnaos = itens.data;
-                this.simnaos.map((item) => {
-
-                  if (item.id === parseInt(this.obra?.temBarragem?.temBarragem)) {
-                    this.obraForm.patchValue({
-                      temBarragem: item
-                    })
-                  }
-                  if (item.id === parseInt(this.obra?.temEclusa?.temEclusa)) {
-                    this.obraForm.patchValue({
-                      temEclusa: item
-                    })
-                  }
-                  if (item.id === parseInt(this.obra?.ampliacaoCapacidade?.ampliacaoCapacidade)) {
-                    this.obraForm.patchValue({
-                      ampliacaoCapacidade: item
-                    })
-                  }
-                })
-              })
-            }
-
-            if (obra.tipo === 'Portuário') {
-
-              this.simnaos$.subscribe((itens) => {
-                this.simnaos = itens.data;
-                this.simnaos.map((item) => {
-                  if (item.id === parseInt(this.obra?.ampliacaoCapacidade?.ampliacaoCapacidade)) {
-                    this.obraForm.patchValue({
-                      ampliacaoCapacidade: item
-                    })
-                  }
-                })
-              })
-
-            }
-
-            if (obra.tipo === 'Ferroviário') {
-              this.bitolas$ = this._obraService.getBitolas();
-              this.bitolas$.subscribe((itens) => {
-                this.bitolas = itens.data;
-                this.bitolas.map((item) => {
-                  if (item.id === this.obra?.bitola?.bitola?.id) {
-                    this.obraForm.patchValue({
-                      bitola: this.obra.bitola.bitola
-                    })
-                  }
-                })
-              })
-            }
-
-            if (obra.tipo === 'Dutoviário') {
-              this.tipoDutos$ = this._obraService.getTipoDutos();
-              this.tipoDutos$.subscribe((res) => {
-                this.tipoDutos = res.data;
-
-                this.tipoDutos.map((item) => {
-                  if (item.id === this.obra?.tipo_duto?.tipo_duto?.id) {
-                    this.obraForm.patchValue({
-                      tipo_duto: this.obra?.tipo_duto?.tipo_duto
-                    })
-                  }
-                })
-
-              })
-
-              this.funcaoEstruturas$ = this._obraService.getFuncaoEstruturas();
-              this.funcaoEstruturas$.subscribe((res) => {
-                this.funcaoEstruturas = res.data;
-
-                this.funcaoEstruturas.map((item) => {
-                  if (item.id === this.obra?.tipo_infraestrutura?.tipo_infraestrutura?.id) {
-                    this.obraForm.patchValue({
-                      tipo_infraestrutura: this.obra?.tipo_infraestrutura?.tipo_infraestrutura
-                    })
-                  }
-                })
-
-              })
-
-
-              this.nivelDutos$ = this._obraService.getNivelDutos();
-              this.nivelDutos$.subscribe((res) => {
-                this.nivelDutos = res.data;
-
-                this.nivelDutos.map((item) => {
-                  if (item.id === this.obra?.nivel_duto?.nivel_duto?.id) {
-                    this.obraForm.patchValue({
-                      nivel_duto: this.obra?.nivel_duto?.nivel_duto
-                    })
-                  }
-                })
-              })
-            }
-
-            if (obra.tipo === 'Hidroviário') {
-              this.situacoes$ = this._obraService
-                .getSituacoes();
-              this.situacoes$.subscribe((res) => {
-                this.situacoes = res.data;
-
-                this.situacoes.map((item) => {
-                  if (item.id === this.obra?.situacaoHidrovia?.id) {
-                    this.obraForm.patchValue({
-                      situacaoHidrovia: item
-                    })
-                  }
-                })
-              })
-            }
-
-            this.obraForm.patchValue({
-              status: this.obra?.status?.status,
-              dataInicio: this.fixDateFormat(this.obra?.dataInicio),
-              dataConclusao: this.fixDateFormat(this.obra?.dataConclusao),
-              data_base_orcamento: this.fixDateFormat(this.obra?.data_base_orcamento),
-              uf: this.obra?.uf?.uf,
-              documentosAdicionais: '',
-              arquivoGeorreferenciado: ''
             })
-          }
+          });
 
+        this._tipoInfraService
+          .getInfrasBySetorId(this.tipo?.id)
+          .subscribe((result) => {
+            this.infras = result.data
+            result.data.map((infra) => {
+              if (infra) {
+                this.obraForm.patchValue({
+                  tipo_infraestrutura: infra
+                })
+              }
+            })
+          })
+
+        this.intervencaoService
+          .getIntervencaoBySetorId(this.tipo?.id)
+          .subscribe((interv) => {
+            this.intervecoes = interv.data;
+            interv.data.map((intv) => {
+              if (intv) {
+                this.obraForm.patchValue({
+                  intervencao: intv
+                })
+              }
+            })
+          })
+      }
+
+      if (obra?.produtos) {
+        // Clear existing form groups in produtosFormArray
+        while (this.produtosFormArray.length !== 0) {
+          this.produtosFormArray.removeAt(0);
+        }
+        this.produtos.map((prod) => {
+
+          obra.produtos.forEach((item) => {
+            if (prod.id === item.id) {
+              // Create a new form group for each item
+              const produtoFormGroup = this.createProdutoForms();
+
+              // Patch the form group with values from the item
+              produtoFormGroup.patchValue({
+                id: item.id,
+                descricao: item.descricao
+              });
+
+              // Push the form group to the form array
+              this.produtosFormArray.push(produtoFormGroup);
+            }
+          })
+        })
+
+
+        // Patch the form array in the obraForm
+        this.obraForm.patchValue({
+          produtos: this.produtosFormArray.controls
+        });
+      }
+
+      if (obra?.municipios) {
+
+        // Clear existing form groups in produtosFormArray
+        while (this.municipiosFormArray.length !== 0) {
+          this.municipiosFormArray.removeAt(0);
+        }
+        this.municpios$ = this.obra?.uf?.uf ? this._obraService.getMunicipios(this.obra?.uf?.uf?.sigla) : of([]);
+
+        this.municpios$.subscribe((itens) => {
+
+          const flattenedArray = [].concat(...itens);
+
+          this.municpios = flattenedArray;
+
+          this.municpios.map((munic) => {
+
+            obra.municipios.forEach((item) => {
+              if (munic.nome === item.nome) {
+                // Create a new form group for each item
+                const municipioFormGroup = this.createMunicipioForms();
+
+                // Patch the form group with values from the item
+                municipioFormGroup.patchValue({
+                  id: item.id,
+                  nome: item.nome,
+                  uf: item.uf
+                });
+
+                // Push the form group to the form array
+                this.municipiosFormArray.push(municipioFormGroup);
+              }
+            })
+            this.isLoadingMunicipio = false
+          })
         });
 
+        // Patch the form array in the obraForm
+        this.obraForm.patchValue({
+          municipios: this.municipiosFormArray.controls
+        });
+      }
+
+      this.obraForm.patchValue(this.obra)
+
+      if (this.tipo?.descricao === 'Hidroviário') {
+
+        this.simnaos.map((item) => {
+
+          if (item.id === parseInt(this.obra?.temBarragem?.temBarragem)) {
+            this.obraForm.patchValue({
+              temBarragem: item
+            })
+          }
+          if (item.id === parseInt(this.obra?.temEclusa?.temEclusa)) {
+            this.obraForm.patchValue({
+              temEclusa: item
+            })
+          }
+          if (item.id === parseInt(this.obra?.ampliacaoCapacidade)) {
+            this.obraForm.patchValue({
+              ampliacaoCapacidade: item
+            })
+          }
+        })
+
+      }
+
+      if (this.tipo?.descricao === 'Portuário') {
+
+
+        this.simnaos.map((item) => {
+          if (item.id === parseInt(this.obra?.ampliacaoCapacidade?.id)) {
+            this.obraForm.patchValue({
+              ampliacaoCapacidade: item
+            })
+          }
+        })
+
+      }
+
+      if (this.tipo?.descricao === 'Ferroviário') {
+        this.bitolas$ = this._obraService.getBitolas();
+        this.bitolas$.subscribe((itens) => {
+          this.bitolas = itens.data;
+          this.bitolas.map((item) => {
+            if (item.id === this.obra?.bitola?.bitola?.id) {
+              this.obraForm.patchValue({
+                bitola: this.obra.bitola.bitola
+              })
+            }
+          })
+        })
+      }
+
+      if (this.tipo?.descricao === 'Dutoviário') {
+        this.tipoDutos$ = this._obraService.getTipoDutos();
+        this.tipoDutos$.subscribe((res) => {
+          this.tipoDutos = res.data;
+
+          this.tipoDutos.map((item) => {
+            if (item.id === this.obra?.tipo_duto?.tipo_duto?.id) {
+              this.obraForm.patchValue({
+                tipo_duto: this.obra?.tipo_duto?.tipo_duto
+              })
+            }
+          })
+
+        })
+
+        this.funcaoEstruturas$ = this._obraService.getFuncaoEstruturas();
+        this.funcaoEstruturas$.subscribe((res) => {
+          this.funcaoEstruturas = res.data;
+
+          this.funcaoEstruturas.map((item) => {
+            if (item.id === this.obra?.tipo_infraestrutura?.tipo_infraestrutura?.id) {
+              this.obraForm.patchValue({
+                tipo_infraestrutura: this.obra?.tipo_infraestrutura?.tipo_infraestrutura
+              })
+            }
+          })
+
+        })
+
+
+        this.nivelDutos$ = this._obraService.getNivelDutos();
+        this.nivelDutos$.subscribe((res) => {
+          this.nivelDutos = res.data;
+
+          this.nivelDutos.map((item) => {
+            if (item.id === this.obra?.nivel_duto?.nivel_duto?.id) {
+              this.obraForm.patchValue({
+                nivel_duto: this.obra?.nivel_duto?.nivel_duto
+              })
+            }
+          })
+        })
+      }
+
+      if (this.tipo?.descricao === 'Hidroviário') {
+        this.situacoes$ = this._obraService
+          .getSituacoes();
+        this.situacoes$.subscribe((res) => {
+          this.situacoes = res.data;
+
+          this.situacoes.map((item) => {
+            if (item.id === this.obra?.situacaoHidrovia?.id) {
+              this.obraForm.patchValue({
+                situacaoHidrovia: item
+              })
+            }
+          })
+        })
+      }
+
+      this.obraForm.patchValue({
+        status: this.obra?.status?.status,
+        dataInicio: this.fixDateFormat(this.obra?.dataInicio),
+        dataConclusao: this.fixDateFormat(this.obra?.dataConclusao),
+        data_base_orcamento: this.fixDateFormat(this.obra?.data_base_orcamento),
+        uf: this.obra?.uf?.uf,
+        documentosAdicionais: '',
+        arquivoGeorreferenciado: ''
+      })
     }
+
   }
 
   createObaForm(): FormGroup {
@@ -451,9 +438,9 @@ export class ObraDetailsComponent implements OnInit {
       intervencao: ['', [Validators.required]],
       status: ['', [Validators.required]],
       instrumento: [''],
-      dataInicio: [{ value: '' }, [Validators.required]],
-      dataConclusao: [{ value: '' }, [Validators.required]],
-      data_base_orcamento: [{ value: '' }],
+      dataInicio: [''],
+      dataConclusao: [''],
+      data_base_orcamento: [''],
       documentosAdicionais: [''],
       responsavel: ['', [Validators.required]],
       arquivoGeorreferenciado: ['', [Validators.required]],
@@ -556,20 +543,37 @@ export class ObraDetailsComponent implements OnInit {
   }
 
   setDataConclusao(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
-    const ctrlValue = this.obraForm.get('dataConclusao').value!;
-    this.obraForm.get('dataConclusao').setValue(normalizedMonthAndYear.toDate());
+    if (normalizedMonthAndYear) {
+      const ctrlValue = this.obraForm.get('dataConclusao').value!;
+      this.obraForm.get('dataConclusao').setValue(normalizedMonthAndYear.toDate());
+    } else {
+      this.obraForm.get('dataConclusao').setValue('');
+    }
+
     datepicker.close();
   }
 
   setDataInicio(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
-    const ctrlValue = this.obraForm.get('dataInicio').value!;
-    this.obraForm.get('dataInicio').setValue(normalizedMonthAndYear.toDate());
+    if (normalizedMonthAndYear) {
+      const ctrlValue = this.obraForm.get('dataInicio').value!;
+      this.obraForm.get('dataInicio').setValue(normalizedMonthAndYear.toDate());
+    } else {
+      this.obraForm.get('dataInicio').setValue('');
+    }
+
     datepicker.close();
   }
 
   setDataBaseOorcamento(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
-    const ctrlValue = this.obraForm.get('data_base_orcamento').value!;
-    this.obraForm.get('data_base_orcamento').setValue(normalizedMonthAndYear.toDate());
+ 
+    if (normalizedMonthAndYear) {
+      // Only set the date if it's not null or undefined
+      const ctrlValue = this.obraForm.get('data_base_orcamento').value;
+      this.obraForm.get('data_base_orcamento').setValue(normalizedMonthAndYear.toDate());
+    } else {
+      // Handle the case where no date is selected - either leave it unchanged or set to null    
+      this.obraForm.get('data_base_orcamento').setValue('');
+    }
     datepicker.close();
   }
 
@@ -915,15 +919,14 @@ export class ObraDetailsComponent implements OnInit {
     if (this.obraForm.valid) {
 
       const obraTipo = this.obraForm.get('tipo').value;
-
-      if (obraTipo.descricao === 'Aeroportuário') {
+  
+      if (obraTipo === 'Aeroportuário') {
         const obraAerea = new ObraAereo(this.obraForm.value);
         const user = new User(JSON.parse(localStorage.getItem('user')));
         obraAerea.usuario_que_alterou = user.id;
-        obraAerea.tipo = obraAerea.tipo?.descricao;
-        obraAerea.dataInicio = moment(this.obraForm.get('dataInicio').value).format('L');
-        obraAerea.dataConclusao = moment(this.obraForm.get('dataConclusao').value).format('L');
-        obraAerea.data_base_orcamento = moment(this.obraForm.get('data_base_orcamento').value).format('L');
+        obraAerea.dataInicio = this.obraForm.get('dataInicio').value ? moment(this.obraForm.get('dataInicio').value).format('L') : null;;
+        obraAerea.dataConclusao = this.obraForm.get('dataConclusao').value ? moment(this.obraForm.get('dataConclusao').value).format('L') : null;
+        obraAerea.data_base_orcamento = this.obraForm.get('data_base_orcamento').value ? moment(this.obraForm.get('data_base_orcamento').value).format('L') : null;
         obraAerea.empreendimento = obraAerea.empreendimento?.id;
         obraAerea.tipo_infraestrutura = obraAerea.tipo_infraestrutura?.id;
         obraAerea.tipo = obraTipo.descricao;
@@ -953,22 +956,21 @@ export class ObraDetailsComponent implements OnInit {
         this._obraService.editObra(obraAerea)
           .pipe(takeUntil(this._unsubscribeAll))
           .subscribe(() => {
-            this._router.navigate(['admin/empreendimentos/todas-obras']);
+            this._router.navigate(['admin/obras/lista']);
             this._snackBar.open('Obra Atualizada com Sucesso', 'Fechar', {
               duration: 3000
             });
           });
       }
-      else if (obraTipo.descricao === 'Dutoviário') {
+      else if (obraTipo === 'Dutoviário') {
         const obraDuto = new ObraDuto(this.obraForm.value);
         const user = new User(JSON.parse(localStorage.getItem('user')));
         obraDuto.usuario_que_alterou = user.id;
         obraDuto.tipo = obraDuto.tipo?.descricao;
-        obraDuto.dataInicio = moment(this.obraForm.get('dataInicio').value).format('L');
-        obraDuto.dataConclusao = moment(this.obraForm.get('dataConclusao').value).format('L');
-        obraDuto.data_base_orcamento = moment(this.obraForm.get('data_base_orcamento').value).format('L');
+        obraDuto.dataInicio = this.obraForm.get('dataInicio').value ? moment(this.obraForm.get('dataInicio').value).format('L') : null;;
+        obraDuto.dataConclusao = this.obraForm.get('dataConclusao').value ? moment(this.obraForm.get('dataConclusao').value).format('L') : null;
+        obraDuto.data_base_orcamento = this.obraForm.get('data_base_orcamento').value ? moment(this.obraForm.get('data_base_orcamento').value).format('L') : null;
         obraDuto.empreendimento = obraDuto.empreendimento?.id;
-        obraDuto.tipo = obraTipo.descricao;
         obraDuto.tipo_infraestrutura = obraDuto.tipo_infraestrutura?.id;
         obraDuto.municipios = obraDuto.municipios.map((muni: any) => {
           muni.municipio_id = muni.id;
@@ -996,21 +998,20 @@ export class ObraDetailsComponent implements OnInit {
         this._obraService.editObra(obraDuto)
           .pipe(takeUntil(this._unsubscribeAll))
           .subscribe(() => {
-            this._router.navigate(['admin/empreendimentos/todas-obras']);
+            this._router.navigate(['admin/obras/lista']);
             this._snackBar.open('Obra Atualizada com Sucesso', 'Fechar', {
               duration: 3000
             });
 
           });
       }
-      else if (obraTipo.descricao === 'Hidroviário') {
+      else if (obraTipo === 'Hidroviário') {
         const obraHidroviaria = new ObraHidroviaria(this.obraForm.value);
         const user = new User(JSON.parse(localStorage.getItem('user')));
         obraHidroviaria.usuario_que_alterou = user.id;
-        obraHidroviaria.tipo = obraHidroviaria.tipo?.descricao;
-        obraHidroviaria.dataInicio = moment(this.obraForm.get('dataInicio').value).format('L');
-        obraHidroviaria.dataConclusao = moment(this.obraForm.get('dataConclusao').value).format('L');
-        obraHidroviaria.data_base_orcamento = moment(this.obraForm.get('data_base_orcamento').value).format('L');
+        obraHidroviaria.dataInicio = this.obraForm.get('dataInicio').value ? moment(this.obraForm.get('dataInicio').value).format('L') : null;;
+        obraHidroviaria.dataConclusao = this.obraForm.get('dataConclusao').value ? moment(this.obraForm.get('dataConclusao').value).format('L') : null;
+        obraHidroviaria.data_base_orcamento = this.obraForm.get('data_base_orcamento').value ? moment(this.obraForm.get('data_base_orcamento').value).format('L') : null;
         obraHidroviaria.empreendimento = obraHidroviaria.empreendimento?.id;
         obraHidroviaria.ampliacaoCapacidade = obraHidroviaria.ampliacaoCapacidade.id;
         obraHidroviaria.temEclusa = obraHidroviaria.temEclusa.id;
@@ -1040,21 +1041,21 @@ export class ObraDetailsComponent implements OnInit {
         this._obraService.editObra(obraHidroviaria)
           .pipe(takeUntil(this._unsubscribeAll))
           .subscribe(() => {
-            this._router.navigate(['admin/empreendimentos/lista']);
+            this._router.navigate(['admin/obras/lista']);
             this._snackBar.open('Obra Atualizada com Sucesso', 'Fechar', {
               duration: 3000
             });
 
           });
       }
-      else if (obraTipo.descricao === 'Ferroviário') {
+      else if (obraTipo === 'Ferroviário') {
         const obraFerroviaria = new ObraFerroviaria(this.obraForm.value);
         const user = new User(JSON.parse(localStorage.getItem('user')));
         obraFerroviaria.usuario_que_alterou = user.id;
         obraFerroviaria.tipo = obraFerroviaria.tipo?.descricao;
-        obraFerroviaria.dataInicio = moment(this.obraForm.get('dataInicio').value).format('L');
-        obraFerroviaria.dataConclusao = moment(this.obraForm.get('dataConclusao').value).format('L');
-        obraFerroviaria.data_base_orcamento = moment(this.obraForm.get('data_base_orcamento').value).format('L');
+        obraFerroviaria.dataInicio = this.obraForm.get('dataInicio').value ? moment(this.obraForm.get('dataInicio').value).format('L') : null;;
+        obraFerroviaria.dataConclusao = this.obraForm.get('dataConclusao').value ? moment(this.obraForm.get('dataConclusao').value).format('L') : null;
+        obraFerroviaria.data_base_orcamento = this.obraForm.get('data_base_orcamento').value ? moment(this.obraForm.get('data_base_orcamento').value).format('L') : null;
         obraFerroviaria.empreendimento = obraFerroviaria.empreendimento?.id;
         obraFerroviaria.tipo = obraTipo.descricao;
         obraFerroviaria.tipo_infraestrutura = obraFerroviaria.tipo_infraestrutura?.id;
@@ -1081,21 +1082,20 @@ export class ObraDetailsComponent implements OnInit {
         this._obraService.editObra(obraFerroviaria)
           .pipe(takeUntil(this._unsubscribeAll))
           .subscribe(() => {
-            this._router.navigate(['admin/empreendimentos/lista']);
+            this._router.navigate(['admin/obras/lista']);
             this._snackBar.open('Obra Atualizada com Sucesso', 'Fechar', {
               duration: 3000
             });
 
           });
       }
-      else if (obraTipo.descricao === 'Portuário') {
+      else if (obraTipo === 'Portuário') {
         const obraPortuaria = new ObraPortuaria(this.obraForm.value);
         const user = new User(JSON.parse(localStorage.getItem('user')));
         obraPortuaria.usuario_que_alterou = user.id;
-        obraPortuaria.tipo = obraPortuaria.tipo?.descricao;
-        obraPortuaria.dataInicio = moment(this.obraForm.get('dataInicio').value).format('L');
-        obraPortuaria.dataConclusao = moment(this.obraForm.get('dataConclusao').value).format('L');
-        obraPortuaria.data_base_orcamento = moment(this.obraForm.get('data_base_orcamento').value).format('L');
+        obraPortuaria.dataInicio = this.obraForm.get('dataInicio').value ? moment(this.obraForm.get('dataInicio').value).format('L') : null;;
+        obraPortuaria.dataConclusao = this.obraForm.get('dataConclusao').value ? moment(this.obraForm.get('dataConclusao').value).format('L') : null;
+        obraPortuaria.data_base_orcamento = this.obraForm.get('data_base_orcamento').value ? moment(this.obraForm.get('data_base_orcamento').value).format('L') : null;
         obraPortuaria.empreendimento = obraPortuaria.empreendimento?.id;
         obraPortuaria.tipo = obraTipo.descricao;
         obraPortuaria.tipo_infraestrutura = obraPortuaria.tipo_infraestrutura?.id;
@@ -1122,21 +1122,20 @@ export class ObraDetailsComponent implements OnInit {
         this._obraService.editObra(obraPortuaria)
           .pipe(takeUntil(this._unsubscribeAll))
           .subscribe(() => {
-            this._router.navigate(['admin/empreendimentos/todas-obras']);
+            this._router.navigate(['admin/obras/lista']);
             this._snackBar.open('Obra Atualizada com Sucesso', 'Fechar', {
               duration: 3000
             });
 
           });
       }
-      else if (obraTipo.descricao === 'Rodoviário') {
+      else if (obraTipo === 'Rodoviário') {
         const obraRodoviaria = new ObraRodoviaria(this.obraForm.value);
         const user = new User(JSON.parse(localStorage.getItem('user')));
         obraRodoviaria.usuario_que_alterou = user.id;
-        obraRodoviaria.tipo = obraRodoviaria.tipo?.descricao;
-        obraRodoviaria.dataInicio = moment(this.obraForm.get('dataInicio').value).format('L');
-        obraRodoviaria.dataConclusao = moment(this.obraForm.get('dataConclusao').value).format('L');
-        obraRodoviaria.data_base_orcamento = moment(this.obraForm.get('data_base_orcamento').value).format('L');
+        obraRodoviaria.dataInicio = this.obraForm.get('dataInicio').value ? moment(this.obraForm.get('dataInicio').value).format('L') : null;;
+        obraRodoviaria.dataConclusao = this.obraForm.get('dataConclusao').value ? moment(this.obraForm.get('dataConclusao').value).format('L') : null;
+        obraRodoviaria.data_base_orcamento = this.obraForm.get('data_base_orcamento').value ? moment(this.obraForm.get('data_base_orcamento').value).format('L') : null;
         obraRodoviaria.empreendimento = obraRodoviaria.empreendimento?.id;
         obraRodoviaria.tipo = obraTipo.descricao;
         obraRodoviaria.tipo_infraestrutura = obraRodoviaria.tipo_infraestrutura?.id;
@@ -1163,7 +1162,7 @@ export class ObraDetailsComponent implements OnInit {
         this._obraService.editObra(obraRodoviaria)
           .pipe(takeUntil(this._unsubscribeAll))
           .subscribe(() => {
-            this._router.navigate(['admin/empreendimentos/todas-obras']);
+            this._router.navigate(['admin/obras/lista']);
             this._snackBar.open('Obra Atualizada com Sucesso', 'Fechar', {
               duration: 3000
             });
@@ -1208,7 +1207,7 @@ export class ObraDetailsComponent implements OnInit {
   deleteItem() {
     const tipo = this.obraForm.get('tipo').value;
 
-    if (tipo?.descricao === 'Aeroportuário') {
+    if (tipo === 'Aeroportuário') {
       const obraAerea = new ObraAereo(this.obraForm.value);
 
       this._obraService.removeObra(obraAerea)
@@ -1223,7 +1222,7 @@ export class ObraDetailsComponent implements OnInit {
           this.obraForm.reset();
         });
     }
-    else if (tipo?.descricao === 'Dutoviário') {
+    else if (tipo === 'Dutoviário') {
       const obraDuto = new ObraDuto(this.obraForm.value);
 
       this._obraService.removeObra(obraDuto)
@@ -1238,7 +1237,7 @@ export class ObraDetailsComponent implements OnInit {
           this.obraForm.reset();
         });
     }
-    else if (tipo?.descricao === 'Hidroviário') {
+    else if (tipo === 'Hidroviário') {
       const obraHidroviaria = new ObraHidroviaria(this.obraForm.value);
 
       this._obraService.removeObra(obraHidroviaria)
@@ -1253,7 +1252,7 @@ export class ObraDetailsComponent implements OnInit {
           this.obraForm.reset();
         });
     }
-    else if (tipo?.descricao === 'Ferroviário') {
+    else if (tipo === 'Ferroviário') {
       const obraFerroviaria = new ObraFerroviaria(this.obraForm.value);
 
       this._obraService.removeObra(obraFerroviaria)
@@ -1268,7 +1267,7 @@ export class ObraDetailsComponent implements OnInit {
           this.obraForm.reset();
         });
     }
-    else if (tipo?.descricao === 'Portuário') {
+    else if (tipo === 'Portuário') {
       const obraPortuaria = new ObraPortuaria(this.obraForm.value);
 
       this._obraService.removeObra(obraPortuaria)
@@ -1283,7 +1282,7 @@ export class ObraDetailsComponent implements OnInit {
           this.obraForm.reset();
         });
     }
-    else if (tipo?.descricao === 'Rodoviário') {
+    else if (tipo === 'Rodoviário') {
       const obraRodoviaria = new ObraRodoviaria(this.obraForm.value);
 
       this._obraService.removeObra(obraRodoviaria)
@@ -1306,8 +1305,8 @@ export class ObraDetailsComponent implements OnInit {
       if (this.obraForm.get('tipo').value === 'Aeroportuário') {
         const obraAerea = new ObraAereo(this.obraForm.value);
         const user = new User(JSON.parse(localStorage.getItem('user')));
-        obraAerea.dataInicio = moment(this.obraForm.get('dataInicio').value).format('L');
-        obraAerea.dataConclusao = moment(this.obraForm.get('dataConclusao').value).format('L');
+        obraAerea.dataInicio = this.obraForm.get('dataInicio').value ? moment(this.obraForm.get('dataInicio').value).format('L') : null;
+        obraAerea.dataConclusao = this.obraForm.get('dataConclusao').value ? moment(this.obraForm.get('dataConclusao').value).format('L') : null;
         obraAerea.data_base_orcamento = this.obraForm.get('data_base_orcamento').value ? moment(this.obraForm.get('data_base_orcamento').value).format('L') : null;
         obraAerea.empreendimento = obraAerea.empreendimento?.id;
         obraAerea.tipo_infraestrutura = obraAerea.tipo_infraestrutura?.id;
@@ -1345,8 +1344,8 @@ export class ObraDetailsComponent implements OnInit {
       else if (this.obraForm.get('tipo').value === 'Dutoviário') {
         const obraDuto = new ObraDuto(this.obraForm.value);
         const user = new User(JSON.parse(localStorage.getItem('user')));
-        obraDuto.dataInicio = moment(this.obraForm.get('dataInicio').value).format('L');
-        obraDuto.dataConclusao = moment(this.obraForm.get('dataConclusao').value).format('L');
+        obraDuto.dataInicio = this.obraForm.get('dataInicio').value ? moment(this.obraForm.get('dataInicio').value).format('L') : null;;
+        obraDuto.dataConclusao = this.obraForm.get('dataConclusao').value ? moment(this.obraForm.get('dataConclusao').value).format('L') : null;
         obraDuto.data_base_orcamento = this.obraForm.get('data_base_orcamento').value ? moment(this.obraForm.get('data_base_orcamento').value).format('L') : null;
         obraDuto.empreendimento = obraDuto.empreendimento?.id;
         obraDuto.tipo_infraestrutura = obraDuto.tipo_infraestrutura?.id;
@@ -1388,8 +1387,8 @@ export class ObraDetailsComponent implements OnInit {
         const obraHidroviaria = new ObraHidroviaria(this.obraForm.value);
         const user = new User(JSON.parse(localStorage.getItem('user')));
 
-        obraHidroviaria.dataInicio = moment(this.obraForm.get('dataInicio').value).format('L');
-        obraHidroviaria.dataConclusao = moment(this.obraForm.get('dataConclusao').value).format('L');
+        obraHidroviaria.dataInicio = this.obraForm.get('dataInicio').value ? moment(this.obraForm.get('dataInicio').value).format('L') : null;;
+        obraHidroviaria.dataConclusao = this.obraForm.get('dataConclusao').value ? moment(this.obraForm.get('dataConclusao').value).format('L') : null;
         obraHidroviaria.data_base_orcamento = this.obraForm.get('data_base_orcamento').value ? moment(this.obraForm.get('data_base_orcamento').value).format('L') : null;
         obraHidroviaria.empreendimento = obraHidroviaria.empreendimento?.id;
         obraHidroviaria.ampliacaoCapacidade = obraHidroviaria.ampliacaoCapacidade.id;
@@ -1432,8 +1431,8 @@ export class ObraDetailsComponent implements OnInit {
         const obraFerroviaria = new ObraFerroviaria(this.obraForm.value);
         const user = new User(JSON.parse(localStorage.getItem('user')));
         const bitola = new Bitola(this.obraForm.get('bitola').value)
-        obraFerroviaria.dataInicio = moment(this.obraForm.get('dataInicio').value).format('L');
-        obraFerroviaria.dataConclusao = moment(this.obraForm.get('dataConclusao').value).format('L');
+        obraFerroviaria.dataInicio = this.obraForm.get('dataInicio').value ? moment(this.obraForm.get('dataInicio').value).format('L') : null;;
+        obraFerroviaria.dataConclusao = this.obraForm.get('dataConclusao').value ? moment(this.obraForm.get('dataConclusao').value).format('L') : null;
         obraFerroviaria.data_base_orcamento = this.obraForm.get('data_base_orcamento').value ? moment(this.obraForm.get('data_base_orcamento').value).format('L') : null;
         obraFerroviaria.empreendimento = obraFerroviaria.empreendimento?.id;
         obraFerroviaria.bitola = bitola.id;
@@ -1472,8 +1471,8 @@ export class ObraDetailsComponent implements OnInit {
       else if (this.obraForm.get('tipo').value === 'Portuário') {
         const obraPortuaria = new ObraPortuaria(this.obraForm.value);
         const user = new User(JSON.parse(localStorage.getItem('user')));
-        obraPortuaria.dataInicio = moment(this.obraForm.get('dataInicio').value).format('L');
-        obraPortuaria.dataConclusao = moment(this.obraForm.get('dataConclusao').value).format('L');
+        obraPortuaria.dataInicio = this.obraForm.get('dataInicio').value ? moment(this.obraForm.get('dataInicio').value).format('L') : null;;
+        obraPortuaria.dataConclusao = this.obraForm.get('dataConclusao').value ? moment(this.obraForm.get('dataConclusao').value).format('L') : null;
         obraPortuaria.data_base_orcamento = this.obraForm.get('data_base_orcamento').value ? moment(this.obraForm.get('data_base_orcamento').value).format('L') : null;
         obraPortuaria.empreendimento = obraPortuaria.empreendimento?.id;
         obraPortuaria.ampliacaoCapacidade = obraPortuaria.ampliacaoCapacidade.id;
@@ -1512,8 +1511,8 @@ export class ObraDetailsComponent implements OnInit {
       else if (this.obraForm.get('tipo').value === 'Rodoviário') {
         const obraRodoviaria = new ObraRodoviaria(this.obraForm.value);
         const user = new User(JSON.parse(localStorage.getItem('user')));
-        obraRodoviaria.dataInicio = moment(this.obraForm.get('dataInicio').value).format('L');
-        obraRodoviaria.dataConclusao = moment(this.obraForm.get('dataConclusao').value).format('L');
+        obraRodoviaria.dataInicio = this.obraForm.get('dataInicio').value ? moment(this.obraForm.get('dataInicio').value).format('L') : null;;
+        obraRodoviaria.dataConclusao = this.obraForm.get('dataConclusao').value ? moment(this.obraForm.get('dataConclusao').value).format('L') : null;
         obraRodoviaria.data_base_orcamento = this.obraForm.get('data_base_orcamento').value ? moment(this.obraForm.get('data_base_orcamento').value).format('L') : null;
         obraRodoviaria.empreendimento = obraRodoviaria.empreendimento?.id;
         obraRodoviaria.tipo_infraestrutura = obraRodoviaria.tipo_infraestrutura?.id;
