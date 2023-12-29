@@ -16,7 +16,7 @@ export class PercentageMaskDirective implements ControlValueAccessor {
   private onChange: (value: any) => void;
   private onTouched: () => void;
 
-  constructor(private el: ElementRef, private renderer: Renderer2) {}
+  constructor(private el: ElementRef, private renderer: Renderer2) { }
 
   @HostListener('input', ['$event.target.value'])
   onInput(value: string): void {
@@ -40,15 +40,19 @@ export class PercentageMaskDirective implements ControlValueAccessor {
   }
 
   private transform(value: string): string {
-    // Remove non-numeric characters except for decimal point
-    let onlyNums = value.replace(/[^\d.]/g, '');
+    if (value && value !== undefined && value !== null) {
+      // Remove non-numeric characters except for decimal point
+      let onlyNums = value.replace(/[^\d.]/g, '');
 
-    // Add '%' symbol at the end
-    return onlyNums + '%';
+      // Add '%' symbol at the end
+      return onlyNums + '%';
+    }
+
   }
 
   private extractValue(transformedValue: string): number {
-    // Remove '%' symbol and convert to number
-    return parseFloat(transformedValue.replace(/%/g, ''));
+    // Verifica se o valor é definido e, em seguida, remove o símbolo '%' e converte para número
+    return transformedValue ? parseFloat(transformedValue.replace(/%/g, '')) : 0;
   }
+  
 }

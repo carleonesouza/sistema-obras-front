@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { DialogMessage } from 'app/utils/dialog-message ';
-import { Observable, Subject, takeUntil, map } from 'rxjs';
+import { Observable, Subject, takeUntil, map, of } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
@@ -94,6 +94,7 @@ export class ObraDetailsComponent implements OnInit {
   selectedFile: File | null = null;
   arquivoGeo: File | null = null;
   uploadProgress: number = 0;
+  tipo: any;
   uploadGeorreferenciado: number = 0;
   uploadFiles = new FormData();
   private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -172,63 +173,68 @@ export class ObraDetailsComponent implements OnInit {
 
 
           if (this.obra) {
-
+            
             this.initializeObraForm(this.obra.tipo)
             this.tipoObraSelecionada = this.obra.tipo;
 
             this.setores$ = this._setoresService.getSetores();
             this.setores$.subscribe((data) => {
               this.setores = data.data;
+             this.tipo = this.setores.find((elem) => elem?.descricao === this.obra?.tipo)
+             
               data.data.map((item) => {
                 if (item.descricao === this.obra.tipo) {
                   this.obraForm.patchValue({
                     tipo: item
-                  })
-
-                  this._empreendimentosService
-                    .getEmpreendimentosBySetor(item.id)
-                    .subscribe((emprs) => {
-                      this.empreendimentos = emprs.data;
-
-                      emprs.data.map((result) => {
-                        if (result) {
-                          this.obraForm.patchValue({
-                            empreendimento: result
-                          })
-                        }
-                      })
-                    });
-
-                  this._tipoInfraService
-                    .getInfrasBySetorId(item.id)
-                    .subscribe((result) => {
-                      this.infras = result.data
-                      result.data.map((infra) => {
-                        if (infra) {
-                          this.obraForm.patchValue({
-                            tipo_infraestrutura: infra
-                          })
-                        }
-                      })
-                    })
-
-                  this.intervencaoService
-                    .getIntervencaoBySetorId(item.id)
-                    .subscribe((interv) => {
-                      this.intervecoes = interv.data;
-                      interv.data.map((intv) => {
-                        if (intv) {
-                          this.obraForm.patchValue({
-                            intervencao: intv
-                          })
-                        }
-                      })
-                    })
+                  })                 
                 }
                 this.loading = false;
               });
-            });
 
+              if(this.tipo){
+
+                this._empreendimentosService
+                .getEmpreendimentosBySetor(this.tipo?.id)
+                .subscribe((emprs) => {
+                  this.empreendimentos = emprs.data;
+    
+                  emprs.data.map((result) => {
+                    if (result) {
+                      this.obraForm.patchValue({
+                        empreendimento: result
+                      })
+                    }
+                  })
+                });
+    
+              this._tipoInfraService
+                .getInfrasBySetorId(this.tipo?.id)
+                .subscribe((result) => {
+                  this.infras = result.data
+                  result.data.map((infra) => {
+                    if (infra) {
+                      this.obraForm.patchValue({
+                        tipo_infraestrutura: infra
+                      })
+                    }
+                  })
+                })
+    
+              this.intervencaoService
+                .getIntervencaoBySetorId(this.tipo?.id)
+                .subscribe((interv) => {
+                  this.intervecoes = interv.data;
+                  interv.data.map((intv) => {
+                    if (intv) {
+                      this.obraForm.patchValue({
+                        intervencao: intv
+                      })
+                    }
+                  })
+                })
+              }
+            });
+            
             if (obra?.produtos) {
               // Clear existing form groups in produtosFormArray
               while (this.produtosFormArray.length !== 0) {
@@ -268,7 +274,7 @@ export class ObraDetailsComponent implements OnInit {
               while (this.municipiosFormArray.length !== 0) {
                 this.municipiosFormArray.removeAt(0);
               }
-              this.municpios$ = this._obraService.getMunicipios(this.obra.uf.uf.sigla);
+              this.municpios$ = this.obra?.uf?.uf ? this._obraService.getMunicipios(this.obra?.uf?.uf?.sigla) : of([]);
 
               this.municpios$.subscribe((itens) => {
 
@@ -311,17 +317,17 @@ export class ObraDetailsComponent implements OnInit {
                 this.simnaos = itens.data;
                 this.simnaos.map((item) => {
 
-                  if (item.id === parseInt(this.obra?.temBarragem.temBarragem)) {
+                  if (item.id === parseInt(this.obra?.temBarragem?.temBarragem)) {
                     this.obraForm.patchValue({
                       temBarragem: item
                     })
                   }
-                  if (item.id === parseInt(this.obra?.temEclusa.temEclusa)) {
+                  if (item.id === parseInt(this.obra?.temEclusa?.temEclusa)) {
                     this.obraForm.patchValue({
                       temEclusa: item
                     })
                   }
-                  if (item.id === parseInt(this.obra?.ampliacaoCapacidade.ampliacaoCapacidade)) {
+                  if (item.id === parseInt(this.obra?.ampliacaoCapacidade?.ampliacaoCapacidade)) {
                     this.obraForm.patchValue({
                       ampliacaoCapacidade: item
                     })
@@ -335,7 +341,7 @@ export class ObraDetailsComponent implements OnInit {
               this.simnaos$.subscribe((itens) => {
                 this.simnaos = itens.data;
                 this.simnaos.map((item) => {
-                  if (item.id === parseInt(this.obra?.ampliacaoCapacidade.ampliacaoCapacidade)) {
+                  if (item.id === parseInt(this.obra?.ampliacaoCapacidade?.ampliacaoCapacidade)) {
                     this.obraForm.patchValue({
                       ampliacaoCapacidade: item
                     })
@@ -350,7 +356,7 @@ export class ObraDetailsComponent implements OnInit {
               this.bitolas$.subscribe((itens) => {
                 this.bitolas = itens.data;
                 this.bitolas.map((item) => {
-                  if (item.id === this.obra.bitola.bitola.id) {
+                  if (item.id === this.obra?.bitola?.bitola?.id) {
                     this.obraForm.patchValue({
                       bitola: this.obra.bitola.bitola
                     })
@@ -360,13 +366,12 @@ export class ObraDetailsComponent implements OnInit {
             }
 
             if (obra.tipo === 'Dutoviário') {
-
               this.tipoDutos$ = this._obraService.getTipoDutos();
               this.tipoDutos$.subscribe((res) => {
                 this.tipoDutos = res.data;
 
                 this.tipoDutos.map((item) => {
-                  if (item.id === this.obra?.tipo_duto?.tipo_duto.id) {
+                  if (item.id === this.obra?.tipo_duto?.tipo_duto?.id) {
                     this.obraForm.patchValue({
                       tipo_duto: this.obra?.tipo_duto?.tipo_duto
                     })
@@ -380,7 +385,7 @@ export class ObraDetailsComponent implements OnInit {
                 this.funcaoEstruturas = res.data;
 
                 this.funcaoEstruturas.map((item) => {
-                  if (item.id === this.obra?.tipo_infraestrutura?.tipo_infraestrutura.id) {
+                  if (item.id === this.obra?.tipo_infraestrutura?.tipo_infraestrutura?.id) {
                     this.obraForm.patchValue({
                       tipo_infraestrutura: this.obra?.tipo_infraestrutura?.tipo_infraestrutura
                     })
@@ -395,9 +400,24 @@ export class ObraDetailsComponent implements OnInit {
                 this.nivelDutos = res.data;
 
                 this.nivelDutos.map((item) => {
-                  if (item.id === this.obra?.nivel_duto?.nivel_duto.id) {
+                  if (item.id === this.obra?.nivel_duto?.nivel_duto?.id) {
                     this.obraForm.patchValue({
                       nivel_duto: this.obra?.nivel_duto?.nivel_duto
+                    })
+                  }
+                })
+              })
+            }
+            if (obra.tipo === 'Hidroviário') {
+              this.situacoes$ = this._obraService
+                .getSituacoes();
+              this.situacoes$.subscribe((res) => {
+                this.situacoes = res.data;
+
+                this.situacoes.map((item) => {
+                  if (item.id === this.obra?.situacaoHidrovia?.id) {
+                    this.obraForm.patchValue({
+                      situacaoHidrovia: item
                     })
                   }
                 })
@@ -406,7 +426,6 @@ export class ObraDetailsComponent implements OnInit {
 
             this.obraForm.patchValue({
               status: this.obra?.status?.status,
-              tipo: this.obra.tipo,
               dataInicio: this.fixDateFormat(this.obra?.dataInicio),
               dataConclusao: this.fixDateFormat(this.obra?.dataConclusao),
               data_base_orcamento: this.fixDateFormat(this.obra?.data_base_orcamento),
@@ -443,12 +462,17 @@ export class ObraDetailsComponent implements OnInit {
       longitude: [''],
       latitude: [''],
       valorGlobal: [''],
-      percentualFinanceiroExecutado: [''],
+      percentualFinanceiroExecutado: [0],
     })
   }
 
   compareSetores(c1: any, c2: any): boolean {
-    return c1 && c2 ? c1.descricao === c2 : c1 === c2;
+    if (c1.descricao === c2) {
+      return true;
+    } else if (c1.descricao === c2.descricao) {
+      return true
+    }
+
   }
 
   compareEmpreend(c1: any, c2: any): boolean {
@@ -483,7 +507,7 @@ export class ObraDetailsComponent implements OnInit {
       this.uploadFiles.append('documentosAdicionais', this.selectedFile);
 
       if (this.uploadFiles.has('documentosAdicionais')) {
-        this._obraService.uploadFile(this.uploadFiles).subscribe(event => {         
+        this._obraService.uploadFile(this.uploadFiles).subscribe(event => {
 
           if (event.type === HttpEventType.UploadProgress && event.total) {
             this.uploadProgress = Math.round(100 * event.loaded / event.total);
@@ -511,7 +535,7 @@ export class ObraDetailsComponent implements OnInit {
       this.uploadFiles.append('arquivoGeorreferenciado', this.arquivoGeo)
 
       if (this.uploadFiles.has('arquivoGeorreferenciado')) {
-        this._obraService.uploadFile(this.uploadFiles).subscribe(event => {         
+        this._obraService.uploadFile(this.uploadFiles).subscribe(event => {
 
           if (event.type === HttpEventType.UploadProgress && event.total) {
             this.uploadGeorreferenciado = Math.round(100 * event.loaded / event.total);
@@ -551,23 +575,27 @@ export class ObraDetailsComponent implements OnInit {
   fixDateFormat(dateString: string): string {
 
     // Verifica se a string de data está no formato esperado
-    if (dateString.length != null) {
+    if (dateString) {
 
-      dateString = dateString.replace(/-/g, '');
+      if (dateString.length != null) {
 
-      // Extrai os componentes da data
-      const year = dateString.slice(0, 4);
-      const day = dateString.slice(4, 6);
-      const month = dateString.slice(6, 8);
+        dateString = dateString.replace(/-/g, '');
 
-      // Formata a data no novo formato
-      const formattedDate = `${year}-${month}-${day}`;
+        // Extrai os componentes da data
+        const year = dateString.slice(0, 4);
+        const day = dateString.slice(4, 6);
+        const month = dateString.slice(6, 8);
 
-      return formattedDate;
-    } else {
-      // Se a string de data não estiver no formato esperado, retorna a mesma string
-      return dateString;
+        // Formata a data no novo formato
+        const formattedDate = `${year}-${month}-${day}`;
+
+        return formattedDate;
+      } else {
+        // Se a string de data não estiver no formato esperado, retorna a mesma string
+        return dateString;
+      }
     }
+
   }
 
   selectedEstaoObra(event) {
@@ -661,7 +689,6 @@ export class ObraDetailsComponent implements OnInit {
       descricao: new FormControl('')
     });
   }
-
 
   initializeObraForm(type: string) {
 
@@ -773,7 +800,6 @@ export class ObraDetailsComponent implements OnInit {
   get municipiosControls() {
     return (this.obraForm.get('municipios') as FormArray).controls;
   }
-
 
   addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
     this.events.push(_moment(event.value).format('L'));
@@ -893,7 +919,7 @@ export class ObraDetailsComponent implements OnInit {
         const obraAerea = new ObraAereo(this.obraForm.value);
         const user = new User(JSON.parse(localStorage.getItem('user')));
         obraAerea.usuario_que_alterou = user.id;
-
+        obraAerea.tipo = obraAerea.tipo?.descricao;
         obraAerea.dataInicio = moment(this.obraForm.get('dataInicio').value).format('L');
         obraAerea.dataConclusao = moment(this.obraForm.get('dataConclusao').value).format('L');
         obraAerea.data_base_orcamento = moment(this.obraForm.get('data_base_orcamento').value).format('L');
@@ -936,6 +962,7 @@ export class ObraDetailsComponent implements OnInit {
         const obraDuto = new ObraDuto(this.obraForm.value);
         const user = new User(JSON.parse(localStorage.getItem('user')));
         obraDuto.usuario_que_alterou = user.id;
+        obraDuto.tipo = obraDuto.tipo?.descricao;
         obraDuto.dataInicio = moment(this.obraForm.get('dataInicio').value).format('L');
         obraDuto.dataConclusao = moment(this.obraForm.get('dataConclusao').value).format('L');
         obraDuto.data_base_orcamento = moment(this.obraForm.get('data_base_orcamento').value).format('L');
@@ -979,11 +1006,15 @@ export class ObraDetailsComponent implements OnInit {
         const obraHidroviaria = new ObraHidroviaria(this.obraForm.value);
         const user = new User(JSON.parse(localStorage.getItem('user')));
         obraHidroviaria.usuario_que_alterou = user.id;
+        obraHidroviaria.tipo = obraHidroviaria.tipo?.descricao;
         obraHidroviaria.dataInicio = moment(this.obraForm.get('dataInicio').value).format('L');
         obraHidroviaria.dataConclusao = moment(this.obraForm.get('dataConclusao').value).format('L');
         obraHidroviaria.data_base_orcamento = moment(this.obraForm.get('data_base_orcamento').value).format('L');
         obraHidroviaria.empreendimento = obraHidroviaria.empreendimento?.id;
-        obraHidroviaria.tipo = obraTipo.descricao;
+        obraHidroviaria.ampliacaoCapacidade = obraHidroviaria.ampliacaoCapacidade.id;
+        obraHidroviaria.temEclusa = obraHidroviaria.temEclusa.id;
+        obraHidroviaria.situacaoHidrovia = obraHidroviaria.situacaoHidrovia?.id;
+        obraHidroviaria.temBarragem = obraHidroviaria.temBarragem.id;
         obraHidroviaria.tipo_infraestrutura = obraHidroviaria.tipo_infraestrutura?.id;
         obraHidroviaria.municipios = obraHidroviaria.municipios.map((muni: any) => {
           muni.municipio_id = muni.id;
@@ -1008,7 +1039,7 @@ export class ObraDetailsComponent implements OnInit {
         this._obraService.editObra(obraHidroviaria)
           .pipe(takeUntil(this._unsubscribeAll))
           .subscribe(() => {
-            this._router.navigate(['admin/empreendimentos/todas-obras']);
+            this._router.navigate(['admin/empreendimentos/lista']);
             this._snackBar.open('Obra Atualizada com Sucesso', 'Fechar', {
               duration: 3000
             });
@@ -1019,6 +1050,7 @@ export class ObraDetailsComponent implements OnInit {
         const obraFerroviaria = new ObraFerroviaria(this.obraForm.value);
         const user = new User(JSON.parse(localStorage.getItem('user')));
         obraFerroviaria.usuario_que_alterou = user.id;
+        obraFerroviaria.tipo = obraFerroviaria.tipo?.descricao;
         obraFerroviaria.dataInicio = moment(this.obraForm.get('dataInicio').value).format('L');
         obraFerroviaria.dataConclusao = moment(this.obraForm.get('dataConclusao').value).format('L');
         obraFerroviaria.data_base_orcamento = moment(this.obraForm.get('data_base_orcamento').value).format('L');
@@ -1048,7 +1080,7 @@ export class ObraDetailsComponent implements OnInit {
         this._obraService.editObra(obraFerroviaria)
           .pipe(takeUntil(this._unsubscribeAll))
           .subscribe(() => {
-            this._router.navigate(['admin/empreendimentos/todas-obras']);
+            this._router.navigate(['admin/empreendimentos/lista']);
             this._snackBar.open('Obra Atualizada com Sucesso', 'Fechar', {
               duration: 3000
             });
@@ -1059,6 +1091,7 @@ export class ObraDetailsComponent implements OnInit {
         const obraPortuaria = new ObraPortuaria(this.obraForm.value);
         const user = new User(JSON.parse(localStorage.getItem('user')));
         obraPortuaria.usuario_que_alterou = user.id;
+        obraPortuaria.tipo = obraPortuaria.tipo?.descricao;
         obraPortuaria.dataInicio = moment(this.obraForm.get('dataInicio').value).format('L');
         obraPortuaria.dataConclusao = moment(this.obraForm.get('dataConclusao').value).format('L');
         obraPortuaria.data_base_orcamento = moment(this.obraForm.get('data_base_orcamento').value).format('L');
@@ -1099,6 +1132,7 @@ export class ObraDetailsComponent implements OnInit {
         const obraRodoviaria = new ObraRodoviaria(this.obraForm.value);
         const user = new User(JSON.parse(localStorage.getItem('user')));
         obraRodoviaria.usuario_que_alterou = user.id;
+        obraRodoviaria.tipo = obraRodoviaria.tipo?.descricao;
         obraRodoviaria.dataInicio = moment(this.obraForm.get('dataInicio').value).format('L');
         obraRodoviaria.dataConclusao = moment(this.obraForm.get('dataConclusao').value).format('L');
         obraRodoviaria.data_base_orcamento = moment(this.obraForm.get('data_base_orcamento').value).format('L');
@@ -1148,7 +1182,6 @@ export class ObraDetailsComponent implements OnInit {
 
   }
 
-
   uploadFilesSelected() {
 
     if (this.uploadFiles.has('documentosAdicionais') || this.uploadFiles.has('arquivoGeorreferenciado')) {
@@ -1171,6 +1204,101 @@ export class ObraDetailsComponent implements OnInit {
     }
   }
 
+  deleteItem() {
+    const tipo = this.obraForm.get('tipo').value;
+
+    if (tipo?.descricao === 'Aeroportuário') {
+      const obraAerea = new ObraAereo(this.obraForm.value);
+
+      this._obraService.removeObra(obraAerea)
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe(() => {
+          this.saving = false;
+          this.toggleEditMode(false);
+          this._router.navigate(['/admin/obras/lista']);
+          this._snackBar.open('Obra Removida com Sucesso', 'Fechar', {
+            duration: 3000
+          });
+          this.obraForm.reset();
+        });
+    }
+    else if (tipo?.descricao === 'Dutoviário') {
+      const obraDuto = new ObraDuto(this.obraForm.value);
+
+      this._obraService.removeObra(obraDuto)
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe(() => {
+          this.saving = false;
+          this.toggleEditMode(false);
+          this._router.navigate(['/admin/obras/lista']);
+          this._snackBar.open('Obra Removida com Sucesso', 'Fechar', {
+            duration: 3000
+          });
+          this.obraForm.reset();
+        });
+    }
+    else if (tipo?.descricao === 'Hidroviário') {
+      const obraHidroviaria = new ObraHidroviaria(this.obraForm.value);
+
+      this._obraService.removeObra(obraHidroviaria)
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe(() => {
+          this.saving = false;
+          this.toggleEditMode(false);
+          this._router.navigate(['/admin/obras/lista']);
+          this._snackBar.open('Obra Removida com Sucesso', 'Fechar', {
+            duration: 3000
+          });
+          this.obraForm.reset();
+        });
+    }
+    else if (tipo?.descricao === 'Ferroviário') {
+      const obraFerroviaria = new ObraFerroviaria(this.obraForm.value);
+
+      this._obraService.removeObra(obraFerroviaria)
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe(() => {
+          this.saving = false;
+          this.toggleEditMode(false);
+          this._router.navigate(['/admin/obras/lista']);
+          this._snackBar.open('Obra Removida com Sucesso', 'Fechar', {
+            duration: 3000
+          });
+          this.obraForm.reset();
+        });
+    }
+    else if (tipo?.descricao === 'Portuário') {
+      const obraPortuaria = new ObraPortuaria(this.obraForm.value);
+
+      this._obraService.removeObra(obraPortuaria)
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe(() => {
+          this.saving = false;
+          this.toggleEditMode(false);
+          this._router.navigate(['/admin/obras/lista']);
+          this._snackBar.open('Obra Removida com Sucesso', 'Fechar', {
+            duration: 3000
+          });
+          this.obraForm.reset();
+        });
+    }
+    else if (tipo?.descricao === 'Rodoviário') {
+      const obraRodoviaria = new ObraRodoviaria(this.obraForm.value);
+
+      this._obraService.removeObra(obraRodoviaria)
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe(() => {
+          this.saving = false;
+          this.toggleEditMode(false);
+          this._router.navigate(['/admin/obras/lista']);
+          this._snackBar.open('Obra Removida com Sucesso', 'Fechar', {
+            duration: 3000
+          });
+          this.obraForm.reset();
+        });
+    }
+
+  }
 
   onSubmit() {
     if (this.obraForm) {
@@ -1179,7 +1307,7 @@ export class ObraDetailsComponent implements OnInit {
         const user = new User(JSON.parse(localStorage.getItem('user')));
         obraAerea.dataInicio = moment(this.obraForm.get('dataInicio').value).format('L');
         obraAerea.dataConclusao = moment(this.obraForm.get('dataConclusao').value).format('L');
-        obraAerea.data_base_orcamento = moment(this.obraForm.get('data_base_orcamento').value).format('L');
+        obraAerea.data_base_orcamento = this.obraForm.get('data_base_orcamento').value ? moment(this.obraForm.get('data_base_orcamento').value).format('L') : null;
         obraAerea.empreendimento = obraAerea.empreendimento?.id;
         obraAerea.tipo_infraestrutura = obraAerea.tipo_infraestrutura?.id;
         obraAerea.municipios = obraAerea.municipios.map((item: any) => {
@@ -1191,6 +1319,7 @@ export class ObraDetailsComponent implements OnInit {
         obraAerea.produtos = obraAerea.produtos.map((item: any) => {
           item.produto_id = item.descricao.id
           delete item.descricao;
+          delete item.id
           return item;
         });
         obraAerea.user = user.id;
@@ -1217,7 +1346,7 @@ export class ObraDetailsComponent implements OnInit {
         const user = new User(JSON.parse(localStorage.getItem('user')));
         obraDuto.dataInicio = moment(this.obraForm.get('dataInicio').value).format('L');
         obraDuto.dataConclusao = moment(this.obraForm.get('dataConclusao').value).format('L');
-        obraDuto.data_base_orcamento = moment(this.obraForm.get('data_base_orcamento').value).format('L');
+        obraDuto.data_base_orcamento = this.obraForm.get('data_base_orcamento').value ? moment(this.obraForm.get('data_base_orcamento').value).format('L') : null;
         obraDuto.empreendimento = obraDuto.empreendimento?.id;
         obraDuto.tipo_infraestrutura = obraDuto.tipo_infraestrutura?.id;
         obraDuto.municipios = obraDuto.municipios.map((item: any) => {
@@ -1229,6 +1358,7 @@ export class ObraDetailsComponent implements OnInit {
         obraDuto.produtos = obraDuto.produtos.map((item: any) => {
           item.produto_id = item.descricao.id
           delete item.descricao
+          delete item.id
           return item;
         });
         obraDuto.user = user.id;
@@ -1259,7 +1389,7 @@ export class ObraDetailsComponent implements OnInit {
 
         obraHidroviaria.dataInicio = moment(this.obraForm.get('dataInicio').value).format('L');
         obraHidroviaria.dataConclusao = moment(this.obraForm.get('dataConclusao').value).format('L');
-        obraHidroviaria.data_base_orcamento = moment(this.obraForm.get('data_base_orcamento').value).format('L');
+        obraHidroviaria.data_base_orcamento = this.obraForm.get('data_base_orcamento').value ? moment(this.obraForm.get('data_base_orcamento').value).format('L') : null;
         obraHidroviaria.empreendimento = obraHidroviaria.empreendimento?.id;
         obraHidroviaria.ampliacaoCapacidade = obraHidroviaria.ampliacaoCapacidade.id;
         obraHidroviaria.temEclusa = obraHidroviaria.temEclusa.id;
@@ -1275,6 +1405,7 @@ export class ObraDetailsComponent implements OnInit {
         obraHidroviaria.produtos = obraHidroviaria.produtos.map((item: any) => {
           item.produto_id = item.descricao.id
           delete item.descricao;
+          delete item.id
           return item;
         });
         obraHidroviaria.user = user.id;
@@ -1302,7 +1433,7 @@ export class ObraDetailsComponent implements OnInit {
         const bitola = new Bitola(this.obraForm.get('bitola').value)
         obraFerroviaria.dataInicio = moment(this.obraForm.get('dataInicio').value).format('L');
         obraFerroviaria.dataConclusao = moment(this.obraForm.get('dataConclusao').value).format('L');
-        obraFerroviaria.data_base_orcamento = moment(this.obraForm.get('data_base_orcamento').value).format('L');
+        obraFerroviaria.data_base_orcamento = this.obraForm.get('data_base_orcamento').value ? moment(this.obraForm.get('data_base_orcamento').value).format('L') : null;
         obraFerroviaria.empreendimento = obraFerroviaria.empreendimento?.id;
         obraFerroviaria.bitola = bitola.id;
         obraFerroviaria.tipo_infraestrutura = obraFerroviaria.tipo_infraestrutura?.id;
@@ -1315,6 +1446,7 @@ export class ObraDetailsComponent implements OnInit {
         obraFerroviaria.produtos = obraFerroviaria.produtos.map((item: any) => {
           item.produto_id = item.descricao.id
           delete item.descricao
+          delete item.id
           return item;
         });
         obraFerroviaria.user = user.id;
@@ -1330,7 +1462,7 @@ export class ObraDetailsComponent implements OnInit {
             this.saving = false;
             this.toggleEditMode(false);
             this._router.navigate(['/admin/obras/lista']);
-            this._snackBar.open('Empreendimento Salvo com Sucesso', 'Fechar', {
+            this._snackBar.open('Obra Salvo com Sucesso', 'Fechar', {
               duration: 3000
             });
             this.obraForm.reset();
@@ -1341,7 +1473,7 @@ export class ObraDetailsComponent implements OnInit {
         const user = new User(JSON.parse(localStorage.getItem('user')));
         obraPortuaria.dataInicio = moment(this.obraForm.get('dataInicio').value).format('L');
         obraPortuaria.dataConclusao = moment(this.obraForm.get('dataConclusao').value).format('L');
-        obraPortuaria.data_base_orcamento = moment(this.obraForm.get('data_base_orcamento').value).format('L');
+        obraPortuaria.data_base_orcamento = this.obraForm.get('data_base_orcamento').value ? moment(this.obraForm.get('data_base_orcamento').value).format('L') : null;
         obraPortuaria.empreendimento = obraPortuaria.empreendimento?.id;
         obraPortuaria.ampliacaoCapacidade = obraPortuaria.ampliacaoCapacidade.id;
         obraPortuaria.tipo_infraestrutura = obraPortuaria.tipo_infraestrutura?.id;
@@ -1354,6 +1486,7 @@ export class ObraDetailsComponent implements OnInit {
         obraPortuaria.produtos = obraPortuaria.produtos.map((item: any) => {
           item.produto_id = item.descricao.id
           delete item.descricao
+          delete item.id
           return item;
         });
         obraPortuaria.user = user.id;
@@ -1380,7 +1513,7 @@ export class ObraDetailsComponent implements OnInit {
         const user = new User(JSON.parse(localStorage.getItem('user')));
         obraRodoviaria.dataInicio = moment(this.obraForm.get('dataInicio').value).format('L');
         obraRodoviaria.dataConclusao = moment(this.obraForm.get('dataConclusao').value).format('L');
-        obraRodoviaria.data_base_orcamento = moment(this.obraForm.get('data_base_orcamento').value).format('L');
+        obraRodoviaria.data_base_orcamento = this.obraForm.get('data_base_orcamento').value ? moment(this.obraForm.get('data_base_orcamento').value).format('L') : null;
         obraRodoviaria.empreendimento = obraRodoviaria.empreendimento?.id;
         obraRodoviaria.tipo_infraestrutura = obraRodoviaria.tipo_infraestrutura?.id;
         obraRodoviaria.municipios = obraRodoviaria.municipios.map((item: any) => {
@@ -1392,6 +1525,7 @@ export class ObraDetailsComponent implements OnInit {
         obraRodoviaria.produtos = obraRodoviaria.produtos.map((item: any) => {
           item.produto_id = item.descricao.id
           delete item.descricao
+          delete item.id
           return item;
         });
         obraRodoviaria.user = user.id;

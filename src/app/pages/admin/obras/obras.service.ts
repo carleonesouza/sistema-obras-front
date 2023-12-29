@@ -367,5 +367,15 @@ export class ObrasService {
       );
   }
 
+  removeObra(obra: any): Observable<any> {
+    return this._httpClient.delete<any>(environment.apiManager +`obras/${obra.id}`, {
+      body: obra })
+      .pipe(
+        tap(() => { }),
+        catchError(this.error.handleError<any>('removeObra'))
+      );
+  }
+
+
 
 }

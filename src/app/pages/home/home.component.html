@@ -1,67 +1,150 @@
-<div class="flex flex-wrap w-ful p-6 mt-5 justify-center justify-items-center items-center gap-4 text-center home-card">
+<div class="flex flex-wrap w-full md:p-6 home-card bg-gray-200 sm:p-1">
 
-   <div class="flex-auto">
-    <div class="flex flex-col shadow-2xl rounded-2xl overflow-hidden bg-gray-50 cursor-pointer" matRipple routerLink="/admin/empreendimentos/lista">
-        <div class="flex flex-col p-6">
-            <div class="flex items-center justify-between">
-                <ng-container>
-                    <div
-                        class="py-0.5 px-3 rounded-full text-sm font-semibold text-blue-800 bg-blue-100 dark:text-blue-50 dark:bg-blue-500">
-                        Lista
+    <div class="flex flex-wrap w-full p-6 justify-center justify-items-center items-center gap-4">
+        <div class="flex-auto ">
+            <div class="flex flex-col shadow-2xl rounded-2xl overflow-hidden bg-gray-50 cursor-pointer" matRipple
+                routerLink="/admin/empreendimentos/lista">
+                <div class="flex flex-col p-6">
+                    <div class="flex items-center justify-between">
+                        <ng-container>
+                            <div
+                                class="py-0.5 px-3 rounded-full text-sm font-semibold text-blue-800 bg-blue-100 dark:text-blue-50 dark:bg-blue-500">
+                                Lista
+                            </div>
+                        </ng-container>
+                        <!-- Completed at least once -->
+                        <div class="flex items-center">
+
+                        </div>
                     </div>
-                </ng-container>
-                <!-- Completed at least once -->
-                <div class="flex items-center">
-                   
+                    <div class="flex justify-items-center text-center justify-center items-center w-full h-full">
+                        <div class="mt-4 text-xl font-bold">Módulo Empreendimento</div>
+                    </div>
                 </div>
             </div>
-            <div class="flex justify-items-center text-center justify-center items-center w-full h-full">
-                <div class="mt-4 text-xl font-bold">Módulo Empreendimento</div>
-            </div>                                  
-        </div>      
-    </div>
-   </div>
-   <div class="flex-auto">
-    <div class="flex flex-col shadow-2xl rounded-2xl overflow-hidden bg-gray-50 cursor-pointer" matRipple routerLink="/admin/obras/lista">
-        <div class="flex flex-col p-6">
-            <div class="flex items-center justify-between">
-                <ng-container>
-                    <div
-                        class="py-0.5 px-3 rounded-full text-sm font-semibold text-blue-800 bg-blue-100 dark:text-blue-50 dark:bg-blue-500">
-                        Lista
+        </div>
+
+        <div class="flex-auto ">
+            <div class="flex flex-col shadow-2xl rounded-2xl overflow-hidden bg-gray-50 cursor-pointer" matRipple
+                routerLink="/admin/obras/lista">
+                <div class="flex flex-col p-6">
+                    <div class="flex items-center justify-between">
+                        <ng-container>
+                            <div
+                                class="py-0.5 px-3 rounded-full text-sm font-semibold text-blue-800 bg-blue-100 dark:text-blue-50 dark:bg-blue-500">
+                                Lista
+                            </div>
+                        </ng-container>
+                        <!-- Completed at least once -->
+                        <div class="flex items-center">
+
+                        </div>
                     </div>
-                </ng-container>
-                <!-- Completed at least once -->
-                <div class="flex items-center">
-                   
+                    <div class="flex justify-items-center text-center justify-center items-center w-full h-full">
+                        <div class="mt-4 text-xl font-bold">Módulo Obra</div>
+                    </div>
                 </div>
             </div>
-            <div class="flex justify-items-center text-center justify-center items-center w-full h-full">
-                <div class="mt-4 text-xl font-bold">Módulo Obra</div>
-            </div>                                  
-        </div>      
-    </div>
-   </div>
-   <div class="flex-auto">
-    <div class="flex flex-col shadow-2xl rounded-2xl overflow-hidden bg-gray-50 cursor-pointer" matRipple routerLink="/admin/iniciativas/lista">
-        <div class="flex flex-col p-6">
-            <div class="flex items-center justify-between">
-                <ng-container>
-                    <div
-                        class="py-0.5 px-3 rounded-full text-sm font-semibold text-blue-800 bg-blue-100 dark:text-blue-50 dark:bg-blue-500">
-                        Lista
+        </div>
+
+        <div class="flex-auto ">
+            <div class="flex flex-col shadow-2xl rounded-2xl overflow-hidden bg-gray-50 cursor-pointer" matRipple
+                routerLink="/admin/iniciativas/lista">
+                <div class="flex flex-col p-6">
+                    <div class="flex items-center justify-between">
+                        <ng-container>
+                            <div
+                                class="py-0.5 px-3 rounded-full text-sm font-semibold text-blue-800 bg-blue-100 dark:text-blue-50 dark:bg-blue-500">
+                                Lista
+                            </div>
+                        </ng-container>
+                        <!-- Completed at least once -->
+                        <div class="flex items-center">
+
+                        </div>
                     </div>
-                </ng-container>
-                <!-- Completed at least once -->
-                <div class="flex items-center">
-                   
+                    <div class="flex justify-items-center text-center justify-center items-center w-full h-full">
+                        <div class="mt-4 text-xl font-bold">Módulo Iniciativa</div>
+                    </div>
                 </div>
             </div>
-            <div class="flex justify-items-center text-center justify-center items-center w-full h-full">
-                <div class="mt-4 text-xl font-bold">Módulo Iniciativa</div>
-            </div>                                  
-        </div>      
+        </div>
+
+            
+    <div class="flex-auto">
+        <!-- Card -->
+        <div class="flex justify-center ">
+            <fuse-card class="flex flex-col lg:flex-row shadow-2xl">
+                <div class="p-6 sm:p-8 lg:p-10">
+                    <!-- <div class="text-3xl font-bold">Lifetime Membership</div> -->
+                    <div class="mt-2 leading-relaxed text-secondary">
+                        Tendo em vista a necessidade de padronização do formato de coleta entre as diferentes
+                        instituições vinculadas, os
+                        formulários a seguir solicitam dados que não necessariamente estão na área de atuação direta de
+                        todos os setores.
+                        Caso o setor respondente não possua ou não atue com a informação solicitada, basta não preencher
+                        o formulário ou
+                        deixar a coluna em branco, e passar para o próximo item. O levantamento irá avaliar
+                        separadamente, mas de forma integrada 3 conjuntos de ações:
+                        Empreendimentos, Obras e Iniciativas, sendo que:
+                    </div>
+                    
+                    <!-- Features -->
+                    <div class="flex flex-col p-6 justify-between space-y-4">
+                        <div class="flex items-center">
+                            <mat-icon class="icon-size-5 text-primary"
+                                [svgIcon]="'heroicons_solid:check-circle'"></mat-icon>
+                            <div class="ml-2 text-secondary">
+                                <span class="font-bold">Empreendimento:</span> Agrupamento de ações do tipo obra e serviço, que afetam um ou mais
+                                componentes de infraestrutura do
+                                sistema de transporte, alocados a um responsável pela sua condução (gestão ou execução).
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <mat-icon class="icon-size-5 text-primary"
+                                [svgIcon]="'heroicons_solid:check-circle'"></mat-icon>
+                            <div class="ml-2 text-secondary">
+                                <span class="font-bold">Obra: </span>Intervenções que implantam, ampliam, mantém ou operam uma
+                                determinada infraestrutura individualizada.
+                                Por exemplo: ampliação de via, operação de terminal, implantação de obra de arte
+                                especial.</div>
+                        </div>
+                        <div class="flex items-center">
+                            <mat-icon class="icon-size-5 text-primary"
+                                [svgIcon]="'heroicons_solid:check-circle'"></mat-icon>
+                            <div class="ml-2 text-secondary" >
+                                <span class="font-bold">Iniciativa (estratégica ou tática): </span>Conjunto de ações que não sejam obras e serviços de
+                                infraestrutura (ex. regulamentação, capacitação,
+                                fiscalização, transformação digital, gestão ambiental), com objetivo comum entre si, que
+                                afetam significativamente as características de um ou mais
+                                componentes do sistema de transporte que não sejam infraestrutura, alocados a um ator do
+                                sistema responsável pela sua condução
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- Price -->
+                <!-- <div class="flex flex-col items-center p-8 lg:px-10 lg:py-12 lg:min-w-80 bg-gray-100 dark:bg-black dark:bg-opacity-10">
+                    <div class="flex items-center whitespace-nowrap">
+                        <div class="text-8xl font-extrabold tracking-tight">$599</div>
+                        <div class="ml-2 text-2xl font-semibold text-secondary">USD</div>
+                    </div>
+                    <div class="font-medium text-center text-secondary">
+                        <div>No monthly subscription,</div>
+                        <div>you only pay once.</div>
+                    </div>
+                    <button
+                        class="w-full mt-8 lg:mt-auto"
+                        mat-flat-button
+                        [color]="'primary'">
+                        Get Started
+                    </button>
+                </div> -->
+            </fuse-card>
+        </div>
     </div>
-   </div>      
+
+    </div>
 
 </div>

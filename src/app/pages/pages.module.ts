@@ -16,7 +16,7 @@ import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 import { SharedModule } from 'app/shared/shared.module';
 import { AuthInterceptor } from 'app/core/auth/auth.interceptor';
-
+import { FuseCardModule } from '@fuse/components/card';
 import { PageComponent } from './page.component';
 import { PagesService } from './pages.service';
 import { PagesResolver } from './pages.resolver';
@@ -48,6 +48,7 @@ const maskConfig: Partial<IConfig> = { validation: false};
     FuseLoadingBarModule,
     SharedModule,
     FuseSplashScreenModule,
+    FuseCardModule,
     NgApexchartsModule,
     FuseFindByKeyPipeModule,
     MaterialAppModule,

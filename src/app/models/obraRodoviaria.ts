@@ -6,7 +6,7 @@ export class ObraRodoviaria implements Obra {
 
     id: number;
     empreendimento: any;
-    tipo: string;
+    tipo: any;
     nomeDaInfraestrutura: string;
     descricao: string;
     intervencao: any;

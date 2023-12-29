@@ -6,7 +6,7 @@ export class ObraAereo implements Obra {
 
     id: number;
     empreendimento: any;
-    tipo: string;
+    tipo: any;
     user: any;
     tipo_infraestrutura: any;
     descricao: string;

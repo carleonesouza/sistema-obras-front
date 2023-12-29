@@ -241,7 +241,7 @@
                                         class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
                                         <mat-icon class="mr-2" [svgIcon]="'mat_solid:my_location'"></mat-icon>
                                         <div class="font-mono text-primary-500">
-                                            <span class="font-bold">Estado: </span>{{obra?.uf.uf.descricao }}
+                                            <span class="font-bold">Estado: </span>{{obra?.uf?.uf?.descricao }}
                                         </div>
                                     </div>
 
@@ -327,8 +327,7 @@
                                         <div class="flex">
                                             <mat-icon class="mr-2" [svgIcon]="'mat_solid:attach_money'"></mat-icon>
                                         <div class="font-mono text-primary-500">
-                                            <span class="font-bold">Valor Global:</span> {{obra?.valorGlobal |
-                                            currency:'BRL' }}
+                                            <span class="font-bold">Valor Global:</span> {{obra?.valorGlobal | currency:'BRL' }}
                                         </div>
                                         </div>
                                         <div class="flex">
@@ -799,7 +798,7 @@
                                             </mat-icon>
                                             <div class="font-mono text-primary-500">
                                                 <span class="font-bold">Nova Bitola:</span> {{
-                                                obra?.bitola?.bitola.descricao }}
+                                                obra?.bitola?.bitola?.descricao }}
                                             </div>
                                         </div>
 
@@ -974,16 +973,18 @@
                                                 </button>
                                             </div>
                                         </div>
-
                                         <div
-                                            class="flex items-center justify-between leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2" [svgIcon]="'mat_solid:directions'"></mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">KM Inicial:</span> {{
-                                                obra?.kmInicial
-                                                }}
-                                            </div>
+                                        class="flex items-center justify-between leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                        <mat-icon class="mr-2" [svgIcon]="'mat_solid:directions'"></mat-icon>
+                                        <div class="font-mono text-primary-500">
+                                            <span class="font-bold">KM Inicial:</span> {{
+                                            obra?.kmInicial
+                                            }}
                                         </div>
+                                    </div>
+                                    </div>
+                                    <div class="flex justify-between gap-3 pb-2">                                      
+                                       
                                         <div
                                             class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
                                             <mat-icon class="mr-2">
@@ -1072,7 +1073,27 @@
                                     <div class="mt-4 flex flex-wrap">
                                         <ng-container>
                                             <div class="flex flex-wrap space-x-4 w-full">
-                                                <div class="flex-auto">
+                                                <div class="flex-auto" *ngIf="!creating">
+                                                    <mat-form-field appearance="outline" class="w-full">
+                                                        <mat-label *ngIf="!isLoading">Selecione o Setor
+                                                        </mat-label>
+                                                        <mat-label *ngIf="isLoading">
+                                                            <div class="select-placeholder-container justify-between">
+                                                                <span>Loading...</span>
+                                                                <mat-spinner class="spinner"
+                                                                    diameter="20"></mat-spinner>
+                                                            </div>
+                                                        </mat-label>
+                                                        <mat-select formControlName="tipo" [disabled]="editMode"                                                           
+                                                            [compareWith]="compareSetores">
+                                                            <mat-option *ngFor="let setor of setores" [value]="setor">
+                                                                {{ setor.descricao }}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+
+                                                <div class="flex-auto" *ngIf="creating">
                                                     <mat-form-field appearance="outline" class="w-full">
                                                         <mat-label *ngIf="!isLoading">Selecione o Setor
                                                         </mat-label>
@@ -1859,7 +1880,7 @@
                                                                 </div>
                                                             </mat-label>
 
-                                                            <mat-select formControlName="situacaoHidrovia">
+                                                            <mat-select formControlName="situacaoHidrovia" [compareWith]="compareSetores">
                                                                 <mat-option *ngFor="let situacao of situacoes"
                                                                     [value]="situacao">
                                                                     {{ situacao.descricao }}
@@ -1893,7 +1914,7 @@
                                                                 </div>
                                                             </mat-label>
 
-                                                            <mat-select formControlName="temBarragem">
+                                                            <mat-select formControlName="temBarragem" [compareWith]="compareSetores">
                                                                 <mat-option *ngFor="let simnao of simnaos"
                                                                     [value]="simnao">
                                                                     {{ simnao.descricao }}
@@ -1915,7 +1936,7 @@
                                                                 </div>
                                                             </mat-label>
 
-                                                            <mat-select formControlName="temEclusa">
+                                                            <mat-select formControlName="temEclusa" [compareWith]="compareSetores">
                                                                 <mat-option *ngFor="let simnao of simnaos"
                                                                     [value]="simnao">
                                                                     {{ simnao.descricao }}
@@ -1956,7 +1977,7 @@
                                                                 </div>
                                                             </mat-label>
 
-                                                            <mat-select formControlName="ampliacaoCapacidade">
+                                                            <mat-select formControlName="ampliacaoCapacidade" [compareWith]="compareSetores">
                                                                 <mat-option *ngFor="let simnao of simnaos"
                                                                     [value]="simnao">
                                                                     {{ simnao.descricao }}
@@ -2328,9 +2349,10 @@
                         <div class="flex items-center justify-end m-3">
 
                             <!-- Inativar -->
-                            <!-- <mat-slide-toggle *ngIf="editMode" class="mt-2" [color]="'warn'" [checked]="!obra.status"
-                                (change)="desativaObra($event)" [matTooltip]="'Inativar'">Inativar
-                            </mat-slide-toggle> -->
+                        <button class="ml-2" *ngIf="!creating" [color]="'warn'" type="button" mat-button
+                            [matTooltip]="'Delete'" aria-label="Deletar item" (click)="deleteItem()">
+                            <mat-icon>delete</mat-icon>
+                        </button>
                             <!-- Cancel -->
                             <button class="ml-auto" *ngIf="!editMode" type="button" mat-button [matTooltip]="'Cancelar'"
                                 (click)="clearForm()">

@@ -17,8 +17,9 @@ export class AcceptNumberAboveThousandDirective implements ControlValueAccessor 
   constructor(private renderer: Renderer2, private el: ElementRef) {}
 
   writeValue(value: any): void {
-    // Inicializa o campo com o valor dividido por 1000
-    this.renderer.setProperty(this.el.nativeElement, 'value', (value / 1000).toString());
+    if (value !== null && value !== undefined) {
+      this.renderer.setProperty(this.el.nativeElement, 'value', this.formatNumber(value));
+    }
   }
 
   registerOnChange(fn: any): void {
@@ -29,20 +30,26 @@ export class AcceptNumberAboveThousandDirective implements ControlValueAccessor 
     // Implementação se necessário
   }
 
-  @HostListener('focus')
-  onFocus(): void {
-    // Converte o valor para formato editável (divide por 1000)
-    let value = this.el.nativeElement.value;
-    this.renderer.setProperty(this.el.nativeElement, 'value', parseFloat(value) / 1000);
+  private formatNumber(value: number): string {
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
+
+  private unformatNumber(value: string): number {
+    return parseFloat(value.replace(/\./g, ''));
+  }
+
+  @HostListener('input', ['$event.target.value'])
+  onInput(value: string): void {
+    let numericValue = this.unformatNumber(value);
+    this.renderer.setProperty(this.el.nativeElement, 'value', this.formatNumber(numericValue));
+    this.onChange(numericValue);
   }
 
   @HostListener('blur')
   onBlur(): void {
-    // Ao perder o foco, multiplica o valor por 1000
     let value = this.el.nativeElement.value;
-    const newValue = parseFloat(value) * 1000;
-    this.renderer.setProperty(this.el.nativeElement, 'value', newValue.toString());
-    this.onChange(newValue);
+    let numericValue = this.unformatNumber(value);
+    this.renderer.setProperty(this.el.nativeElement, 'value', this.formatNumber(numericValue));
   }
 
 }

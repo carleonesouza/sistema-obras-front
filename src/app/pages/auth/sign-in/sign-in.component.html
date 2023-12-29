@@ -4,17 +4,15 @@
 
         <div class="w-full max-w-80 sm:w-80 mx-auto sm:mx-0">
             <!-- Logo -->
-           
+
             <!-- Title -->
             <div class="mt-4 text-4xl font-extrabold tracking-tight leading-tight">Cadastro de Ações PELT</div>
             <div class="flex items-baseline mt-0.5 font-medium">
                 <div>Não tem uma conta?</div>
-                <a
-                    class="ml-1 text-primary-500 hover:underline"
-                    [routerLink]="['/sign-up']">Inscrever-se
+                <a class="ml-1 text-primary-500 hover:underline" [routerLink]="['/sign-up']">Inscrever-se
                 </a>
             </div>
-            
+
             <!-- Alert -->
             <fuse-alert class="mt-4 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false"
                 [type]="alert.type" [@shake]="alert.type === 'error'">
@@ -62,10 +60,12 @@
                         [routerLink]="['/forgot-password']">Esqueci minha senha
                     </a> -->
                 </div>
-                <re-captcha [siteKey]="recaptcha" data-sitekey="recaptcha" class="g-recaptcha" id="recaptcha" name="recaptcha" [formControl]="signInControls.recaptcha" required 
-                [class.is-invalid]="signInControls.recaptcha.invalid && ( signInControls.recaptcha.dirty || signInControls.recaptcha.touched)"></re-captcha>
+                <re-captcha [siteKey]="recaptcha" data-sitekey="recaptcha" class="g-recaptcha" id="recaptcha"
+                    name="recaptcha" [formControl]="signInControls.recaptcha" required
+                    [class.is-invalid]="signInControls.recaptcha.invalid && ( signInControls.recaptcha.dirty || signInControls.recaptcha.touched)"></re-captcha>
                 <div *ngIf="'recaptcha.invalid && (recaptcha.dirty || recaptcha.touched)'" class="invalid-feedback">
-                    <div *ngIf="signInForm.get('recaptcha').hasError('required')" class="text-red-700">This field is required.</div>
+                    <div *ngIf="signInForm.get('recaptcha').hasError('required')" class="text-red-700">This field is
+                        required.</div>
                 </div>
 
                 <!-- Submit button -->
@@ -112,42 +112,31 @@
             </div> -->
             <div class="mt-6 text-lg tracking-tight text-white leading-relaxed flex flex-col space-y-4">
                 <p>
-                    Tendo em vista a necessidade de padronização do formato de coleta entre as diferentes instituições
-                    vinculadas,
-                    os formulários a seguir solicitam dados que não necessariamente estão na área de atuação direta de
-                    todos os setores.
+                    O Plano Estadual de Logística e Transporte (PELT) é um instrumento de planejamento que tem como
+                    objetivo guiar o estado de Minas Gerais no que diz respeito às prioridades e necessidades de
+                    investimentos em infraestrutura de transporte. O PELT é um produto desenvolvido pelo acordo de
+                    cooperação entre a Secretaria de Estado de Infraestrutura e Mobilidade de Minas Gerais (SEINFRA) e a
+                    Companhia de Desenvolvimento de Minas Gerais (CODEMGE), além de contar com apoio técnico da INFRA
+                    S.A, empresa pública vinculada ao Governo Federal.
                 </p>
                 <p>
-                    Caso o setor respondente não possua ou não atue com a informação solicitada, basta não preencher o
-                    formulário ou
-                    deixar a coluna em branco, e passar para o próximo item.
+                    Esse estudo trará como benefícios o aumento da eficiência no setor de transporte, a competitividade
+                    no cenário estadual e nacional, e consequentemente, o fomento para o desenvolvimento econômico e
+                    social em Minas Gerais. Para isso, trará como resultado uma sugestão de priorização de investimentos
+                    públicos ou privados conforme o potencial de impactos positivos dos projetos e alcance dos objetivos
+                    do Plano. Dessa forma, o PELT será um instrumento utilizado para direcionamento de ações do estado
+                    em investimento em infraestrutura de transportes.
                 </p>
-                <div class="ml-5">
-                    <p class="mb-3">O levantamento irá avaliar separadamente, mas de forma integrada 3 conjuntos de ações:
-                        Empreendimentos, Obras e
-                        Iniciativas, sendo que</p>
-                    <ul class="list-disc flex space-y-4 flex-col">
-                        <li>Empreendimento: Agrupamento de ações do tipo obra e serviço, que afetam um ou mais
-                            componentes de infraestrutura do
-                            sistema de transporte, alocados a um responsável pela sua condução (gestão ou execução).
-                        </li>
-                        <li>
-                            Obra: Intervenções que implantam, ampliam, mantém ou operam uma determinada infraestrutura
-                            individualizada.
-                            Por exemplo: ampliação de via, operação de terminal, implantação de obra de arte especial.
-                        </li>
-                        <li>
-                            Iniciativa (estratégica ou tática): Conjunto de ações que não sejam obras e serviços de
-                            infraestrutura (ex. regulamentação, capacitação, fiscalização, transformação digital, gestão
-                            ambiental), com
-                            objetivo comum entre si, que afetam significativamente as características de um ou mais
-                            componentes do sistema de
-                            transporte que não sejam infraestrutura, alocados a um ator do sistema responsável pela sua
-                            condução
-                        </li>
-
-                    </ul>
-                </div>
+                <p>
+                    O formulário em questão tem como objetivo receber contribuições sobre as ações (empreendimentos,
+                    obras e iniciativas) em infraestruturas de transporte. Essas ações serão estruturadas e consolidadas
+                    em um banco de dados que será utilizado para subsidiar a elaboração do PELT, além de auxiliar a
+                    SEINFRA no acompanhamento dos projetos relevantes para o estado de Minas Gerais. No preenchimento do
+                    formulário serão solicitadas informações que caracterizam as ações como dados sobre seu orçamento e
+                    serviços, sobre sua gestão além de características físicas como geolocalização, infraestruturas
+                    afetadas e quais os impactos esperados.
+                </p>
+                
             </div>
 
             <div class="flex items-center mt-8">
