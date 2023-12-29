@@ -1273,12 +1273,15 @@
                                                         <input matInput formControlName="dataInicio"
                                                             [matDatepicker]="InicioDatepicker"
                                                             [placeholder]="'Data de Inicío'"
-                                                            (dateChange)="addEvent('change', $event)" disabled />
+                                                            (dateChange)="addEvent('change', $event)"  />
                                                         <mat-datepicker-toggle matSuffix [for]="InicioDatepicker">
                                                         </mat-datepicker-toggle>
                                                         <mat-datepicker disabled="false" startView="year"
                                                             (monthSelected)="setDataInicio($event,InicioDatepicker)"
                                                             #InicioDatepicker></mat-datepicker>
+                                                            <mat-error *ngIf="obrasControls.dataInicio?.hasError('required')">
+                                                                Data Inicío é obrigatório
+                                                            </mat-error>
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="flex-auto">
@@ -1295,12 +1298,15 @@
                                                         <input matInput formControlName="dataConclusao"
                                                             [matDatepicker]="ConclusaoDatepicker"
                                                             [placeholder]="'Data de Conclusão'"
-                                                            (dateChange)="addEvent('change', $event)" disabled />
+                                                            (dateChange)="addEvent('change', $event)"  />
                                                         <mat-datepicker-toggle matSuffix [for]="ConclusaoDatepicker">
                                                         </mat-datepicker-toggle>
                                                         <mat-datepicker disabled="false" startView="year"
                                                             (monthSelected)="setDataConclusao($event, ConclusaoDatepicker)"
                                                             #ConclusaoDatepicker></mat-datepicker>
+                                                            <mat-error *ngIf="obrasControls.dataConclusao?.hasError('required')">
+                                                                Data Conclusão é obrigatório
+                                                            </mat-error>
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="flex-auto">
@@ -1317,7 +1323,7 @@
                                                         <input matInput formControlName="data_base_orcamento"
                                                             [matDatepicker]="BaseDatepicker"
                                                             [placeholder]="'Data de Conclusão'"
-                                                            (dateChange)="addEvent('change', $event)" disabled />
+                                                            (dateChange)="addEvent('change', $event)" />
                                                         <mat-datepicker-toggle matSuffix [for]="BaseDatepicker">
                                                         </mat-datepicker-toggle>
                                                         <mat-datepicker disabled="false" startView="year"

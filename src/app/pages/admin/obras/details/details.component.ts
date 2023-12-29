@@ -408,6 +408,7 @@ export class ObraDetailsComponent implements OnInit {
                 })
               })
             }
+
             if (obra.tipo === 'Hidroviário') {
               this.situacoes$ = this._obraService
                 .getSituacoes();
@@ -450,9 +451,9 @@ export class ObraDetailsComponent implements OnInit {
       intervencao: ['', [Validators.required]],
       status: ['', [Validators.required]],
       instrumento: [''],
-      dataInicio: [{ value: '', disabled: true }, [Validators.required]],
-      dataConclusao: [{ value: '', disabled: true }, [Validators.required]],
-      data_base_orcamento: [{ value: '', disabled: true }, [Validators.required]],
+      dataInicio: [{ value: '' }, [Validators.required]],
+      dataConclusao: [{ value: '' }, [Validators.required]],
+      data_base_orcamento: [{ value: '' }],
       documentosAdicionais: [''],
       responsavel: ['', [Validators.required]],
       arquivoGeorreferenciado: ['', [Validators.required]],
