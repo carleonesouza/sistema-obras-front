@@ -1,6 +1,6 @@
 <div class="flex flex-col w-full">
 
-    <ng-container *ngIf="!loading; else noItems">
+    <ng-container *ngIf="!isLoading; else noItems">
         <!-- View mode -->
         <ng-container *ngIf="!editMode && !creating">
             <!-- Header -->
@@ -1419,7 +1419,7 @@
                                                                 (change)="docsAdicionais($event)" class="w-full"
                                                                 formControlName="documentosAdicionais"
                                                                 placeholder="'Selecione o Arquivo para Upload'"
-                                                                accept=".pdf, .doc, .docx, .txt">
+                                                                accept=".*">
                                                         </div>
                                                     </mat-form-field>
                                                     <div class="progress-container">
@@ -1446,7 +1446,7 @@
                                                         <div class="file-input">
                                                             <input type="file" class="file-input" matInput
                                                                 name="fileInput" (change)="geoDocs($event)"
-                                                                accept=".pdf, .doc, .docx, .txt"
+                                                                accept=".*"
                                                                 formControlName="arquivoGeorreferenciado"
                                                                 class="w-full" />
                                                         </div>
