@@ -1094,36 +1094,39 @@ export class ObraDetailsComponent implements OnInit {
 
   normalizeProductArray(produtoArray: any) {
     if (produtoArray && produtoArray.length > 0) {
-      produtoArray = produtoArray.map((item: any) => {    
-        if (item) {         
-          item.produto_id = item.descricao.id ? item.descricao.id : item.id ;
+      produtoArray = produtoArray.map((item: any) => {
+        if (item) {
+          item.produto_id = item.descricao && item.descricao.id ? item.descricao.id : item.id;
           delete item.id;
           delete item.descricao;
           return item;
         }
-      });
+      }).filter((item: any) => item && item.produto_id); // Add this line to filter out items with empty produto_id
       return produtoArray;
     } else {
-      produtoArray = [];
-      return produtoArray;
+      return []; // Simplified this line
     }
   }
-
+  
   normalizeMunicipioArray(municipioArray: any, ufID: any) {
     if (municipioArray && municipioArray.length > 0) {
-      municipioArray = municipioArray.map((muni: any) => {
-        muni.municipio_id = muni.id;
-        muni.nome = muni.nome.nome;
-        muni.uf = ufID;
-        if (muni.municipio_id) {
-          delete muni.uf;
+      return municipioArray.map((muni: any) => {
+        if (muni && muni.id != null && muni.nome && muni.nome.nome != null) {
+          muni.municipio_id = muni.id;
+          muni.nome = muni.nome.nome;
+          muni.uf = ufID;
+          if (muni.municipio_id) {
+            delete muni.uf;
+          }
+          delete muni.id;
+          return muni;
         }
-        delete muni.id;
-        return muni;
-      });
-      return municipioArray;
+      }).filter((muni: any) => muni && muni.municipio_id); // Filter out items without municipio_id
+    } else {
+      return []; // Return an empty array if input is invalid or empty
     }
   }
+  
 
   uploadFilesSelected() {
 
