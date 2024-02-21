@@ -119,7 +119,7 @@ export class ObraDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoading = true;
-
+    
     // Combine initial requests into a single forkJoin
     forkJoin({
       produtos: this._obraService.getAllProdutos(),
