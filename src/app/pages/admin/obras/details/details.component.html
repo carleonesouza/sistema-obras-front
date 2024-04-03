@@ -66,15 +66,16 @@
                                     class="flex items-center justify-between w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
                                     <div class="flex">
                                         <mat-icon class="mr-2" [svgIcon]="'heroicons_outline:document-text'"></mat-icon>
-                                    <div class="font-mono text-primary-500">
-                                        <span class="font-bold">Responsável Empreendimento:
-                                        </span>{{obra.empreendimento.empreendimento.responsavel}}
-                                    </div>
+                                        <div class="font-mono text-primary-500">
+                                            <span class="font-bold">Responsável Empreendimento:
+                                            </span>{{obra.empreendimento.empreendimento.responsavel}}
+                                        </div>
                                     </div>
 
                                     <div class="flex">
                                         <button mat-icon-button aria-label="button Informações"
-                                            matTooltipPosition="above" matTooltip="
+                                            matTooltipPosition="above"
+                                            matTooltip="
                                             O responsável é o órgão ou departamento incumbido do acompanhamento e/ou execução daquele empreendimento. 
                                             Deve ser relacionado à gestão daquele empreendimento, seja subcontratando seus executores ou acompanhando seu andamento.">
                                             <mat-icon>
@@ -252,13 +253,13 @@
                                 <div class="flex justify-between gap-3 pb-2"
                                     *ngFor="let municipio of obra?.municipios; let i = index;">
                                     <div
-                                        class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">                                                                                      
-                                                <mat-icon class="mr-2" matTooltipPosition="above"
-                                                matTooltip="Lista de Municípios que serão impactados pela obra.">
-                                                    <span class="material-symbols-outlined">
-                                                        info
-                                                    </span>
-                                                </mat-icon>                                          
+                                        class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                        <mat-icon class="mr-2" matTooltipPosition="above"
+                                            matTooltip="Lista de Municípios que serão impactados pela obra.">
+                                            <span class="material-symbols-outlined">
+                                                info
+                                            </span>
+                                        </mat-icon>
                                         <div class="font-mono text-primary-500">
                                             <span class="font-bold">Município: </span>{{ municipio.nome}}
                                         </div>
@@ -273,10 +274,10 @@
                                         class="flex items-center justify-between leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
                                         <div class="flex">
                                             <mat-icon class="mr-2" [svgIcon]="'mat_solid:folder'"></mat-icon>
-                                        <div class="font-mono text-primary-500">
-                                            <span class="font-bold">Documentos Adicionais:
-                                            </span>{{obra?.documentosAdicionais }}
-                                        </div>
+                                            <div class="font-mono text-primary-500">
+                                                <span class="font-bold">Documentos Adicionais:
+                                                </span>{{obra?.documentosAdicionais }}
+                                            </div>
                                         </div>
                                         <div class="flex">
                                             <button mat-icon-button aria-label="button Informações"
@@ -296,15 +297,14 @@
                                         class="flex items-center justify-between leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
                                         <div class="flex">
                                             <mat-icon class="mr-2" [svgIcon]="'mat_solid:folder'"></mat-icon>
-                                        <div class="font-mono text-primary-500">
-                                            <span class="font-bold">Arquivo Georreferenciado: </span>
-                                            {{obra?.arquivoGeorreferenciado }}
-                                        </div>
+                                            <div class="font-mono text-primary-500">
+                                                <span class="font-bold">Arquivo Georreferenciado: </span>
+                                                {{obra?.arquivoGeorreferenciado }}
+                                            </div>
                                         </div>
                                         <div class="flex">
                                             <button mat-icon-button aria-label="button Informações"
-                                                matTooltipPosition="above"
-                                                matTooltip="Arquivo contendo informações para que seja possível localizar a obra. 
+                                                matTooltipPosition="above" matTooltip="Arquivo contendo informações para que seja possível localizar a obra. 
                                                 Esse arquivo deve ser, preferencialmente, em algum formato compatível com GIS (Shapefiles, GeoDataBase, GeoPackage, KMZ, KML, GeoJson, GeoPDF ou similares). 
                                                 Se não estiver disponível, anexar arquivos com imagem ou PDF.">
                                                 <mat-icon>
@@ -326,9 +326,10 @@
                                         class="flex items-center justify-between leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
                                         <div class="flex">
                                             <mat-icon class="mr-2" [svgIcon]="'mat_solid:attach_money'"></mat-icon>
-                                        <div class="font-mono text-primary-500">
-                                            <span class="font-bold">Valor Global:</span> {{obra?.valorGlobal | currency:'BRL' }}
-                                        </div>
+                                            <div class="font-mono text-primary-500">
+                                                <span class="font-bold">Valor Global:</span> {{obra?.valorGlobal |
+                                                currency:'BRL' }}
+                                            </div>
                                         </div>
                                         <div class="flex">
                                             <button mat-icon-button aria-label="button Informações"
@@ -347,10 +348,10 @@
                                         class="flex items-center justify-between leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
                                         <div class="flex">
                                             <mat-icon class="mr-2">percent</mat-icon>
-                                        <div class="font-mono text-primary-500">
-                                            <span class="font-bold">Percentual Financeiro Executado:</span>
-                                            {{obra?.percentualFinanceiroExecutado }}%
-                                        </div>
+                                            <div class="font-mono text-primary-500">
+                                                <span class="font-bold">Percentual Financeiro Executado:</span>
+                                                {{obra?.percentualFinanceiroExecutado }}%
+                                            </div>
                                         </div>
                                         <div class="flex">
                                             <button mat-icon-button aria-label="button Informações"
@@ -398,14 +399,14 @@
                                 <div class="flex justify-between gap-3 pb-2">
                                     <div
                                         class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                        <mat-icon class="mr-2"  matTooltipPosition="above"
-                                        matTooltip="
+                                        <mat-icon class="mr-2" matTooltipPosition="above"
+                                            matTooltip="
                                         Lista de todos os produtos previstos para serem transportados pelo modo de transporte que fará uso da infraestrutura que receberá a obra cadastrada. 
                                         Os produtos “Automóveis” e “Ônibus” dizem respeito ao transporte de pessoas em carros particulares ou veículos de transporte coletivo. 
                                         Todos os outros são oriundos da lista de produtos considerados na elaboração do Plano Nacional de Logística.">
-                                        <span class="material-symbols-outlined">
-                                            info
-                                        </span></mat-icon>
+                                            <span class="material-symbols-outlined">
+                                                info
+                                            </span></mat-icon>
                                         <div class="font-mono text-primary-500">
                                             <span class="font-bold"> Produto:</span> {{ produto.descricao }}
                                         </div>
@@ -433,610 +434,610 @@
                                         </div>
                                     </div>
                                 </div>
-                            </ng-container>
-
-                            <!--Obra Áerea-->
-                            <ng-container *ngIf="obra?.tipo ==='Aeroportuário'">
-                                <ng-container>
-                                    <div class="flex justify-between gap-3 pb-2">
-                                        <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2" [svgIcon]="'mat_solid:code'"></mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold"> Código IATA:</span> {{ obra?.codigoIATA }}
-                                            </div>
-                                        </div>
-
-                                        <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2" [svgIcon]="'mat_solid:flight'"></mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">Tipo de Avião que será Recebido com base no
-                                                    Cadastro da
-                                                    ICAO:</span> {{ obra?.tipoAviaoRecICAO }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </ng-container>
-
-                                <ng-container>
-                                    <div class="flex justify-between gap-3 pb-2">
-                                        <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2" [svgIcon]="'mat_solid:grass'"></mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">Nova Área Criada:</span> {{ obra?.novaAreaCriada
-                                                }} (em metros²)
-                                            </div>
-                                        </div>
-                                        <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2" [svgIcon]="'mat_solid:straighten'"></mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">Nova Largura:</span> {{ obra?.novaLargura }} (em
-                                                metros)
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </ng-container>
-                            </ng-container>
-
-                            <!--Obra Dutovária-->
-                            <ng-container *ngIf="obra?.tipo ==='Dutoviário'">
-                                <ng-container>
-                                    <div class="flex justify-between gap-3 pb-2">
-                                        <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2">
-                                                <span class="material-symbols-outlined">
-                                                    valve
-                                                </span></mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">Tipo de Duto:</span> {{
-                                                obra?.tipo_duto?.tipo_duto?.descricao
-                                                }}
-                                            </div>
-                                        </div>
-
-                                        <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2" [svgIcon]="'mat_solid:home_work'"></mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">Função da Estrutura:</span> {{
-                                                obra?.funcao_estrutura?.funcao_estrutura?.descricao
-                                                }}
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </ng-container>
-
-                                <ng-container>
-                                    <div class="flex justify-between gap-3 pb-2">
-                                        <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2">
-                                                <span class="material-symbols-outlined">
-                                                    tools_level
-                                                </span>
-                                            </mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">Nível do Duto:</span> {{
-                                                obra?.nivel_duto?.nivel_duto?.descricao }}
-                                            </div>
-                                        </div>
-
-                                        <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2"
-                                                [svgIcon]="'mat_solid:emoji_transportation'"></mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">Material Transportado:</span> {{
-                                                obra?.materialTransportado }}
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </ng-container>
-
-                                <ng-container>
-                                    <div class="flex justify-between gap-3 pb-2">
-                                        <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2" [svgIcon]="'mat_solid:trip_origin'"></mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">Código de Origem: </span>{{ obra?.codigoOrigem
-                                                }}
-                                            </div>
-                                        </div>
-
-                                        <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2" [svgIcon]="'mat_solid:pin_drop'"></mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">Código de Destino:</span> {{ obra?.codigoDestino
-                                                }}
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </ng-container>
-
-                                <ng-container>
-                                    <div class="flex justify-between gap-3 pb-2">
-                                        <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2">
-                                                <span class="material-symbols-outlined">
-                                                    signature
-                                                </span>
-                                            </mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">Nome XRL:</span> {{ obra?.nomeXRL }}
-                                            </div>
-                                        </div>
-
-                                        <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2">
-                                                <span class="material-symbols-outlined">
-                                                    bia
-                                                </span>
-                                            </mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">Espessura:</span> {{ obra?.espessura }} (em
-                                                metros)
-                                            </div>
-                                        </div>
-
-                                        <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2">
-                                                <span class="material-symbols-outlined">
-                                                    format_text_overflow
-                                                </span></mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">Vazão do Projeto:</span> {{ obra?.vazaoProjeto
-                                                }}
-                                                (m³/dia)
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </ng-container>
-
-                                <ng-container>
-                                    <div class="flex justify-between gap-3 pb-2">
-                                        <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2">
-                                                <span class="material-symbols-outlined">
-                                                    rebase_edit
-                                                </span>
-                                            </mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">Vazão Operacional:</span> {{
-                                                obra?.vazaoOperacional
-                                                }}
-                                                (m³/dia)
-                                            </div>
-                                        </div>
-
-                                        <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2">
-                                                <span class="material-symbols-outlined">
-                                                    sword_rose
-                                                </span>
-                                            </mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">Nova Área Impactada:</span> {{
-                                                obra?.novaAreaImpactada
-                                                }}
-                                                (Hac.)
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </ng-container>
-
-                            </ng-container>
-
-                            <!--Obra Hidroviária-->
-                            <ng-container *ngIf="obra?.tipo ==='Hidroviário'">
-                                <ng-container>
-                                    <div class="flex justify-between gap-3 pb-2">
-                                        <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2" [svgIcon]="'mat_solid:sailing'"></mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">Situação da Hidrovia:</span> {{
-                                                obra?.situacaoHidrovia?.descricao
-                                                }}
-                                            </div>
-                                        </div>
-
-                                        <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2"><span class="material-symbols-outlined">
-                                                    gate
-                                                </span></mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">A Hidrovia tem Eclusa: </span>
-                                                {{ obra?.temEclusa?.descricao }}
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </ng-container>
-
-                                <ng-container>
-                                    <div class="flex justify-between gap-3 pb-2">
-                                        <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2" [svgIcon]="'mat_solid:border_all'"></mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">A Hidrovia tem Barragem:</span> {{
-                                                obra?.temBarragem?.descricao }}
-                                            </div>
-                                        </div>
-
-                                        <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2" [svgIcon]="'mat_solid:directions_boat'"></mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">Tipo de Embarcação: </span>{{
-                                                obra?.tipoEmbarcacao }}
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </ng-container>
-
-                                <ng-container>
-                                    <div class="flex justify-between gap-3 pb-2">
-                                        <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2" [svgIcon]="'mat_solid:houseboat'"></mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">Haverá Ampliação na Capacidade de
-                                                    Passageiros,
-                                                    de Carga
-                                                    ou
-                                                    Ambos: </span>{{
-                                                obra?.ampliacaoCapacidade?.descricao }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="flex justify-between gap-3 pb-2">
-                                        <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2">
-                                                <span class="material-symbols-outlined">
-                                                    flex_direction
-                                                </span>
-                                            </mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">Profundida Mínima: </span>{{
-                                                obra?.profundidadeMinima }} (em metros)
-                                            </div>
-                                        </div>
-
-                                        <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2">
-                                                <span class="material-symbols-outlined">
-                                                    footprint
-                                                </span>
-                                            </mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">Profundida Máxima:</span> {{
-                                                obra?.profundidadeMaxima }} (em metros)
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </ng-container>
-
-                                <ng-container>
-                                    <div class="flex justify-between gap-3 pb-2">
-                                        <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2">diversity_3</mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">Comboios de Cheia:</span> {{ obra?.comboiosCheia
-                                                }}
-                                            </div>
-                                        </div>
-
-                                        <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2" [svgIcon]="'mat_solid:reduce_capacity'"></mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">Comboios de Estiagem:</span> {{
-                                                obra?.comboiosEstiagem }}
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </ng-container>
-                            </ng-container>
-
-                            <!--Obra Ferroviária-->
-                            <ng-container *ngIf="obra?.tipo ==='Ferroviário'">
-                                <ng-container>
-                                    <div class="flex justify-between gap-3 pb-2">
-                                        <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2" [svgIcon]="'mat_solid:directions'"></mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">KM Inicial:</span> {{
-                                                obra?.kmInicial
-                                                }}
-                                            </div>
-                                        </div>
-
-                                        <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2">
-                                                <span class="material-symbols-outlined">
-                                                    signpost
-                                                </span>
-                                            </mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">KM Final:</span> {{ obra?.kmFinal }}
-                                            </div>
-                                        </div>
-
-                                        <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2">
-                                                <span class="material-symbols-outlined">
-                                                    package_2
-                                                </span>
-                                            </mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">Nova Bitola:</span> {{
-                                                obra?.bitola?.bitola?.descricao }}
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </ng-container>
-
-                                <ng-container>
-                                    <div class="flex justify-between gap-3 pb-2">
-                                        <div
-                                            class="flex items-center justify-between leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <div class="flex">
-                                                <mat-icon class="mr-2">
-                                                    <span class="material-symbols-outlined">
-                                                        directions_alt
-                                                    </span>
-                                                </mat-icon>
-                                                <div class="font-mono text-primary-500">
-                                                    <span class="font-bold">Nova Velocidade:</span> {{
-                                                    obra?.novaVelocidade
-                                                    }} (KM/h)
-                                                </div>
-                                            </div>
-                                            <div class="flex">
-                                                <button mat-icon-button aria-label="button Informações"
-                                                    matTooltipPosition="above"
-                                                    matTooltip="Velocidade Operacional da via em Km/h após a conclusão das obras.">
-                                                    <mat-icon>
-                                                        <span class="material-symbols-outlined">
-                                                            info
-                                                        </span>
-                                                    </mat-icon>
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                        <div
-                                            class="flex items-center justify-between leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <div class="flex">
-                                                <mat-icon class="mr-2" [svgIcon]="'mat_solid:360'"></mat-icon>
-                                                <div class="font-mono text-primary-500">
-                                                    <span class="font-bold">Capacidade Dinâmica:</span> {{
-                                                    obra?.capacidadeDinamica }} (T/ano)
-                                                </div>
-                                            </div>
-                                            <div class="flex">
-                                                <button mat-icon-button aria-label="button Informações"
-                                                    matTooltipPosition="above"
-                                                    matTooltip="
-                                                    Capacidade de movimentação da infraestrutura ferroviária em toneladas/ano após a conclusão das obras.">
-                                                    <mat-icon>
-                                                        <span class="material-symbols-outlined">
-                                                            info
-                                                        </span>
-                                                    </mat-icon>
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </ng-container>
-
-
-                            </ng-container>
-
-                            <!--Obra Portuária-->
-                            <ng-container *ngIf="obra?.tipo ==='Portuário'">
-                                <ng-container>
-                                    <div class="flex justify-between gap-3 pb-2">
-                                        <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2" [svgIcon]="'mat_solid:directions_boat'"></mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">Tipo Embarcação:</span> {{
-                                                obra?.tipoEmbarcacao
-                                                }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </ng-container>
-                                <ng-container>
-                                    <div class="flex justify-between gap-3 pb-2">
-                                        <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2">
-                                                <span class="material-symbols-outlined">
-                                                    360
-                                                </span>
-                                            </mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">Haverá Ampliação na Capacidade de
-                                                    Passageiros,
-                                                    de Carga
-                                                    ou
-                                                    Ambos:</span> {{ obra?.ampliacaoCapacidade?.descricao }} (T/ano)
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </ng-container>
-
-                                <ng-container>
-                                    <div class="flex justify-between gap-3 pb-2">
-                                        <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2">
-                                                <span class="material-symbols-outlined">
-                                                    settings_panorama
-                                                </span>
-                                            </mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">Novo Calado:</span> {{
-                                                obra?.novoCalado }} (em metros)
-                                            </div>
-                                        </div>
-
-                                        <div
-                                            class="flex items-center justify-between leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <div class="flex">
-                                                <mat-icon class="mr-2">
-                                                    <span class="material-symbols-outlined">
-                                                        360
-                                                    </span>
-                                                </mat-icon>
-                                                <div class="font-mono text-primary-500">
-                                                    <span class="font-bold">Capacidade Dinâmica:</span> {{
-                                                    obra?.capacidadeDinamica }} (T/ano)
-                                                </div>
-                                            </div>
-                                            <div class="flex">
-                                                <button mat-icon-button aria-label="button Informações"
-                                                    matTooltipPosition="above"
-                                                    matTooltip="Capacidade de movimentação da infraestrutura portuária em toneladas/ano após a conclusão das obras..">
-                                                    <mat-icon>
-                                                        <span class="material-symbols-outlined">
-                                                            info
-                                                        </span>
-                                                    </mat-icon>
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </ng-container>
-
-                            </ng-container>
-
-                            <!--Obra Rodoviária-->
-                            <ng-container *ngIf="obra?.tipo ==='Rodoviário'">
-                                <ng-container>
-                                    <div class="flex justify-between gap-3 pb-2">
-                                        <div
-                                            class="flex items-center justify-between leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <div class="flex">
-                                                <mat-icon class="mr-2" [svgIcon]="'mat_solid:trip_origin'"></mat-icon>
-                                                <div class="font-mono text-primary-500">
-                                                    <span class="font-bold">Rodivia:</span> {{
-                                                    obra?.rodovia }}
-                                                </div>
-                                            </div>
-                                            <div class="flex">
-                                                <button mat-icon-button aria-label="button Informações"
-                                                    matTooltipPosition="above"
-                                                    matTooltip="
-                                                Nome da rodovia onde a obra será realizada. Caso seja uma rodovia federal, utilizar o s
-                                                eguinte padrão: “BR-” + número da rodovia + “/” + sigla da UF (Ex.: BR-381/MG). 
-                                                No caso de uma rodovia estadual utilizar o seguinte padrão: sigla da rodovia + número da rodovia (Ex.: MG-050, MGT-750).">
-                                                    <mat-icon>
-                                                        <span class="material-symbols-outlined">
-                                                            info
-                                                        </span>
-                                                    </mat-icon>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div
-                                        class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                        <mat-icon class="mr-2" [svgIcon]="'mat_solid:directions'"></mat-icon>
-                                        <div class="font-mono text-primary-500">
-                                            <span class="font-bold">KM Inicial:</span> {{
-                                            obra?.kmInicial
-                                            }}
-                                        </div>
-                                    </div>
-                                    </div>
-                                    <div class="flex justify-between gap-3 pb-2">                                      
-                                       
-                                        <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2">
-                                                <span class="material-symbols-outlined">
-                                                    signpost
-                                                </span>
-                                            </mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">KM Final:</span> {{ obra?.kmFinal }}
-                                            </div>
-                                        </div>
-
-                                        <div
-                                            class="flex items-center justify-between leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <div class="flex">
-                                                <mat-icon class="mr-2" [svgIcon]="'mat_solid:trip_origin'"></mat-icon>
-                                                <div class="font-mono text-primary-500">
-                                                    <span class="font-bold">Código PNV/SRE:</span> {{
-                                                    obra?.codigo }}
-                                                </div>
-                                            </div>
-                                            <div class="flex">
-                                                <button mat-icon-button aria-label="button Informações"
-                                                    matTooltipPosition="above" matTooltip="
-                                                    Inserir os códigos PNV ou SER que a obra engloba, utilizar o seguinte padrão: código + “;” + 
-                                                    código (Ex,: 900AMG1210; 120CMG0190-01; 434EMG0200-01)">
-                                                    <mat-icon>
-                                                        <span class="material-symbols-outlined">
-                                                            info
-                                                        </span>
-                                                    </mat-icon>
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                        <div
-                                            class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
-                                            <mat-icon class="mr-2">
-                                                <span class="material-symbols-outlined">
-                                                    conversion_path
-                                                </span>
-                                            </mat-icon>
-                                            <div class="font-mono text-primary-500">
-                                                <span class="font-bold">Versão:</span> {{ obra?.versao }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </ng-container>
-                            </ng-container>
-                            <!--Obra Rodoviária-->
+                            </ng-container>                            
                         </div>
                     </ng-container>
+
+                    <!--Obra Áerea-->
+                    <ng-container *ngIf="obra?.tipo ==='Aeroportuário'">
+                        <ng-container>
+                            <div class="flex justify-between gap-3 pb-2">
+                                <div
+                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <mat-icon class="mr-2" [svgIcon]="'mat_solid:code'"></mat-icon>
+                                    <div class="font-mono text-primary-500">
+                                        <span class="font-bold"> Código IATA:</span> {{ obra?.codigoIATA }}
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <mat-icon class="mr-2" [svgIcon]="'mat_solid:flight'"></mat-icon>
+                                    <div class="font-mono text-primary-500">
+                                        <span class="font-bold">Tipo de Avião que será Recebido com base no
+                                            Cadastro da
+                                            ICAO:</span> {{ obra?.tipoAviaoRecICAO }}
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                        <ng-container>
+                            <div class="flex justify-between gap-3 pb-2">
+                                <div
+                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <mat-icon class="mr-2" [svgIcon]="'mat_solid:grass'"></mat-icon>
+                                    <div class="font-mono text-primary-500">
+                                        <span class="font-bold">Nova Área Criada:</span> {{ obra?.novaAreaCriada
+                                        }} (em metros²)
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <mat-icon class="mr-2" [svgIcon]="'mat_solid:straighten'"></mat-icon>
+                                    <div class="font-mono text-primary-500">
+                                        <span class="font-bold">Nova Largura:</span> {{ obra?.novaLargura }} (em
+                                        metros)
+                                    </div>
+                                </div>
+
+                            </div>
+                        </ng-container>
+                    </ng-container>
+
+                    <!--Obra Dutovária-->
+                    <ng-container *ngIf="obra?.tipo ==='Dutoviário'">
+                        <ng-container>
+                            <div class="flex justify-between gap-3 pb-2">
+                                <div
+                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <mat-icon class="mr-2">
+                                        <span class="material-symbols-outlined">
+                                            valve
+                                        </span></mat-icon>
+                                    <div class="font-mono text-primary-500">
+                                        <span class="font-bold">Tipo de Duto:</span> {{
+                                        obra?.tipo_duto?.tipo_duto?.descricao
+                                        }}
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <mat-icon class="mr-2" [svgIcon]="'mat_solid:home_work'"></mat-icon>
+                                    <div class="font-mono text-primary-500">
+                                        <span class="font-bold">Função da Estrutura:</span> {{
+                                        obra?.funcao_estrutura?.funcao_estrutura?.descricao
+                                        }}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </ng-container>
+
+                        <ng-container>
+                            <div class="flex justify-between gap-3 pb-2">
+                                <div
+                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <mat-icon class="mr-2">
+                                        <span class="material-symbols-outlined">
+                                            tools_level
+                                        </span>
+                                    </mat-icon>
+                                    <div class="font-mono text-primary-500">
+                                        <span class="font-bold">Nível do Duto:</span> {{
+                                        obra?.nivel_duto?.nivel_duto?.descricao }}
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <mat-icon class="mr-2"
+                                        [svgIcon]="'mat_solid:emoji_transportation'"></mat-icon>
+                                    <div class="font-mono text-primary-500">
+                                        <span class="font-bold">Material Transportado:</span> {{
+                                        obra?.materialTransportado }}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </ng-container>
+
+                        <ng-container>
+                            <div class="flex justify-between gap-3 pb-2">
+                                <div
+                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <mat-icon class="mr-2" [svgIcon]="'mat_solid:trip_origin'"></mat-icon>
+                                    <div class="font-mono text-primary-500">
+                                        <span class="font-bold">Código de Origem: </span>{{ obra?.codigoOrigem
+                                        }}
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <mat-icon class="mr-2" [svgIcon]="'mat_solid:pin_drop'"></mat-icon>
+                                    <div class="font-mono text-primary-500">
+                                        <span class="font-bold">Código de Destino:</span> {{ obra?.codigoDestino
+                                        }}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </ng-container>
+
+                        <ng-container>
+                            <div class="flex justify-between gap-3 pb-2">
+                                <div
+                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <mat-icon class="mr-2">
+                                        <span class="material-symbols-outlined">
+                                            signature
+                                        </span>
+                                    </mat-icon>
+                                    <div class="font-mono text-primary-500">
+                                        <span class="font-bold">Nome XRL:</span> {{ obra?.nomeXRL }}
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <mat-icon class="mr-2">
+                                        <span class="material-symbols-outlined">
+                                            bia
+                                        </span>
+                                    </mat-icon>
+                                    <div class="font-mono text-primary-500">
+                                        <span class="font-bold">Espessura:</span> {{ obra?.espessura }} (em
+                                        metros)
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <mat-icon class="mr-2">
+                                        <span class="material-symbols-outlined">
+                                            format_text_overflow
+                                        </span></mat-icon>
+                                    <div class="font-mono text-primary-500">
+                                        <span class="font-bold">Vazão do Projeto:</span> {{ obra?.vazaoProjeto
+                                        }}
+                                        (m³/dia)
+                                    </div>
+                                </div>
+
+                            </div>
+                        </ng-container>
+
+                        <ng-container>
+                            <div class="flex justify-between gap-3 pb-2">
+                                <div
+                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <mat-icon class="mr-2">
+                                        <span class="material-symbols-outlined">
+                                            rebase_edit
+                                        </span>
+                                    </mat-icon>
+                                    <div class="font-mono text-primary-500">
+                                        <span class="font-bold">Vazão Operacional:</span> {{
+                                        obra?.vazaoOperacional
+                                        }}
+                                        (m³/dia)
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <mat-icon class="mr-2">
+                                        <span class="material-symbols-outlined">
+                                            sword_rose
+                                        </span>
+                                    </mat-icon>
+                                    <div class="font-mono text-primary-500">
+                                        <span class="font-bold">Nova Área Impactada:</span> {{
+                                        obra?.novaAreaImpactada
+                                        }}
+                                        (Hac.)
+                                    </div>
+                                </div>
+
+                            </div>
+                        </ng-container>
+
+                    </ng-container>
+
+                    <!--Obra Hidroviária-->
+                    <ng-container *ngIf="obra?.tipo ==='Hidroviário'">
+                        <ng-container>
+                            <div class="flex justify-between gap-3 pb-2">
+                                <div
+                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <mat-icon class="mr-2" [svgIcon]="'mat_solid:sailing'"></mat-icon>
+                                    <div class="font-mono text-primary-500">
+                                        <span class="font-bold">Situação da Hidrovia:</span> {{
+                                        obra?.situacaoHidrovia?.descricao
+                                        }}
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <mat-icon class="mr-2"><span class="material-symbols-outlined">
+                                            gate
+                                        </span></mat-icon>
+                                    <div class="font-mono text-primary-500">
+                                        <span class="font-bold">A Hidrovia tem Eclusa: </span>
+                                        {{ obra?.temEclusa?.descricao }}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </ng-container>
+
+                        <ng-container>
+                            <div class="flex justify-between gap-3 pb-2">
+                                <div
+                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <mat-icon class="mr-2" [svgIcon]="'mat_solid:border_all'"></mat-icon>
+                                    <div class="font-mono text-primary-500">
+                                        <span class="font-bold">A Hidrovia tem Barragem:</span> {{
+                                        obra?.temBarragem?.descricao }}
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <mat-icon class="mr-2" [svgIcon]="'mat_solid:directions_boat'"></mat-icon>
+                                    <div class="font-mono text-primary-500">
+                                        <span class="font-bold">Tipo de Embarcação: </span>{{
+                                        obra?.tipoEmbarcacao }}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </ng-container>
+
+                        <ng-container>
+                            <div class="flex justify-between gap-3 pb-2">
+                                <div
+                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <mat-icon class="mr-2" [svgIcon]="'mat_solid:houseboat'"></mat-icon>
+                                    <div class="font-mono text-primary-500">
+                                        <span class="font-bold">Haverá Ampliação na Capacidade de
+                                            Passageiros,
+                                            de Carga
+                                            ou
+                                            Ambos: </span>{{
+                                        obra?.ampliacaoCapacidade?.descricao }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex justify-between gap-3 pb-2">
+                                <div
+                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <mat-icon class="mr-2">
+                                        <span class="material-symbols-outlined">
+                                            flex_direction
+                                        </span>
+                                    </mat-icon>
+                                    <div class="font-mono text-primary-500">
+                                        <span class="font-bold">Profundida Mínima: </span>{{
+                                        obra?.profundidadeMinima }} (em metros)
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <mat-icon class="mr-2">
+                                        <span class="material-symbols-outlined">
+                                            footprint
+                                        </span>
+                                    </mat-icon>
+                                    <div class="font-mono text-primary-500">
+                                        <span class="font-bold">Profundida Máxima:</span> {{
+                                        obra?.profundidadeMaxima }} (em metros)
+                                    </div>
+                                </div>
+
+                            </div>
+                        </ng-container>
+
+                        <ng-container>
+                            <div class="flex justify-between gap-3 pb-2">
+                                <div
+                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <mat-icon class="mr-2">diversity_3</mat-icon>
+                                    <div class="font-mono text-primary-500">
+                                        <span class="font-bold">Comboios de Cheia:</span> {{ obra?.comboiosCheia
+                                        }}
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <mat-icon class="mr-2" [svgIcon]="'mat_solid:reduce_capacity'"></mat-icon>
+                                    <div class="font-mono text-primary-500">
+                                        <span class="font-bold">Comboios de Estiagem:</span> {{
+                                        obra?.comboiosEstiagem }}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </ng-container>
+                    </ng-container>
+
+                    <!--Obra Ferroviária-->
+                    <ng-container *ngIf="obra?.tipo ==='Ferroviário'">
+                        <ng-container>
+                            <div class="flex justify-between gap-3 pb-2">
+                                <div
+                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <mat-icon class="mr-2" [svgIcon]="'mat_solid:directions'"></mat-icon>
+                                    <div class="font-mono text-primary-500">
+                                        <span class="font-bold">KM Inicial:</span> {{
+                                        obra?.kmInicial
+                                        }}
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <mat-icon class="mr-2">
+                                        <span class="material-symbols-outlined">
+                                            signpost
+                                        </span>
+                                    </mat-icon>
+                                    <div class="font-mono text-primary-500">
+                                        <span class="font-bold">KM Final:</span> {{ obra?.kmFinal }}
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <mat-icon class="mr-2">
+                                        <span class="material-symbols-outlined">
+                                            package_2
+                                        </span>
+                                    </mat-icon>
+                                    <div class="font-mono text-primary-500">
+                                        <span class="font-bold">Nova Bitola:</span> {{
+                                        obra?.bitola?.bitola?.descricao }}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </ng-container>
+
+                        <ng-container>
+                            <div class="flex justify-between gap-3 pb-2">
+                                <div
+                                    class="flex items-center justify-between leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <div class="flex">
+                                        <mat-icon class="mr-2">
+                                            <span class="material-symbols-outlined">
+                                                directions_alt
+                                            </span>
+                                        </mat-icon>
+                                        <div class="font-mono text-primary-500">
+                                            <span class="font-bold">Nova Velocidade:</span> {{
+                                            obra?.novaVelocidade
+                                            }} (KM/h)
+                                        </div>
+                                    </div>
+                                    <div class="flex">
+                                        <button mat-icon-button aria-label="button Informações"
+                                            matTooltipPosition="above"
+                                            matTooltip="Velocidade Operacional da via em Km/h após a conclusão das obras.">
+                                            <mat-icon>
+                                                <span class="material-symbols-outlined">
+                                                    info
+                                                </span>
+                                            </mat-icon>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="flex items-center justify-between leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <div class="flex">
+                                        <mat-icon class="mr-2" [svgIcon]="'mat_solid:360'"></mat-icon>
+                                        <div class="font-mono text-primary-500">
+                                            <span class="font-bold">Capacidade Dinâmica:</span> {{
+                                            obra?.capacidadeDinamica }} (T/ano)
+                                        </div>
+                                    </div>
+                                    <div class="flex">
+                                        <button mat-icon-button aria-label="button Informações"
+                                            matTooltipPosition="above"
+                                            matTooltip="
+                                            Capacidade de movimentação da infraestrutura ferroviária em toneladas/ano após a conclusão das obras.">
+                                            <mat-icon>
+                                                <span class="material-symbols-outlined">
+                                                    info
+                                                </span>
+                                            </mat-icon>
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </ng-container>
+
+
+                    </ng-container>
+
+                    <!--Obra Portuária-->
+                    <ng-container *ngIf="obra?.tipo ==='Portuário'">
+                        <ng-container>
+                            <div class="flex justify-between gap-3 pb-2">
+                                <div
+                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <mat-icon class="mr-2" [svgIcon]="'mat_solid:directions_boat'"></mat-icon>
+                                    <div class="font-mono text-primary-500">
+                                        <span class="font-bold">Tipo Embarcação:</span> {{
+                                        obra?.tipoEmbarcacao
+                                        }}
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                        <ng-container>
+                            <div class="flex justify-between gap-3 pb-2">
+                                <div
+                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <mat-icon class="mr-2">
+                                        <span class="material-symbols-outlined">
+                                            360
+                                        </span>
+                                    </mat-icon>
+                                    <div class="font-mono text-primary-500">
+                                        <span class="font-bold">Haverá Ampliação na Capacidade de
+                                            Passageiros,
+                                            de Carga
+                                            ou
+                                            Ambos:</span> {{ obra?.ampliacaoCapacidade?.descricao }} (T/ano)
+                                    </div>
+                                </div>
+
+                            </div>
+                        </ng-container>
+
+                        <ng-container>
+                            <div class="flex justify-between gap-3 pb-2">
+                                <div
+                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <mat-icon class="mr-2">
+                                        <span class="material-symbols-outlined">
+                                            settings_panorama
+                                        </span>
+                                    </mat-icon>
+                                    <div class="font-mono text-primary-500">
+                                        <span class="font-bold">Novo Calado:</span> {{
+                                        obra?.novoCalado }} (em metros)
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="flex items-center justify-between leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <div class="flex">
+                                        <mat-icon class="mr-2">
+                                            <span class="material-symbols-outlined">
+                                                360
+                                            </span>
+                                        </mat-icon>
+                                        <div class="font-mono text-primary-500">
+                                            <span class="font-bold">Capacidade Dinâmica:</span> {{
+                                            obra?.capacidadeDinamica }} (T/ano)
+                                        </div>
+                                    </div>
+                                    <div class="flex">
+                                        <button mat-icon-button aria-label="button Informações"
+                                            matTooltipPosition="above"
+                                            matTooltip="Capacidade de movimentação da infraestrutura portuária em toneladas/ano após a conclusão das obras..">
+                                            <mat-icon>
+                                                <span class="material-symbols-outlined">
+                                                    info
+                                                </span>
+                                            </mat-icon>
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </ng-container>
+
+                    </ng-container>
+
+                    <!--Obra Rodoviária-->
+                    <ng-container *ngIf="obra?.tipo ==='Rodoviário'">
+                        <ng-container>
+                            <div class="flex justify-between gap-3 pb-2">
+                                <div
+                                    class="flex items-center justify-between leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <div class="flex">
+                                        <mat-icon class="mr-2" [svgIcon]="'mat_solid:trip_origin'"></mat-icon>
+                                        <div class="font-mono text-primary-500">
+                                            <span class="font-bold">Rodivia:</span> {{
+                                            obra?.rodovia }}
+                                        </div>
+                                    </div>
+                                    <div class="flex">
+                                        <button mat-icon-button aria-label="button Informações"
+                                            matTooltipPosition="above"
+                                            matTooltip="
+                                        Nome da rodovia onde a obra será realizada. Caso seja uma rodovia federal, utilizar o s
+                                        eguinte padrão: “BR-” + número da rodovia + “/” + sigla da UF (Ex.: BR-381/MG). 
+                                        No caso de uma rodovia estadual utilizar o seguinte padrão: sigla da rodovia + número da rodovia (Ex.: MG-050, MGT-750).">
+                                            <mat-icon>
+                                                <span class="material-symbols-outlined">
+                                                    info
+                                                </span>
+                                            </mat-icon>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <mat-icon class="mr-2" [svgIcon]="'mat_solid:directions'"></mat-icon>
+                                    <div class="font-mono text-primary-500">
+                                        <span class="font-bold">KM Inicial:</span> {{
+                                        obra?.kmInicial
+                                        }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex justify-between gap-3 pb-2">
+
+                                <div
+                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <mat-icon class="mr-2">
+                                        <span class="material-symbols-outlined">
+                                            signpost
+                                        </span>
+                                    </mat-icon>
+                                    <div class="font-mono text-primary-500">
+                                        <span class="font-bold">KM Final:</span> {{ obra?.kmFinal }}
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="flex items-center justify-between leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <div class="flex">
+                                        <mat-icon class="mr-2" [svgIcon]="'mat_solid:trip_origin'"></mat-icon>
+                                        <div class="font-mono text-primary-500">
+                                            <span class="font-bold">Código PNV/SRE:</span> {{
+                                            obra?.codigo }}
+                                        </div>
+                                    </div>
+                                    <div class="flex">
+                                        <button mat-icon-button aria-label="button Informações"
+                                            matTooltipPosition="above" matTooltip="
+                                            Inserir os códigos PNV ou SER que a obra engloba, utilizar o seguinte padrão: código + “;” + 
+                                            código (Ex,: 900AMG1210; 120CMG0190-01; 434EMG0200-01)">
+                                            <mat-icon>
+                                                <span class="material-symbols-outlined">
+                                                    info
+                                                </span>
+                                            </mat-icon>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="flex items-center leading-6 w-full p-3 border-2 border-light-blue-500 border-opacity-75 rounded-lg">
+                                    <mat-icon class="mr-2">
+                                        <span class="material-symbols-outlined">
+                                            conversion_path
+                                        </span>
+                                    </mat-icon>
+                                    <div class="font-mono text-primary-500">
+                                        <span class="font-bold">Versão:</span> {{ obra?.versao }}
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                    <!--Obra Rodoviária-->
                 </div>
             </div>
 
@@ -1072,7 +1073,7 @@
                                 <div class="flex flex-col px-8 py-6 pb-4 shadow-xl w-full">
                                     <div class="mt-4 flex flex-wrap">
                                         <ng-container>
-                                            <div class="flex flex-wrap space-x-4 w-full">
+                                            <div class="flex flex-wrap md:space-x-4 w-full">
                                                 <div class="flex-auto" *ngIf="!creating">
                                                     <mat-form-field appearance="outline" class="w-full">
                                                         <mat-label *ngIf="!isLoading">Selecione o Setor
@@ -1084,7 +1085,7 @@
                                                                     diameter="20"></mat-spinner>
                                                             </div>
                                                         </mat-label>
-                                                        <mat-select formControlName="tipo" [disabled]="editMode"                                                           
+                                                        <mat-select formControlName="tipo" [disabled]="editMode"
                                                             [compareWith]="compareSetores">
                                                             <mat-option *ngFor="let setor of setores" [value]="setor">
                                                                 {{ setor.descricao }}
@@ -1114,7 +1115,7 @@
                                                     </mat-form-field>
                                                 </div>
                                             </div>
-                                            <div class="flex flex-wrap space-x-4 w-full">
+                                            <div class="flex flex-wrap md:space-x-4 w-full">
                                                 <div class="flex-auto">
                                                     <mat-form-field appearance="outline" class="w-full">
                                                         <mat-label *ngIf="!isLoading">Selecione o Empreendimento
@@ -1136,7 +1137,7 @@
                                                     </mat-form-field>
                                                 </div>
                                             </div>
-                                            <div class="flex flex-wrap space-x-4 w-full">
+                                            <div class="flex flex-wrap md:space-x-4 w-full">
                                                 <div class="flex-auto">
                                                     <mat-form-field class=" w-full" appearance="outline">
                                                         <mat-label>Descrição</mat-label>
@@ -1189,7 +1190,7 @@
                                                     </mat-form-field>
                                                 </div>
                                             </div>
-                                            <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                            <div class="mt-4 flex flex-wrap md:space-x-4 w-full">
                                                 <div class="flex-auto">
                                                     <mat-form-field class=" w-full" appearance="outline">
                                                         <mat-label>Valor Global</mat-label>
@@ -1220,7 +1221,7 @@
                                                     </mat-form-field>
                                                 </div>
                                             </div>
-                                            <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                            <div class="mt-4 flex flex-wrap md:space-x-4 w-full">
                                                 <div class="flex-auto">
                                                     <mat-form-field class="w-full" appearance="outline">
                                                         <mat-label>Instrumento</mat-label>
@@ -1273,7 +1274,7 @@
                                                         <input matInput formControlName="dataInicio"
                                                             [matDatepicker]="InicioDatepicker"
                                                             [placeholder]="'Data de Inicío'"
-                                                            (dateChange)="addEvent('change', $event)"  />
+                                                            (dateChange)="addEvent('change', $event)" />
                                                         <mat-datepicker-toggle matSuffix [for]="InicioDatepicker">
                                                         </mat-datepicker-toggle>
                                                         <mat-datepicker disabled="false" startView="year"
@@ -1295,12 +1296,12 @@
                                                         <input matInput formControlName="dataConclusao"
                                                             [matDatepicker]="ConclusaoDatepicker"
                                                             [placeholder]="'Data de Conclusão'"
-                                                            (dateChange)="addEvent('change', $event)"  />
+                                                            (dateChange)="addEvent('change', $event)" />
                                                         <mat-datepicker-toggle matSuffix [for]="ConclusaoDatepicker">
                                                         </mat-datepicker-toggle>
                                                         <mat-datepicker disabled="false" startView="year"
                                                             (monthSelected)="setDataConclusao($event, ConclusaoDatepicker)"
-                                                            #ConclusaoDatepicker></mat-datepicker>                                                           
+                                                            #ConclusaoDatepicker></mat-datepicker>
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="flex-auto">
@@ -1326,7 +1327,7 @@
                                                     </mat-form-field>
                                                 </div>
                                             </div>
-                                            <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                            <div class="mt-4 flex flex-wrap md:space-x-4 w-full">
                                                 <div class="flex-auto">
                                                     <mat-form-field appearance="outline" class="w-full">
                                                         <mat-label *ngIf="!isLoading">Status</mat-label>
@@ -1398,7 +1399,7 @@
                                                 <mat-icon class="icon-size-5"
                                                     [svgIcon]="'heroicons_solid:plus-circle'"></mat-icon>
                                                 <span
-                                                    class="ml-2 font-medium text-secondary group-hover:underline">Adicionar                                                    
+                                                    class="ml-2 font-medium text-secondary group-hover:underline">Adicionar
                                                     Produto</span>
                                             </div>
                                             <div class="mt-4 flex justify-between items-center space-x-4 w-full">
@@ -1422,12 +1423,17 @@
                                                                 accept=".*">
                                                         </div>
                                                     </mat-form-field>
+                                                    <div>
+                                                        <mat-hint *ngIf="!validateSize">Tamanho máximo do arquivo para upload é de 100 MB.</mat-hint>
+                                                    </div>
                                                     <div class="progress-container">
                                                         <div class="progress-bar" [style.width]="uploadProgress + '%'">
                                                         </div>
                                                     </div>
-                                                    <p class="p-1" *ngIf="uploadProgress> 0">Upload Completo: {{
-                                                        uploadProgress }}%</p>
+                                                        <p class="p-1" *ngIf="uploadProgress> 0">Upload Completo: {{
+                                                            uploadProgress }}%
+                                                        </p>
+                                                    
                                                 </div>
                                                 <div class="flex-auto w-full">
                                                     <mat-form-field class="w-full" appearance="fill">
@@ -1445,12 +1451,14 @@
                                                         <p *ngIf="arquivoGeo">{{ arquivoGeo.name }}</p>
                                                         <div class="file-input">
                                                             <input type="file" class="file-input" matInput
-                                                                name="fileInput" (change)="geoDocs($event)"
-                                                                accept=".*"
+                                                                name="fileInput" (change)="geoDocs($event)" accept=".*"
                                                                 formControlName="arquivoGeorreferenciado"
                                                                 class="w-full" />
                                                         </div>
                                                     </mat-form-field>
+                                                    <div>
+                                                        <mat-hint *ngIf="!validateSize">Tamanho máximo do arquivo para upload é de 100 MB.</mat-hint>
+                                                    </div>
                                                     <div class="progress-container">
                                                         <div class="progress-bar"
                                                             [style.width]="uploadGeorreferenciado + '%'"></div>
@@ -1467,7 +1475,7 @@
                                                     <h3 class="text-3xl">Endereço</h3>
                                                 </div>
                                                 <ng-container>
-                                                    <div class="flex flex-wrap space-x-4 w-full">
+                                                    <div class="flex flex-wrap md:space-x-4 w-full">
                                                         <div class="flex-auto">
                                                             <mat-form-field appearance="outline" class="w-full">
                                                                 <mat-label *ngIf="!isLoading">Estado </mat-label>
@@ -1542,9 +1550,10 @@
                                                         <mat-icon class="icon-size-5"
                                                             [svgIcon]="'heroicons_solid:plus-circle'"></mat-icon>
                                                         <span
-                                                            class="ml-2 font-medium text-secondary group-hover:underline">Adicionar Município</span>
+                                                            class="ml-2 font-medium text-secondary group-hover:underline">Adicionar
+                                                            Município</span>
                                                     </div>
-                                                    <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                                    <div class="mt-4 flex flex-wrap md:space-x-4 w-full">
                                                         <div class="flex-auto">
                                                             <mat-form-field class=" w-full" appearance="outline">
                                                                 <mat-label>Latitude</mat-label>
@@ -1588,7 +1597,7 @@
                                                 <div class="w-full pb-6">
                                                     <h3 class="text-3xl">Tipo Obra: Aeroportuária </h3>
                                                 </div>
-                                                <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                                <div class="mt-4 flex flex-wrap md:space-x-4 w-full">
                                                     <div class="flex-auto">
                                                         <mat-form-field class="w-full" appearance="outline">
                                                             <mat-label>Código IATA</mat-label>
@@ -1602,7 +1611,7 @@
                                                         </mat-form-field>
                                                     </div>
                                                 </div>
-                                                <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                                <div class="mt-4 flex flex-wrap md:space-x-4 w-full">
                                                     <div class="flex-auto">
                                                         <mat-form-field class=" w-full" appearance="outline">
                                                             <mat-label>Tipo de Avião que será recebido com base
@@ -1618,7 +1627,7 @@
                                                         </mat-form-field>
                                                     </div>
                                                 </div>
-                                                <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                                <div class="mt-4 flex flex-wrap md:space-x-4 w-full">
                                                     <div class="flex-auto">
                                                         <mat-form-field class=" w-full" appearance="outline">
                                                             <mat-label>Nova Extensão (m)</mat-label>
@@ -1664,7 +1673,7 @@
                                                 <div class="w-full pb-6">
                                                     <h3 class="text-3xl">Tipo Obra: Rodoviária </h3>
                                                 </div>
-                                                <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                                <div class="mt-4 flex flex-wrap md:space-x-4 w-full">
                                                     <div class="flex-auto justify-between">
                                                         <mat-form-field class="w-full" appearance="outline">
                                                             <mat-label>Rodovia</mat-label>
@@ -1706,7 +1715,7 @@
                                                         </mat-form-field>
                                                     </div>
                                                 </div>
-                                                <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                                <div class="mt-4 flex flex-wrap md:space-x-4 w-full">
                                                     <div class="flex-auto">
                                                         <mat-form-field class=" w-full" appearance="outline">
                                                             <mat-label>Extensão KM</mat-label>
@@ -1755,7 +1764,7 @@
                                                 <div class="w-full pb-6">
                                                     <h3 class="text-3xl">Tipo Obra: Portuária</h3>
                                                 </div>
-                                                <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                                <div class="mt-4 flex flex-wrap md:space-x-4 w-full">
                                                     <div class="flex-auto">
                                                         <mat-form-field class="w-full" appearance="outline">
                                                             <mat-label>Tipo Embarcação</mat-label>
@@ -1786,7 +1795,7 @@
                                                             </mat-label>
 
                                                             <mat-select formControlName="ampliacaoCapacidade"
-                                                            [compareWith]="compareSetores">
+                                                                [compareWith]="compareSetores">
                                                                 <mat-option *ngFor="let simnao of simnaos"
                                                                     [value]="simnao">
                                                                     {{ simnao.descricao }}
@@ -1795,7 +1804,7 @@
                                                         </mat-form-field>
                                                     </div>
                                                 </div>
-                                                <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                                <div class="mt-4 flex flex-wrap md:space-x-4 w-full">
                                                     <div class="flex-auto">
                                                         <mat-form-field class=" w-full" appearance="outline">
                                                             <mat-label>Nova Calado a ser Atendido pelo
@@ -1824,7 +1833,7 @@
                                                         </mat-form-field>
                                                     </div>
                                                 </div>
-                                                <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                                <div class="mt-4 flex flex-wrap md:space-x-4 w-full">
                                                     <div class="flex-auto">
                                                         <mat-form-field class=" w-full" appearance="outline">
                                                             <mat-label>Novo Comprimento Permitido na plataforma (em
@@ -1863,7 +1872,7 @@
                                                 <div class="w-full pb-6">
                                                     <h3 class="text-3xl">Tipo Obra: Hidroviária</h3>
                                                 </div>
-                                                <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                                <div class="mt-4 flex flex-wrap md:space-x-4 w-full">
                                                     <div class="flex-auto">
 
                                                         <mat-form-field appearance="outline" class="w-full">
@@ -1878,7 +1887,8 @@
                                                                 </div>
                                                             </mat-label>
 
-                                                            <mat-select formControlName="situacaoHidrovia" [compareWith]="compareSetores">
+                                                            <mat-select formControlName="situacaoHidrovia"
+                                                                [compareWith]="compareSetores">
                                                                 <mat-option *ngFor="let situacao of situacoes"
                                                                     [value]="situacao">
                                                                     {{ situacao.descricao }}
@@ -1898,7 +1908,7 @@
                                                         </mat-form-field> -->
                                                     </div>
                                                 </div>
-                                                <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                                <div class="mt-4 flex flex-wrap md:space-x-4 w-full">
                                                     <div class="flex-auto">
                                                         <mat-form-field appearance="outline" class="w-full">
                                                             <mat-label *ngIf="!isLoading">Possui Barragem
@@ -1912,7 +1922,8 @@
                                                                 </div>
                                                             </mat-label>
 
-                                                            <mat-select formControlName="temBarragem" [compareWith]="compareSetores">
+                                                            <mat-select formControlName="temBarragem"
+                                                                [compareWith]="compareSetores">
                                                                 <mat-option *ngFor="let simnao of simnaos"
                                                                     [value]="simnao">
                                                                     {{ simnao.descricao }}
@@ -1934,7 +1945,8 @@
                                                                 </div>
                                                             </mat-label>
 
-                                                            <mat-select formControlName="temEclusa" [compareWith]="compareSetores">
+                                                            <mat-select formControlName="temEclusa"
+                                                                [compareWith]="compareSetores">
                                                                 <mat-option *ngFor="let simnao of simnaos"
                                                                     [value]="simnao">
                                                                     {{ simnao.descricao }}
@@ -1943,7 +1955,7 @@
                                                         </mat-form-field>
                                                     </div>
                                                 </div>
-                                                <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                                <div class="mt-4 flex flex-wrap md:space-x-4 w-full">
                                                     <div class="flex-auto">
                                                         <mat-form-field class=" w-full" appearance="outline">
                                                             <mat-label>Tipo de Embarção que Poderá Utilizar a Nova
@@ -1975,7 +1987,8 @@
                                                                 </div>
                                                             </mat-label>
 
-                                                            <mat-select formControlName="ampliacaoCapacidade" [compareWith]="compareSetores">
+                                                            <mat-select formControlName="ampliacaoCapacidade"
+                                                                [compareWith]="compareSetores">
                                                                 <mat-option *ngFor="let simnao of simnaos"
                                                                     [value]="simnao">
                                                                     {{ simnao.descricao }}
@@ -1984,7 +1997,7 @@
                                                         </mat-form-field>
                                                     </div>
                                                 </div>
-                                                <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                                <div class="mt-4 flex flex-wrap md:space-x-4 w-full">
                                                     <div class="flex-auto">
                                                         <mat-form-field class=" w-full" appearance="outline">
                                                             <mat-label>Profundiade Mínima (m)</mat-label>
@@ -2011,7 +2024,7 @@
                                                         </mat-form-field>
                                                     </div>
                                                 </div>
-                                                <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                                <div class="mt-4 flex flex-wrap md:space-x-4 w-full">
                                                     <div class="flex-auto">
                                                         <mat-form-field class=" w-full" appearance="outline">
                                                             <mat-label>Comboios de Cheia</mat-label>
@@ -2035,7 +2048,7 @@
                                                         </mat-form-field>
                                                     </div>
                                                 </div>
-                                                <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                                <div class="mt-4 flex flex-wrap md:space-x-4 w-full">
                                                     <div class="flex-auto">
                                                         <mat-form-field class=" w-full" appearance="outline">
                                                             <mat-label>Nova Largura (m)</mat-label>
@@ -2075,7 +2088,7 @@
                                                 <div class="w-full pb-6">
                                                     <h3 class="text-3xl">Tipo Obra: Ferroviária</h3>
                                                 </div>
-                                                <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                                <div class="mt-4 flex flex-wrap md:space-x-4 w-full">
                                                     <div class="flex-auto">
                                                         <mat-form-field class="w-full" appearance="outline">
                                                             <mat-label>KM Inicial</mat-label>
@@ -2115,7 +2128,7 @@
                                                         </mat-form-field>
                                                     </div>
                                                 </div>
-                                                <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                                <div class="mt-4 flex flex-wrap md:space-x-4 w-full">
                                                     <div class="flex-auto">
                                                         <mat-form-field appearance="outline" class="w-full">
                                                             <mat-label *ngIf="!isLoading">Nova Bitola</mat-label>
@@ -2177,7 +2190,7 @@
                                                 <div class="w-full pb-6">
                                                     <h3 class="text-3xl">Tipo Obra: Dutoviária</h3>
                                                 </div>
-                                                <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                                <div class="mt-4 flex flex-wrap md:space-x-4 w-full">
                                                     <div class="flex-auto">
                                                         <mat-form-field appearance="outline" class="w-full">
                                                             <mat-label>Tipo do Duto </mat-label>
@@ -2191,7 +2204,7 @@
                                                         </mat-form-field>
                                                     </div>
                                                 </div>
-                                                <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                                <div class="mt-4 flex flex-wrap md:space-x-4 w-full">
                                                     <div class="flex-auto">
                                                         <mat-form-field appearance="outline" class="w-full">
                                                             <mat-label>Função da Estrutura</mat-label>
@@ -2217,7 +2230,7 @@
                                                         </mat-form-field>
                                                     </div>
                                                 </div>
-                                                <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                                <div class="mt-4 flex flex-wrap md:space-x-4 w-full">
                                                     <div class="flex-auto">
                                                         <mat-form-field appearance="outline" class="w-full">
                                                             <mat-label>Nível Dutos</mat-label>
@@ -2243,7 +2256,7 @@
                                                         </mat-form-field>
                                                     </div>
                                                 </div>
-                                                <div class="mt-4 flex flex-wrap space-x-4 w-full">
+                                                <div class="mt-4 flex flex-wrap md:space-x-4 w-full">
                                                     <div class="flex-auto">
                                                         <mat-form-field class=" w-full" appearance="outline">
                                                             <mat-label>Código de Destino</mat-label>
@@ -2347,10 +2360,10 @@
                         <div class="flex items-center justify-end m-3">
 
                             <!-- Inativar -->
-                        <button class="ml-2" *ngIf="!creating" [color]="'warn'" type="button" mat-button
-                            [matTooltip]="'Delete'" aria-label="Deletar item" (click)="deleteItem()">
-                            <mat-icon>delete</mat-icon>
-                        </button>
+                            <button class="ml-2" *ngIf="!creating" [color]="'warn'" type="button" mat-button
+                                [matTooltip]="'Delete'" aria-label="Deletar item" (click)="deleteItem()">
+                                <mat-icon>delete</mat-icon>
+                            </button>
                             <!-- Cancel -->
                             <button class="ml-auto" *ngIf="!editMode" type="button" mat-button [matTooltip]="'Cancelar'"
                                 (click)="clearForm()">

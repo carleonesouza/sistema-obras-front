@@ -69,6 +69,7 @@ export class ObraDetailsComponent implements OnInit {
   municpios$: Observable<any>;
   municpios: any;
   infras: any;
+  validateSize: boolean;
   estados: any;
   intervecoes: any;
   statues$: Observable<any>;
@@ -473,6 +474,9 @@ export class ObraDetailsComponent implements OnInit {
 
     if (event.target.files && event.target.files.length) {
       const file: File = event.target.files[0];
+
+      this.validateSize = this.validateFile(file);
+      console.log(this.validateSize)
       this.selectedFile = event.target.files[0];
       this.uploadFiles.append('documentosAdicionais', this.selectedFile);
 
@@ -489,8 +493,8 @@ export class ObraDetailsComponent implements OnInit {
         }, error => {
           // Handle error
           this.uploadProgress = 0;
-          this._snackBar.open('Erro ao fazer Upload ' + error, 'Fechar', { duration: 3000 });
-          console.error('Upload error:', error);
+          this._snackBar.open('Erro ao fazer Upload ' + error?.message, 'Fechar', { duration: 3000 });
+          console.error('Upload error:', error?.message);
         });
       }
     }
@@ -501,6 +505,9 @@ export class ObraDetailsComponent implements OnInit {
 
     if (event.target.files && event.target.files.length) {
       const file: File = event.target.files[0];
+
+      this.validateSize = this.validateFile(file);
+     
       this.arquivoGeo = event.target.files[0];
       this.uploadFiles.append('arquivoGeorreferenciado', this.arquivoGeo)
 
@@ -517,8 +524,8 @@ export class ObraDetailsComponent implements OnInit {
         }, error => {
           // Handle error
           this.uploadGeorreferenciado = 0;
-          this._snackBar.open('Erro ao fazer Upload ' + error, 'Fechar', { duration: 3000 });
-          console.error('Upload error:', error);
+          this._snackBar.open('Erro ao fazer Upload ' + error?.message, 'Fechar', { duration: 3000 });
+          console.error('Upload error:', error?.message);
         });
       }
     }
@@ -558,6 +565,28 @@ export class ObraDetailsComponent implements OnInit {
     }
     datepicker.close();
   }
+
+  // Function to validate file before uploading
+ validateFile(file: File): boolean {
+  // Check if file exists
+  if (!file) {
+    this._snackBar.open('Arquivo não existe!', 'Fechar', { duration: 3000 });
+      console.error('File does not exist.');
+      return false;
+  }
+
+  // Check file size
+  const maxSizeInBytes = 100 * 1024 * 1024; // 100 MB
+  if (file.size > maxSizeInBytes) {
+    this._snackBar.open('O tamanho do arquivo excede o limite máximo de 100 MB!', 'Fechar', { duration: 3000 });
+      console.error('File size exceeds the maximum limit of 100MB.');
+      return false;
+  }
+
+  // If all checks pass, return true
+  return true;
+}
+
 
   fixDateFormat(dateString: string): string {
 
@@ -1144,8 +1173,8 @@ export class ObraDetailsComponent implements OnInit {
       }, error => {
         // Handle error
         this.uploadProgress = 0;
-        this._snackBar.open('Erro ao fazer Upload ' + error, 'Fechar', { duration: 3000 });
-        console.error('Upload error:', error);
+        this._snackBar.open('Erro ao fazer Upload ' + error?.message, 'Fechar', { duration: 3000 });
+        console.error('Upload error: ', error?.message);
       });
     }
   }
