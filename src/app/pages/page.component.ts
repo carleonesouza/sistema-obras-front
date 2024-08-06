@@ -52,6 +52,13 @@ export class PageComponent implements OnInit, OnDestroy {
                     icon: 'mat_outline:manage_accounts',
                     link: 'admin/conta/lista'
                 },
+                // {
+                //     id: 'controllers',
+                //     title: 'Controle',
+                //     type: 'basic',
+                //     icon: 'mat_solid:content_paste_off',
+                //     link: 'admin/paginas/controller'
+                // },
                 {
                     id: 'roles',
                     title: 'Perfis',

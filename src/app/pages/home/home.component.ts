@@ -1,5 +1,7 @@
 import { formatDate } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ViewEncapsulation, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { FuseConfirmationService } from '@fuse/services/confirmation';
 
 
 
@@ -13,7 +15,7 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation, OnInit } from '@
 export class HomeComponent implements  OnInit
 {
 
-
+    configForm: FormGroup;
     selectedClient: any;
     currentDate: any;
     chartOptions: any;
@@ -21,7 +23,7 @@ export class HomeComponent implements  OnInit
     sequenciaNotasNPS: Array<number>;
     sequencialNPS: Array<number>;
 
-        constructor(){
+        constructor( private _fuseConfirmationService: FuseConfirmationService,  private _formBuilder: FormBuilder){
       
         this.selectedClient = 'Todos';
         this.currentDate = formatDate(new Date(), 'dd/MM/yyyy', 'en');
@@ -104,5 +106,38 @@ export class HomeComponent implements  OnInit
 
       //   }, 2000);
 
-       }
+      this.configForm = this._formBuilder.group({
+        title      : 'Aviso Importante!',
+        message    : '<span class="font-medium">O cadastro de novas ações (obras, empreendimentos e iniciativas) foi encerrado no dia 31/07/2024 para continuação dos trabalhos do PELT-MG. Acompanhe as páginas da CODEMGE e da SEINFRA para saber mais atualizações sobre o andamento do plano!</span>',
+        icon       : this._formBuilder.group({
+          show : true,
+          name : 'heroicons_outline:exclamation',
+          color: 'warning'
+        }),
+        actions    : this._formBuilder.group({
+          confirm: this._formBuilder.group({
+            show : true,
+            label: 'Fechar',
+            color: 'warn'
+          }),
+          cancel : this._formBuilder.group({
+            show : false,
+            label: 'Fechar'
+          })
+        }),
+        dismissible: true
+      });
+    
+      const dialogRef = this._fuseConfirmationService.open(this.configForm.value);
+      dialogRef.afterClosed().subscribe((result) => {
+        console.log(result);
+      });
+    }
+
+       openConfirmationDialog(): void {
+        const dialogRef = this._fuseConfirmationService.open(this.configForm.value);
+        dialogRef.afterClosed().subscribe((result) => {
+          console.log(result);
+        });
+      }
   }

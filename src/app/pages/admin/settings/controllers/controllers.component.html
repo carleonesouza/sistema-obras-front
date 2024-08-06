@@ -1,0 +1,153 @@
+<div class="flex flex-col flex-auto min-w-0">
+
+    <!-- Header -->
+    <div
+        class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
+        <div class="flex-1 min-w-0">
+
+            <!-- Title -->
+            <div class="mt-2">
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
+                    Controles
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="flex p-6 sm:p-10 justify-center w-full bg-gray-200">
+
+        <div class="md:w-1/2 sm:w-full mr-2">
+            <div class="example-viewer shadow-lg p-6 sm:p-10">
+              <div class="title">
+                <h6>Habilitar - Desabilitar Formulários</h6>
+              </div>
+              <form class="example-form flex-col space-y-4" #form="ngForm" ngNativeValidate>
+                <div *ngFor="let form of forms" class="flex items-center justify-evenly w-full space-x-8">
+                  <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <input matInput [value]="form.label" disabled>
+                  </mat-form-field>
+                  <mat-slide-toggle [(ngModel)]="formStates[form.name]" (change)="toggleForm(form.name)" color="warn">
+                    <span class="font-extrabold"> Status: {{ formStates[form.name] ? 'Desabilitado' : 'Habilitado' }} </span>
+                  </mat-slide-toggle>
+                </div>
+              </form>
+            </div>
+          </div>
+          
+        <div class="md:w-1/2 sm:w-full">
+
+            <div class="example-viewer shadow-lg">
+
+                <div class="title">
+                    <h6>Configure the dialog and preview it</h6>
+                </div>
+
+                <div class="flex flex-col p-8 pt-0">
+
+                    <form [formGroup]="configForm" class="flex flex-col items-start">
+
+                        <!-- Title -->
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Title</mat-label>
+                            <input matInput [formControlName]="'title'">
+                        </mat-form-field>
+
+                        <!-- Message -->
+                        <mat-form-field class="fuse-mat-no-subscript fuse-mat-textarea w-full mt-6">
+                            <mat-label>Message</mat-label>
+                            <textarea matInput [formControlName]="'message'">
+                            </textarea>
+                        </mat-form-field>
+
+                        <!-- Divider -->
+                        <div class="w-full mt-8 mb-7 border-b"></div>
+
+                        <!-- Icon -->
+                        <div class="flex flex-col w-full" [formGroupName]="'icon'">
+                            <mat-checkbox [color]="'primary'" [formControlName]="'show'">
+                                Show Icon
+                            </mat-checkbox>
+                            <div class="flex items-center w-full mt-6">
+                                <!-- Icon name -->
+                                <mat-form-field class="fuse-mat-no-subscript w-1/2 pr-2">
+                                    <mat-label>Icon name</mat-label>
+                                    <input matInput [formControlName]="'name'">
+                                </mat-form-field>
+
+                                <!-- Icon color -->
+                                <mat-form-field class="fuse-mat-no-subscript w-1/2 pl-2">
+                                    <mat-label>Icon color</mat-label>
+                                    <mat-select [formControlName]="'color'">
+                                        <ng-container
+                                            *ngFor="let color of ['primary', 'accent', 'warn', 'basic', 'info', 'success', 'warning', 'error']">
+                                            <mat-option [value]="color">{{color | titlecase}}</mat-option>
+                                        </ng-container>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <!-- Divider -->
+                        <div class="w-full mt-8 mb-7 border-b"></div>
+
+                        <!-- Actions -->
+                        <div class="w-full" [formGroupName]="'actions'">
+                            <!-- Confirm -->
+                            <div class="flex flex-col w-full" [formGroupName]="'confirm'">
+                                <mat-checkbox class="mt-2" [color]="'primary'" [formControlName]="'show'">
+                                    Show Confirm button
+                                </mat-checkbox>
+                                <div class="flex items-center w-full mt-4">
+                                    <!-- Confirm label -->
+                                    <mat-form-field class="fuse-mat-no-subscript w-1/2 pr-2">
+                                        <mat-label>Confirm button label</mat-label>
+                                        <input matInput [formControlName]="'label'">
+                                    </mat-form-field>
+
+                                    <!-- Confirm color -->
+                                    <mat-form-field class="fuse-mat-no-subscript w-1/2 pl-2">
+                                        <mat-label>Confirm button color</mat-label>
+                                        <mat-select [formControlName]="'color'">
+                                            <ng-container *ngFor="let color of ['primary', 'accent', 'warn']">
+                                                <mat-option [value]="color">{{color | titlecase}}</mat-option>
+                                            </ng-container>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <!-- Cancel -->
+                            <div class="flex flex-col w-full mt-6" [formGroupName]="'cancel'">
+                                <mat-checkbox class="mt-2" [color]="'primary'" [formControlName]="'show'">
+                                    Show Cancel button
+                                </mat-checkbox>
+                                <div class="flex items-center w-full mt-4">
+                                    <!-- Cancel label -->
+                                    <mat-form-field class="fuse-mat-no-subscript w-1/2 pr-2">
+                                        <mat-label>Cancel button label</mat-label>
+                                        <input matInput [formControlName]="'label'">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Divider -->
+                        <div class="w-full mt-8 mb-7 border-b"></div>
+
+                        <!-- Dismissible -->
+                        <mat-checkbox [color]="'primary'" [formControlName]="'dismissible'">
+                            Dismissible
+                        </mat-checkbox>
+                    </form>
+
+                    <div class="mt-12">
+                        <button mat-flat-button [color]="'primary'" (click)="openConfirmationDialog()">
+                            Open Confirmation Dialog
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

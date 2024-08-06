@@ -12,6 +12,9 @@ export const settingsRoutes: Route[] = [
             {
                 path:'conta', loadChildren: () => import('app/pages/admin/settings/users/users.module').then(users => users.UsersModule),
             },
+            {
+                path:'paginas', loadChildren: () => import('app/pages/admin/settings/controllers/controllers.module').then(controllers => controllers.ControllersModule),
+            },
            
         ]
     }

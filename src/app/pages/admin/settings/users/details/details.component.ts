@@ -14,6 +14,7 @@ import { Perfil } from 'app/models/perfil';
 import { RolesService } from '../../roles/roles.service';
 import { cpfValida } from 'app/utils/validaCpf';
 import { User } from 'app/models/user';
+import { ControllersService } from '../../controllers/controllers.service';
 
 @Component({
   selector: 'app-details',
@@ -50,6 +51,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
     private _route: ActivatedRoute,
     private _perfilService: RolesService,
     private _router: Router,
+    private formControlService: ControllersService,
     public _dialog: DialogMessage,
     public dialog: MatDialog) {
      
@@ -57,6 +59,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    
     // Open the drawer
     this._listItemsComponent.matDrawer.open();
     this._changeDetectorRef.markForCheck();
@@ -111,6 +114,15 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
 
     }
+
+    this.formControlService.formStates$.subscribe(formStates => {
+      console.log(formStates);
+      if (formStates['userForm']) {
+        this.userForm.disable();
+      } else {
+        this.userForm.enable();
+      }
+    });
   }
 
 
